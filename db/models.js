@@ -35,6 +35,13 @@ const UserFacebook = db.define('userfacebook', {
 
 });
 
+const Client = db.define('client', {
+    id: {type: Sequelize.BIGINT, primaryKey: true},
+    secret: Sequelize.STRING,
+    domain: Sequelize.ARRAY(Sequelize.STRING),
+    callbackURL: Sequelize.ARRAY(Sequelize.STRING)
+});
+
 UserLocal.belongsTo(User);
 UserFacebook.belongsTo(User);
 User.hasOne(UserLocal);
@@ -45,6 +52,6 @@ db.sync().then(() => {console.log('DB Done')});
 
 
 module.exports = {
-    models: {User, UserLocal, UserFacebook}
+    models: {User, UserLocal, UserFacebook, Client}
 
 };

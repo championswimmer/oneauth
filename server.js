@@ -8,8 +8,10 @@ const express = require('express')
     , path = require('path');
 
 const secrets = require('./secrets.json')
+    , config = require('./config.json')
     , loginrouter = require('./routers/loginrouter')
-    , signuprouter = require('./routers/signup');
+    , signuprouter = require('./routers/signup')
+    , apirouter = require('./routers/apirouter');
 
 const app = express();
 
@@ -24,10 +26,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/login', loginrouter);
 app.use('/signup', signuprouter);
+app.use('/api', apirouter);
 app.use(express.static(path.join(__dirname, 'public_html')));
 
 app.listen(3838, function () {
-
+    console.log("Listening on " + config.SERVER_URL );
 });
 
 

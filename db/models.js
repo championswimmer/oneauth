@@ -40,7 +40,7 @@ UserFacebook.belongsTo(User);
 User.hasOne(UserLocal);
 User.hasOne(UserFacebook);
 
-db.sync({force: true}).then(() => {console.log('DB Done')});
+db.sync().then(() => {console.log('DB Done')});
 
 
 

@@ -8,7 +8,8 @@ const express = require('express')
     , path = require('path');
 
 const secrets = require('./secrets.json')
-    , loginrouter = require('./routers/loginrouter');
+    , loginrouter = require('./routers/loginrouter')
+    , signuprouter = require('./routers/signup');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/login', loginrouter);
+app.use('/signup', signuprouter);
 app.use(express.static(path.join(__dirname, 'public_html')));
 
 app.listen(3838, function () {

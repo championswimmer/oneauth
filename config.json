@@ -1,3 +1,5 @@
 {
-  "SERVER_URL": "http://localhost:3838"
+  "SERVER_URL": "http://localhost:3838",
+  "FACEBOOK_CALLBACK": "/login/facebook/callback",
+  "FACEBOOK_LOGIN_SCOPES": ["email", "public_profile"]
 }

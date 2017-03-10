@@ -42,6 +42,7 @@ User.hasOne(UserFacebook);
 
 const Client = db.define('client', {
     id: {type: Sequelize.BIGINT, primaryKey: true},
+    name: Sequelize.STRING,
     secret: Sequelize.STRING,
     domain: Sequelize.ARRAY(Sequelize.STRING),
     callbackURL: Sequelize.ARRAY(Sequelize.STRING)
@@ -57,7 +58,7 @@ GrantCode.belongsTo(Client);
 Client.hasMany(GrantCode);
 User.hasMany(GrantCode);
 
-db.sync().then(() => {console.log('DB Done')});
+db.sync({}).then(() => {console.log('DB Done')});
 
 
 

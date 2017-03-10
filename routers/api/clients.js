@@ -14,6 +14,7 @@ router.post('/add', function (req, res) {
     models.Client.create({
         id: generator.genNdigitNum(10),
         secret: generator.genNcharAlphaNum(64),
+        name: req.body.clientname,
         domain: req.body.domain.replace(/ /g, '').split(';'),
         callbackURL: req.body.callback.replace(/ /g, '').split(';')
     }).then(function(client) {

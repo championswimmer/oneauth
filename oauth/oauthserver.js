@@ -40,6 +40,8 @@ server.grant( oauth.grant.code (
     }
 ) );
 
+//TODO: Implement all the other types of tokens and grants !
+
 const authorizationMiddleware = [
     cel.ensureLoggedIn('/login'),
     server.authorization(function(clientId, callbackURL, done) {
@@ -49,10 +51,13 @@ const authorizationMiddleware = [
             if (!client) {
                 return done(null, false)
             }
-            if (client.callbackURL != callbackURL) {
-                return done(null, false)
+            console.log(callbackURL);
+            for (url of client.callbackURL) {
+                if (url == callbackURL) {
+                    return done(null, client, callbackURL)
+                }
             }
-            return done(null, client, callbackURL)
+            return done(null, false)
         })
     }, function (client, user, done) {
         //TODO: Check if we can auto approve

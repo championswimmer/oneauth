@@ -1,2 +1,1 @@
 # oneauth
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bfd0b29c15684a249450ddc8d296c8d4)](https://www.codacy.com/app/championswimmer/oneauth?utm_source=github.com&utm_medium=referral&utm_content=championswimmer/oneauth&utm_campaign=badger)

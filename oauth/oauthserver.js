@@ -6,7 +6,8 @@ const oauth = require('oauth2orize')
 
 const models = require('../db/models').models
     , generator = require('../utils/generator')
-    , passport = require('../passport/passporthandler');
+    , passport = require('../passport/passporthandler')
+    , config = require('../config.json');
 
 const server = oauth.createServer();
 
@@ -29,7 +30,7 @@ server.deserializeClient(function (clientId, done) {
 server.grant( oauth.grant.code (
     function (client, redirectURL, user, ares, done) {
         models.GrantCode.create({
-            code: generator.genNcharAlphaNum(32),
+            code: generator.genNcharAlphaNum(config.GRANT_TOKEN_SIZE),
             clientId: client.id,
             userId: user.id
         }).then(function (grantCode) {
@@ -37,6 +38,12 @@ server.grant( oauth.grant.code (
         }).catch(function (err) {
             return done(err)
         })
+    }
+) );
+
+server.grant( oauth.grant.token (
+    function (client, user, ares, done) {
+
     }
 ) );
 

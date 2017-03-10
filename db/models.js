@@ -35,23 +35,33 @@ const UserFacebook = db.define('userfacebook', {
     refreshToken: Sequelize.STRING,
 
 });
-
-const Client = db.define('client', {
-    id: {type: Sequelize.BIGINT, primaryKey: true},
-    secret: Sequelize.STRING,
-    domain: Sequelize.ARRAY(Sequelize.STRING),
-    callbackURL: Sequelize.ARRAY(Sequelize.STRING)
-});
-
 UserLocal.belongsTo(User);
 UserFacebook.belongsTo(User);
 User.hasOne(UserLocal);
 User.hasOne(UserFacebook);
 
-db.sync().then(() => {console.log('DB Done')});
+const Client = db.define('client', {
+    id: {type: Sequelize.BIGINT, primaryKey: true},
+    name: Sequelize.STRING,
+    secret: Sequelize.STRING,
+    domain: Sequelize.ARRAY(Sequelize.STRING),
+    callbackURL: Sequelize.ARRAY(Sequelize.STRING)
+});
+
+const GrantCode = db.define('grantcode', {
+    code: {type: Sequelize.STRING, primaryKey: true}
+});
+
+
+GrantCode.belongsTo(User);
+GrantCode.belongsTo(Client);
+Client.hasMany(GrantCode);
+User.hasMany(GrantCode);
+
+db.sync({}).then(() => {console.log('DB Done')});
 
 
 
 module.exports = {
-    models: {User, UserLocal, UserFacebook, Client}
+    models: {User, UserLocal, UserFacebook, Client, GrantCode}
 };

@@ -11,6 +11,9 @@ const models = require('../db/models').models;
 passport.use(UserStrategies.localStrategy);
 passport.use(UserStrategies.fbStrategy);
 
+passport.use(ClientStrategies.basicStrategy);
+passport.use(ClientStrategies.clientPasswordStrategy);
+
 passport.serializeUser(function (user, cb) {
     cb(null, user.id);
 });

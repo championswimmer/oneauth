@@ -11,10 +11,13 @@ const secrets = require('./secrets.json')
     , config = require('./config.json')
     , loginrouter = require('./routers/loginrouter')
     , signuprouter = require('./routers/signup')
-    , apirouter = require('./routers/apirouter');
+    , apirouter = require('./routers/apirouter')
+    , oauthrouter = require('./routers/oauthrouter');
 
 const app = express();
 
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "hbs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
@@ -27,6 +30,7 @@ app.use(passport.session());
 app.use('/login', loginrouter);
 app.use('/signup', signuprouter);
 app.use('/api', apirouter);
+app.use('/oauth', oauthrouter);
 app.use(express.static(path.join(__dirname, 'public_html')));
 
 app.listen(3838, function () {

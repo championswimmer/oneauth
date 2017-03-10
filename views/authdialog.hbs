@@ -1,0 +1,14 @@
+<html>
+<body>
+<form method="post" action="/oauth/dialog/authorize/decision">
+
+    <p>
+        Hello, {{user.firstname}} {{user.lastname}} ( {{user.username}} )
+    </p>
+    <p> The app {{client.id}} wants to use your profile details </p>
+    <input name="transaction_id" type="hidden" value="{{transactionID}}">
+    <input type="submit" value="Allow" id="allow">
+    <input type="submit" value="Deny" name="cancel" id="deny">
+</form>
+</body>
+</html>

@@ -2,9 +2,10 @@
  * Created by championswimmer on 08/03/17.
  */
 const Sequelize = require('sequelize');
+const secrets = require('../secrets.json');
 
 const db = new Sequelize(
-    'oneauth', 'oneauth', 'oneauth',  {
+    secrets.DB.NAME, secrets.DB.USER, secrets.DB.PASSWORD,  {
         host: 'localhost',
         dialect: 'postgres',
         pool: {

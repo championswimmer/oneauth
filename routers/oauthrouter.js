@@ -4,7 +4,7 @@
 const router = require('express').Router();
 const OauthMiddewares = require('../oauth/oauthserver').Middlewares;
 
-router.get('/dialog/authorize', OauthMiddewares.authorizationMiddleware);
+router.get('/authorize', OauthMiddewares.authorizationMiddleware);
 router.post('/dialog/authorize/decision', OauthMiddewares.decisionMiddleware);
 router.post('/token', OauthMiddewares.tokenMiddleware);
 

@@ -59,6 +59,41 @@ server.grant( oauth.grant.token (
     }
 ) );
 
+server.exchange( oauth.exchange.code (
+    function (client, code, redirectURI, done) {
+        models.GrantCode.findOne({
+            where: {code: code},
+            include: [models.Client]
+        }).then(function (grantCode) {
+            if (!grantCode) {
+                return done(null, false); // Grant code does not exist
+            }
+            if (client.id !== grantCode.client.id) {
+                return done(null, false); //Wrong Client ID
+            }
+            let callbackMatch = false;
+            for (url of client.callbackURL) {
+                if (url === redirectURI) callbackMatch = true;
+            }
+            if (!callbackMatch) {
+                return done(null, false); // Wrong redirect URI
+            }
+            models.AuthToken.create({
+                token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
+                scope: ['*'],
+                explicit: true,
+                clientId: grantCode.clientId,
+                userId: grantCode.userId
+            }).then(function (authToken) {
+                return done(null, authToken.token)
+            }).catch(function (err) {
+                return done(err)
+            })
+
+        })
+    }
+) );
+
 //TODO: Implement all the other types of tokens and grants !
 
 const authorizationMiddleware = [

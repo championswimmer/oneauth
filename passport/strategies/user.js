@@ -1,14 +1,37 @@
 /**
  * Created by championswimmer on 08/03/17.
  */
-const Strategy = require('passport-facebook').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const models = require('../../db/models').models;
 
 const secrets = require('../../secrets.json');
 const config = require('../../config.json');
 
+/**
+ * This is to authenticate _users_ using a username and password
+ * via a simple post request
+ */
+const localStrategy = new LocalStrategy(function (username, password, cb) {
+    models.UserLocal.findOne({
+        include: [{model: models.User, where: {username: username}}],
+    }).then(function(userLocal) {
+        if (!userLocal) {
+            return cb(null, false);
+        }
+        if (userLocal.password != password) {
+            return cb(null, false);
+        }
+        return cb(null, userLocal.user.get());
+    });
 
-const fbStrategy = new Strategy({
+});
+
+/**
+ * This is to authenticate _users_ using their
+ * Facebook accounts
+ */
+const fbStrategy = new FacebookStrategy({
     clientID: secrets.FB_CLIENT_ID,
     clientSecret: secrets.FB_CLIENT_SECRET,
     callbackURL: config.SERVER_URL + config.FACEBOOK_CALLBACK,
@@ -40,4 +63,4 @@ const fbStrategy = new Strategy({
 
 });
 
-module.exports = fbStrategy;
+module.exports = {localStrategy, fbStrategy};

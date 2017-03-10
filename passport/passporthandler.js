@@ -3,13 +3,13 @@
  */
 const passport = require('passport');
 
-const local = require('./strategies/local')
-    , facebook = require('./strategies/facebook');
+const UserStrategies = require('./strategies/user')
+    , ClientStrategies = require('./strategies/client');
 
 const models = require('../db/models').models;
 
-passport.use(local);
-passport.use(facebook);
+passport.use(UserStrategies.localStrategy);
+passport.use(UserStrategies.fbStrategy);
 
 passport.serializeUser(function (user, cb) {
     cb(null, user.id);

@@ -53,5 +53,4 @@ db.sync().then(() => {console.log('DB Done')});
 
 module.exports = {
     models: {User, UserLocal, UserFacebook, Client}
-
 };

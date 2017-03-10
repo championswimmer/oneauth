@@ -44,6 +44,18 @@ server.grant( oauth.grant.code (
 server.grant( oauth.grant.token (
     function (client, user, ares, done) {
 
+        models.AuthToken.create({
+            token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
+            scope: ['*'],
+            explicit: false,
+            clientId: client.id,
+            userId: user.id
+        }).then(function (authToken) {
+            return done(null, authToken.token)
+        }).catch(function (err) {
+            return done(err)
+        })
+
     }
 ) );
 

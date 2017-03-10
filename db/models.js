@@ -52,16 +52,29 @@ const GrantCode = db.define('grantcode', {
     code: {type: Sequelize.STRING, primaryKey: true}
 });
 
-
 GrantCode.belongsTo(User);
 GrantCode.belongsTo(Client);
 Client.hasMany(GrantCode);
 User.hasMany(GrantCode);
+
+
+const AuthToken = db.define('authtoken', {
+    token: {type: Sequelize.STRING, primaryKey: true},
+    scope: Sequelize.ARRAY(Sequelize.STRING),
+    explicit: {type: Sequelize.BOOLEAN, default: false}
+});
+
+AuthToken.belongsTo(User);
+AuthToken.belongsTo(Client);
+Client.hasMany(AuthToken);
+User.hasMany(AuthToken);
+
+
 
 db.sync({}).then(() => {console.log('DB Done')});
 
 
 
 module.exports = {
-    models: {User, UserLocal, UserFacebook, Client, GrantCode}
+    models: {User, UserLocal, UserFacebook, Client, GrantCode, AuthToken}
 };

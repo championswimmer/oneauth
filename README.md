@@ -18,6 +18,19 @@ http://localhost:3838/oauth/authorize?
     &   client_id=9990781661
     &   redirect_uri=http://hackerblocks.com/callback
 ```
+Then from your backend get the auth token
+<p style="color: red">Ensure you do not leak client secret
+to the frontend.</p>
+
+```
+POST
+http://localhost:3838/oauth/token
+        client_id=9990781661
+    &   redirect_uri=hackerblocks.com/authback
+    &   client_secret=ZyTe3zCR67REHND7CHa9zH39NllvLWYULCedocZDLaCkSVTA7GGE1s1Hjrgkos09
+    &   grant_type=authorization_code
+    &   code=MyiLDqJwTpzEXqYOG1jNFCtjEzYHAR4U
+```
 
 ### Implicit Auth Token
 This will get you a bearer token straight away
@@ -29,15 +42,7 @@ http://localhost:3838/oauth/authorize?
     &   redirect_uri=http://hackerblocks.com/callback
 ```
 
-```
-POST
-http://localhost:3838/oauth/token
-        client_id=9990781661
-    &   redirect_uri=hackerblocks.com/authback
-    &   client_secret=ZyTe3zCR67REHND7CHa9zH39NllvLWYULCedocZDLaCkSVTA7GGE1s1Hjrgkos09
-    &   grant_type=authorization_code
-    &   code=MyiLDqJwTpzEXqYOG1jNFCtjEzYHAR4U
-```
+
 
 ## Oauth2 Consumer
 _**oneauth**_ is also an OAuth2 consumer, so users can link other accounts

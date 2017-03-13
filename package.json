@@ -16,6 +16,7 @@
     "body-parser": "^1.17.1",
     "connect-ensure-login": "^0.1.1",
     "express": "^4.15.2",
+    "express-hbs": "^1.0.4",
     "express-session": "^1.15.1",
     "hbs": "^4.0.1",
     "oauth2orize": "^1.8.0",

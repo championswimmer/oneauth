@@ -1,4 +1,8 @@
 /**
+ * These are authentication strategies to authenticate the user.
+ * For example - when user logs in with username+password
+ * Or when we logs in via SSO like Facebook/Twitter etc.
+ *
  * Created by championswimmer on 10/03/17.
  */
 

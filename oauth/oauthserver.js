@@ -85,10 +85,13 @@ server.exchange( oauth.exchange.code (
                 clientId: grantCode.clientId,
                 userId: grantCode.userId
             }).then(function (authToken) {
-                return done(null, authToken.token)
+                    return done(null, authToken.token)
             }).catch(function (err) {
                 return done(err)
-            })
+            });
+            //Make sure to delete the grant code
+            //so it cannot be reused
+            grantCode.destroy();
 
         })
     }

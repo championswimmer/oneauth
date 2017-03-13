@@ -11,6 +11,7 @@ _**oneauth**_ is an OAuth2 server, that you can consume
 
 ### Grant Code
 This will get you a grant code (that can be exchanged for an auth token).
+Redirect the user to the below URL on the frontend
 ```
 GET
 http://localhost:3838/oauth/authorize?
@@ -19,9 +20,6 @@ http://localhost:3838/oauth/authorize?
     &   redirect_uri=http://hackerblocks.com/callback
 ```
 Then from your backend get the auth token
-<p style="color: red">Ensure you do not leak client secret
-to the frontend.</p>
-
 ```
 POST
 http://localhost:3838/oauth/token
@@ -31,9 +29,11 @@ http://localhost:3838/oauth/token
     &   grant_type=authorization_code
     &   code=MyiLDqJwTpzEXqYOG1jNFCtjEzYHAR4U
 ```
+<p style="color: red">Ensure you do not leak client secret
+to the frontend.</p>
 
 ### Implicit Auth Token
-This will get you a bearer token straight away
+This will get you a bearer token straight away on frontend
 ```
 GET
 http://localhost:3838/oauth/authorize?

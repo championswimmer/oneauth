@@ -48,6 +48,8 @@ const Client = db.define('client', {
     callbackURL: Sequelize.ARRAY(Sequelize.STRING)
 });
 
+//TODO : Client should belong to User (users can create clients)
+
 const GrantCode = db.define('grantcode', {
     code: {type: Sequelize.STRING, primaryKey: true}
 });
@@ -71,7 +73,7 @@ User.hasMany(AuthToken);
 
 
 
-db.sync({}).then(() => {console.log('DB Done')});
+db.sync({}).then(() => {console.log('Database configured')});
 
 
 

@@ -18,7 +18,7 @@ const bearerStrategy = new BearerStrategy(function(token, done) {
             scope: authToken.scope,
             explicit: authToken.explicit
         };
-        return done (null, user, info);
+        return done (null, authToken.user.get(), info);
     })
 });
 

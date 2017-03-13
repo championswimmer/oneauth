@@ -4,7 +4,8 @@
 const passport = require('passport');
 
 const UserStrategies = require('./strategies/user')
-    , ClientStrategies = require('./strategies/client');
+    , ClientStrategies = require('./strategies/client')
+    , ApiStrategies = require('./strategies/api');
 
 const models = require('../db/models').models;
 
@@ -13,6 +14,8 @@ passport.use(UserStrategies.fbStrategy);
 
 passport.use(ClientStrategies.basicStrategy);
 passport.use(ClientStrategies.clientPasswordStrategy);
+
+passport.use(ApiStrategies.bearerStrategy);
 
 passport.serializeUser(function (user, cb) {
     cb(null, user.id);

@@ -48,7 +48,8 @@ const Client = db.define('client', {
     callbackURL: Sequelize.ARRAY(Sequelize.STRING)
 });
 
-//TODO : Client should belong to User (users can create clients)
+Client.belongsTo(User);
+User.hasMany(Client);
 
 const GrantCode = db.define('grantcode', {
     code: {type: Sequelize.STRING, primaryKey: true}

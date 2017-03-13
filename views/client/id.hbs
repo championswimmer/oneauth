@@ -1,0 +1,35 @@
+{{!< main}}
+
+<div class="container">
+    <div class="h3 thin-font text-center">Client Details</div>
+    <div class="col-md-12 col-lg-10 offset-lg-1">
+    <table class="table table-bordered table-responsive">
+        <tr>
+            <th> Client Name</th>
+            <td> {{client.name}}</td>
+        </tr>
+        <tr>
+            <th> Client Id</th>
+            <td> {{client.id}}</td>
+        </tr>
+        <tr>
+            <th> Client Secret</th>
+            <td> {{client.secret}}</td>
+        </tr>
+
+        {{#each client.domain as |domain|}}
+            <tr>
+                <th>Domain</th>
+                <td>{{domain}}</td>
+            </tr>
+        {{/each}}
+        {{#each client.callbackURL as |callback|}}
+            <tr>
+                <th>Callback URL</th>
+                <td>{{callback}}</td>
+            </tr>
+        {{/each}}
+
+    </table>
+    </div>
+</div>

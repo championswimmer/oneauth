@@ -9,8 +9,8 @@ const generator = require('../../utils/generator');
 const urlutils = require('../../utils/urlutils');
 
 router.post('/add', function (req, res) {
-    if (req.body.adminkey != secrets.ADMIN_KEY) {
-        return res.send({status: 403, message: 'Unauthorized'})
+    if (!req.user) {
+        return res.send("Only logged in users can make clients")
     }
 
     let clientName = req.body.clientname;
@@ -31,9 +31,10 @@ router.post('/add', function (req, res) {
         secret: generator.genNcharAlphaNum(64),
         name: clientName,
         domain: clientDomains,
-        callbackURL: clientCallbacks
+        callbackURL: clientCallbacks,
+        userId: req.user.id
     }).then(function(client) {
-        res.send(client)
+        res.redirect('/clients/' + client.id)
     })
 });
 

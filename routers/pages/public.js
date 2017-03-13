@@ -1,6 +1,7 @@
 /**
  * Created by championswimmer on 13/03/17.
  */
+const cel = require('connect-ensure-login');
 
 const router = require('express').Router();
 
@@ -10,9 +11,12 @@ router.get('/login', function(req, res, next) {
 router.get('/signup', function(req, res, next) {
     res.render('signup', {title: "Signup | OneAuth"})
 });
-router.get('/addclient', function(req, res, next) {
-    res.render('addclient', {title: "Add New Client | OneAuth"})
-});
+router.get('/client/add',
+    cel.ensureLoggedIn('/login'),
+    function(req, res, next) {
+        res.render('client/add', {title: "Add New Client | OneAuth"})
+    }
+);
 
 
 

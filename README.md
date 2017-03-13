@@ -9,7 +9,17 @@
 ## OAuth2 Server
 _**oneauth**_ is an OAuth2 server, that you can consume
 
-### Grant Code
+A few terms to remember -
+
+| Term | Definition |
+| -----|------------|
+| auth token | A token, used in lieu of user+password credentials, to make API requests |
+| grant code | A code that can be exchanged for a auth token |
+| client id | Unique identifier for each client |
+| client secret| A secret key, to be used to exchange codes for tokens |
+
+
+### Grant Code Flow (frontend + backend clients)
 This will get you a grant code (that can be exchanged for an auth token).
 Redirect the user to the below URL on the frontend
 ```
@@ -29,10 +39,12 @@ http://localhost:3838/oauth/token
     &   grant_type=authorization_code
     &   code=MyiLDqJwTpzEXqYOG1jNFCtjEzYHAR4U
 ```
+Retrieve the bearer token from the response body
+
 <p style="color: red">Ensure you do not leak client secret
 to the frontend.</p>
 
-### Implicit Auth Token
+### Implicit Auth Token Flow (pure frontend clients)
 This will get you a bearer token straight away on frontend
 ```
 GET
@@ -41,7 +53,7 @@ http://localhost:3838/oauth/authorize?
     &   client_id=9990781661
     &   redirect_uri=http://hackerblocks.com/callback
 ```
-
+Retrive the bearer token from the URL
 
 
 ## Oauth2 Consumer

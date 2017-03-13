@@ -118,8 +118,20 @@ const authorizationMiddleware = [
         })
     }, function (client, user, done) {
         //TODO: Check if we can auto approve
-
-        done(null, false)
+        models.AuthToken.findOne({
+            where: {
+                clientId: client.id,
+                userId: user.id
+            }
+        }).then(function(authToken) {
+            if (!authToken) {
+                return done(null, false)
+            } else {
+                return done(null, true)
+            }
+        }).catch(function(err) {
+            return done(err)
+        });
 
     }),
     function (req, res) {

@@ -7,8 +7,13 @@
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=championswimmer&url=https://github.com/coding-blocks/oneauth&title=oneauth&language=&tags=github&category=software)
 
-## Usage
-### OAuth2 Server
+## Installation
+
+### Step 1 : Database Setup
+
+### Step 2 : Deploy
+
+## OAuth2 Server Usage
 _**oneauth**_ is an OAuth2 server, that you can consume
 
 A few terms to remember -
@@ -21,7 +26,7 @@ A few terms to remember -
 | client secret| A secret key, to be used to exchange codes for tokens |
 
 
-#### Grant Code Flow (frontend + backend clients)
+### Grant Code Flow (frontend + backend clients)
 This will get you a grant code (that can be exchanged for an auth token).
 Redirect the user to the below URL on the frontend
 ```
@@ -46,7 +51,7 @@ Retrieve the bearer token from the response body
 _Ensure you do not leak client secret
 to the frontend_
 
-#### Implicit Auth Token Flow (pure frontend clients)
+### Implicit Auth Token Flow (pure frontend clients)
 This will get you a bearer token straight away on frontend
 ```
 GET
@@ -58,9 +63,23 @@ http://localhost:3838/oauth/authorize?
 Retrive the bearer token from the URL
 
 
-### Oauth2 Consumer
+## Oauth2 Consumer Usage
 _**oneauth**_ is also an OAuth2 consumer, so users can link other accounts
 they have on Facebook/Twitter/Google etc
+
+## Pages
+
+#### /login
+Existing user login
+
+#### /signup
+New user signup
+
+#### /user/me
+User profile data of logged in user
+
+#### /user/{id}
+User profie data (only public data) of any user
 
 ## Credits
 ### Libraries Used

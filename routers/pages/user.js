@@ -4,7 +4,9 @@
 const cel = require('connect-ensure-login');
 const router = require('express').Router();
 
-router.get('/me', cel.ensureLoggedIn('/login'), function (req, res, next) {
+router.get('/me',
+    cel.ensureLoggedIn('/login'),
+    function (req, res, next) {
     res.render('user/me', {user: req.user})
 });
 

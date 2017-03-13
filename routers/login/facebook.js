@@ -11,7 +11,7 @@ router.get('/', passport.authenticate('facebook', {scope: ['email']}));
 router.get('/callback', passport.authenticate('facebook', {
     scope: config.FACEBOOK_LOGIN_SCOPES,
     failureRedirect: '/login',
-    successReturnToOrRedirect: '/api/users/me'
+    successReturnToOrRedirect: '/users/me'
 }));
 
 module.exports = router;

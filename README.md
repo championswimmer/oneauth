@@ -13,6 +13,8 @@
 
 ### Step 2 : Deploy
 
+-------------------------
+
 ## OAuth2 Server Usage
 _**oneauth**_ is an OAuth2 server, that you can consume
 
@@ -25,6 +27,7 @@ A few terms to remember -
 | client id | Unique identifier for each client |
 | client secret| A secret key, to be used to exchange codes for tokens |
 
+-------------------------
 
 ### Grant Code Flow (frontend + backend clients)
 This will get you a grant code (that can be exchanged for an auth token).
@@ -51,6 +54,8 @@ Retrieve the bearer token from the response body
 _Ensure you do not leak client secret
 to the frontend_
 
+-------------------------
+
 ### Implicit Auth Token Flow (pure frontend clients)
 This will get you a bearer token straight away on frontend
 ```
@@ -61,6 +66,8 @@ http://localhost:3838/oauth/authorize?
     &   redirect_uri=http://hackerblocks.com/callback
 ```
 Retrive the bearer token from the URL
+
+-------------------------
 
 
 ## Oauth2 Consumer Usage
@@ -80,6 +87,8 @@ User profile data of logged in user
 
 #### /user/{id}
 User profie data (only public data) of any user
+
+-------------------------
 
 ## Credits
 ### Libraries Used

@@ -5,6 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/coding-blocks/oneauth/badge)](https://www.codefactor.io/repository/github/coding-blocks/oneauth)
 [![codebeat badge](https://codebeat.co/badges/93d5f023-5bab-40c0-9c65-aeb724814bd3)](https://codebeat.co/projects/github-com-coding-blocks-oneauth-master)
 
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=championswimmer&url=https://github.com/coding-blocks/oneauth&title=oneauth&language=&tags=github&category=software)
 
 ## Usage
 ### OAuth2 Server
@@ -42,8 +43,8 @@ http://localhost:3838/oauth/token
 ```
 Retrieve the bearer token from the response body
 
-<p style="color: red">Ensure you do not leak client secret
-to the frontend.</p>
+_Ensure you do not leak client secret
+to the frontend_
 
 #### Implicit Auth Token Flow (pure frontend clients)
 This will get you a bearer token straight away on frontend

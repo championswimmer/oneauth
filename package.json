@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com/championswimmer/oneauth"
+    "url": "http://github.com/coding-blocks/oneauth"
   },
-  "author": "",
+  "author": "Arnav Gupta, Coding Blocks",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",

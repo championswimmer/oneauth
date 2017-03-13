@@ -1,8 +1,13 @@
-<form method="post" action="/signup">
-    <input name="username" placeholder="username" type="text"> <br>
-    <input name="firstname" placeholder="firstname" type="text"> <br>
-    <input name="lastname" placeholder="lastname" type="text"> <br>
-    <input name="email" placeholder="email" type="email"> <br>
-    <input name="password" placeholder="password" type="password"> <br>
-    <input type="submit">
+{{!< centercolumn}}
+
+<h2 class="text-center thin-font">Sign Up</h2>
+<form class="form-group" method="post" action="/signup">
+    <input class="form-control" name="username" placeholder="username" type="text"> <br>
+    <input class="form-control" name="firstname" placeholder="firstname" type="text"> <br>
+    <input class="form-control" name="lastname" placeholder="lastname" type="text"> <br>
+    <input class="form-control" name="email" placeholder="email" type="email"> <br>
+    <input class="form-control" name="password" placeholder="password" type="password"> <br>
+    <div class="row">
+        <input class="btn btn-primary mx-auto" type="submit" value="Signup">
+    </div>
 </form>

@@ -1,8 +1,14 @@
+{{!< centercolumn}}
 
-<form method="post" action="/login">
-    <input name="username" type="text"><br>
-    <input name="password" type="password"><br>
-    <input type="submit"><br>
+<h2 class="text-center thin-font">Login</h2>
+
+<form class="form-group" method="post" action="/login">
+    <input class="form-control" placeholder="username" name="username" type="text"><br>
+    <input class="form-control" placeholder="password" name="password" type="password"><br>
+    <div class="row">
+        <input class="btn btn-success mx-auto" type="submit" value="Login"><br>
+    </div>
+    <div class="text-center h4 thin-font"> or </div>
     <a href="/login/facebook"> Login with facebook</a>
 </form>
 <br><br>

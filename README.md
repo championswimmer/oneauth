@@ -85,8 +85,14 @@ New user signup
 #### /user/me
 User profile data of logged in user
 
-#### /user/{id}
+#### /user/{userid}
 User profie data (only public data) of any user
+
+#### /clients
+All clients created by currently logged in user
+
+#### /clients/{clientid}
+Details of the client (given the user who owns it is logged in)
 
 -------------------------
 

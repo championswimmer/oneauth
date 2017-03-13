@@ -1,0 +1,18 @@
+{{!< centercolumn}}
+
+{{#each clients as |client|}}
+
+    <div class="row p-2">
+        <div class="col p-2">
+            <div class="row h1 m-2">{{client.name}}</div>
+            <div class="row">
+                <div class="col align-self-center align-items-center">
+                    <a href="/clients/{{client.id}}"><div class="btn btn-sm btn-info">Details</div></a>
+                    <div class="btn btn-sm btn-info">Edit</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{{/each}}

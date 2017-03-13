@@ -6,7 +6,8 @@
 [![codebeat badge](https://codebeat.co/badges/93d5f023-5bab-40c0-9c65-aeb724814bd3)](https://codebeat.co/projects/github-com-coding-blocks-oneauth-master)
 
 
-## OAuth2 Server
+## Usage
+### OAuth2 Server
 _**oneauth**_ is an OAuth2 server, that you can consume
 
 A few terms to remember -
@@ -19,7 +20,7 @@ A few terms to remember -
 | client secret| A secret key, to be used to exchange codes for tokens |
 
 
-### Grant Code Flow (frontend + backend clients)
+#### Grant Code Flow (frontend + backend clients)
 This will get you a grant code (that can be exchanged for an auth token).
 Redirect the user to the below URL on the frontend
 ```
@@ -44,7 +45,7 @@ Retrieve the bearer token from the response body
 <p style="color: red">Ensure you do not leak client secret
 to the frontend.</p>
 
-### Implicit Auth Token Flow (pure frontend clients)
+#### Implicit Auth Token Flow (pure frontend clients)
 This will get you a bearer token straight away on frontend
 ```
 GET
@@ -56,6 +57,20 @@ http://localhost:3838/oauth/authorize?
 Retrive the bearer token from the URL
 
 
-## Oauth2 Consumer
+### Oauth2 Consumer
 _**oneauth**_ is also an OAuth2 consumer, so users can link other accounts
 they have on Facebook/Twitter/Google etc
+
+## Credits
+### Libraries Used
+This is built upon the insanely useful and easy to use Oauth2 libraries
+built by @jaredhanson from @auth0
+ - **[passport.js](https://github.com/jaredhanson/passport)** The universal auth solution on Nodejs
+ - **[oauth2orize](https://github.com/jaredhanson/oauth2orize)** Simple Oauth2 provider middleware
+
+### Inspirations
+We built this at @coding-blocks looking at a similar solution @hasgeek
+has here - http://github.com/hasgeek/lastuser
+We made our own, instead of using _lastuser_, because (a) the documentation
+was a little lacking on lastuser, and (b) we were more comfortable on a
+NodeJS+Postgres based stack.

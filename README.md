@@ -64,12 +64,12 @@ they have on Facebook/Twitter/Google etc
 ## Credits
 ### Libraries Used
 This is built upon the insanely useful and easy to use Oauth2 libraries
-built by @jaredhanson from @auth0
+built by [jaredhanson](http://github.com/jaredhanson) from [auth0](http://github.com/auth0)
  - **[passport.js](https://github.com/jaredhanson/passport)** The universal auth solution on Nodejs
  - **[oauth2orize](https://github.com/jaredhanson/oauth2orize)** Simple Oauth2 provider middleware
 
 ### Inspirations
-We built this at @coding-blocks looking at a similar solution @hasgeek
+We built this at @coding-blocks looking at a similar solution [hasgeek](http://github.com/hasgeek)
 has here - http://github.com/hasgeek/lastuser
 We made our own, instead of using _lastuser_, because (a) the documentation
 was a little lacking on lastuser, and (b) we were more comfortable on a

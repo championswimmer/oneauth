@@ -1,3 +1,14 @@
+engines:
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+
 exclude_paths:
  - "**/jquery*"
  - "**/bootstrap*"

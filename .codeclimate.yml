@@ -1,3 +1,3 @@
-excluded_paths:
+exclude_paths:
  - "**/jquery*"
  - "**/bootstrap*"

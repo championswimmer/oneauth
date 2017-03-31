@@ -7,6 +7,7 @@ const models = require('../../db/models').models;
 
 const secrets = require('../../secrets.json');
 const config = require('../../config.json');
+const passutils = require('../../utils/password');
 
 /**
  * This is to authenticate _users_ using a username and password
@@ -19,10 +20,20 @@ const localStrategy = new LocalStrategy(function (username, password, cb) {
         if (!userLocal) {
             return cb(null, false);
         }
-        if (userLocal.password != password) {
-            return cb(null, false);
-        }
-        return cb(null, userLocal.user.get());
+
+        passutils.compare2hash(password, userLocal.password)
+            .then(function(match) {
+                if (match) {
+                    return cb(null, userLocal.user.get());
+                } else {
+                    return cb(null, false);
+                }
+            })
+            .catch(function (err) {
+                console.trace(err.message);
+                return cb(null, false, {message: err})
+            });
+
     });
 
 });

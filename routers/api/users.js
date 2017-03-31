@@ -14,6 +14,8 @@ router.get('/me',
     function(req,res) {
        if (req.user) {
            res.send(req.user)
+       } else {
+           res.sendStatus(403)
        }
     }
 );

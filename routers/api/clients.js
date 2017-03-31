@@ -1,5 +1,7 @@
 /**
  * Created by championswimmer on 10/03/17.
+ *
+ * This is the /api/v1/clients path
  */
 const router = require('express').Router();
 const secrets = require('../../secrets.json');

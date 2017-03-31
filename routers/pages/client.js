@@ -19,6 +19,13 @@ router.get('/',
     }
 );
 
+router.get('/add',
+    cel.ensureLoggedIn('/login'),
+    function (req, res, next) {
+        return res.render('client/add')
+    }
+);
+
 router.get('/:id',
     cel.ensureLoggedIn('/login'),
     function(req, res, next) {

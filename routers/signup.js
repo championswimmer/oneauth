@@ -1,5 +1,7 @@
 /**
  * Created by championswimmer on 09/03/17.
+ *
+ * This is the /signup path
  */
 const router = require('express').Router();
 const models = require('../db/models').models;

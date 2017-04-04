@@ -2,6 +2,7 @@
   "SERVER_URL": "http://localhost:3838",
   "FACEBOOK_CALLBACK": "/login/facebook/callback",
   "FACEBOOK_LOGIN_SCOPES": ["email", "public_profile"],
+  "TWITTER_CALLBACK": "/login/twitter/callback",
   "GRANT_TOKEN_SIZE": 32,
   "AUTH_TOKEN_SIZE": 64,
   "BCRYPT_SALT_ROUNDS": 8

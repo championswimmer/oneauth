@@ -2,6 +2,7 @@
  * Created by championswimmer on 08/03/17.
  */
 const FacebookStrategy = require('passport-facebook').Strategy;
+const TwitterStrategy = require('passport-twitter-email').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const models = require('../../db/models').models;
 
@@ -74,4 +75,37 @@ const fbStrategy = new FacebookStrategy({
 
 });
 
-module.exports = {localStrategy, fbStrategy};
+const twitterStrategy = new TwitterStrategy({
+        consumerKey: secrets.TWITTER_CONSUMER_KEY,
+        consumerSecret: secrets.TWITTER_CONSUMER_SECRET,
+        callbackURL: config.SERVER_URL + config.TWITTER_CALLBACK
+},
+    function(token, tokenSecret, profile, cb) {
+        let profileJson = profile._json;
+
+        models.UserTwitter.findCreateFind({
+            include: [models.User],
+            where: {id: profileJson.id},
+            defaults: {
+                id: profileJson.id,
+                token: token,
+                tokenSecret: tokenSecret,
+                user: {
+                    username: profileJson.screen_name,
+                    firstname: profileJson.name.split(' ')[0],
+                    lastname: profileJson.name.split(' ').pop(),
+                    email: profileJson.email,
+                    photo: profileJson.profile_image_url.replace('_normal', '_400x400')
+                }
+            }
+        }).spread(function(userTwitter, created) {
+            //TODO: Check created == true for first time
+            if (!userTwitter) {
+                return cb(null, false);
+            }
+
+            return cb(null, userTwitter.user.get())
+        })
+});
+
+module.exports = {localStrategy, fbStrategy, twitterStrategy};

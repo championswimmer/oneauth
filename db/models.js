@@ -35,10 +35,19 @@ const UserFacebook = db.define('userfacebook', {
     refreshToken: Sequelize.STRING,
 
 });
+
+const UserTwitter = db.define('usertwitter', {
+    id: {type: Sequelize.BIGINT, primaryKey: true},
+    token: Sequelize.STRING,
+    tokenSecret: Sequelize.STRING
+});
+
 UserLocal.belongsTo(User);
 UserFacebook.belongsTo(User);
+UserTwitter.belongsTo(User);
 User.hasOne(UserLocal);
 User.hasOne(UserFacebook);
+User.hasOne(UserTwitter);
 
 const Client = db.define('client', {
     id: {type: Sequelize.BIGINT, primaryKey: true},
@@ -79,5 +88,5 @@ db.sync({}).then(() => {console.log('Database configured')});
 
 
 module.exports = {
-    models: {User, UserLocal, UserFacebook, Client, GrantCode, AuthToken}
+    models: {User, UserLocal, UserFacebook, UserTwitter, Client, GrantCode, AuthToken}
 };

@@ -95,7 +95,7 @@ const twitterStrategy = new TwitterStrategy({
                     firstname: profileJson.name.split(' ')[0],
                     lastname: profileJson.name.split(' ').pop(),
                     email: profileJson.email,
-                    photo: profileJson.profile_image_url.replace('_normal', '_400x400')
+                    photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
                 }
             }
         }).spread(function(userTwitter, created) {

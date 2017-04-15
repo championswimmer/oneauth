@@ -17,6 +17,14 @@ const secrets = require('./secrets.json')
     , pagerouter = require('./routers/pagerouter');
 
 const app = express();
+const redirectToHome = function (req, res) {
+    if(req.user){
+        res.redirect(req.protocol + '://' + req.get('host') + req.originalUrl + '/users/me');
+    }
+    else{
+        res.redirect(req.protocol + '://' + req.get('host') + req.originalUrl + '/login');
+    }
+};
 
 app.engine('hbs', exphbs.express4({
     partialsDir: path.join(__dirname, 'views/partials'),
@@ -41,6 +49,7 @@ app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);
 app.use('/', pagerouter);
 app.use(express.static(path.join(__dirname, 'public_static')));
+app.use(redirectToHome);
 
 app.listen(3838, function () {
     console.log("Listening on " + config.SERVER_URL );

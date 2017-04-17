@@ -12,6 +12,7 @@ const models = require('../db/models').models;
 passport.use(UserStrategies.localStrategy);
 passport.use(UserStrategies.fbStrategy);
 passport.use(UserStrategies.twitterStrategy);
+passport.use(UserStrategies.githubStrategy);
 
 passport.use(ClientStrategies.basicStrategy);
 passport.use(ClientStrategies.clientPasswordStrategy);

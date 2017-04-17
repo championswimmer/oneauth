@@ -3,6 +3,7 @@
  */
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter-email').Strategy;
+const GithubStrategy = require('passport-github2').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const models = require('../../db/models').models;
 
@@ -108,4 +109,37 @@ const twitterStrategy = new TwitterStrategy({
         })
 });
 
-module.exports = {localStrategy, fbStrategy, twitterStrategy};
+const githubStrategy = new GithubStrategy({
+        clientID: secrets.GITHUB_CONSUMER_KEY,
+        clientSecret: secrets.GITHUB_CONSUMER_SECRET,
+        callbackURL: config.SERVER_URL + config.GITHUB_CALLBACK
+    },
+    function(token, tokenSecret, profile, cb) {
+        let profileJson = profile._json;
+
+        models.UserGithub.findCreateFind({
+            include: [models.User],
+            where: {id: profileJson.id},
+            defaults: {
+                id: profileJson.id,
+                token: token,
+                tokenSecret: tokenSecret,
+                user: {
+                    username: profileJson.screen_name,
+                    firstname: profileJson.name.split(' ')[0],
+                    lastname: profileJson.name.split(' ').pop(),
+                    email: profileJson.email,
+                    photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
+                }
+            }
+        }).spread(function(userGithub, created) {
+            //TODO: Check created == true for first time
+            if (!userGithub) {
+                return cb(null, false);
+            }
+
+            return cb(null, userGithub.user.get())
+        })
+    });
+
+module.exports = {localStrategy, fbStrategy, twitterStrategy, githubStrategy};

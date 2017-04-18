@@ -17,13 +17,14 @@ const secrets = require('./secrets.json')
     , pagerouter = require('./routers/pagerouter');
 
 const app = express();
-const redirectToHome = function (req, res) {
-    if(req.user){
-        res.redirect(req.protocol + '://' + req.get('host') + req.originalUrl + '/users/me');
+const redirectToHome = function (req, res, next) {
+
+    if (req.path == '/') {
+        return res.redirect('/users/me');
     }
-    else{
-        res.redirect(req.protocol + '://' + req.get('host') + req.originalUrl + '/login');
-    }
+
+    next();
+
 };
 
 app.engine('hbs', exphbs.express4({
@@ -43,13 +44,13 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(redirectToHome);
 app.use('/login', loginrouter);
 app.use('/signup', signuprouter);
 app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);
 app.use('/', pagerouter);
 app.use(express.static(path.join(__dirname, 'public_static')));
-app.use(redirectToHome);
 
 app.listen(3838, function () {
     console.log("Listening on " + config.SERVER_URL );

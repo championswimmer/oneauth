@@ -125,15 +125,16 @@ const githubStrategy = new GithubStrategy({
                 token: token,
                 tokenSecret: tokenSecret,
                 user: {
-                    username: profileJson.screen_name,
+                    username: profileJson.login,
                     firstname: profileJson.name.split(' ')[0],
                     lastname: profileJson.name.split(' ').pop(),
                     email: profileJson.email,
-                    photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
+                    photo: profileJson.avatar_url
                 }
             }
         }).spread(function(userGithub, created) {
             //TODO: Check created == true for first time
+            console.log(userGithub);
             if (!userGithub) {
                 return cb(null, false);
             }

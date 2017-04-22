@@ -11,6 +11,7 @@ const express = require('express')
 const secrets = require('./secrets.json')
     , config = require('./config.json')
     , loginrouter = require('./routers/loginrouter')
+    , logoutrouter = require('./routers/logoutrouter')
     , signuprouter = require('./routers/signup')
     , apirouter = require('./routers/apirouter')
     , oauthrouter = require('./routers/oauthrouter')
@@ -46,6 +47,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(redirectToHome);
 app.use('/login', loginrouter);
+app.use('/logout', logoutrouter);
 app.use('/signup', signuprouter);
 app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);

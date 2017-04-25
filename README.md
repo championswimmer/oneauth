@@ -54,6 +54,8 @@ Retrieve the bearer token from the response body
 _Ensure you do not leak client secret
 to the frontend_
 
+Read in detailed [step by step instructions here](docs/AUTHENTICATE_EXPLICIT.md)
+
 -------------------------
 
 ### Implicit Auth Token Flow (pure frontend clients)

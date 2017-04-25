@@ -1,13 +1,32 @@
 {{!< centercolumn}}
 
-<h2 class="text-center thin-font">Profile</h2>
+<h2 class="text-center thin-font"> My Profile </h2>
 
-<table class="table">
-    <tr id="">
-
+<table class="table table-bordered">
+    <tr id="profile-row-photo">
+        <td colspan="2" class="text-center">
+            <img class="img-thumbnail" src="{{user.photo}}">
+        </td>
     </tr>
-    <div> id : {{user.id}} </div>
-    <div> {{user.firstname}} {{user.lastname}}</div>
-    <img src="{{user.photo}}">
-    <a href="mailto:{{user.email}}">{{user.email}}</a>
+    <tr id="profile-row-id">
+        <td class="font-weight-bold"> User ID </td>
+        <td> {{user.id}} </td>
+    </tr>
+    <tr id="profile-row-username">
+        <td class="font-weight-bold"> Username </td>
+        <td> {{user.username}} </td>
+    </tr>
+    <tr id="profile-row-firstname">
+        <td class="font-weight-bold"> Firstname </td>
+        <td> {{user.firstname}} </td>
+    </tr>
+    <tr id="profile-row-lastname">
+        <td class="font-weight-bold"> Lastname </td>
+        <td> {{user.lastname}} </td>
+    </tr>
+    <tr id="profile-row-email">
+        <td class="font-weight-bold"> Email </td>
+        <td> <a href="mailto:{{user.email}}">{{user.email}}</a> </td>
+    </tr>
+
 </table>

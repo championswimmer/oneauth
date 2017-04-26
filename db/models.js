@@ -48,14 +48,28 @@ const UserGithub = db.define('usergithub', {
     tokenSecret: Sequelize.STRING
 });
 
+const UserLms = db.define('userlms', {
+    id: {type: Sequelize.BIGINT, primaryKey: true},
+    roll_number: Sequelize.BIGINT,
+    accessToken: Sequelize.STRING,
+    course_identifier: Sequelize.STRING
+});
+
 UserLocal.belongsTo(User);
-UserFacebook.belongsTo(User);
-UserTwitter.belongsTo(User);
-UserGithub.belongsTo(User);
 User.hasOne(UserLocal);
+
+UserFacebook.belongsTo(User);
 User.hasOne(UserFacebook);
+
+UserTwitter.belongsTo(User);
 User.hasOne(UserTwitter);
+
+UserGithub.belongsTo(User);
 User.hasOne(UserGithub);
+
+UserLms.belongsTo(User);
+User.hasOne(UserLms);
+
 
 const Client = db.define('client', {
     id: {type: Sequelize.BIGINT, primaryKey: true},
@@ -73,9 +87,10 @@ const GrantCode = db.define('grantcode', {
 });
 
 GrantCode.belongsTo(User);
+User.hasMany(GrantCode);
+
 GrantCode.belongsTo(Client);
 Client.hasMany(GrantCode);
-User.hasMany(GrantCode);
 
 
 const AuthToken = db.define('authtoken', {
@@ -85,9 +100,10 @@ const AuthToken = db.define('authtoken', {
 });
 
 AuthToken.belongsTo(User);
+User.hasMany(AuthToken);
+
 AuthToken.belongsTo(Client);
 Client.hasMany(AuthToken);
-User.hasMany(AuthToken);
 
 
 
@@ -96,5 +112,6 @@ db.sync({}).then(() => {console.log('Database configured')});
 
 
 module.exports = {
-    models: {User, UserLocal, UserFacebook, UserTwitter, UserGithub, Client, GrantCode, AuthToken}
+    models: {User, UserLocal, UserFacebook, UserTwitter, UserGithub, UserLms,
+        Client, GrantCode, AuthToken}
 };

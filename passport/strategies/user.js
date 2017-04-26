@@ -141,7 +141,6 @@ const githubStrategy = new GithubStrategy({
             }
         }).spread(function(userGithub, created) {
             //TODO: Check created == true for first time
-            console.log(userGithub);
             if (!userGithub) {
                 return cb(null, false);
             }
@@ -155,7 +154,32 @@ const lmsStrategy = new LmsStrategy({
     applicationId: secrets.LMS_APPLICATION_ID,
     deviceId: secrets.LMS_DEVICE_ID
 }, function (accessToken, profile, cb) {
-    console.log(profile);
+    let profileJson = JSON.parse(profile);
+
+    models.UserLms.findCreateFind({
+        include: [models.User],
+        where: {id: profileJson.id},
+        defaults: {
+            id: profileJson.id,
+            roll_number: profileJson.roll_number,
+            accessToken: accessToken,
+            course_identifier: profileJson.course_identifier,
+            user: {
+                username: profileJson.roll_number,
+                firstname: profileJson.name.split(' ')[0],
+                lastname: profileJson.name.split(' ').pop(),
+                email: profileJson.email,
+                photo: profileJson.photo.url
+            }
+        }
+    }).spread(function(userLms, created) {
+        //TODO: Check created == true for first time
+        if (!userLms) {
+            return cb(null, false);
+        }
+
+        return cb(null, userLms.user.get())
+    })
 });
 
 module.exports = {localStrategy, fbStrategy, twitterStrategy, githubStrategy, lmsStrategy};

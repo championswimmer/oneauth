@@ -11,11 +11,14 @@ const secrets = require('../../secrets.json');
 const config = require('../../config.json');
 const passutils = require('../../utils/password');
 
+const LmsStrategy = require('./custom/passport-lms').Strategy;
+
 /**
  * This is to authenticate _users_ using a username and password
  * via a simple post request
  */
 const localStrategy = new LocalStrategy(function (username, password, cb) {
+
     models.UserLocal.findOne({
         include: [{model: models.User, where: {username: username}}],
     }).then(function(userLocal) {
@@ -33,7 +36,7 @@ const localStrategy = new LocalStrategy(function (username, password, cb) {
             })
             .catch(function (err) {
                 console.trace(err.message);
-                return cb(null, false, {message: err})
+                return cb(err, false, {message: err})
             });
 
     });
@@ -76,12 +79,14 @@ const fbStrategy = new FacebookStrategy({
 
 });
 
+/**
+ * Authenticate _users_ using their Twitter accounts
+ */
 const twitterStrategy = new TwitterStrategy({
-        consumerKey: secrets.TWITTER_CONSUMER_KEY,
-        consumerSecret: secrets.TWITTER_CONSUMER_SECRET,
-        callbackURL: config.SERVER_URL + config.TWITTER_CALLBACK
-},
-    function(token, tokenSecret, profile, cb) {
+    consumerKey: secrets.TWITTER_CONSUMER_KEY,
+    consumerSecret: secrets.TWITTER_CONSUMER_SECRET,
+    callbackURL: config.SERVER_URL + config.TWITTER_CALLBACK
+}, function(token, tokenSecret, profile, cb) {
         let profileJson = profile._json;
 
         models.UserTwitter.findCreateFind({
@@ -107,14 +112,16 @@ const twitterStrategy = new TwitterStrategy({
 
             return cb(null, userTwitter.user.get())
         })
-});
+    });
 
+/**
+ * Authenticate _users_ using their Github Accounts
+ */
 const githubStrategy = new GithubStrategy({
-        clientID: secrets.GITHUB_CONSUMER_KEY,
-        clientSecret: secrets.GITHUB_CONSUMER_SECRET,
-        callbackURL: config.SERVER_URL + config.GITHUB_CALLBACK
-    },
-    function(token, tokenSecret, profile, cb) {
+    clientID: secrets.GITHUB_CONSUMER_KEY,
+    clientSecret: secrets.GITHUB_CONSUMER_SECRET,
+    callbackURL: config.SERVER_URL + config.GITHUB_CALLBACK
+}, function(token, tokenSecret, profile, cb) {
         let profileJson = profile._json;
 
         models.UserGithub.findCreateFind({
@@ -143,4 +150,12 @@ const githubStrategy = new GithubStrategy({
         })
     });
 
-module.exports = {localStrategy, fbStrategy, twitterStrategy, githubStrategy};
+const lmsStrategy = new LmsStrategy({
+    instituteId: secrets.LMS_INSTITUTE_ID,
+    applicationId: secrets.LMS_APPLICATION_ID,
+    deviceId: secrets.LMS_DEVICE_ID
+}, function (accessToken, profile, cb) {
+    console.log(profile);
+});
+
+module.exports = {localStrategy, fbStrategy, twitterStrategy, githubStrategy, lmsStrategy};

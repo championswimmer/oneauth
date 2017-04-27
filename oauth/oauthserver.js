@@ -84,7 +84,7 @@ server.exchange( oauth.exchange.code (
                 return done(null, false); // Wrong redirect URI
             }
 
-            models.findCreateFind({
+            models.AuthToken.findCreateFind({
                 where: {
                     clientId: grantCode.clientId,
                     userId: grantCode.userId,

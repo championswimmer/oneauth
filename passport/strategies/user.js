@@ -169,7 +169,7 @@ const lmsStrategy = new LmsStrategy({
                 firstname: profileJson.name.split(' ')[0],
                 lastname: profileJson.name.split(' ').pop(),
                 email: profileJson.email,
-                photo: profileJson.photo.url
+                photo: profileJson.photo ? profileJson.photo.url : ""
             }
         }
     }).spread(function(userLms, created) {

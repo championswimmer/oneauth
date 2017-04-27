@@ -73,7 +73,7 @@ Strategy.prototype.authenticate = function(req, options) {
         form: {
             "application_id": self._applicationId,
             "device_id": self._deviceId,
-            "password": password,
+            "password": btoa(password),
             "roll_number": roll_number
         }
     }, function (err, resp, body) {

@@ -4,6 +4,8 @@
 
 ### 0.1
 
+#### 0.0.7
+
 #### 0.0.6
  - enable twitter login
  - enable github login

@@ -1,21 +1,21 @@
 # Explicit Authentication
 Use this when your website has a frontend and a backend
 
-## Register a client
-### 1. Create User on account.codingblocks.com
+## 1. Register a client
+### 1.1. Create User on account.codingblocks.com
 Create user, and login
 
 https://account.codingblocks.com/login
 
-### 2. Create a client
+### 1.2. Create a client
 
 https://account.codingblocks.com/clients/add
 
 Save the client id and client secret. You'll need them.
 
-## Redirect user to get a grant code
+## 2. Redirect user to get a grant code
 
-### 1. Send to oneauth for grant code
+### 2.1. Send to oneauth for grant code
 
 ```
 GET
@@ -32,7 +32,7 @@ to the following place -
 http://hackerblocks.com/callback?code=HaFn5uq9j8IkFr2LaRanXCCypla03raF
 ```
 
-### From backend exchange grant code for auth token
+### 2.2 From backend exchange grant code for auth token
 
 ```
 POST
@@ -54,11 +54,11 @@ The auth token will be in response body like this -
 }
 ```
 
-### Get user details -
+## 3. Get user details -
 You can get details of the user using the bearer token you got -
 
 ```GET
-https://account.codingblocks.com/api/v1/user/me
+https://account.codingblocks.com/api/users/me
 
 HEADERS:
     Authorization: Bearer hm2AuJgHPVWXDDpaj1iB2mznBUXjtOC2WSfno1u2hBx75eK8eQOjdu77WD3biyIU

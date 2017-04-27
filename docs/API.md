@@ -28,6 +28,7 @@ any registered user.
 | Authorization | (required), eg `Bearer jb1jv3jh4v1jkh41h1b` |
 
 
+-----
 
 ## `/api/clients`
 

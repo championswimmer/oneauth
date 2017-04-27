@@ -1,0 +1,1 @@
+ALTER TABLE public.userlms ALTER COLUMN roll_number TYPE VARCHAR(255);

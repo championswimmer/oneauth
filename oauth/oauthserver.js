@@ -24,7 +24,7 @@ server.deserializeClient(function (clientId, done) {
 });
 
 /**
- * Generates a _refresh token_ or a _grant code_
+ * Generates a  _grant code_
  * that has to be exchanged for an access token later
  */
 server.grant( oauth.grant.code (
@@ -40,7 +40,9 @@ server.grant( oauth.grant.code (
         })
     }
 ) );
-
+/**
+ * Generate refresh token
+ */
 server.grant( oauth.grant.token (
     function (client, user, ares, done) {
 
@@ -59,6 +61,9 @@ server.grant( oauth.grant.token (
     }
 ) );
 
+/**
+ * Exchange **grant code** to get access token
+ */
 server.exchange( oauth.exchange.code (
     function (client, code, redirectURI, done) {
         models.GrantCode.findOne({
@@ -78,17 +83,26 @@ server.exchange( oauth.exchange.code (
             if (!callbackMatch) {
                 return done(null, false); // Wrong redirect URI
             }
-            models.AuthToken.create({
-                token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
-                scope: ['*'],
-                explicit: true,
-                clientId: grantCode.clientId,
-                userId: grantCode.userId
-            }).then(function (authToken) {
-                    return done(null, authToken.token)
-            }).catch(function (err) {
+
+            models.findCreateFind({
+                where: {
+                    clientId: grantCode.clientId,
+                    userId: grantCode.userId,
+                    explicit: true
+                },
+                defaults: {
+                    token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
+                    scope: ['*'],
+                    explicit: true,
+                    clientId: grantCode.clientId,
+                    userId: grantCode.userId
+                }
+            }).spread(function(authToken, created) {
+                return done(null, authToken.token)
+            }).catch(function(err) {
                 return done(err)
             });
+
             //Make sure to delete the grant code
             //so it cannot be reused
             grantCode.destroy();

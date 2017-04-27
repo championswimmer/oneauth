@@ -50,7 +50,7 @@ const UserGithub = db.define('usergithub', {
 
 const UserLms = db.define('userlms', {
     id: {type: Sequelize.BIGINT, primaryKey: true},
-    roll_number: Sequelize.BIGINT,
+    roll_number: Sequelize.STRING,
     accessToken: Sequelize.STRING,
     course_identifier: Sequelize.STRING
 });

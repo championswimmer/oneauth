@@ -14,9 +14,7 @@ Return details of the user whose auth token is present in the header
 | ------------- |:-------------:|:----|
 | include | (optional), eg. `?include=facebook,github` | Gets user's social account related details (if available). Comma separated values. Valid are - `facebook`, `twitter`, `lms`, `github` |
 
-
-
-
+-----
 
 ### GET `/api/users/:id`
 
@@ -28,7 +26,8 @@ any registered user.
 | Authorization | (required), eg `Bearer jb1jv3jh4v1jkh41h1b` |
 
 
------
+------
+------
 
 ## `/api/clients`
 

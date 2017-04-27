@@ -65,17 +65,23 @@ Strategy.prototype.authenticate = function(req, options) {
         if (!user) { return self.fail(info); }
         self.success(user, info);
     }
+    let loginForm = {
+        "application_id": self._applicationId,
+        "device_id": self._deviceId,
+        "password": new Buffer(password).toString('base64'),
+    };
+
+    if (roll_number.indexOf('@') === -1) {
+        loginForm["roll_number"] = roll_number
+    } else {
+        loginForm["email"] = roll_number
+    }
 
     request.post(LOGIN_PATH, {
         headers: {
             "institute-id": self._instituteId
         },
-        form: {
-            "application_id": self._applicationId,
-            "device_id": self._deviceId,
-            "password": btoa(password),
-            "roll_number": roll_number
-        }
+        form: loginForm
     }, function (err, resp, body) {
         if (err || resp.statusCode != 200) {
             return self.fail(err, 500)

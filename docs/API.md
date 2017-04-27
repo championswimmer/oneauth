@@ -7,9 +7,11 @@ Headers -
 
 | Authorization | (required), eg `Bearer jb1jv3jh4v1jkh41h1b` |
 
+
 Query Parameters -
 
 | include | (optional), eg. `?include=facebook,github` | Gets user's social account related details (if available) |
+
 
 
 ### GET `/api/users/:id`

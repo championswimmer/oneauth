@@ -12,7 +12,7 @@ Return details of the user whose auth token is present in the header
 
 | Query Parameter | Value | Description |
 | ------------- |:-------------:|:----|
-| include | (optional), eg. `?include=facebook,github` | Gets user's social account related details (if available) |
+| include | (optional), eg. `?include=facebook,github` | Gets user's social account related details (if available). Comma separated values. Valid are - `facebook`, `twitter`, `lms`, `github` |
 
 
 

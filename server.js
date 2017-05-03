@@ -9,7 +9,7 @@ const express = require('express')
     , exphbs = require('express-hbs');
 
 const secrets = require('./secrets.json')
-    , config = require('./config.json')
+    , config = require('./config')
     , loginrouter = require('./routers/loginrouter')
     , logoutrouter = require('./routers/logoutrouter')
     , signuprouter = require('./routers/signup')

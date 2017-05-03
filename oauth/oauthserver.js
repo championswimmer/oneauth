@@ -7,7 +7,7 @@ const oauth = require('oauth2orize')
 const models = require('../db/models').models
     , generator = require('../utils/generator')
     , passport = require('../passport/passporthandler')
-    , config = require('../config.json');
+    , config = require('../config');
 
 const server = oauth.createServer();
 

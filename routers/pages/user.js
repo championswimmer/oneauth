@@ -4,10 +4,30 @@
 const cel = require('connect-ensure-login');
 const router = require('express').Router();
 
+const models = require('../../db/models').models;
+
 router.get('/me',
     cel.ensureLoggedIn('/login'),
     function (req, res, next) {
-    res.render('user/me', {user: req.user})
+
+        models.User.findOne({
+            where: {id: req.user.id},
+            include: [
+                models.UserGithub,
+                models.UserFacebook,
+                models.UserLms,
+                models.UserTwitter
+            ]
+        }).then(function (user) {
+            if (!user) {
+                throw err;
+            }
+            console.log(user);
+            return res.render('user/me', {user: user})
+        }).catch(function(err) {
+            res.redirect('/login')
+        });
+
 });
 
 module.exports = router;

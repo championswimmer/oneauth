@@ -30,3 +30,27 @@
     </tr>
 
 </table>
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+        {{#unless user.userfacebook}}
+            <a class="btn btn-block text-white btn-social btn-facebook" href="/login/facebook">
+                <span class="fa fa-facebook"></span> Connect Facebook
+            </a>
+        {{/unless}}
+
+        {{#unless user.usertwitter}}
+            <a class="btn btn-block text-white btn-social btn-twitter" href="/login/twitter">
+                <span class="fa fa-twitter"></span> Connect Twitter
+            </a>
+        {{/unless}}
+
+        {{#unless user.usergithub}}
+            <a class="btn btn-block text-white btn-social btn-github" href="/login/github">
+                <span class="fa fa-github"></span> Connect Github
+            </a>
+        {{/unless}}
+    </div>
+    <div class="col"></div>
+</div>

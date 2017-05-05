@@ -51,8 +51,9 @@ const fbStrategy = new FacebookStrategy({
     clientID: secrets.FB_CLIENT_ID,
     clientSecret: secrets.FB_CLIENT_SECRET,
     callbackURL: config.SERVER_URL + config.FACEBOOK_CALLBACK,
-    profileFields: ['id', 'name', 'picture', 'email']
-}, function (authToken, refreshToken, profile, cb) {
+    profileFields: ['id', 'name', 'picture', 'email'],
+    passReqToCallBack: true
+}, function (req, authToken, refreshToken, profile, cb) {
     let profileJson = profile._json;
     console.log(profileJson);
 
@@ -87,8 +88,9 @@ const fbStrategy = new FacebookStrategy({
 const twitterStrategy = new TwitterStrategy({
     consumerKey: secrets.TWITTER_CONSUMER_KEY,
     consumerSecret: secrets.TWITTER_CONSUMER_SECRET,
-    callbackURL: config.SERVER_URL + config.TWITTER_CALLBACK
-}, function(token, tokenSecret, profile, cb) {
+    callbackURL: config.SERVER_URL + config.TWITTER_CALLBACK,
+    passReqToCallBack: true
+}, function(req, token, tokenSecret, profile, cb) {
         let profileJson = profile._json;
 
         models.UserTwitter.findCreateFind({
@@ -122,8 +124,9 @@ const twitterStrategy = new TwitterStrategy({
 const githubStrategy = new GithubStrategy({
     clientID: secrets.GITHUB_CONSUMER_KEY,
     clientSecret: secrets.GITHUB_CONSUMER_SECRET,
-    callbackURL: config.SERVER_URL + config.GITHUB_CALLBACK
-}, function(token, tokenSecret, profile, cb) {
+    callbackURL: config.SERVER_URL + config.GITHUB_CALLBACK,
+    passReqToCallBack: true
+}, function(req, token, tokenSecret, profile, cb) {
         let profileJson = profile._json;
 
         models.UserGithub.findCreateFind({

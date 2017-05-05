@@ -54,6 +54,7 @@ const fbStrategy = new FacebookStrategy({
     profileFields: ['id', 'name', 'picture', 'email']
 }, function (authToken, refreshToken, profile, cb) {
     let profileJson = profile._json;
+    console.log(profileJson);
 
     models.UserFacebook.findCreateFind({
         include: [models.User],
@@ -62,11 +63,12 @@ const fbStrategy = new FacebookStrategy({
             id: profileJson.id,
             accessToken: authToken,
             refreshToken: refreshToken,
+            photo: profileJson.picture.data.url,
             user: {
                 firstname: profileJson.first_name,
                 lastname: profileJson.last_name,
                 email: profileJson.email,
-                photo: profileJson.picture.data.url
+                photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large"
             }
         }
     }).spread(function(userFacebook, created) {

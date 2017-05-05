@@ -33,6 +33,7 @@ const UserFacebook = db.define('userfacebook', {
     id: {type: Sequelize.BIGINT, primaryKey: true},
     accessToken: Sequelize.STRING,
     refreshToken: Sequelize.STRING,
+    photo: Sequelize.STRING
 
 });
 

@@ -99,7 +99,7 @@ const twitterStrategy = new TwitterStrategy({
             defaults: {
                 id: profileJson.id,
                 token: token,
-                tokenSecret: tokenSecret,
+                tokenSecret: tokenSecret.user_id,
                 user: {
                     username: profileJson.screen_name,
                     firstname: profileJson.name.split(' ')[0],

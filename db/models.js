@@ -3,6 +3,8 @@
  */
 const Sequelize = require('sequelize');
 const secrets = require('../secrets.json');
+const config = require('../config');
+
 
 const db = new Sequelize(
     secrets.DB.NAME, secrets.DB.USER, secrets.DB.PASSWORD,  {
@@ -13,7 +15,7 @@ const db = new Sequelize(
             min: 0,
             idle: 10000
         },
-        logging: false
+        logging: config.DEBUG ? console.log : false
     });
 
 

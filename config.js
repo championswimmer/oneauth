@@ -6,11 +6,13 @@ config = {
     "GITHUB_CALLBACK": "/login/github/callback",
     "GRANT_TOKEN_SIZE": 32,
     "AUTH_TOKEN_SIZE": 64,
-    "BCRYPT_SALT_ROUNDS": 8
+    "BCRYPT_SALT_ROUNDS": 8,
+    "DEBUG": true
 };
 
 if (process.env.ONEAUTH_DEV) {
     config.SERVER_URL =  "https://localhost:3838"
+    config.DEBUG = true
 } else {
     config.SERVER_URL =  "https://account.codingblocks.com"
 }

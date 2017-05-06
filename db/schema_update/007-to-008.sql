@@ -1,0 +1,1 @@
+ALTER TABLE public.usertwitters ADD COLUMN username VARCHAR(255);

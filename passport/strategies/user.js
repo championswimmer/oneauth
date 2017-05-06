@@ -92,6 +92,9 @@ const twitterStrategy = new TwitterStrategy({
     passReqToCallBack: true
 }, function(req, token, tokenSecret, profile, cb) {
         let profileJson = profile._json;
+        if (typeof tokenSecret == 'object') {
+            tokenSecret = tokenSecret.user_id || "";
+        }
 
         models.UserTwitter.findCreateFind({
             include: [models.User],
@@ -99,7 +102,8 @@ const twitterStrategy = new TwitterStrategy({
             defaults: {
                 id: profileJson.id,
                 token: token,
-                tokenSecret: tokenSecret.user_id,
+                tokenSecret: tokenSecret,
+                username: profileJson.screen_name,
                 user: {
                     username: profileJson.screen_name,
                     firstname: profileJson.name.split(' ')[0],
@@ -129,13 +133,20 @@ const githubStrategy = new GithubStrategy({
 }, function(req, token, tokenSecret, profile, cb) {
         let profileJson = profile._json;
 
+        if (config.DEBUG) {
+            console.log("req, token, tokenSecret, profile = = = = = ");
+            console.log(token);
+            console.log(tokenSecret);
+            console.log(profileJson);
+        }
+
         models.UserGithub.findCreateFind({
             include: [models.User],
             where: {id: profileJson.id},
             defaults: {
                 id: profileJson.id,
-                token: token,
-                tokenSecret: tokenSecret,
+                token: token || tokenSecret.access_token,
+                tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
                 user: {
                     username: profileJson.login,
                     firstname: profileJson.name.split(' ')[0],
@@ -149,7 +160,6 @@ const githubStrategy = new GithubStrategy({
             if (!userGithub) {
                 return cb(null, false);
             }
-
             return cb(null, userGithub.user.get())
         })
     });

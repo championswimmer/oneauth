@@ -43,7 +43,8 @@ const UserFacebook = db.define('userfacebook', {
 const UserTwitter = db.define('usertwitter', {
     id: {type: Sequelize.BIGINT, primaryKey: true},
     token: Sequelize.STRING,
-    tokenSecret: {type: Sequelize.STRING, allowNull: true}
+    tokenSecret: {type: Sequelize.STRING, allowNull: true},
+    username: {type: Sequelize.STRING, allowNull: true}
 });
 
 const UserGithub = db.define('usergithub', {

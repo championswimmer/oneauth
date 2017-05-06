@@ -10,10 +10,11 @@ const express = require('express')
 
 const secrets = require('./secrets.json')
     , config = require('./config')
-    , loginrouter = require('./routers/loginrouter')
+    , loginrouter = require('./routers/login')
+    , connectrouter = require('./routers/connect')
     , logoutrouter = require('./routers/logoutrouter')
     , signuprouter = require('./routers/signup')
-    , apirouter = require('./routers/apirouter')
+    , apirouter = require('./routers/api')
     , oauthrouter = require('./routers/oauthrouter')
     , pagerouter = require('./routers/pagerouter');
 
@@ -47,6 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(redirectToHome);
 app.use('/login', loginrouter);
+app.use('/connect', connectrouter);
 app.use('/logout', logoutrouter);
 app.use('/signup', signuprouter);
 app.use('/api', apirouter);

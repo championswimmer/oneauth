@@ -7,7 +7,7 @@ config = {
     "GRANT_TOKEN_SIZE": 32,
     "AUTH_TOKEN_SIZE": 64,
     "BCRYPT_SALT_ROUNDS": 8,
-    "DEBUG": true
+    "DEBUG": false
 };
 
 if (process.env.ONEAUTH_DEV) {

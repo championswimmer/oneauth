@@ -113,7 +113,7 @@ Client.hasMany(AuthToken);
 
 
 
-db.sync({force:true}).then(() => {console.log('Database configured')});
+db.sync({}).then(() => {console.log('Database configured')});
 
 
 

@@ -5,6 +5,8 @@
 ### 0.1
 
 #### 0.0.8
+ - same user on multiple social account bug fixed
+ - modularized the passport handlers
 
 #### 0.0.7
  - fix LMS base64

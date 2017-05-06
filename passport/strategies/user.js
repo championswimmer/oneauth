@@ -62,9 +62,9 @@ const fbStrategy = new FacebookStrategy({
         where: {id: profileJson.id},
         defaults: {
             id: profileJson.id,
-            accessToken: authToken,
-            refreshToken: refreshToken,
-            photo: profileJson.picture.data.url,
+            accessToken: authToken || refreshToken.access_token,
+            refreshToken: typeof refreshToken == 'string' ? refreshToken : "",
+            photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large",
             user: {
                 firstname: profileJson.first_name,
                 lastname: profileJson.last_name,
@@ -92,9 +92,6 @@ const twitterStrategy = new TwitterStrategy({
     passReqToCallBack: true
 }, function(req, token, tokenSecret, profile, cb) {
         let profileJson = profile._json;
-        if (typeof tokenSecret == 'object') {
-            tokenSecret = tokenSecret.user_id || "";
-        }
 
         models.UserTwitter.findCreateFind({
             include: [models.User],
@@ -102,7 +99,7 @@ const twitterStrategy = new TwitterStrategy({
             defaults: {
                 id: profileJson.id,
                 token: token,
-                tokenSecret: tokenSecret,
+                tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
                 username: profileJson.screen_name,
                 user: {
                     username: profileJson.screen_name,
@@ -133,13 +130,6 @@ const githubStrategy = new GithubStrategy({
 }, function(req, token, tokenSecret, profile, cb) {
         let profileJson = profile._json;
 
-        if (config.DEBUG) {
-            console.log("req, token, tokenSecret, profile = = = = = ");
-            console.log(token);
-            console.log(tokenSecret);
-            console.log(profileJson);
-        }
-
         models.UserGithub.findCreateFind({
             include: [models.User],
             where: {id: profileJson.id},
@@ -147,6 +137,7 @@ const githubStrategy = new GithubStrategy({
                 id: profileJson.id,
                 token: token || tokenSecret.access_token,
                 tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
+                username: profileJson.login,
                 user: {
                     username: profileJson.login,
                     firstname: profileJson.name.split(' ')[0],

@@ -50,7 +50,8 @@ const UserTwitter = db.define('usertwitter', {
 const UserGithub = db.define('usergithub', {
     id: {type: Sequelize.BIGINT, primaryKey: true},
     token: Sequelize.STRING,
-    tokenSecret: {type: Sequelize.STRING, allowNull: true}
+    tokenSecret: {type: Sequelize.STRING, allowNull: true},
+    username: {type: Sequelize.STRING, allowNull: true}
 });
 
 const UserLms = db.define('userlms', {
@@ -112,7 +113,7 @@ Client.hasMany(AuthToken);
 
 
 
-db.sync({}).then(() => {console.log('Database configured')});
+db.sync({force:true}).then(() => {console.log('Database configured')});
 
 
 

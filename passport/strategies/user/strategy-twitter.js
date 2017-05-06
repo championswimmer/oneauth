@@ -21,23 +21,26 @@ module.exports = new TwitterStrategy({
 }, function(req, token, tokenSecret, profile, cb) {
     let profileJson = profile._json;
 
-    models.UserTwitter.findCreateFind({
-        include: [models.User],
-        where: {id: profileJson.id},
-        defaults: {
-            id: profileJson.id,
-            token: token,
-            tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
-            username: profileJson.screen_name,
-            user: {
-                username: profileJson.screen_name,
-                firstname: profileJson.name.split(' ')[0],
-                lastname: profileJson.name.split(' ').pop(),
-                email: profileJson.email,
-                photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
-            }
-        }
-    }).spread(function(userTwitter, created) {
+    models.User.count({where: {username: profileJson.screen_name}})
+        .then(function (existCount) {
+            return models.UserTwitter.findCreateFind({
+                include: [models.User],
+                where: {id: profileJson.id},
+                defaults: {
+                    id: profileJson.id,
+                    token: token,
+                    tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
+                    username: profileJson.screen_name,
+                    user: {
+                        username: existCount == 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
+                        firstname: profileJson.name.split(' ')[0],
+                        lastname: profileJson.name.split(' ').pop(),
+                        email: profileJson.email,
+                        photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
+                    }
+                }
+            })
+        }).spread(function(userTwitter, created) {
         //TODO: Check created == true for first time
         if (!userTwitter) {
             return cb(null, false);
@@ -45,4 +48,6 @@ module.exports = new TwitterStrategy({
 
         return cb(null, userTwitter.user.get())
     })
+
+
 });

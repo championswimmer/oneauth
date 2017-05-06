@@ -21,23 +21,26 @@ module.exports = new GithubStrategy({
 }, function(req, token, tokenSecret, profile, cb) {
     let profileJson = profile._json;
 
-    models.UserGithub.findCreateFind({
-        include: [models.User],
-        where: {id: profileJson.id},
-        defaults: {
-            id: profileJson.id,
-            token: token || tokenSecret.access_token,
-            tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
-            username: profileJson.login,
-            user: {
-                username: profileJson.login,
-                firstname: profileJson.name.split(' ')[0],
-                lastname: profileJson.name.split(' ').pop(),
-                email: profileJson.email,
-                photo: profileJson.avatar_url
-            }
-        }
-    }).spread(function(userGithub, created) {
+    models.User.count({ where: {username: profileJson.login}})
+        .then(function(existCount){
+            return models.UserGithub.findCreateFind({
+                include: [models.User],
+                where: {id: profileJson.id},
+                defaults: {
+                    id: profileJson.id,
+                    token: token || tokenSecret.access_token,
+                    tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
+                    username: profileJson.login,
+                    user: {
+                        username: existCount == 0 ? profileJson.login : profileJson.login + "-gh",
+                        firstname: profileJson.name.split(' ')[0],
+                        lastname: profileJson.name.split(' ').pop(),
+                        email: profileJson.email,
+                        photo: profileJson.avatar_url
+                    }
+                }
+            })
+        }).spread(function(userGithub, created) {
         //TODO: Check created == true for first time
         if (!userGithub) {
             return cb(null, false);

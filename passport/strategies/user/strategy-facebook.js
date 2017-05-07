@@ -20,7 +20,7 @@ module.exports = new FacebookStrategy({
     clientSecret: secrets.FB_CLIENT_SECRET,
     callbackURL: config.SERVER_URL + config.FACEBOOK_CALLBACK,
     profileFields: ['id', 'name', 'picture', 'email'],
-    passReqToCallBack: true,
+    passReqToCallback: true,
 }, function (req, authToken, refreshToken, profile, cb) {
     let profileJson = profile._json;
     let oldUser = req.user;
@@ -35,8 +35,8 @@ module.exports = new FacebookStrategy({
         where: {id: profileJson.id},
         defaults: {
             id: profileJson.id,
-            accessToken: authToken || refreshToken.access_token,
-            refreshToken: typeof refreshToken == 'string' ? refreshToken : "",
+            accessToken: authToken,
+            refreshToken: refreshToken,
             photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large",
             user: {
                 firstname: profileJson.first_name,

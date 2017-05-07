@@ -17,46 +17,44 @@ module.exports = new TwitterStrategy({
     consumerKey: secrets.TWITTER_CONSUMER_KEY,
     consumerSecret: secrets.TWITTER_CONSUMER_SECRET,
     callbackURL: config.SERVER_URL + config.TWITTER_CALLBACK,
-    passReqToCallBack: true
+    passReqToCallback: true
 }, function(req, token, tokenSecret, profile, cb) {
 
-    process.nextTick(function () {
-        let profileJson = profile._json;
-        let oldUser = req.user;
+    let profileJson = profile._json;
+    let oldUser = req.user;
 
-        if (oldUser) {
-            console.log('User exists, is connecting account = = = = = = = ');
-            console.log(oldUser);
+    if (oldUser) {
+        console.log('User exists, is connecting account = = = = = = = ');
+        console.log(oldUser);
+    }
+
+
+    models.User.count({where: {username: profileJson.screen_name}})
+        .then(function (existCount) {
+            return models.UserTwitter.findCreateFind({
+                include: [models.User],
+                where: {id: profileJson.id},
+                defaults: {
+                    id: profileJson.id,
+                    token: token,
+                    tokenSecret: tokenSecret,
+                    username: profileJson.screen_name,
+                    user: {
+                        username: existCount == 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
+                        firstname: profileJson.name.split(' ')[0],
+                        lastname: profileJson.name.split(' ').pop(),
+                        email: profileJson.email,
+                        photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
+                    }
+                }
+            })
+        }).spread(function(userTwitter, created) {
+        //TODO: Check created == true for first time
+        if (!userTwitter) {
+            return cb(null, false);
         }
 
-
-        models.User.count({where: {username: profileJson.screen_name}})
-            .then(function (existCount) {
-                return models.UserTwitter.findCreateFind({
-                    include: [models.User],
-                    where: {id: profileJson.id},
-                    defaults: {
-                        id: profileJson.id,
-                        token: token,
-                        tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
-                        username: profileJson.screen_name,
-                        user: {
-                            username: existCount == 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
-                            firstname: profileJson.name.split(' ')[0],
-                            lastname: profileJson.name.split(' ').pop(),
-                            email: profileJson.email,
-                            photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
-                        }
-                    }
-                })
-            }).spread(function(userTwitter, created) {
-            //TODO: Check created == true for first time
-            if (!userTwitter) {
-                return cb(null, false);
-            }
-
-            return cb(null, userTwitter.user.get())
-        })
+        return cb(null, userTwitter.user.get())
     })
 
 

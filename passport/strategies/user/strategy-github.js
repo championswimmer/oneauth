@@ -28,8 +28,8 @@ module.exports = new GithubStrategy({
                 where: {id: profileJson.id},
                 defaults: {
                     id: profileJson.id,
-                    token: token || tokenSecret.access_token,
-                    tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
+                    token: token,
+                    tokenSecret: tokenSecret,
                     username: profileJson.login,
                     user: {
                         username: existCount == 0 ? profileJson.login : profileJson.login + "-gh",

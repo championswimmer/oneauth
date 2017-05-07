@@ -45,14 +45,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
     secret: secrets.EXPRESS_SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
-    secure: true,
-    name: 'oneauth',
-    cookie: {
-        path: '/*',
-        secure: true,
-    }
+    name: 'oneauth'
 }));
 app.use(passport.initialize());
 app.use(passport.session());

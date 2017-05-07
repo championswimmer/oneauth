@@ -17,15 +17,17 @@ function authnOrAuthzFacebook(req, res, next) {
     } else {
         if(config.DEBUG) console.log("Authz Facebook = = = = = = ");
         passport.authorize('facebook', {
-            scope: config.FACEBOOK_LOGIN_SCOPES,
-            failureRedirect: '/login',
-            successReturnToOrRedirect: '/users/me',
+            //Add failure flash
+            failureRedirect: '/users/me'
         })(req, res, next);
     }
 }
 
 router.get('/', passport.authenticate('facebook', {scope: ['email']}));
 
-router.get('/callback', authnOrAuthzFacebook);
+router.get('/callback', authnOrAuthzFacebook, function (req, res, next) {
+    //Add flash for success
+    res.redirect('/users/me')
+});
 
 module.exports = router;

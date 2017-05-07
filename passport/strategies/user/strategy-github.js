@@ -17,7 +17,7 @@ module.exports = new GithubStrategy({
     clientID: secrets.GITHUB_CONSUMER_KEY,
     clientSecret: secrets.GITHUB_CONSUMER_SECRET,
     callbackURL: config.SERVER_URL + config.GITHUB_CALLBACK,
-    passReqToCallBack: true
+    passReqToCallback: true
 }, function(req, token, tokenSecret, profile, cb) {
     let profileJson = profile._json;
 

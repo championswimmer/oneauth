@@ -4,6 +4,8 @@
 
 ### 0.1
 
+#### 0.0.9
+
 #### 0.0.8
  - same user on multiple social account bug fixed
  - modularized the passport handlers

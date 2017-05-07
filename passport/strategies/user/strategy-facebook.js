@@ -20,10 +20,15 @@ module.exports = new FacebookStrategy({
     clientSecret: secrets.FB_CLIENT_SECRET,
     callbackURL: config.SERVER_URL + config.FACEBOOK_CALLBACK,
     profileFields: ['id', 'name', 'picture', 'email'],
-    passReqToCallBack: true
+    passReqToCallBack: true,
 }, function (req, authToken, refreshToken, profile, cb) {
     let profileJson = profile._json;
-    console.log(profileJson);
+    let oldUser = req.user;
+
+    if (oldUser) {
+        console.log('User exists, is connecting account');
+        console.log(oldUser);
+    }
 
     models.UserFacebook.findCreateFind({
         include: [models.User],

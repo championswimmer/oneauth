@@ -37,11 +37,15 @@ http://hackerblocks.com/callback?code=HaFn5uq9j8IkFr2LaRanXCCypla03raF
 ```
 POST
 https://account.codingblocks.com/oauth/token
-        client_id=9990781661
-    &   redirect_uri=http://hackerblocks.com/callback
-    &   client_secret=ZyTe3zCR67REHND7CHa9zH39NllvLWYULCedocZDLaCkSVTA7GGE1s1Hjrgkos09
-    &   grant_type=authorization_code
-    &   code=MyiLDqJwTpzEXqYOG1jNFCtjEzYHAR4U
+
+   {
+        "client_id" : 9990781661,
+        "redirect_uri" : "http://hackerblocks.com/callback",
+        "client_secret" : "ZyTe3zCR67REHND7CHa9zH39NllvLWYULCedocZDLaCkSVTA7GGE1s1Hjrgkos09",
+        "grant_type" : "authorization_code",
+        "code"  : "MyiLDqJwTpzEXqYOG1jNFCtjEzYHAR4U"
+
+   }
 ```
 NOTE that re-sending the redirect-uri is important (only for verification purpose).
 

@@ -41,7 +41,6 @@ router.post('/add', function (req, res) {
 });
 
 router.put('/edit/:id', function(req, res){
-    console.log("fjkasnkafan")
     if(!req.user){
         return res.send("Only logged in users can edit clients")
     }

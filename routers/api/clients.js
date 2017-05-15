@@ -40,5 +40,36 @@ router.post('/add', function (req, res) {
     })
 });
 
+router.put('/edit/:id', function(req, res){
+    console.log("fjkasnkafan")
+    if(!req.user){
+        return res.send("Only logged in users can edit clients")
+    }
+
+    let clientId  = req.params.clientid;
+    let clientName = req.body.clientname;
+    let clientDomains = req.body.domain.replace(/ /g, '').split(';');
+    let clientCallbacks = req.body.callback.replace(/ /g, '').split(';');
+
+        //Make sure all urls have http in them
+    clientDomains.forEach(function (url, i, arr) {
+        arr[i] = urlutils.prefixHttp(url)
+    });
+    clientCallbacks.forEach(function (url, i, arr) {
+        arr[i] = urlutils.prefixHttp(url)
+    });
+
+    models.Client.update({
+        name : clientName,
+        domain : clientDomains,
+        callbackURL : clientCallbacks
+    },{
+        where : { id : clientId}
+    }).then(function(client){
+        res.redirect('/clients/'+client.id)
+    });
+
+});
+
 
 module.exports = router;

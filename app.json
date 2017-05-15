@@ -4,5 +4,5 @@
   "repository": "https://github.com/coding-blocks/oneauth",
   "logo": "https://codingblocks.com/img/cb/cb_tshirt_logo.png",
   "keywords": ["node", "passport", "oauth"],
-  "addons" : ["cleardb:ignite"]
++ "addons": ["heroku-postgresql:hobby-dev"]
 } 

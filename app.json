@@ -3,5 +3,6 @@
   "description": "oneauth is an OAuth2 server, that you can consume. oneauth is also an OAuth2 consumer",
   "repository": "https://github.com/coding-blocks/oneauth",
   "logo": "https://codingblocks.com/img/cb/cb_tshirt_logo.png",
-  "keywords": ["node", "passport", "oauth"]
-}
+  "keywords": ["node", "passport", "oauth"],
+  "addons" : ["cleardb:ignite"]
+} 

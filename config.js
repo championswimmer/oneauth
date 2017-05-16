@@ -7,14 +7,14 @@ config = {
     "GRANT_TOKEN_SIZE": 32,
     "AUTH_TOKEN_SIZE": 64,
     "BCRYPT_SALT_ROUNDS": 8,
-    "DEBUG": false
+    "DEBUG": process.env.ONEAUTH_DEBUG
 };
 
 if (process.env.ONEAUTH_DEV) {
-    config.SERVER_URL =  "https://localhost:3838"
+    config.SERVER_URL =  "https://localhost:3838";
     config.DEBUG = true
 } else {
-    config.SERVER_URL =  "https://account.codingblocks.com"
+    config.SERVER_URL =  "https://account.codingblocks.com";
 }
 
 module.exports = config;

@@ -17,9 +17,17 @@ module.exports = new TwitterStrategy({
     consumerKey: secrets.TWITTER_CONSUMER_KEY,
     consumerSecret: secrets.TWITTER_CONSUMER_SECRET,
     callbackURL: config.SERVER_URL + config.TWITTER_CALLBACK,
-    passReqToCallBack: true
+    passReqToCallback: true
 }, function(req, token, tokenSecret, profile, cb) {
+
     let profileJson = profile._json;
+    let oldUser = req.user;
+
+    if (oldUser) {
+        console.log('User exists, is connecting account = = = = = = = ');
+        console.log(oldUser);
+    }
+
 
     models.User.count({where: {username: profileJson.screen_name}})
         .then(function (existCount) {
@@ -29,7 +37,7 @@ module.exports = new TwitterStrategy({
                 defaults: {
                     id: profileJson.id,
                     token: token,
-                    tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
+                    tokenSecret: tokenSecret,
                     username: profileJson.screen_name,
                     user: {
                         username: existCount == 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
@@ -48,6 +56,7 @@ module.exports = new TwitterStrategy({
 
         return cb(null, userTwitter.user.get())
     })
+
 
 
 });

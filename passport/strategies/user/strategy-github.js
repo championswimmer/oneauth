@@ -17,7 +17,7 @@ module.exports = new GithubStrategy({
     clientID: secrets.GITHUB_CONSUMER_KEY,
     clientSecret: secrets.GITHUB_CONSUMER_SECRET,
     callbackURL: config.SERVER_URL + config.GITHUB_CALLBACK,
-    passReqToCallBack: true
+    passReqToCallback: true
 }, function(req, token, tokenSecret, profile, cb) {
     let profileJson = profile._json;
 
@@ -28,8 +28,8 @@ module.exports = new GithubStrategy({
                 where: {id: profileJson.id},
                 defaults: {
                     id: profileJson.id,
-                    token: token || tokenSecret.access_token,
-                    tokenSecret: typeof tokenSecret == 'string' ? tokenSecret : "",
+                    token: token,
+                    tokenSecret: tokenSecret,
                     username: profileJson.login,
                     user: {
                         username: existCount == 0 ? profileJson.login : profileJson.login + "-gh",

@@ -29,6 +29,7 @@ server.deserializeClient(function (clientId, done) {
  */
 server.grant( oauth.grant.code (
     function (client, redirectURL, user, ares, done) {
+        console.log('oauth: getting grant code for ' + client.id + ' and ' + user.id  );
         models.GrantCode.create({
             code: generator.genNcharAlphaNum(config.GRANT_TOKEN_SIZE),
             clientId: client.id,
@@ -66,6 +67,7 @@ server.grant( oauth.grant.token (
  */
 server.exchange( oauth.exchange.code (
     function (client, code, redirectURI, done) {
+        console.log('oneauth: exchange');
         models.GrantCode.findOne({
             where: {code: code},
             include: [models.Client]
@@ -78,7 +80,7 @@ server.exchange( oauth.exchange.code (
             }
             let callbackMatch = false;
             for (url of client.callbackURL) {
-                if (url === redirectURI) callbackMatch = true;
+                if (redirectURI.startsWith(url)) callbackMatch = true;
             }
             if (!callbackMatch) {
                 return done(null, false); // Wrong redirect URI
@@ -116,6 +118,7 @@ server.exchange( oauth.exchange.code (
 const authorizationMiddleware = [
     cel.ensureLoggedIn('/login'),
     server.authorization(function(clientId, callbackURL, done) {
+        console.log('oauth: authorize');
         models.Client.findOne({
             where: {id: clientId}
         }).then(function(client) {
@@ -124,7 +127,7 @@ const authorizationMiddleware = [
             }
             console.log(callbackURL);
             for (url of client.callbackURL) {
-                if (url == callbackURL) {
+                if (callbackURL.startsWith(url)) {
                     return done(null, client, callbackURL)
                 }
             }

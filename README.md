@@ -43,11 +43,14 @@ Then from your backend get the auth token
 ```
 POST
 http://localhost:3838/oauth/token
-        client_id=9990781661
-    &   redirect_uri=hackerblocks.com/authback
-    &   client_secret=ZyTe3zCR67REHND7CHa9zH39NllvLWYULCedocZDLaCkSVTA7GGE1s1Hjrgkos09
-    &   grant_type=authorization_code
-    &   code=MyiLDqJwTpzEXqYOG1jNFCtjEzYHAR4U
+
+    {
+         "client_id" : 9990781661,
+         "redirect_uri" : "http://hackerblocks.com/callback",
+         "client_secret" : "ZyTe3zCR67REHND7CHa9zH39NllvLWYULCedocZDLaCkSVTA7GGE1s1Hjrgkos09",
+         "grant_type" : "authorization_code",
+         "code"  : "MyiLDqJwTpzEXqYOG1jNFCtjEzYHAR4U"
+     }
 ```
 Retrieve the bearer token from the response body
 

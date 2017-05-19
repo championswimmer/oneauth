@@ -44,4 +44,25 @@ router.get('/:id',
     }
 );
 
+
+router.get('/edit/:id',
+    cel.ensureLoggedIn('/login'),
+    function(req, res, next) {
+        models.Client.findOne({
+            where: {id : req.params.id}
+        }).then(function (client) {
+            if (!client) {
+                return res.send("Invalid Client Id")
+            }
+            if (client.userId != req.user.id) {
+                return res.send("Unauthorized user")
+            }
+            client.clientDomains = client.domain.join(";");
+            client.clientCallbacks = client.callback.join(";");
+
+            return res.render('client/edit', {client: client})
+        })
+    }
+);
+
 module.exports = router;

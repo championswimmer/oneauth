@@ -5,10 +5,14 @@ const Sequelize = require('sequelize');
 const secrets = require('../secrets.json');
 const config = require('../config');
 
+const db_name = secrets.DB.NAME;
+const db_user = secrets.DB.USER;
+const db_pass = secrets.DB.PASSWORD;
+const db_host = "localhost";
 
-const db = new Sequelize(
-    secrets.DB.NAME, secrets.DB.USER, secrets.DB.PASSWORD,  {
-        host: 'localhost',
+const DATABASE_URL = process.env.DATABASE_URL || ('postgres://' + db_user + ":" + db_pass + "@" + db_host + ":5432/" + db_name);
+
+const db = new Sequelize(DATABASE_URL, {
         dialect: 'postgres',
         pool: {
             max: 5,

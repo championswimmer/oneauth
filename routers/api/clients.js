@@ -7,6 +7,7 @@ const router = require('express').Router();
 const secrets = require('../../secrets.json');
 const models = require('../../db/models').models;
 const generator = require('../../utils/generator');
+const cel = require('connect-ensure-login');
 
 const urlutils = require('../../utils/urlutils');
 
@@ -38,6 +39,33 @@ router.post('/add', function (req, res) {
     }).then(function(client) {
         res.redirect('/clients/' + client.id)
     })
+});
+
+router.post('/edit/:id', function(req, res){
+    cel.ensureLoggedIn('/login'),
+    let clientId  = req.params.id;
+    let clientName = req.body.clientname;
+    let clientDomains = req.body.domain.replace(/ /g, '').split(';');
+    let clientCallbacks = req.body.callback.replace(/ /g, '').split(';');
+
+   //Make sure all urls have http in them
+    clientDomains.forEach(function (url, i, arr) {
+        arr[i] = urlutils.prefixHttp(url)
+    });
+    clientCallbacks.forEach(function (url, i, arr) {
+        arr[i] = urlutils.prefixHttp(url)
+    });
+
+    models.Client.update({
+        name : clientName,
+        domain : clientDomains,
+        callbackURL : clientCallbacks
+    },{
+        where : { id : clientId}
+    }).then(function(client){
+        res.redirect('/clients/'+client.id)
+    });
+
 });
 
 

@@ -41,9 +41,9 @@ router.post('/add', function (req, res) {
     })
 });
 
-router.post('/edit/:id', function(req, res){
-    cel.ensureLoggedIn('/login'),
-    let clientId  = req.params.id;
+router.post('/edit/:id', cel.ensureLoggedIn('/login'),
+    function(req, res){
+    let clientId  = parseInt(req.params.id);
     let clientName = req.body.clientname;
     let clientDomains = req.body.domain.replace(/ /g, '').split(';');
     let clientCallbacks = req.body.callback.replace(/ /g, '').split(';');
@@ -63,7 +63,9 @@ router.post('/edit/:id', function(req, res){
     },{
         where : { id : clientId}
     }).then(function(client){
-        res.redirect('/clients/'+client.id)
+        res.redirect('/clients/' + clientId)
+    }).catch(function(error) {
+        console.error(error)
     });
 
 });

@@ -45,7 +45,7 @@ router.get('/:id',
 );
 
 
-router.get('/edit/:id',
+router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     function(req, res, next) {
         models.Client.findOne({
@@ -58,7 +58,7 @@ router.get('/edit/:id',
                 return res.send("Unauthorized user")
             }
             client.clientDomains = client.domain.join(";");
-            client.clientCallbacks = client.callback.join(";");
+            client.clientCallbacks = client.callbackURL.join(";");
 
             return res.render('client/edit', {client: client})
         })

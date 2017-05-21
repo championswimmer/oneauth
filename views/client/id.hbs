@@ -3,7 +3,9 @@
 <div class="container">
     <div class="h3 thin-font text-center">Client Details</div>
     <div class="col-md-12 col-lg-10 offset-lg-1">
-    <table class="table table-bordered table-responsive">
+        <a href="/clients/{{client.id}}/edit"><div class="btn btn-sm btn-info">Edit</div></a>
+
+        <table class="table table-bordered table-responsive">
         <tr>
             <th> Client Name</th>
             <td> {{client.name}}</td>

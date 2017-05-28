@@ -5,3 +5,8 @@ body {
 .thin-font {
     font-weight: 100;
 }
+.btn btn-block btn-facebook {background: #3b5998;}
+
+.btn btn-block btn-twitter {background: #00aced;}
+
+.btn btn-block  btn-github {background: #c32f10;}

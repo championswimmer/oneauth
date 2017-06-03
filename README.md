@@ -12,6 +12,7 @@
 ### Step 1 : Database Setup
 
 ### Step 2 : Deploy
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 -------------------------
 

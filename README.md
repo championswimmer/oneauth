@@ -12,6 +12,7 @@
 ### Step 1 : Database Setup
 
 ### Step 2 : Deploy
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 If you want to run locally for testing, please read the
 [required steps here](docs/RUNNING_LOCALLY.md)

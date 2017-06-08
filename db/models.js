@@ -124,5 +124,6 @@ db.sync({}).then(() => {console.log('Database configured')});
 
 module.exports = {
     models: {User, UserLocal, UserFacebook, UserTwitter, UserGithub, UserLms,
-        Client, GrantCode, AuthToken}
+        Client, GrantCode, AuthToken},
+    db
 };

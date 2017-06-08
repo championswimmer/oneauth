@@ -1,6 +1,6 @@
 {
   "name": "oneauth",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,7 @@
   "author": "Arnav Gupta, Coding Blocks",
   "license": "ISC",
   "dependencies": {
+    "args": "^3.0.2",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "connect-ensure-login": "^0.1.1",

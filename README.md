@@ -13,6 +13,9 @@
 
 ### Step 2 : Deploy
 
+If you want to run locally for testing, please read the
+[required steps here](docs/RUNNING_LOCALLY.md)
+
 -------------------------
 
 ## OAuth2 Server Usage
@@ -81,22 +84,22 @@ they have on Facebook/Twitter/Google etc
 
 ## Pages
 
-#### /login
+#### `/login`
 Existing user login
 
-#### /signup
+#### `/signup`
 New user signup
 
-#### /user/me
+#### `/user/me`
 User profile data of logged in user
 
-#### /user/{userid}
+#### `/user/{userid}`
 User profie data (only public data) of any user
 
-#### /clients
+#### `/clients`
 All clients created by currently logged in user
 
-#### /clients/{clientid}
+#### `/clients/{clientid}`
 Details of the client (given the user who owns it is logged in)
 
 -------------------------

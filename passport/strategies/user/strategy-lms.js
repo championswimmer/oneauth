@@ -24,6 +24,7 @@ module.exports = new LmsStrategy({
             roll_number: profileJson.roll_number,
             accessToken: accessToken,
             course_identifier: profileJson.course_identifier,
+            courses: profileJson.courses,
             user: {
                 username: profileJson.roll_number,
                 firstname: profileJson.name.split(' ')[0],

@@ -58,7 +58,8 @@ const UserLms = db.define('userlms', {
     id: {type: Sequelize.BIGINT, primaryKey: true},
     roll_number: Sequelize.STRING,
     accessToken: Sequelize.STRING,
-    course_identifier: Sequelize.STRING
+    course_identifier: Sequelize.STRING,
+    courses: Sequelize.JSONB
 });
 
 UserLocal.belongsTo(User);

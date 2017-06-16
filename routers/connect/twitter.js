@@ -1,7 +1,6 @@
 /**
  * Created by championswimmer on 05/04/17.
  */
-
 const router = require('express').Router();
 const passport = require('../../passport/passporthandler');
 

@@ -24,39 +24,49 @@ module.exports = new TwitterStrategy({
     let oldUser = req.user;
 
     if (oldUser) {
-        console.log('User exists, is connecting account = = = = = = = ');
-        console.log(oldUser);
-    }
+        if (config.DEBUG) console.log('User exists, is connecting Facebook account');
+        models.UserTwitter.upsert({
+            id: profileJson.id,
+            token: token,
+            tokenSecret: tokenSecret,
+            username: profileJson.screen_name,
+            userId: oldUser.id
+        }).then(function (updated) {
+            return models.User.findById(oldUser.id)
+        }).then(function (user) {
+            return cb(null, user.get())
+        })
+    } else {
 
-
-    models.User.count({where: {username: profileJson.screen_name}})
-        .then(function (existCount) {
-            return models.UserTwitter.findCreateFind({
-                include: [models.User],
-                where: {id: profileJson.id},
-                defaults: {
-                    id: profileJson.id,
-                    token: token,
-                    tokenSecret: tokenSecret,
-                    username: profileJson.screen_name,
-                    user: {
-                        username: existCount == 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
-                        firstname: profileJson.name.split(' ')[0],
-                        lastname: profileJson.name.split(' ').pop(),
-                        email: profileJson.email,
-                        photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
+        models.User.count({where: {username: profileJson.screen_name}})
+            .then(function (existCount) {
+                return models.UserTwitter.findCreateFind({
+                    include: [models.User],
+                    where: {id: profileJson.id},
+                    defaults: {
+                        id: profileJson.id,
+                        token: token,
+                        tokenSecret: tokenSecret,
+                        username: profileJson.screen_name,
+                        user: {
+                            username: existCount == 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
+                            firstname: profileJson.name.split(' ')[0],
+                            lastname: profileJson.name.split(' ').pop(),
+                            email: profileJson.email,
+                            photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
+                        }
                     }
-                }
-            })
-        }).spread(function(userTwitter, created) {
-        //TODO: Check created == true for first time
-        if (!userTwitter) {
-            return cb(null, false);
-        }
+                })
+        }).spread(function (userTwitter, created) {
+            //TODO: Check created == true for first time
+            if (!userTwitter) {
+                return cb(null, false);
+            }
+            return cb(null, userTwitter.user.get())
+        })
 
-        return cb(null, userTwitter.user.get())
-    })
 
+    }
 
 
 });

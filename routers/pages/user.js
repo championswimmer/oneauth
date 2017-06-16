@@ -22,7 +22,6 @@ router.get('/me',
             if (!user) {
                 throw err;
             }
-            console.log(user);
             return res.render('user/me', {user: user})
         }).catch(function(err) {
             res.redirect('/login')

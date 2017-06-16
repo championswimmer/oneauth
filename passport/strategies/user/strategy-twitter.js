@@ -24,7 +24,7 @@ module.exports = new TwitterStrategy({
     let oldUser = req.user;
 
     if (oldUser) {
-        if (config.DEBUG) console.log('User exists, is connecting Facebook account');
+        if (config.DEBUG) console.log('User exists, is connecting Twitter account');
         models.UserTwitter.upsert({
             id: profileJson.id,
             token: token,

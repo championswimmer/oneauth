@@ -3,6 +3,8 @@
 ## 1.0.0
 
 ### 0.1
+ - connect twitter if signed in with other means
+ - connect github if signed in with other means
 
 #### 0.0.9
 

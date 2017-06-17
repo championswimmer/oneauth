@@ -28,6 +28,36 @@
         <td class="font-weight-bold"> Email </td>
         <td> <a href="mailto:{{user.email}}">{{user.email}}</a> </td>
     </tr>
+    {{#if user.userfacebook}}
+    <tr id="profile-row-fb">
+        <td class="font-weight-bold"> Facebook </td>
+        <td> Connected to
+            <a target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
+            {{user.userfacebook.id}}
+            </a>
+        </td>
+    </tr>
+    {{/if}}
+    {{#if user.usertwitter}}
+        <tr id="profile-row-twitter">
+            <td class="font-weight-bold"> Twitter </td>
+            <td> Connected to
+                <a target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
+                {{user.usertwitter.username}}
+                </a>
+            </td>
+        </tr>
+    {{/if}}
+    {{#if user.usergithub}}
+        <tr id="profile-row-github">
+            <td class="font-weight-bold"> Github </td>
+            <td> Connected to
+                <a target="_blank" href="http://github.com/{{user.usergithub.username}}">
+                    {{user.usergithub.username}}
+                </a>
+            </td>
+        </tr>
+    {{/if}}
 
 </table>
 

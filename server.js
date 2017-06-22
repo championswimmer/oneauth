@@ -7,7 +7,8 @@ const express = require('express')
     , passport = require('./passport/passporthandler')
     , path = require('path')
     , cookieParser = require('cookie-parser')
-    , exphbs = require('express-hbs');
+    , exphbs = require('express-hbs')
+    , expressGa = require('express-ga-middleware');
 
 const secrets = require('./secrets.json')
     , config = require('./config')
@@ -38,7 +39,7 @@ app.engine('hbs', exphbs.express4({
 app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "hbs");
 
-
+app.use(expressGa('UA-83327907-7'))
 app.use(express.static(path.join(__dirname, 'public_static')));
 app.use(cookieParser(secrets.EXPRESS_SESSION_SECRET));
 app.use(bodyParser.json());

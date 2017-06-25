@@ -39,7 +39,6 @@ app.engine('hbs', exphbs.express4({
 app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "hbs");
 
-app.use(expressGa('UA-83327907-7'))
 app.use(express.static(path.join(__dirname, 'public_static')));
 app.use(cookieParser(secrets.EXPRESS_SESSION_SECRET));
 app.use(bodyParser.json());
@@ -53,6 +52,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(redirectToHome);
+app.use(expressGa('UA-83327907-7'));
 app.use('/login', loginrouter);
 app.use('/connect', connectrouter);
 app.use('/logout', logoutrouter);

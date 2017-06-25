@@ -5,8 +5,10 @@
 ### 0.1
  - connect twitter if signed in with other means
  - connect github if signed in with other means
+ - add google analytics
 
 #### 0.0.9
+ - add course details to lms table
 
 #### 0.0.8
  - same user on multiple social account bug fixed

@@ -2,6 +2,11 @@
 
 <h2 class="text-center thin-font">Sign Up</h2>
 <form class="form-group" method="post" action="/signup">
+    {{#if messages.error}}
+        <div class="alert alert-danger" role="alert">
+            {{messages.error}}
+        </div>
+    {{/if}}
     <input class="form-control" name="username" placeholder="username" type="text" required> <br>
     <input class="form-control" name="firstname" placeholder="firstname" type="text" required> <br>
     <input class="form-control" name="lastname" placeholder="lastname" type="text" required> <br>

@@ -8,7 +8,8 @@ const express = require('express')
     , path = require('path')
     , cookieParser = require('cookie-parser')
     , exphbs = require('express-hbs')
-    , expressGa = require('express-ga-middleware');
+    , expressGa = require('express-ga-middleware')
+    , flash = require('express-flash');
 
 const secrets = require('./secrets.json')
     , config = require('./config')
@@ -49,6 +50,7 @@ app.use(session({
     saveUninitialized: false,
     name: 'oneauth'
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(redirectToHome);

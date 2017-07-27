@@ -8,6 +8,20 @@ const models = require('../db/models').models;
 const passutils = require('../utils/password');
 
 router.post('/', function (req, res) {
+
+  if(req.body.username.trim() === '') {
+    req.flash('error', 'Username cannot be empty');
+    return res.redirect('/signup')
+  }
+  if((req.body.firstname.trim() === '') || (req.body.lastname.trim() === '')) {
+    req.flash('error', 'Firstname and/or Lastname cannot be empty');
+    return res.redirect('/signup')
+  }
+  if((req.body.password.trim() === '') || req.body.password.length < 5) {
+    req.flash('error', 'Password too weak. Use 5 characters at least.');
+    return res.redirect('/signup')
+  }
+
     passutils.pass2hash(req.body.password)
         .then(function (passhash) {
             models.UserLocal.create({

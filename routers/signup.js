@@ -41,7 +41,8 @@ router.post('/', function (req, res) {
         })
         .catch (function (err) {
             // Could not register user
-            //TODO: Handle this case (use flash message maybe ? )
+             req.flash('error', 'Unsuccessful registration. Please try again.');
+            return res.redirect('/signup')
         });
 });
 

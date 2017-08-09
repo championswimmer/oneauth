@@ -13,7 +13,7 @@ const urlutils = require('../../utils/urlutils');
 
 router.post('/add', function (req, res) {
     if (!req.user) {
-        return res.send("Only logged in users can make clients")
+        return res.status(403).send("Only logged in users can make clients")
     }
 
     let clientName = req.body.clientname;

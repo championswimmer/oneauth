@@ -2,6 +2,11 @@
 
 ## 1.0.0
 
+### 0.2
+
+#### 0.1.1
+ - logout user via api `/api/users/me/logout`
+
 ### 0.1
  - connect twitter if signed in with other means
  - connect github if signed in with other means

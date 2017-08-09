@@ -6,6 +6,7 @@
  - connect twitter if signed in with other means
  - connect github if signed in with other means
  - add google analytics
+ - beautify the auth dialog
 
 #### 0.0.9
  - add course details to lms table

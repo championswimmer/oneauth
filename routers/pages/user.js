@@ -6,6 +6,7 @@ const router = require('express').Router();
 
 const passutils = require('../../utils/password');
 const models = require('../../db/models').models;
+const acl = require('../../middlewares/acl')
 
 router.get('/me',
   cel.ensureLoggedIn('/login'),
@@ -83,5 +84,29 @@ router.post('/me/edit',
 
   })
 
+router.get('/:id',
+  cel.ensureLoggedIn('/login'),
+  acl.ensureRole('admin'),
+  function (req, res, next) {
+
+    models.User.findOne({
+      where: {id: req.params.id},
+      include: [
+        models.UserGithub,
+        models.UserFacebook,
+        models.UserLms,
+        models.UserTwitter
+      ]
+    }).then(function (user) {
+      if (!user) {
+        return res.status(404).send({error: "Not found"})
+      }
+      return res.render('user/id', {user: user})
+    }).catch(function(err) {
+      throw err;
+    });
+  }
+
+)
 
 module.exports = router;

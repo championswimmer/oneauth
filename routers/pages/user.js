@@ -109,4 +109,45 @@ router.get('/:id',
 
 )
 
+router.get('/:id/edit',
+  cel.ensureLoggedIn('/login'),
+  acl.ensureRole('admin'),
+  function (req, res, next) {
+
+    models.User.findOne({
+      where: {id: req.params.id},
+    }).then(function (user) {
+      if (!user) {
+        return res.status(404).send({error: "Not found"})
+      }
+      return res.render('user/id/edit', {user: user})
+    }).catch(function(err) {
+      throw err;
+    });
+  }
+
+)
+
+router.post('/:id/edit',
+  cel.ensureLoggedIn('/login'),
+  acl.ensureRole('admin'),
+  function (req, res, next) {
+
+    models.User.update({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        role: req.body.role !== 'unchanged' ? req.body.role : undefined
+      },
+      {
+        where: {id: req.params.id},
+        returning: true
+      }).then(function (result) {
+        return res.redirect('../' + req.params.id)
+    }).catch(function(err) {
+      throw err
+    });
+  }
+)
+
 module.exports = router;

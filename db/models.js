@@ -24,46 +24,47 @@ const db = new Sequelize(DATABASE_URL, {
 
 
 const User = db.define('user', {
-    id: {type: Sequelize.BIGINT, primaryKey: true, autoIncrement: true},
-    username: {type: Sequelize.STRING, unique: true},
-    firstname: Sequelize.STRING,
-    lastname: Sequelize.STRING,
-    photo: Sequelize.STRING,
-    email: Sequelize.STRING
+    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
+    username: {type: Sequelize.DataTypes.STRING, unique: true},
+    firstname: Sequelize.DataTypes.STRING,
+    lastname: Sequelize.DataTypes.STRING,
+    photo: Sequelize.DataTypes.STRING,
+    email: Sequelize.DataTypes.STRING,
+    role: {type: Sequelize.DataTypes.ENUM('admin', 'employee', 'intern'), allowNull: true}
 });
 
 const UserLocal = db.define('userlocal', {
-   password: Sequelize.STRING
+   password: Sequelize.DataTypes.STRING
 });
 
 const UserFacebook = db.define('userfacebook', {
-    id: {type: Sequelize.BIGINT, primaryKey: true},
-    accessToken: Sequelize.STRING,
-    refreshToken: {type: Sequelize.STRING, allowNull: true},
-    photo: {type: Sequelize.STRING, allowNull: true},
+    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
+    accessToken: Sequelize.DataTypes.STRING,
+    refreshToken: {type: Sequelize.DataTypes.STRING, allowNull: true},
+    photo: {type: Sequelize.DataTypes.STRING, allowNull: true},
 
 });
 
 const UserTwitter = db.define('usertwitter', {
-    id: {type: Sequelize.BIGINT, primaryKey: true},
-    token: Sequelize.STRING,
-    tokenSecret: {type: Sequelize.STRING, allowNull: true},
-    username: {type: Sequelize.STRING, allowNull: true}
+    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
+    token: Sequelize.DataTypes.STRING,
+    tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
+    username: {type: Sequelize.DataTypes.STRING, allowNull: true}
 });
 
 const UserGithub = db.define('usergithub', {
-    id: {type: Sequelize.BIGINT, primaryKey: true},
-    token: Sequelize.STRING,
-    tokenSecret: {type: Sequelize.STRING, allowNull: true},
-    username: {type: Sequelize.STRING, allowNull: true}
+    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
+    token: Sequelize.DataTypes.STRING,
+    tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
+    username: {type: Sequelize.DataTypes.STRING, allowNull: true}
 });
 
 const UserLms = db.define('userlms', {
-    id: {type: Sequelize.BIGINT, primaryKey: true},
-    roll_number: Sequelize.STRING,
-    accessToken: Sequelize.STRING,
-    course_identifier: Sequelize.STRING,
-    courses: Sequelize.JSONB
+    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
+    roll_number: Sequelize.DataTypes.STRING,
+    accessToken: Sequelize.DataTypes.STRING,
+    course_identifier: Sequelize.DataTypes.STRING,
+    courses: Sequelize.DataTypes.JSONB
 });
 
 UserLocal.belongsTo(User);
@@ -83,18 +84,18 @@ User.hasOne(UserLms);
 
 
 const Client = db.define('client', {
-    id: {type: Sequelize.BIGINT, primaryKey: true},
-    name: Sequelize.STRING,
-    secret: Sequelize.STRING,
-    domain: Sequelize.ARRAY(Sequelize.STRING),
-    callbackURL: Sequelize.ARRAY(Sequelize.STRING)
+    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
+    name: Sequelize.DataTypes.STRING,
+    secret: Sequelize.DataTypes.STRING,
+    domain: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.STRING),
+    callbackURL: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.STRING)
 });
 
 Client.belongsTo(User);
 User.hasMany(Client);
 
 const GrantCode = db.define('grantcode', {
-    code: {type: Sequelize.STRING, primaryKey: true}
+    code: {type: Sequelize.DataTypes.STRING, primaryKey: true}
 });
 
 GrantCode.belongsTo(User);
@@ -105,9 +106,9 @@ Client.hasMany(GrantCode);
 
 
 const AuthToken = db.define('authtoken', {
-    token: {type: Sequelize.STRING, primaryKey: true},
-    scope: Sequelize.ARRAY(Sequelize.STRING),
-    explicit: {type: Sequelize.BOOLEAN, default: false}
+    token: {type: Sequelize.DataTypes.STRING, primaryKey: true},
+    scope: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.STRING),
+    explicit: {type: Sequelize.DataTypes.BOOLEAN, default: false}
 });
 
 AuthToken.belongsTo(User);

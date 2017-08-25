@@ -29,6 +29,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/db/schema_update/011-to-012.sql" connection-id="" current-schema="" />
     <mapping file-url="file://$PROJECT_DIR$/db/schema_update/008-to-009.sql" connection-id="virtual-postgres-connection" current-schema="ROOT" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">

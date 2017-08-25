@@ -4,6 +4,10 @@
 
 ### 0.2
 
+#### 0.1.2
+ - added roles to users
+ - scripts to set roles
+
 #### 0.1.1
  - logout user via api `/api/users/me/logout`
  - editing user (only browser session for now, not API)

@@ -31,6 +31,10 @@
         <td class="font-weight-bold"> Email </td>
         <td> <a href="mailto:{{user.email}}">{{user.email}}</a> </td>
     </tr>
+    <tr id="profile-row-role">
+        <td class="font-weight-bold"> Role@CB </td>
+        <td> {{user.role}} </td>
+    </tr>
     {{#if user.userfacebook}}
     <tr id="profile-row-fb">
         <td class="font-weight-bold"> Facebook </td>

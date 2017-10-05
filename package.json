@@ -21,12 +21,12 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.15.3",
     "express-flash": "^0.0.2",
-    "express-ga-middleware": "^0.1.5",
+    "express-ga-middleware": "^0.1.6",
     "express-hbs": "^1.0.4",
     "express-session": "^1.15.4",
     "hbs": "^4.0.1",
     "oauth2orize": "^1.8.0",
-    "passport": "^0.3.2",
+    "passport": "^0.4.0",
     "passport-custom": "^1.0.5",
     "passport-facebook": "^2.1.1",
     "passport-github2": "^0.1.10",
@@ -36,10 +36,10 @@
     "passport-oauth2-client-password": "^0.1.2",
     "passport-strategy": "^1.0.0",
     "passport-twitter-email": "^1.0.3",
-    "pg": "^6.4.1",
+    "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
     "request": "^2.81.0",
-    "sequelize": "^4.4.2",
+    "sequelize": "^4.13.5",
     "uid2": "^0.0.3"
   }
 }

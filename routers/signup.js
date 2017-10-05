@@ -6,8 +6,10 @@
 const router = require('express').Router();
 const models = require('../db/models').models;
 const passutils = require('../utils/password');
+const makeGaEvent = require('../utils/ga').makeGaEvent
 
-router.post('/', function (req, res) {
+
+router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
 
   if(req.body.username.trim() === '') {
     req.flash('error', 'Username cannot be empty');

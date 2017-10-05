@@ -2,7 +2,7 @@
  * Created by championswimmer on 08/03/17.
  */
 const router = require('express').Router();
-const makeGaEvent = require('../utils/ga').makeGaEvent
+const makeGaEvent = require('../../utils/ga').makeGaEvent
 
 router.use('/', makeGaEvent('attempt', 'login', 'local'), require('./local'));
 router.use('/facebook', makeGaEvent('attempt', 'login', 'facebook'), require('./facebook'));

@@ -34,7 +34,7 @@ module.exports = new GithubStrategy({
             return models.User.findById(oldUser.id)
         }).then(function (user) {
             return cb(null, user.get())
-        })
+        }).catch((err) => console.log(err))
     } else {
         models.User.count({ where: {username: profileJson.login}})
             .then(function(existCount){
@@ -61,7 +61,7 @@ module.exports = new GithubStrategy({
                 return cb(null, false);
             }
             return cb(null, userGithub.user.get())
-        })
+        }).catch((err) => console.log(err))
     }
 
 

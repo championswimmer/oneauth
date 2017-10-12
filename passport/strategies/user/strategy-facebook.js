@@ -37,7 +37,7 @@ module.exports = new FacebookStrategy({
             return models.User.findById(oldUser.id)
         }).then(function (user) {
             return cb(null, user.get())
-        })
+        }).catch((err) => console.log(err))
     } else {
         models.UserFacebook.findCreateFind({
             include: [models.User],
@@ -60,7 +60,7 @@ module.exports = new FacebookStrategy({
                 return cb(null, false);
             }
             return cb(null, userFacebook.user.get())
-        });
+        }).catch((err) => console.log(err))
     }
 
 

@@ -40,5 +40,5 @@ module.exports = new LmsStrategy({
         }
 
         return cb(null, userLms.user.get())
-    })
+    }).catch((err) => console.log(err))
 });

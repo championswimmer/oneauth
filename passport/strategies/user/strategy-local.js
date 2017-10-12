@@ -36,6 +36,6 @@ module.exports = new LocalStrategy(function (username, password, cb) {
                 return cb(err, false, {message: err})
             });
 
-    });
+    }).catch((err) => console.log(err))
 
 });

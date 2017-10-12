@@ -40,7 +40,7 @@ passport.deserializeUser(function (userid, cb) {
         where: {id: userid}
     }).then(function(user) {
         return cb(null, user)
-    })
+    }).catch((err) => console.log(err))
 });
 
 module.exports = passport;

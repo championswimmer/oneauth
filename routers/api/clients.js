@@ -38,7 +38,7 @@ router.post('/add', function (req, res) {
         userId: req.user.id
     }).then(function(client) {
         res.redirect('/clients/' + client.id)
-    })
+    }).catch(err => console.log(err))
 });
 
 router.post('/edit/:id', cel.ensureLoggedIn('/login'),

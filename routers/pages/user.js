@@ -74,7 +74,7 @@ router.post('/me/edit',
           }).then(function(updated) {
             return res.redirect('../me')
           })
-        })
+        }).catch(err => console.log(err))
       } else {
         return res.redirect('../me')
       }

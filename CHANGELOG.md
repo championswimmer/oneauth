@@ -3,6 +3,8 @@
 ## 1.0.0
 
 ### 0.2
+  - update to use node 8
+  - fix all unhandled promises
 
 #### 0.1.2
  - added roles to users

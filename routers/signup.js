@@ -24,28 +24,35 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
     return res.redirect('/signup')
   }
 
-    passutils.pass2hash(req.body.password)
-        .then(function (passhash) {
-            models.UserLocal.create({
-                user: {
-                    username: req.body.username,
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
-                    email: req.body.email
-                },
-                password: passhash
-            }, {
-                include: [models.User]
-            }).then(function (user) {
-                res.redirect('/login');
-            })
-
-        })
-        .catch (function (err) {
-            // Could not register user
-             req.flash('error', 'Unsuccessful registration. Please try again.');
-            return res.redirect('/signup')
-        });
+    models.User.findOne({where:{username:req.body.username}})
+    .then((user)=> {
+      if(user)
+      {
+          req.flash('error', 'Username already exist\'s. Please try again.');
+          return res.redirect('/signup')
+      }
+      passutils.pass2hash(req.body.password)
+          .then(function (passhash) {
+              models.UserLocal.create({
+                  user: {
+                      username: req.body.username,
+                      firstname: req.body.firstname,
+                      lastname: req.body.lastname,
+                      email: req.body.email
+                  },
+                  password: passhash
+              }, {
+                  include: [models.User]
+              }).then(function (user) {
+                  res.redirect('/login');
+              })
+          })
+    })
+    .catch (function (err) {
+        // Could not register user
+         req.flash('error', 'Unsuccessful registration. Please try again.');
+        return res.redirect('/signup')
+    });
 });
 
 module.exports = router;

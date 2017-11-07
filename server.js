@@ -9,7 +9,8 @@ const express = require('express')
     , cookieParser = require('cookie-parser')
     , exphbs = require('express-hbs')
     , expressGa = require('express-ga-middleware')
-    , flash = require('express-flash');
+    , flash = require('express-flash')
+    , Raven = require('raven')
 
 const secrets = require('./secrets.json')
     , config = require('./config')
@@ -31,6 +32,9 @@ const redirectToHome = function (req, res, next) {
     next();
 
 };
+
+Raven.config(secrets.SENTRY_DSN).install()
+app.use(Raven.requestHandler())
 
 app.engine('hbs', exphbs.express4({
     partialsDir: path.join(__dirname, 'views/partials'),
@@ -62,6 +66,8 @@ app.use('/signup', signuprouter);
 app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);
 app.use('/', pagerouter);
+
+app.use(Raven.errorHandler());
 
 app.listen(3838, function () {
     console.log("Listening on " + config.SERVER_URL );

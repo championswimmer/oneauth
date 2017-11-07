@@ -1,6 +1,7 @@
 /**
  * Created by championswimmer on 07/05/17.
  */
+const Raven = require('raven')
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 const models = require('../../../db/models').models;
@@ -37,7 +38,7 @@ module.exports = new FacebookStrategy({
             return models.User.findById(oldUser.id)
         }).then(function (user) {
             return cb(null, user.get())
-        }).catch((err) => console.log(err))
+        }).catch((err) => Raven.captureException(err))
     } else {
         models.UserFacebook.findCreateFind({
             include: [models.User],
@@ -60,7 +61,7 @@ module.exports = new FacebookStrategy({
                 return cb(null, false);
             }
             return cb(null, userFacebook.user.get())
-        }).catch((err) => console.log(err))
+        }).catch((err) => Raven.captureException(err))
     }
 
 

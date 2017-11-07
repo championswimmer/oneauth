@@ -1,6 +1,7 @@
 /**
  * Created by championswimmer on 07/05/17.
  */
+const Raven = require('raven')
 const TwitterStrategy = require('passport-twitter-email').Strategy;
 
 const models = require('../../../db/models').models;
@@ -35,7 +36,7 @@ module.exports = new TwitterStrategy({
             return models.User.findById(oldUser.id)
         }).then(function (user) {
             return cb(null, user.get())
-        }).catch((err) => console.log(err))
+        }).catch((err) => Raven.captureException(err))
     } else {
 
         models.User.count({where: {username: profileJson.screen_name}})
@@ -63,7 +64,7 @@ module.exports = new TwitterStrategy({
                 return cb(null, false);
             }
             return cb(null, userTwitter.user.get())
-        }).catch((err) => console.log(err))
+        }).catch((err) => Raven.captureException(err))
 
 
     }

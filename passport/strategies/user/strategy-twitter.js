@@ -49,7 +49,7 @@ module.exports = new TwitterStrategy({
                         tokenSecret: tokenSecret,
                         username: profileJson.screen_name,
                         user: {
-                            username: existCount == 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
+                            username: existCount === 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
                             firstname: profileJson.name.split(' ')[0],
                             lastname: profileJson.name.split(' ').pop(),
                             email: profileJson.email,

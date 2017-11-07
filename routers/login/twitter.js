@@ -14,7 +14,7 @@ function authnOrAuthzTwitter(req, res, next) {
         })(req, res, next);
     } else {
         if(config.DEBUG) console.log("Authz Twitter = = = = = = ");
-        passport.authenticate('twitter', {
+        passport.authorize('twitter', {
             failureRedirect: '/login',
             successReturnToOrRedirect: '/users/me'
         })(req, res, next);

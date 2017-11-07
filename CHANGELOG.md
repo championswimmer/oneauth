@@ -2,6 +2,11 @@
 
 ## 1.0.0
 
+### 0.3
+  - fix Twitter authorize 
+  - fix Github connect 
+  - add sentry error reporting 
+
 ### 0.2
   - update to use node 8
   - fix all unhandled promises

@@ -11,6 +11,7 @@ const express = require('express')
     , expressGa = require('express-ga-middleware')
     , flash = require('express-flash')
     , Raven = require('raven')
+    , connectDatadog = require('connect-datadog')
 
 const secrets = require('./secrets.json')
     , config = require('./config')
@@ -23,6 +24,10 @@ const secrets = require('./secrets.json')
     , pagerouter = require('./routers/pagerouter');
 
 const app = express();
+const datadogRouter = connectDatadog({
+  'response_code':true,
+  'tags': ['app:oneauth']
+})
 const redirectToHome = function (req, res, next) {
 
     if (req.path == '/') {
@@ -59,6 +64,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(redirectToHome);
 app.use(expressGa('UA-83327907-7'));
+app.use(datadogRouter)
 app.use('/login', loginrouter);
 app.use('/connect', connectrouter);
 app.use('/logout', logoutrouter);

@@ -4,6 +4,7 @@
 
 #### 0.3.1
   - Fix github missing first/last names
+  - Add DataDog metrics
 
 ### 0.3
   - fix Twitter authorize 

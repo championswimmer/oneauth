@@ -2,6 +2,9 @@
 
 ## 1.0.0
 
+#### 0.3.1
+  - Fix github missing first/last names
+
 ### 0.3
   - fix Twitter authorize 
   - fix Github connect 

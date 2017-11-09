@@ -49,8 +49,8 @@ module.exports = new GithubStrategy({
                         username: profileJson.login,
                         user: {
                             username: existCount === 0 ? profileJson.login : profileJson.login + "-gh",
-                            firstname: profileJson.name.split(' ')[0],
-                            lastname: profileJson.name.split(' ').pop(),
+                            firstname: profileJson.name ? profileJson.name.split(' ')[0] : profileJson.login,
+                            lastname: profileJson.name ? profileJson.name.split(' ').pop() : profileJson.login,
                             email: profileJson.email,
                             photo: profileJson.avatar_url
                         }

@@ -12,6 +12,7 @@ const express = require('express')
     , flash = require('express-flash')
     , Raven = require('raven')
     , connectDatadog = require('connect-datadog')
+    , Tracer = require('datadog-tracer')
 
 const secrets = require('./secrets.json')
     , config = require('./config')
@@ -24,10 +25,37 @@ const secrets = require('./secrets.json')
     , pagerouter = require('./routers/pagerouter');
 
 const app = express();
+
+// ============== START DATADOG
 const datadogRouter = connectDatadog({
   'response_code':true,
   'tags': ['app:oneauth']
 })
+
+const tracer = new Tracer({service: 'oneauth'})
+function trace (req, res, span) {
+  span.addTags({
+    'resource': req.route.path,
+    'type': 'web',
+    'span.kind': 'server',
+    'http.method': req.method,
+    'http.url': req.url,
+    'http.status_code': res.statusCode
+  })
+
+  span.finish()
+}
+
+app.use((req, res, next) => {
+  const span = tracer.startSpan('express.request')
+
+  res.on('finish', () => trace(req, res, span))
+  res.on('close', () => trace(req, res, span))
+
+  next()
+})
+
+// ================= END DATADOG
 const redirectToHome = function (req, res, next) {
 
     if (req.path == '/') {
@@ -38,8 +66,10 @@ const redirectToHome = function (req, res, next) {
 
 };
 
+// ====================== START SENTRY
 Raven.config(secrets.SENTRY_DSN).install()
 app.use(Raven.requestHandler())
+// ====================== END SENTRY
 
 app.engine('hbs', exphbs.express4({
     partialsDir: path.join(__dirname, 'views/partials'),

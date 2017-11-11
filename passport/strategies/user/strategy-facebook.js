@@ -41,12 +41,14 @@ module.exports = new FacebookStrategy({
             return models.User.findById(oldUser.id)
         }).then(function (user) {
           // DATADOG TRACE: END SPAN
-              span.addTags({
-                userId: oldUser.id,
-                newUser: false,
-                facebookId: profileJson.id
+              setImmediate(() => {
+                span.addTags({
+                  userId: oldUser.id,
+                  newUser: false,
+                  facebookId: profileJson.id
+                })
+                span.finish()
               })
-              span.finish()
             return cb(null, user.get())
         }).catch((err) => Raven.captureException(err))
     } else {
@@ -71,12 +73,14 @@ module.exports = new FacebookStrategy({
                 return cb(null, false);
             }
             // DATADOG TRACE: END SPAN
-              span.addTags({
-                userId: oldUser.id,
-                newUser: false,
-                facebookId: profileJson.id
+              setImmediate(() => {
+                span.addTags({
+                  userId: userFacebook.user.id,
+                  newUser: true,
+                  facebookId: profileJson.id
+                })
+                span.finish()
               })
-              span.finish()
             return cb(null, userFacebook.user.get())
         }).catch((err) => Raven.captureException(err))
     }

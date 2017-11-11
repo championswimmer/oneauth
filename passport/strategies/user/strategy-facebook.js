@@ -9,6 +9,7 @@ const models = require('../../../db/models').models;
 const secrets = require('../../../secrets.json');
 const config = require('../../../config');
 const passutils = require('../../../utils/password');
+const tracer = require('../../../utils/ddtracer').tracer
 
 
 /**
@@ -25,6 +26,8 @@ module.exports = new FacebookStrategy({
 }, function (req, authToken, refreshToken, profile, cb) {
     let profileJson = profile._json;
     let oldUser = req.user;
+    // DATADOG TRACE: START SPAN
+    const span = tracer.startSpan('passport.strategy.facebook')
 
     if (oldUser) {
         if (config.DEBUG) console.log('User exists, is connecting Facebook account');
@@ -37,6 +40,13 @@ module.exports = new FacebookStrategy({
         }).then(function (updated) {
             return models.User.findById(oldUser.id)
         }).then(function (user) {
+          // DATADOG TRACE: END SPAN
+              span.addTags({
+                userId: oldUser.id,
+                newUser: false,
+                facebookId: profileJson.id
+              })
+              span.finish()
             return cb(null, user.get())
         }).catch((err) => Raven.captureException(err))
     } else {
@@ -60,6 +70,13 @@ module.exports = new FacebookStrategy({
             if (!userFacebook) {
                 return cb(null, false);
             }
+            // DATADOG TRACE: END SPAN
+              span.addTags({
+                userId: oldUser.id,
+                newUser: false,
+                facebookId: profileJson.id
+              })
+              span.finish()
             return cb(null, userFacebook.user.get())
         }).catch((err) => Raven.captureException(err))
     }

@@ -12,8 +12,7 @@ const express = require('express')
     , expressGa = require('express-ga-middleware')
     , flash = require('express-flash')
     , Raven = require('raven')
-    , connectDatadog = require('connect-datadog')
-    , Tracer = require('datadog-tracer')
+    , debug = require('debug')('oneauth:server')
 
 const secrets = require('./secrets.json')
     , config = require('./config')
@@ -23,39 +22,13 @@ const secrets = require('./secrets.json')
     , signuprouter = require('./routers/signup')
     , apirouter = require('./routers/api')
     , oauthrouter = require('./routers/oauthrouter')
-    , pagerouter = require('./routers/pagerouter');
+    , pagerouter = require('./routers/pagerouter')
+    , {expresstracer, datadogRouter} = require('./utils/ddtracer')
 
 const app = express();
 
 // ============== START DATADOG
-const datadogRouter = connectDatadog({
-  'response_code':true,
-  'tags': ['app:oneauth']
-})
-
-const tracer = new Tracer({service: 'oneauth'})
-function trace (req, res, span) {
-  span.addTags({
-    'resource': req.path,
-    'type': 'web',
-    'span.kind': 'server',
-    'http.method': req.method,
-    'http.url': req.url,
-    'http.status_code': res.statusCode
-  })
-
-  span.finish()
-}
-
-app.use((req, res, next) => {
-  const span = tracer.startSpan('express.request')
-
-  res.on('finish', () => trace(req, res, span))
-  res.on('close', () => trace(req, res, span))
-
-  next()
-})
-
+app.use(expresstracer)
 // ================= END DATADOG
 const redirectToHome = function (req, res, next) {
 
@@ -107,8 +80,5 @@ app.use('/', pagerouter);
 app.use(Raven.errorHandler());
 
 app.listen(3838, function () {
-    console.log("Listening on " + config.SERVER_URL );
+    debug("Listening on " + config.SERVER_URL );
 });
-
-
-

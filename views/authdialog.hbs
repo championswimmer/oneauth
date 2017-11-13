@@ -3,7 +3,7 @@
 <div class="auth-head">
   <h2 class="text-center thin-font custom-h2">AUTHORIZE APP</h2>
 </div>
-<form class="form-group custom-form auth-form" method="post" action="/oauth/dialog/authorize/decision">
+<form class="form-group p-4 auth-form" method="post" action="/oauth/dialog/authorize/decision">
     <p>
         Hello, {{user.firstname}} {{user.lastname}} ( <span class="bold">{{user.username}}</span> )
     </p>
@@ -16,7 +16,7 @@
       <li>View details of courses enrolled with coding blocks (if any).</li>
     </ul>
     <input name="transaction_id" type="hidden" value="{{transactionID}}">
-    <div class="row">
+    <div class="row p-4">
         <input class="btn btn-danger col-2 col-2-mod" type="submit" value="Deny" name="cancel" id="deny">
         <div class="col"></div>
         <input class="btn btn-success col-2 col-2-mod" type="submit" value="Allow" id="allow">

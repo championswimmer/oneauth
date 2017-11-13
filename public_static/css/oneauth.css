@@ -1,5 +1,6 @@
 body {
     padding: 30px;
+    background: #fbfbfc;
 }
 
 .thin-font {
@@ -10,3 +11,55 @@ body {
 .btn btn-block btn-twitter {background: #00aced;}
 
 .btn btn-block  btn-github {background: #c32f10;}
+
+
+.mycard{
+  box-shadow: 0 1px 12px rgba(0,0,0,.15);
+  padding:20px;
+  border-radius: .25rem;
+}
+
+.custom-btn{
+  line-height: 0.25;
+  font-size: 0.75rem;
+  box-shadow: 0 1px 12px rgba(0,0,0,.15);
+  border-radius: 0.2rem;
+}
+
+.custom-form{
+  padding: 0 50px;
+  margin-top: 50px;
+}
+.custom-h2{
+  border-bottom: 1px solid #e2dee6;
+  padding-bottom: 8px;
+}
+
+.fontAwesome {
+  font-family: 'Helvetica', FontAwesome, sans-serif;
+}
+
+.login-head{
+  background: #fbfbfc;
+}
+.form-control{
+  background: #fbfbfc;
+}
+.mt-4 {
+  margin-top: 3.5rem!important;
+}
+.thin-font{
+  font-weight: 400;
+  font-size: 1.25rem;
+}
+.col-2-mod{
+  max-width: none;
+}
+.bold{
+  font-weight: bold;
+}
+.auth-form{
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}

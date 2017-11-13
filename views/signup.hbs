@@ -1,17 +1,18 @@
 {{!< centercolumn}}
-
-<h2 class="text-center thin-font">Sign Up</h2>
-<form class="form-group" method="post" action="/signup">
+<div class="signup-head">
+  <h2 class="text-center thin-font custom-h2">SIGN UP</h2>
+</div>
+<form class="form-group custom-form" method="post" action="/signup">
     {{#if messages.error}}
         <div class="alert alert-danger" role="alert">
             {{messages.error}}
         </div>
     {{/if}}
-    <input class="form-control" name="username" placeholder="username" type="text" required> <br>
-    <input class="form-control" name="firstname" placeholder="firstname" type="text" required> <br>
-    <input class="form-control" name="lastname" placeholder="lastname" type="text" required> <br>
-    <input class="form-control" name="email" placeholder="email" type="email"> <br>
-    <input class="form-control" name="password" placeholder="password" type="password" required> <br>
+    <input class="form-control fontAwesome" name="username" placeholder="&#xf007; Username" type="text" required> <br>
+    <input class="form-control fontAwesome" name="firstname" placeholder="&#xf061; Firstname" type="text" required> <br>
+    <input class="form-control fontAwesome" name="lastname" placeholder="&#xf061; Lastname" type="text" required> <br>
+    <input class="form-control fontAwesome" name="email" placeholder="&#xf0e0; Email" type="email"> <br>
+    <input class="form-control fontAwesome" name="password" placeholder="&#xf023; Password" type="password" required> <br>
     <div class="row">
         <input class="btn btn-primary mx-auto" type="submit" value="Signup">
     </div>

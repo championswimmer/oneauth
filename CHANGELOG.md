@@ -2,6 +2,9 @@
 
 ## 1.0.0
 
+#### 0.3.2
+  - [temporarily] downgrade to pg v6 
+
 #### 0.3.1
   - Fix github missing first/last names
   - Add DataDog metrics

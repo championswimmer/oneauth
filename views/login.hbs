@@ -1,10 +1,12 @@
 {{!< centercolumn}}
-
-<h2 class="text-center thin-font">Login</h2>
-
-<form class="form-group" method="post" action="/login">
-    <input class="form-control" placeholder="username" name="username" type="text" required><br>
-    <input class="form-control" placeholder="password" name="password" type="password" required><br>
+<div class="login-head">
+  <h3 class="text-center thin-font custom-h2">LOGIN</h3>
+</div>
+<form class="form-group mt-5 pl-4 pr-4" method="post" action="/login">
+    <input class="form-control fontAwesome" placeholder="&#xf007; Username " name="username" type="text" required>
+    <br>
+    <input class="form-control fontAwesome" placeholder="&#xf023; Password" name="password" type="password" required>
+    <br>
     <div class="row">
         <input class="btn btn-success mx-auto" type="submit" value="Login"><br>
     </div>
@@ -13,16 +15,16 @@
     <div class="row">
         <div class="col"></div>
         <div class="col-6">
-            <a class="btn btn-block btn-facebook" href="/login/facebook">
+            <a class="btn custom-social-btn btn-block btn-facebook" href="/login/facebook">
               <i class="fa fa-facebook"></i> Login
               <span class="hidden-xs-down">with Facebook</span>
             </a>
-            
-            <a class="btn btn-block btn-twitter" href="/login/twitter">
+
+            <a class="btn custom-social-btn btn-block btn-twitter" href="/login/twitter">
                  <i class="fa fa-twitter"></i> Login
                  <span class="hidden-xs-down">with Twitter</span>
             </a>
-            <a class="btn btn-block btn-github" href="/login/github">
+            <a class="btn custom-social-btn btn-block btn-github" href="/login/github">
                 <i class="fa fa-github"></i> Login
                 <span class="hidden-xs-down">with Github</span>
             </a>
@@ -32,7 +34,7 @@
 
 
 </form>
-<br><br>
+<br>
 <div class="text-center h4 thin-font">
-    No user id ? <a class="font-weight-normal" href="/signup"> Signup </a>
+    New User? </i><a class="font-weight-normal" href="/signup"> Signup </a>
 </div>

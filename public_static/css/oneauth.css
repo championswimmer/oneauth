@@ -56,3 +56,10 @@ body {
   font-size: 0.9rem;
   line-height: 1.25;
 }
+
+input:focus:valid , input:valid{
+  border: 1px dashed green;
+}
+input:focus:invalid {
+  border: 1px dashed #f25f52;
+}

@@ -29,7 +29,25 @@ body {
   border-bottom: 1px solid #e2dee6;
   padding-bottom: 8px;
 }
-
+.custom-profile-image{
+  width: 150px;
+  height:auto;
+}
+.custom-profile-padding{
+  padding:.25rem;
+}
+.profile-row{
+  display: flex;
+  justify-content: space-between;
+}
+.profile-parent-row{
+  display: flex;
+  flex-direction: column;
+  height:200px;
+}
+td , thead , tbody , tr , table{
+  border:0 !important;
+}
 .fontAwesome {
   font-family: 'Helvetica', FontAwesome, sans-serif;
 }

@@ -57,9 +57,9 @@ body {
   line-height: 1.25;
 }
 
-input:focus:valid , input:valid{
+.inputvalidation:focus:valid , .inputvalidation:valid{
   border: 1px dashed green;
 }
-input:focus:invalid {
+.inputvalidation:focus:invalid {
   border: 1px dashed #f25f52;
 }

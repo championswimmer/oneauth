@@ -3,8 +3,9 @@
  */
 const router = require('express').Router();
 const Raven = require('raven');
+const makeGaEvent = require('../utils/ga').makeGaEvent
 
-router.get('/', function (req, res){
+router.get('/', makeGaEvent('submit', 'form', 'logout'), function (req, res){
 	const redirectUrl = req.query.redirect || '/'
     req.user = null;
     req.logout();

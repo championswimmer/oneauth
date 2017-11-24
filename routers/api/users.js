@@ -46,6 +46,28 @@ router.get('/me',
 
     });
 
+router.get('/me/logout',
+  passport.authenticate('bearer', {session: false}),
+  function (req, res) {
+    if (req.user) {
+      models.AuthToken.destroy({
+        where: {
+          token: req.header('Authorization').split(' ')[1]
+        }
+      }).then(function () {
+        res.status(202).send({
+          'user_id': req.user.id,
+          'logout': 'success'
+        })
+      }).catch(function(err) {
+        res.status(501).send(err)
+      })
+    } else {
+      res.status(403).send("Unauthorized")
+    }
+  }
+)
+
 router.get('/:id',
     passport.authenticate('bearer', {session: false}),
     function (req, res) {

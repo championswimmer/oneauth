@@ -1,6 +1,7 @@
 /**
  * Created by championswimmer on 07/05/17.
  */
+const Raven = require('raven')
 const LocalStrategy = require('passport-local').Strategy;
 const models = require('../../../db/models').models;
 
@@ -36,6 +37,6 @@ module.exports = new LocalStrategy(function (username, password, cb) {
                 return cb(err, false, {message: err})
             });
 
-    });
+    }).catch((err) => Raven.captureException(err))
 
 });

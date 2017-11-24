@@ -1,11 +1,25 @@
+{{!< centercolumn}}
 
-<form method="post" action="/oauth/dialog/authorize/decision">
-
+<div class="auth-head">
+  <h2 class="text-center thin-font custom-h2">AUTHORIZE APP</h2>
+</div>
+<form class="form-group p-4 auth-form" method="post" action="/oauth/dialog/authorize/decision">
     <p>
-        Hello, {{user.firstname}} {{user.lastname}} ( {{user.username}} )
+        Hello, {{user.firstname}} {{user.lastname}} ( <span class="bold">{{user.username}}</span> )
     </p>
-    <p> The app {{client.name}} wants to use your profile details </p>
+    <p> You are about to authorize <span class="bold">{{client.name}}</span> to use your profile details.</p>
+    <p>This application will be able to:</p>
+    <ul>
+      <li>View your Full Name.</li>
+      <li>View your Email Id.</li>
+      <li>View your username on connected social accounts (if any).</li>
+      <li>View details of courses enrolled with coding blocks (if any).</li>
+    </ul>
     <input name="transaction_id" type="hidden" value="{{transactionID}}">
-    <input type="submit" value="Allow" id="allow">
-    <input type="submit" value="Deny" name="cancel" id="deny">
+    <div class="row p-4">
+        <input class="btn btn-danger col-2 col-2-mod" type="submit" value="Deny" name="cancel" id="deny">
+        <div class="col"></div>
+        <input class="btn btn-success col-2 col-2-mod" type="submit" value="Allow" id="allow">
+
+    </div>
 </form>

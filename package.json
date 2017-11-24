@@ -1,6 +1,6 @@
 {
   "name": "oneauth",
-  "version": "0.0.9",
+  "version": "0.3.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,17 +14,23 @@
   "author": "Arnav Gupta, Coding Blocks",
   "license": "ISC",
   "dependencies": {
-    "args": "^3.0.2",
+    "args": "^3.0.4",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "connect-datadog": "^0.0.6",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.3",
+    "datadog-tracer": "^0.3.4",
+    "debug": "^3.1.0",
     "express": "^4.15.3",
+    "express-flash": "^0.0.2",
+    "express-ga-middleware": "^0.1.6",
     "express-hbs": "^1.0.4",
-    "express-session": "^1.15.3",
+    "express-session": "^1.15.4",
     "hbs": "^4.0.1",
+    "newrelic": "^2.3.2",
     "oauth2orize": "^1.8.0",
-    "passport": "^0.3.2",
+    "passport": "^0.4.0",
     "passport-custom": "^1.0.5",
     "passport-facebook": "^2.1.1",
     "passport-github2": "^0.1.10",
@@ -34,10 +40,16 @@
     "passport-oauth2-client-password": "^0.1.2",
     "passport-strategy": "^1.0.0",
     "passport-twitter-email": "^1.0.3",
-    "pg": "^6.2.4",
+    "pg": "6",
     "pg-hstore": "^2.3.2",
+    "raven": "^2.2.1",
     "request": "^2.81.0",
-    "sequelize": "^4.1.0",
+    "sequelize": "^4.13.5",
     "uid2": "^0.0.3"
+  },
+  "engines": {
+    "node": ">= 7",
+    "npm": ">= 5",
+    "yarn": ">= 1"
   }
 }

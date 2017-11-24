@@ -1,14 +1,24 @@
 engines:
-  eslint:
-    enabled: true
   csslint:
+    enabled: true
+  eslint:
     enabled: true
   duplication:
     enabled: true
     config:
       languages:
-      - javascript
-
+        - javascript
+  fixme:
+    enabled: true
+ratings:
+  paths:
+    - "db/**/*"
+    - "oauth/**/*"
+    - "routers/**/*"
+    - "utils/**/*"
+    - "scripts/**/*"
+    - "views/**/*"
 exclude_paths:
+ - "docs/**/*"
  - "**/jquery*"
  - "**/bootstrap*"

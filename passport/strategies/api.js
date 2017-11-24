@@ -19,7 +19,7 @@ const bearerStrategy = new BearerStrategy(function(token, done) {
             explicit: authToken.explicit
         };
         return done (null, authToken.user.get(), info);
-    })
+    }).catch((err) => console.log(err))
 });
 
 module.exports = {

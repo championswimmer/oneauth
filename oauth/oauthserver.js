@@ -20,7 +20,7 @@ server.deserializeClient(function (clientId, done) {
         where: {id: clientId}
     }).then(function (client) {
         return done(null, client)
-    })
+    }).catch(err => console.log(err))
 });
 
 /**
@@ -109,7 +109,7 @@ server.exchange( oauth.exchange.code (
             //so it cannot be reused
             grantCode.destroy();
 
-        })
+        }).catch(err => console.log(err))
     }
 ) );
 
@@ -132,7 +132,7 @@ const authorizationMiddleware = [
                 }
             }
             return done(null, false)
-        })
+        }).catch(err => console.log(err))
     }, function (client, user, done) {
         //TODO: Check if we can auto approve
         models.AuthToken.findOne({

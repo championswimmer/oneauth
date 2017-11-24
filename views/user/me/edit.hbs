@@ -1,0 +1,47 @@
+{{!< centercolumn}}
+
+<h2 class="text-center thin-font"> Edit Profile </h2>
+
+{{#if messages.error}}
+    <div class="alert alert-danger" role="alert">
+        {{messages.error}}
+    </div>
+{{/if}}
+
+<form class="form-group" method="post">
+    <div class="form-group row" id="profile-row-id">
+        <label for="userid" class=" col-sm-3 col-form-label"> User ID </label>
+        <input class="col-sm-9 form-control" type="text" disabled id="userid" value="{{user.id}}"> </input>
+    </div>
+    <div class="form-group row" id="profile-row-id">
+        <label for="username" class=" col-sm-3 col-form-label"> Username </label>
+        <input class="col-sm-9 form-control" type="text" disabled id="username" value="{{user.username}}"> </input>
+    </div>
+    <div class="form-group row" id="profile-row-id">
+        <label for="firstname" class=" col-sm-3 col-form-label"> First Name </label>
+        <input class="col-sm-9 form-control" type="text" name="firstname" id="firstname" value="{{user.firstname}}"> </input>
+    </div>
+    <div class="form-group row" id="profile-row-id">
+        <label for="lastname" class=" col-sm-3 col-form-label"> Last Name </label>
+        <input class="col-sm-9 form-control" type="text" name="lastname" id="lastname" value="{{user.lastname}}"> </input>
+    </div>
+    <div class="form-group row" id="profile-row-id">
+        <label for="email" class="col-sm-3 col-form-label"> Email ID </label>
+        <input class="col-sm-9 form-control" type="text" disabled id="email" value="{{user.email}}"> </input>
+    </div>
+    <div class="form-group row" id="profile-row-id">
+        <label for="password" class="col-sm-3 col-form-label"> New Password </label>
+        <input class="col-sm-9 form-control" type="password" name="password" placeholder="Leave empty to keep unchanged" id="password"> </input>
+    </div>
+    <div class="form-group row" id="profile-row-id">
+        <label for="repassword" class=" col-sm-3 col-form-label"> Re-enter </label>
+        <input class="col-sm-9 form-control" type="password" name="repassword" placeholder="Leave empty to keep unchanged" id="repassword"> </input>
+    </div>
+    <div class="form-group row">
+        <div class="col hidden-md-down"></div>
+        <input type="submit" class="col-lg-3 m-2 btn btn-success" value="SUBMIT">
+        <input type="reset" class="col-lg-3 m-2 p-2 btn btn-danger" value="RESET">
+        <div class="col hidden-md-down"></div>
+    </div>
+
+</form>

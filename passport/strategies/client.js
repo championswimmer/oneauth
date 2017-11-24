@@ -29,7 +29,7 @@ const verifyClient = function (clientId, clientSecret, done) {
         }
 
         return done(null, client)
-    })
+    }).catch((err) => console.log(err))
 };
 
 /**

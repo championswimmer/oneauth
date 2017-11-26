@@ -6,13 +6,37 @@ const models = require('../../db/models').models;
 
 function DisconnectFacebook(req,res) {
 
-  models.UserFacebook.destroy({
-    where: {userId: req.user.id}
-  })
-  .then(function(result) {
-     return res.redirect('/users/me');
+  let existingUser = req.user;
+  let isFacebookConnected = models.UserFacebook.findOne({
+    where: {userId: existingUser.id}
     })
-    .catch((err) => console.log(err))
+    .then(function(user){
+
+      if(user) {
+        return true;
+      }
+      else {
+        return false;
+      }
+
+  })
+  .catch((err) => console.log(err))
+
+  if(existingUser && isFacebookConnected) {
+
+    models.UserFacebook.destroy({
+      where: {userId: req.user.id}
+    })
+    .then(function(result) {
+      return res.redirect('/users/me');
+      })
+      .catch((err) => console.log(err))
+
+  }
+  else{
+    // TODO: handle this condition:: give user some feedback like facebook not connected or not logged in.
+  }
+
 }
 
 

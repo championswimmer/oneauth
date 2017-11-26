@@ -6,13 +6,36 @@ const models = require('../../db/models').models;
 
 function DisconnectTwitter(req,res) {
 
-  models.UserTwitter.destroy({
-    where: {userId: req.user.id}
-  })
-  .then(function(user) {
-    res.redirect('/users/me');
+  let existingUser = req.user;
+  let isTwitterConnected = models.UserTwitter.findOne({
+    where: {userId: existingUser.id}
+    })
+    .then(function(user){
+
+      if(user) {
+        return true;
+      }
+      else {
+        return false;
+      }
+
   })
   .catch((err) => console.log(err))
+
+  if(existingUser && isTwitterConnected) {
+
+    models.UserTwitter.destroy({
+      where: {userId: req.user.id}
+    })
+    .then(function(result) {
+      return res.redirect('/users/me');
+      })
+      .catch((err) => console.log(err))
+
+  }
+  else{
+    // TODO: handle this condition:: give user some feedback like twitter not connected or not logged in.
+  }
 
 }
 

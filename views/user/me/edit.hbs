@@ -1,6 +1,6 @@
 {{!< centercolumn}}
 
-<h2 class="text-center thin-font"> Edit Profile </h2>
+<h2 class="text-center thin-font custom-h2"> Edit Profile </h2>
 
 {{#if messages.error}}
     <div class="alert alert-danger" role="alert">
@@ -8,7 +8,7 @@
     </div>
 {{/if}}
 
-<form class="form-group" method="post">
+<form class="form-group pl-2 pr-4 pt-4" method="post">
     <div class="form-group row" id="profile-row-id">
         <label for="userid" class=" col-sm-3 col-form-label"> User ID </label>
         <input class="col-sm-9 form-control" type="text" disabled id="userid" value="{{user.id}}"> </input>

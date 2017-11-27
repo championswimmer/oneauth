@@ -6,10 +6,23 @@ const cel = require('connect-ensure-login');
 const router = require('express').Router();
 
 router.get('/login', function(req, res, next) {
-    res.render('login', {title: "Login | OneAuth"})
+
+  if (req.user) {
+    res.redirect('/users/me');
+  }
+  else {
+    res.render('login', {title: "Login | OneAuth"});
+  }
+
 });
 router.get('/signup', function(req, res, next) {
-    res.render('signup', {title: "Signup | OneAuth"})
+
+  if(req.user) {
+    res.redirect('/users/me');
+  }
+  else {
+    res.render('signup', {title: "Signup | OneAuth"});
+  }
 });
 
 router.get('/client/add',

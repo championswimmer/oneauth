@@ -7,22 +7,13 @@ const models = require('../../db/models').models;
 function DisconnectGithub(req,res) {
 
   let existingUser = req.user;
-  let isGithubConnected = models.UserGithub.findOne({
-    where: {userId: existingUser.id}
-    })
-    .then(function(user){
 
-      if(user) {
-        return true;
-      }
-      else {
-        return false;
-      }
+  if(!existingUser){
 
-  })
-  .catch((err) => console.log(err))
+    res.redirect('/');
 
-  if(existingUser && isGithubConnected) {
+  }
+  else {
 
     models.UserGithub.destroy({
       where: {userId: req.user.id}
@@ -32,9 +23,6 @@ function DisconnectGithub(req,res) {
       })
       .catch((err) => console.log(err))
 
-  }
-  else{
-    // TODO: handle this condition:: give user some feedback like github not connected or not logged in.
   }
 
 }

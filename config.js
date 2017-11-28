@@ -11,7 +11,7 @@ config = {
 };
 
 if (process.env.ONEAUTH_DEV) {
-    config.SERVER_URL =  "https://oneauth.herokuapp.com/";
+    config.SERVER_URL =  "https://oneauth.herokuapp.com";
     config.DEBUG = true
 } else {
     config.SERVER_URL =  "https://account.codingblocks.com";

@@ -79,6 +79,6 @@ app.use('/', pagerouter);
 
 app.use(Raven.errorHandler());
 
-app.listen(3838, function () {
+app.listen(process.env.PORT||3838, function () {
     debug("Listening on " + config.SERVER_URL );
 });

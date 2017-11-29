@@ -22,12 +22,14 @@ switch (config.DEPLOY_CONFIG) {
     config.SERVER_URL = 'https://oneauth.herokuapp.com'
     config.DEBUG = true
     config.SECRETS = require('./secrets-sample.json')
+    if (process.env.SENTRY_DSN) {
+      config.SECRETS.SENTRY_DSN = process.env.SENTRY_DSN
+    }
     break;
   case 'production': default:
   config.SERVER_URL = 'https://account.codingblocks.com'
   config.SECRETS = require('./secrets.json')
   break;
-
 }
 
 module.exports = config;

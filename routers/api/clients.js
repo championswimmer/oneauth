@@ -4,7 +4,6 @@
  * This is the /api/v1/clients path
  */
 const router = require('express').Router();
-const secrets = require('../../secrets.json');
 const models = require('../../db/models').models;
 const generator = require('../../utils/generator');
 const cel = require('connect-ensure-login');

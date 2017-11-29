@@ -1,6 +1,3 @@
-const config = require('../config');
-const secret = require('../secrets.json');
-
 const args = require('args');
 
 const db = require('../db/models').db;

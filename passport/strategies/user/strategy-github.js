@@ -6,8 +6,8 @@ const GithubStrategy = require('passport-github2').Strategy;
 
 const models = require('../../../db/models').models;
 
-const secrets = require('../../../secrets.json');
 const config = require('../../../config');
+const secrets = config.SECRETS;
 const passutils = require('../../../utils/password');
 
 /**

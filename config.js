@@ -16,13 +16,16 @@ switch (DEPLOY_CONFIG) {
   case 'heroku':
     config.SERVER_URL = 'http://localhost:3838'
     config.DEBUG = true
+    config.SECRETS = require('./secrets-sample.json')
     break;
   case 'localhost':
     config.SERVER_URL = 'https://oneauth.herokuapp.com'
     config.DEBUG = true
+    config.SECRETS = require('./secrets-sample.json')
     break;
   case 'production': default:
   config.SERVER_URL = 'https://account.codingblocks.com'
+  config.SECRETS = require('./secrets.json')
   break;
 
 }

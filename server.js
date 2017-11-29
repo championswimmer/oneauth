@@ -14,8 +14,8 @@ const express = require('express')
     , Raven = require('raven')
     , debug = require('debug')('oneauth:server')
 
-const secrets = require('./secrets.json')
-    , config = require('./config')
+const config = require('./config')
+    , secrets = config.SECRETS
     , loginrouter = require('./routers/login')
     , connectrouter = require('./routers/connect')
     , disconnectrouter = require('./routers/disconnect')

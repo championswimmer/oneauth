@@ -5,8 +5,8 @@ const Raven = require('raven')
 const LmsStrategy = require('./../custom/passport-lms').Strategy;
 const models = require('../../../db/models').models;
 
-const secrets = require('../../../secrets.json');
 const config = require('../../../config');
+const secrets = config.SECRETS;
 const passutils = require('../../../utils/password');
 
 

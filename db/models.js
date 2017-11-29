@@ -2,8 +2,8 @@
  * Created by championswimmer on 08/03/17.
  */
 const Sequelize = require('sequelize');
-const secrets = require('../secrets.json');
 const config = require('../config');
+const secrets = config.SECRETS;
 
 const db_name = secrets.DB.NAME;
 const db_user = secrets.DB.USER;

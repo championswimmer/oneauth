@@ -27,7 +27,7 @@ switch (config.DEPLOY_CONFIG) {
       config.SECRETS.SENTRY_DSN = process.env.SENTRY_DSN
     }
     if (process.env.NEW_RELIC_LICENSE_KEY) {
-      config.SECRETS.NEWRELIC_LICENSE_KEY = NEW_RELIC_LICENSE_KEY
+      config.SECRETS.NEWRELIC_LICENSE_KEY = process.env.NEW_RELIC_LICENSE_KEY
     }
     config.NEWRELIC_LOG_LEVEL = 'trace'
     break;

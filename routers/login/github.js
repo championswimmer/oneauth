@@ -22,7 +22,10 @@ function authnOrAuthzGithub(req, res, next) {
   }
 }
 
-router.get('/', passport.authenticate('github'));
+router.get('/', passport.authenticate('github') , function (req, res, next) {
+
+    res.redirect('/users/me')
+});
 
 router.get('/callback', authnOrAuthzGithub);
 

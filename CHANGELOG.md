@@ -6,6 +6,7 @@
   - create heroku-deployable setup for staging
   - improve user profile ui
   - better handling of secrets.json file
+  - [fix frontend] bootstrap 4 needs tether.io
 #### 0.3.3 
   - [validation] check empty email
   - [validation] give user feedback on frontend 

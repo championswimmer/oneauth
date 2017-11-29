@@ -2,6 +2,11 @@
 
 ## 1.0.0
 
+#### 0.3.3 
+  - [validation] check empty email
+  - [validation] give user feedback on frontend 
+  - redirect away from /login or /signup if already logged in
+  - allow ?redirect=xxxx on /logout path
 #### 0.3.2
   - [temporarily] downgrade to pg v6 
 

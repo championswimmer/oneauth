@@ -64,7 +64,10 @@
 </div>
 
 
-<div class="profile-row">
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-md-6 col-sm-12">
         {{#unless user.userfacebook}}
             <a class="btn text-white custom-social-btn btn-block btn-facebook mt-2 mr-1" href="/connect/facebook">
                 <span class="fa fa-facebook"></span> Connect Facebook
@@ -72,7 +75,7 @@
         {{/unless}}
 
         {{#unless user.usertwitter}}
-            <a class="btn text-white custom-social-btn btn-block btn-twitter" href="/connect/twitter">
+            <a class="btn btn-block text-white custom-social-btn btn-block btn-twitter" href="/connect/twitter">
                 <span class="fa fa-twitter"></span> Connect Twitter
             </a>
         {{/unless}}
@@ -82,4 +85,6 @@
                 <span class="fa fa-github"></span> Connect Github
             </a>
         {{/unless}}
+    </div>
+    <div class="col"></div>
 </div>

@@ -10,9 +10,9 @@ config = {
   "DEBUG": false,
 };
 
-const DEPLOY_CONFIG = process.env.ONEAUTH_DEV || 'production';
+config.DEPLOY_CONFIG = process.env.ONEAUTH_DEV || 'production';
 
-switch (DEPLOY_CONFIG) {
+switch (config.DEPLOY_CONFIG) {
   case 'localhost':
     config.SERVER_URL = 'http://localhost:3838'
     config.DEBUG = true

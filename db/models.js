@@ -119,7 +119,9 @@ Client.hasMany(AuthToken);
 
 
 
-db.sync().then(() => {console.log('Database configured')}).catch(err => console.error(err));
+db.sync({
+  force: config.DEPLOY_CONFIG === 'heroku' // Clear DB on each run on heroku
+}).then(() => {console.log('Database configured')}).catch(err => console.error(err));
 
 
 

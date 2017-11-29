@@ -2,6 +2,10 @@
 
 ## 1.0.0
 
+#### 0.4.0
+  - create heroku-deployable setup for staging
+  - improve user profile ui
+  - better handling of secrets.json file
 #### 0.3.3 
   - [validation] check empty email
   - [validation] give user feedback on frontend 

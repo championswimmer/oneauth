@@ -11,7 +11,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['OneAuth'],
+  app_name: ['oneauth'],
   /**
    * Your New Relic license key.
    */

@@ -1,20 +1,30 @@
 
 config = {
-    "FACEBOOK_CALLBACK": "/login/facebook/callback",
-    "FACEBOOK_LOGIN_SCOPES": ["email", "public_profile"],
-    "TWITTER_CALLBACK": "/login/twitter/callback",
-    "GITHUB_CALLBACK": "/login/github/callback",
-    "GRANT_TOKEN_SIZE": 32,
-    "AUTH_TOKEN_SIZE": 64,
-    "BCRYPT_SALT_ROUNDS": 8,
-    "DEBUG": process.env.ONEAUTH_DEBUG
+  "FACEBOOK_CALLBACK": "/login/facebook/callback",
+  "FACEBOOK_LOGIN_SCOPES": ["email", "public_profile"],
+  "TWITTER_CALLBACK": "/login/twitter/callback",
+  "GITHUB_CALLBACK": "/login/github/callback",
+  "GRANT_TOKEN_SIZE": 32,
+  "AUTH_TOKEN_SIZE": 64,
+  "BCRYPT_SALT_ROUNDS": 8,
+  "DEBUG": false,
 };
 
-if (process.env.ONEAUTH_DEV) {
-    config.SERVER_URL =  "https://oneauth.herokuapp.com";
+const DEPLOY_CONFIG = process.env.ONEAUTH_DEV || 'production';
+
+switch (DEPLOY_CONFIG) {
+  case 'heroku':
+    config.SERVER_URL = 'http://localhost:3838'
     config.DEBUG = true
-} else {
-    config.SERVER_URL =  "https://account.codingblocks.com";
+    break;
+  case 'localhost':
+    config.SERVER_URL = 'https://oneauth.herokuapp.com'
+    config.DEBUG = true
+    break;
+  case 'production': default:
+  config.SERVER_URL = 'https://account.codingblocks.com'
+  break;
+
 }
 
 module.exports = config;

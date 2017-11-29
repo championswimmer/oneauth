@@ -24,6 +24,9 @@ function authnOrAuthzTwitter(req, res, next) {
 
 router.get('/', passport.authenticate('twitter'));
 
-router.get('/callback', authnOrAuthzTwitter);
+router.get('/callback', authnOrAuthzTwitter,function (req, res, next) {
+    //Add flash for success
+    res.redirect('/users/me');
+});
 
 module.exports = router;

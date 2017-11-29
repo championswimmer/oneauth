@@ -15,8 +15,8 @@ function authnOrAuthzTwitter(req, res, next) {
     } else {
         if(config.DEBUG) console.log("Authz Twitter = = = = = = ");
         passport.authorize('twitter', {
-            failureRedirect: '/login',
-            successReturnToOrRedirect: '/users/me'
+            //TODO: Add failure flash (could not connect your account to ...)
+            failureRedirect: '/users/me'
         })(req, res, next);
     }
 }
@@ -24,6 +24,8 @@ function authnOrAuthzTwitter(req, res, next) {
 
 router.get('/', passport.authenticate('twitter'));
 
-router.get('/callback', authnOrAuthzTwitter);
+router.get('/callback', authnOrAuthzTwitter, function (req, res, next) {
+    res.redirect('/users/me');
+});
 
 module.exports = router;

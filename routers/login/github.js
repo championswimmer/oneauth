@@ -16,14 +16,16 @@ function authnOrAuthzGithub(req, res, next) {
   } else {
     if(config.DEBUG) console.log("Authz Github = = = = = = ");
     passport.authorize('github', {
-      failureRedirect: '/login',
-      successReturnToOrRedirect: '/users/me'
+      //TODO: Add failure flash 
+      failureRedirect: '/user/me'
     })(req, res, next);
   }
 }
 
 router.get('/', passport.authenticate('github'));
 
-router.get('/callback', authnOrAuthzGithub);
+router.get('/callback', authnOrAuthzGithub, function (req, res, next) {
+    res.redirect('/users/me')
+});
 
 module.exports = router;

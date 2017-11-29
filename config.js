@@ -13,12 +13,12 @@ config = {
 const DEPLOY_CONFIG = process.env.ONEAUTH_DEV || 'production';
 
 switch (DEPLOY_CONFIG) {
-  case 'heroku':
+  case 'localhost':
     config.SERVER_URL = 'http://localhost:3838'
     config.DEBUG = true
     config.SECRETS = require('./secrets-sample.json')
     break;
-  case 'localhost':
+  case 'heroku':
     config.SERVER_URL = 'https://oneauth.herokuapp.com'
     config.DEBUG = true
     config.SECRETS = require('./secrets-sample.json')

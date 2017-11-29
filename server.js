@@ -18,6 +18,7 @@ const secrets = require('./secrets.json')
     , config = require('./config')
     , loginrouter = require('./routers/login')
     , connectrouter = require('./routers/connect')
+    , disconnectrouter = require('./routers/disconnect')
     , logoutrouter = require('./routers/logoutrouter')
     , signuprouter = require('./routers/signup')
     , apirouter = require('./routers/api')
@@ -71,6 +72,7 @@ app.use(expressGa('UA-83327907-7'));
 app.use(datadogRouter)
 app.use('/login', loginrouter);
 app.use('/connect', connectrouter);
+app.use('/disconnect', disconnectrouter);
 app.use('/logout', logoutrouter);
 app.use('/signup', signuprouter);
 app.use('/api', apirouter);

@@ -21,7 +21,9 @@ function DisconnectTwitter(req,res) {
     .then(function(result) {
       return res.redirect('/users/me');
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {Raven.captureException(err);
+        res.status(503).send({message: "There was an error disconnecting"});
+      })
 
   }
 

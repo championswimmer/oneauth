@@ -45,6 +45,12 @@ body {
   flex-direction: column;
   height:200px;
 }
+.social-btn-wrapper{
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  justify-content: center;
+}
 td , thead , tbody , tr , table{
   border:0 !important;
 }

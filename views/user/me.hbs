@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div class="container mt-3 pl-5 pr-5">
+<div class="container mt-3">
 <div class="profile-parent-row">
     <div id="profile-row-id" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> CodingBlocks Account: </p> <p class="custom-profile-padding"> {{user.id}} </p>
@@ -33,30 +33,33 @@
     {{#if user.userfacebook}}
     <div id="profile-row-fb" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Facebook </p>
-        <p class="custom-profile-padding"> Connected to
+        <p class="custom-profile-padding"><span class="hidden-md-down">Connected to</span>
             <a target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
             {{user.userfacebook.id}}
             </a>
+            <a href="/disconnect/facebook" title="Disconnect Facebook"><i class="fa fa-times" aria-hidden="true"></i></a>
         </p>
     </div>
     {{/if}}
     {{#if user.usertwitter}}
         <div id="profile-row-twitter" class="profile-row">
             <p class="font-weight-bold custom-profile-padding"> Twitter </p>
-            <p class="custom-profile-padding"> Connected to
+            <p class="custom-profile-padding"> <span class="hidden-md-down">Connected to</span>
                 <a target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
                 {{user.usertwitter.username}}
                 </a>
+                <a href="/disconnect/twitter" title="Disconnect Twitter"><i class="fa fa-times" aria-hidden="true"></i></a>
             </p>
         </div>
     {{/if}}
     {{#if user.usergithub}}
         <div id="profile-row-github" class="profile-row">
             <p class="font-weight-bold custom-profile-padding"> Github </p>
-            <p class="custom-profile-padding"> Connected to
+            <p class="custom-profile-padding"> <span class="hidden-md-down">Connected to</span>
                 <a target="_blank" href="http://github.com/{{user.usergithub.username}}">
                     {{user.usergithub.username}}
                 </a>
+                <a href="disconnect/github" title="Disconnect Github"><i class="fa fa-times" aria-hidden="true"></i></a>
             </p>
         </div>
     {{/if}}
@@ -66,25 +69,23 @@
 
 
 <div class="row">
-    <div class="col"></div>
-    <div class="col-md-6 col-sm-12">
+    <div class="social-btn-wrapper col-md-12">
         {{#unless user.userfacebook}}
-            <a class="btn text-white custom-social-btn btn-block btn-facebook mt-2 mr-1" href="/connect/facebook">
+            <a class="btn text-white custom-social-btn btn-facebook mt-2 mr-1" href="/connect/facebook">
                 <span class="fa fa-facebook"></span> Connect Facebook
             </a>
         {{/unless}}
 
         {{#unless user.usertwitter}}
-            <a class="btn btn-block text-white custom-social-btn btn-block btn-twitter" href="/connect/twitter">
+            <a class="btn text-white custom-social-btn btn-twitter mt-2" href="/connect/twitter">
                 <span class="fa fa-twitter"></span> Connect Twitter
             </a>
         {{/unless}}
 
         {{#unless user.usergithub}}
-            <a class="btn text-white custom-social-btn btn-block btn-github ml-1" href="/connect/github">
+            <a class="btn text-white custom-social-btn btn-github ml-1 mt-2" href="/connect/github">
                 <span class="fa fa-github"></span> Connect Github
             </a>
         {{/unless}}
     </div>
-    <div class="col"></div>
 </div>

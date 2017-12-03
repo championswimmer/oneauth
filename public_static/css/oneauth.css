@@ -43,7 +43,6 @@ body {
 .profile-parent-row{
   display: flex;
   flex-direction: column;
-  height:200px;
 }
 .social-btn-wrapper{
   display: flex;

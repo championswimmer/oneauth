@@ -8,7 +8,8 @@ config = {
   "AUTH_TOKEN_SIZE": 64,
   "BCRYPT_SALT_ROUNDS": 8,
   "DEBUG": false,
-  "NEWRELIC_LOG_LEVEL": "info"
+  "NEWRELIC_LOG_LEVEL": "info",
+  "EMAIL_SENDER_ADDR": "himank.bhalla@codingblocks.com"
 };
 
 config.DEPLOY_CONFIG = process.env.ONEAUTH_DEV || 'production';

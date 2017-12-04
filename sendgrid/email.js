@@ -1,5 +1,6 @@
 const sgMail = require('@sendgrid/mail');
 const secret = require('../secrets-sample');
+const config = require('../config');
 sgMail.setApiKey(secret.SENDGRID_API_KEY);
 sgMail.setSubstitutionWrappers('{{', '}}');
 
@@ -9,7 +10,7 @@ const sendgridTemplatesid = {
   'verifyEmail':''
 }
 
-const senderEmail = 'himank.bhalla@codingblocks.com';
+const senderEmail = config.EMAIL_SENDER_ADDR;
 
 
 const welcomeMail = function(user) {
@@ -41,21 +42,40 @@ const welcomeMail = function(user) {
 
 }
 
-const verifyEmail = function(userEmail) {
+//Send a Single Email to Single or Multiple Recipients where they see each others email addresses
+
+const verifyEmail = function(userEmails) {
 
   let msgTemplate = {};
   msgTemplate.template_id = '';
   msgTemplate.from = senderEmail;
 
-  msgTemplate.to = {
-    email : userEmail,
-  };
-
-  // msgTemplate.substitutions = {
-    // "name": user.firstname ,
-  // };
+  msgTemplate.to = userEmails;
 
   sgMail.send(msgTemplate)
+  .then(() => {
+  //  console.log('mail sent');
+  })
+  .catch(error => {
+
+    Raven.captureException(error);
+    console.error(error.toString());
+
+  });
+
+
+}
+
+//Send a Single Email to Multiple Recipients where they don't see each others email addresses
+const verifyEmail_private = function(userEmails) {
+
+  let msgTemplate = {};
+  msgTemplate.template_id = '';
+  msgTemplate.from = senderEmail;
+
+  msgTemplate.to = userEmails;
+
+  sgMail.sendMultiple(msgTemplate)
   .then(() => {
   //  console.log('mail sent');
   })

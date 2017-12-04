@@ -14,11 +14,16 @@ config = {
 config.DEPLOY_CONFIG = process.env.ONEAUTH_DEV || 'production';
 
 switch (config.DEPLOY_CONFIG) {
+
+
   case 'localhost':
     config.SERVER_URL = 'http://localhost:3838'
     config.DEBUG = true
     config.SECRETS = require('./secrets-sample.json')
     break;
+
+
+
   case 'heroku':
     config.SERVER_URL = 'https://oneauth.herokuapp.com'
     config.DEBUG = true
@@ -31,6 +36,9 @@ switch (config.DEPLOY_CONFIG) {
     }
     config.NEWRELIC_LOG_LEVEL = 'trace'
     break;
+
+
+
   case 'production': default:
   config.SERVER_URL = 'https://account.codingblocks.com'
   config.SECRETS = require('./secrets.json')

@@ -7,6 +7,10 @@
   - improve user profile ui
   - better handling of secrets.json file
   - [fix frontend] bootstrap 4 needs tether.io
+  - set global .codingblocks.com cookie
+  - allow frontend clients access to /api/user/me
+  - drop dependency on cookie-parser (not needed)
+  
 #### 0.3.3 
   - [validation] check empty email
   - [validation] give user feedback on frontend 

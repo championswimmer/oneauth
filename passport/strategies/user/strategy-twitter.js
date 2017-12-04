@@ -53,7 +53,7 @@ module.exports = new TwitterStrategy({
                             username: existCount === 0 ? profileJson.screen_name : profileJson.screen_name + "-t",
                             firstname: profileJson.name.split(' ')[0],
                             lastname: profileJson.name.split(' ').pop(),
-                            email: profileJson.email,
+                            email: profileJson.email || undefined,
                             photo: profileJson.profile_image_url_https.replace('_normal', '_400x400')
                         }
                     }

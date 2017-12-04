@@ -50,7 +50,7 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
                   include: [models.User]
               }).then(function (user) {
 
-                  mail.welcomEmail(user.user.dataValues);
+                  mail.welcomeEmail(user.user.dataValues);
 
                   res.redirect('/login');
               })

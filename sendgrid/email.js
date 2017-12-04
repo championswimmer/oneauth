@@ -6,14 +6,14 @@ sgMail.setSubstitutionWrappers('{{', '}}');
 
 
 const sendgridTemplatesid = {
-  'welcomeEmail':'1e4b2b6f-be9a-478a-b1b4-1ecd1c8ecbc5',
-  'verifyEmail':''
+  'welcomeEmail':'b318c5d0-44b9-4a69-9d9a-01f08284b9a6',
+  'verifyEmail':'98855b98-08fd-482f-b273-273038d4f75f'
 }
 
 const senderEmail = config.EMAIL_SENDER_ADDR;
 
 
-const welcomeMail = function(user) {
+const welcomeEmail = function(user) {
 
   let msgTemplate = {};
   msgTemplate.template_id = sendgridTemplatesid.welcomeEmail;
@@ -47,7 +47,7 @@ const welcomeMail = function(user) {
 const verifyEmail = function(userEmails) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = '';
+  msgTemplate.template_id = sendgridTemplatesid.verifyEmail;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = userEmails;
@@ -66,11 +66,12 @@ const verifyEmail = function(userEmails) {
 
 }
 
-//Send a Single Email to Multiple Recipients where they don't see each others email addresses
-const verifyEmail_private = function(userEmails) {
+//Send a Single Email to Single or Multiple Recipients where they don't see each others email addresses
+
+const verifyEmailPrivate = function(userEmails) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = '';
+  msgTemplate.template_id = sendgridTemplatesid.verifyEmail;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = userEmails;
@@ -91,4 +92,4 @@ const verifyEmail_private = function(userEmails) {
 
 
 
-module.exports = {'welcomeMail':welcomeMail , 'verifyEmail':verifyEmail };
+module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail , 'verifyEmailPrivate':verifyEmailPrivate };

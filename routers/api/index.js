@@ -6,9 +6,10 @@
 const router = require('express').Router();
 
 router.use((req, res, next) => {
-    res.set('access-control-allow-headers', 'X-Requested-With,content-type,Authorization')
-    res.set('access-control-allow-methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-    res.set('access-control-allow-origin', req.get('origin'))
+    res.set('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization')
+    res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+    res.set('Access-Control-Allow-Origin', req.get('origin'))
+    res.set('Access-Control-Allow-Credentials', true)
     next()
 })
 

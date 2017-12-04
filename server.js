@@ -60,7 +60,10 @@ app.use(session({
     secret: secrets.EXPRESS_SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    name: 'oneauth'
+    name: 'oneauth',
+    cookie: {
+        domain: config.COOKIE_DOMAIN
+    }
 }));
 app.use(flash());
 app.use(passport.initialize());

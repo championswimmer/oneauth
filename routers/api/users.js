@@ -10,7 +10,8 @@ const models = require('../../db/models').models;
 
 
 router.get('/me',
-    passport.authenticate('bearer', {session: false}),
+    // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
+    passport.authenticate(['bearer', 'session']),
     function(req,res) {
 
         if (req.user) {
@@ -75,6 +76,8 @@ router.get('/:id',
             return res.send(req.user)
         }
         models.User.findOne({
+            // Public API should expose only id, username and photo URL of users
+            attributes: ['id', 'username', 'photo'],
             where: {id: req.params.id}
         }).then(function (user) {
             if (!user) {

@@ -2,6 +2,10 @@
 
 ## 1.0.0
 
+#### 0.4.1
+  - [hotfix] clear cookies so older logins get cleared
+  - some fixed to make it deploy on heroku properly
+
 #### 0.4.0
   - create heroku-deployable setup for staging
   - improve user profile ui

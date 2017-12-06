@@ -18,7 +18,8 @@ const secrets = require('./secrets.json')
     , signuprouter = require('./routers/signup')
     , apirouter = require('./routers/api')
     , oauthrouter = require('./routers/oauthrouter')
-    , pagerouter = require('./routers/pagerouter');
+    , pagerouter = require('./routers/pagerouter')
+    , statusrouter = require('./routers/statusrouter');
 
 const app = express();
 const redirectToHome = function (req, res, next) {
@@ -60,6 +61,7 @@ app.use('/signup', signuprouter);
 app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);
 app.use('/', pagerouter);
+app.use('/status',statusrouter);
 
 app.listen(3838, function () {
     console.log("Listening on " + config.SERVER_URL );

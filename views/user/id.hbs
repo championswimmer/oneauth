@@ -1,0 +1,69 @@
+{{!< centercolumn}}
+
+<h2 class="text-center thin-font">
+    My Profile &nbsp;&nbsp;
+    <a href="/users/{{user.id}}/edit"><i class="fa fa-edit"></i></a>
+</h2>
+
+<table class="table table-bordered">
+    <tr id="profile-row-photo">
+        <td colspan="2" class="text-center">
+            <img class="img-thumbnail" src="{{user.photo}}">
+        </td>
+    </tr>
+    <tr id="profile-row-id">
+        <td class="font-weight-bold"> User ID </td>
+        <td> {{user.id}} </td>
+    </tr>
+    <tr id="profile-row-username">
+        <td class="font-weight-bold"> Username </td>
+        <td> {{user.username}} </td>
+    </tr>
+    <tr id="profile-row-firstname">
+        <td class="font-weight-bold"> Firstname </td>
+        <td> {{user.firstname}} </td>
+    </tr>
+    <tr id="profile-row-lastname">
+        <td class="font-weight-bold"> Lastname </td>
+        <td> {{user.lastname}} </td>
+    </tr>
+    <tr id="profile-row-email">
+        <td class="font-weight-bold"> Email </td>
+        <td> <a href="mailto:{{user.email}}">{{user.email}}</a> </td>
+    </tr>
+    <tr id="profile-row-role">
+        <td class="font-weight-bold"> Role@CB </td>
+        <td> {{user.role}} </td>
+    </tr>
+    {{#if user.userfacebook}}
+    <tr id="profile-row-fb">
+        <td class="font-weight-bold"> Facebook </td>
+        <td> Connected to
+            <a target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
+            {{user.userfacebook.id}}
+            </a>
+        </td>
+    </tr>
+    {{/if}}
+    {{#if user.usertwitter}}
+        <tr id="profile-row-twitter">
+            <td class="font-weight-bold"> Twitter </td>
+            <td> Connected to
+                <a target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
+                {{user.usertwitter.username}}
+                </a>
+            </td>
+        </tr>
+    {{/if}}
+    {{#if user.usergithub}}
+        <tr id="profile-row-github">
+            <td class="font-weight-bold"> Github </td>
+            <td> Connected to
+                <a target="_blank" href="http://github.com/{{user.usergithub.username}}">
+                    {{user.usergithub.username}}
+                </a>
+            </td>
+        </tr>
+    {{/if}}
+
+</table>

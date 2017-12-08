@@ -14,8 +14,23 @@
 ### Step 2 : Deploy
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-If you want to run locally for testing, please read the
-[required steps here](docs/RUNNING_LOCALLY.md)
+## Running Locally (for Development)
+
+### Option 1: Without SSL, only local logins
+Simple clone and  - 
+
+```
+npm install
+npm start
+```
+
+### Option 2: With SSL (HTTPS), and try out social logins too
+
+If you want to run it with https, and run it on a proper domain
+(not 127.0.0.1), and enable Facebook/Twitter/Github logins, you'll need to take care of 
+a few additional steps - 
+
+Please read the [required steps here](docs/RUNNING_LOCALLY.md)
 
 -------------------------
 

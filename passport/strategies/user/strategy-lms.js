@@ -1,11 +1,12 @@
 /**
  * Created by championswimmer on 07/05/17.
  */
+const Raven = require('raven')
 const LmsStrategy = require('./../custom/passport-lms').Strategy;
 const models = require('../../../db/models').models;
 
-const secrets = require('../../../secrets.json');
 const config = require('../../../config');
+const secrets = config.SECRETS;
 const passutils = require('../../../utils/password');
 
 
@@ -40,5 +41,5 @@ module.exports = new LmsStrategy({
         }
 
         return cb(null, userLms.user.get())
-    })
+    }).catch((err) => Raven.captureException(err))
 });

@@ -2,10 +2,53 @@
 
 ## 1.0.0
 
+#### 0.4.1
+  - [hotfix] clear cookies so older logins get cleared
+  - some fixed to make it deploy on heroku properly
+
+#### 0.4.0
+  - create heroku-deployable setup for staging
+  - improve user profile ui
+  - better handling of secrets.json file
+  - [fix frontend] bootstrap 4 needs tether.io
+  - set global .codingblocks.com cookie
+  - allow frontend clients access to /api/user/me
+  - drop dependency on cookie-parser (not needed)
+  
+#### 0.3.3 
+  - [validation] check empty email
+  - [validation] give user feedback on frontend 
+  - redirect away from /login or /signup if already logged in
+  - allow ?redirect=xxxx on /logout path
+#### 0.3.2
+  - [temporarily] downgrade to pg v6 
+
+#### 0.3.1
+  - Fix github missing first/last names
+  - Add DataDog metrics
+
+### 0.3
+  - fix Twitter authorize 
+  - fix Github connect 
+  - add sentry error reporting 
+
+### 0.2
+  - update to use node 8
+  - fix all unhandled promises
+
+#### 0.1.2
+ - added roles to users
+ - scripts to set roles
+
+#### 0.1.1
+ - logout user via api `/api/users/me/logout`
+ - editing user (only browser session for now, not API)
+
 ### 0.1
  - connect twitter if signed in with other means
  - connect github if signed in with other means
  - add google analytics
+ - beautify the auth dialog
 
 #### 0.0.9
  - add course details to lms table

@@ -4,7 +4,6 @@
  * This is the /api/v1/clients path
  */
 const router = require('express').Router();
-const secrets = require('../../secrets.json');
 const models = require('../../db/models').models;
 const generator = require('../../utils/generator');
 const cel = require('connect-ensure-login');
@@ -13,7 +12,7 @@ const urlutils = require('../../utils/urlutils');
 
 router.post('/add', function (req, res) {
     if (!req.user) {
-        return res.send("Only logged in users can make clients")
+        return res.status(403).send("Only logged in users can make clients")
     }
 
     let clientName = req.body.clientname;
@@ -38,7 +37,7 @@ router.post('/add', function (req, res) {
         userId: req.user.id
     }).then(function(client) {
         res.redirect('/clients/' + client.id)
-    })
+    }).catch(err => console.log(err))
 });
 
 router.post('/edit/:id', cel.ensureLoggedIn('/login'),

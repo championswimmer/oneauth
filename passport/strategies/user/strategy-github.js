@@ -1,12 +1,13 @@
 /**
  * Created by championswimmer on 07/05/17.
  */
+const Raven = require('raven')
 const GithubStrategy = require('passport-github2').Strategy;
 
 const models = require('../../../db/models').models;
 
-const secrets = require('../../../secrets.json');
 const config = require('../../../config');
+const secrets = config.SECRETS;
 const passutils = require('../../../utils/password');
 
 /**
@@ -34,7 +35,7 @@ module.exports = new GithubStrategy({
             return models.User.findById(oldUser.id)
         }).then(function (user) {
             return cb(null, user.get())
-        })
+        }).catch((err) => Raven.captureException(err))
     } else {
         models.User.count({ where: {username: profileJson.login}})
             .then(function(existCount){
@@ -47,9 +48,9 @@ module.exports = new GithubStrategy({
                         tokenSecret: tokenSecret,
                         username: profileJson.login,
                         user: {
-                            username: existCount == 0 ? profileJson.login : profileJson.login + "-gh",
-                            firstname: profileJson.name.split(' ')[0],
-                            lastname: profileJson.name.split(' ').pop(),
+                            username: existCount === 0 ? profileJson.login : profileJson.login + "-gh",
+                            firstname: profileJson.name ? profileJson.name.split(' ')[0] : profileJson.login,
+                            lastname: profileJson.name ? profileJson.name.split(' ').pop() : profileJson.login,
                             email: profileJson.email,
                             photo: profileJson.avatar_url
                         }
@@ -61,7 +62,7 @@ module.exports = new GithubStrategy({
                 return cb(null, false);
             }
             return cb(null, userGithub.user.get())
-        })
+        }).catch((err) => Raven.captureException(err))
     }
 
 

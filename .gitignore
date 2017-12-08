@@ -47,3 +47,6 @@ typings/
 .env
 secrets.json
 .github-todos
+
+# New Relic
+newrelic_agent.log

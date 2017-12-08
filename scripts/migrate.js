@@ -6,7 +6,7 @@ const args = require('args');
 const fs = require('fs');
 
 const config = require('../config');
-const secret = require('../secrets.json');
+const secret = config.SECRETS;
 
 args
     .option('file', 'path to migration file')

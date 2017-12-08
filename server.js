@@ -24,7 +24,8 @@ const config = require('./config')
     , oauthrouter = require('./routers/oauthrouter')
     , pagerouter = require('./routers/pagerouter')
     , statusrouter = require('./routers/statusrouter')
-    , {expresstracer, datadogRouter} = require('./utils/ddtracer');
+    , {expresstracer, datadogRouter} = require('./utils/ddtracer')
+    , { expressLogger } = require ('./utils/logger');
 
 const app = express();
 
@@ -54,6 +55,7 @@ app.engine('hbs', exphbs.express4({
 app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "hbs");
 
+app.use (expressLogger);
 app.use(express.static(path.join(__dirname, 'public_static')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

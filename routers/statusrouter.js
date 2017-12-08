@@ -1,7 +1,7 @@
 const router = require('express').Router();
+var seq=require('../db/models.js');
 
 router.get('/', function(req, res, next) {
-    var seq=require('../db/models.js');
     seq.db.authenticate()
 	.then(() => {
     res.send({

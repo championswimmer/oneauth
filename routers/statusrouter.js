@@ -6,13 +6,13 @@ router.get('/', function(req, res, next) {
 	.then(() => {
     res.send({
     	postgres: 'Connected'
+   	  })
     })
-	})
    .catch(err => {
     res.send({
     	postgres: 'Not Connected'
+    	})
     })
-	});
-   });
+});
 
 module.exports = router;

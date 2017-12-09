@@ -11,13 +11,15 @@ function authnOrAuthzGithub(req, res, next) {
     if(config.DEBUG) console.log("Authn Github = = = = = ");
     passport.authenticate('github', {
       failureRedirect: '/login',
-      successReturnToOrRedirect: '/users/me'
+      successReturnToOrRedirect: '/users/me',
+      failureFlash: true
     })(req, res, next);
   } else {
     if(config.DEBUG) console.log("Authz Github = = = = = = ");
     passport.authorize('github', {
-      //TODO: Add failure flash 
-      failureRedirect: '/user/me'
+      //TODO: Add failure flash
+      failureRedirect: '/user/me',
+      failureFlash: true
     })(req, res, next);
   }
 }

@@ -70,7 +70,7 @@ module.exports = new FacebookStrategy({
         }).spread(function(userFacebook, created) {
             //TODO: Check 'created' == true to see if first time user
             if (!userFacebook) {
-                return cb(null, false);
+                return cb(null, false,{message:'Authentication Failed'});
             }
             // DATADOG TRACE: END SPAN
               setImmediate(() => {

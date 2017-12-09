@@ -2,6 +2,9 @@
 <div class="login-head">
   <h3 class="text-center thin-font custom-h2">LOGIN</h3>
 </div>
+{{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+{{/if}}
 <form class="form-group mt-5 pl-4 pr-4" method="post" action="/login">
     <input class="form-control fontAwesome inputvalidation" placeholder="&#xf007; Username " name="username" type="text" required>
     <br>

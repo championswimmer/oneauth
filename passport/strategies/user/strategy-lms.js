@@ -37,7 +37,7 @@ module.exports = new LmsStrategy({
     }).spread(function(userLms, created) {
         //TODO: Check created == true for first time
         if (!userLms) {
-            return cb(null, false);
+            return cb(null, false,{message:'Authentication Failed'});
         }
 
         return cb(null, userLms.user.get())

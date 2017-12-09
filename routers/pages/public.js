@@ -11,7 +11,7 @@ router.get('/login', function(req, res, next) {
     res.redirect('/users/me');
   }
   else {
-    res.render('login', {title: "Login | OneAuth"});
+    res.render('login', {title: "Login | OneAuth",error: req.flash('error')});
   }
 
 });

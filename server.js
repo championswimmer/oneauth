@@ -55,7 +55,7 @@ app.engine('hbs', exphbs.express4({
 app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "hbs");
 
-app.use (expressLogger);
+app.use(expressLogger);
 app.use(express.static(path.join(__dirname, 'public_static')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -82,7 +82,7 @@ app.use('/signup', signuprouter);
 app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);
 app.use('/', pagerouter);
-app.use('/status',statusrouter);
+app.use('/status', statusrouter);
 
 app.use(Raven.errorHandler());
 

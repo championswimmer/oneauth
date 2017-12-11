@@ -61,7 +61,7 @@ module.exports = new TwitterStrategy({
         }).spread(function (userTwitter, created) {
             //TODO: Check created == true for first time
             if (!userTwitter) {
-                return cb(null, false,{message:'Authentication Failed'});
+                return cb(null, false, {message: 'Authentication Failed'});
             }
             return cb(null, userTwitter.user.get())
         }).catch((err) => Raven.captureException(err))

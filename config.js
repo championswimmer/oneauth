@@ -9,7 +9,7 @@ config = {
   "BCRYPT_SALT_ROUNDS": 8,
   "DEBUG": false,
   "NEWRELIC_LOG_LEVEL": "info",
-  "EMAIL_SENDER_ADDR": "himank.bhalla@codingblocks.com"
+  "EMAIL_SENDER_ADDR": "info@codingblocks.com"
 };
 
 config.DEPLOY_CONFIG = process.env.ONEAUTH_DEV || 'production';

@@ -14,6 +14,7 @@
   "author": "Arnav Gupta, Coding Blocks",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.1.4",
     "args": "^3.0.4",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",

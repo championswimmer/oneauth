@@ -7,7 +7,7 @@ const router = require('express').Router();
 const models = require('../db/models').models;
 const passutils = require('../utils/password');
 const makeGaEvent = require('../utils/ga').makeGaEvent;
-const mail = require('../sendgrid/email');
+const mail = require('../utils/email');
 
 
 router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {

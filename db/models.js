@@ -25,7 +25,7 @@ const db = new Sequelize(DATABASE_URL, {
 
 const User = db.define('user', {
     id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
-    username: {type: Sequelize.DataTypes.STRING, unique: true},
+    username: {type: Sequelize.DataTypes.STRING, unique: true, allowNull: false},
     firstname: Sequelize.DataTypes.STRING,
     lastname: Sequelize.DataTypes.STRING,
     photo: Sequelize.DataTypes.STRING,

@@ -81,8 +81,8 @@ app.use('/logout', logoutrouter);
 app.use('/signup', signuprouter);
 app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);
-app.use('/', pagerouter);
 app.use('/status', statusrouter);
+app.use('/', pagerouter);
 
 app.use(Raven.errorHandler());
 

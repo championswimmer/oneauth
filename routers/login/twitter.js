@@ -10,13 +10,15 @@ function authnOrAuthzTwitter(req, res, next) {
         if(config.DEBUG) console.log("Authn Twitter = = = = = ");
         passport.authenticate('twitter', {
             failureRedirect: '/login',
-            successReturnToOrRedirect: '/users/me'
+            successReturnToOrRedirect: '/users/me',
+            failureFlash: true
         })(req, res, next);
     } else {
         if(config.DEBUG) console.log("Authz Twitter = = = = = = ");
         passport.authorize('twitter', {
             //TODO: Add failure flash (could not connect your account to ...)
-            failureRedirect: '/users/me'
+            failureRedirect: '/users/me',
+            failureFlash: true
         })(req, res, next);
     }
 }

@@ -59,7 +59,7 @@ module.exports = new GithubStrategy({
             }).spread(function(userGithub, created) {
             //TODO: Check created == true for first time
             if (!userGithub) {
-                return cb(null, false);
+                return cb(null, false, {message: 'Authentication Failed'});
             }
             return cb(null, userGithub.user.get())
         }).catch((err) => Raven.captureException(err))

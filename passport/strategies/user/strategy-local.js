@@ -19,7 +19,7 @@ module.exports = new LocalStrategy(function (username, password, cb) {
         include: [{model: models.User, where: {username: username}}],
     }).then(function(userLocal) {
         if (!userLocal) {
-            return cb(null, false);
+            return cb(null, false, {message: 'Invalid Username'});
         }
 
         passutils.compare2hash(password, userLocal.password)
@@ -27,7 +27,7 @@ module.exports = new LocalStrategy(function (username, password, cb) {
                 if (match) {
                     return cb(null, userLocal.user.get());
                 } else {
-                    return cb(null, false);
+                    return cb(null, false, {message: 'Invalid Password'});
                 }
             })
             .catch(function (err) {

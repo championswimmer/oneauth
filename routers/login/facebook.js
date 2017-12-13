@@ -12,13 +12,15 @@ function authnOrAuthzFacebook(req, res, next) {
         passport.authenticate('facebook', {
             scope: config.FACEBOOK_LOGIN_SCOPES,
             failureRedirect: '/login',
-            successReturnToOrRedirect: '/users/me'
+            successReturnToOrRedirect: '/users/me',
+            failureFlash: true
         })(req, res, next);
     } else {
         if(config.DEBUG) console.log("Authz Facebook = = = = = = ");
         passport.authorize('facebook', {
             //Add failure flash
-            failureRedirect: '/users/me'
+            failureRedirect: '/users/me',
+            failureFlash: true
         })(req, res, next);
     }
 }

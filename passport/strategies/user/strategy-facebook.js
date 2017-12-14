@@ -41,6 +41,8 @@ module.exports = new FacebookStrategy({
             return models.User.findById(oldUser.id)
         }).then(function (user) {
           // DATADOG TRACE: END SPAN
+            user.update({photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large" });
+             
               setImmediate(() => {
                 span.addTags({
                   userId: oldUser.id,

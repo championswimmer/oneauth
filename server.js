@@ -20,6 +20,8 @@ const config = require('./config')
     , disconnectrouter = require('./routers/disconnect')
     , logoutrouter = require('./routers/logoutrouter')
     , signuprouter = require('./routers/signup')
+    , resetpasswordrouter = require('./routers/resetpassword')
+    , setnewpasswordrouter = require('./routers/setnewpassword')
     , apirouter = require('./routers/api')
     , oauthrouter = require('./routers/oauthrouter')
     , pagerouter = require('./routers/pagerouter')
@@ -79,6 +81,8 @@ app.use('/connect', connectrouter);
 app.use('/disconnect', disconnectrouter);
 app.use('/logout', logoutrouter);
 app.use('/signup', signuprouter);
+app.use('/resetpassword', resetpasswordrouter);
+app.use('/setnewpassword', setnewpasswordrouter);
 app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);
 app.use('/status', statusrouter);

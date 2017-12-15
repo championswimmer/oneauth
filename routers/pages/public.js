@@ -25,6 +25,38 @@ router.get('/signup', function(req, res, next) {
   }
 });
 
+router.get('/forgotpassword' , function (req , res , next) {
+
+  if(req.user) {
+    res.redirect('users/me');
+  }
+  else {
+    res.render('resetpassword/resetpassword',{title: "Resetpassword | OneAuth"});
+  }
+
+});
+
+router.get('/forgotpassword/inter' , function (req , res , next) {
+
+  if(req.user) {
+    res.redirect('users/me');
+  }
+  else {
+    res.render('resetpassword/inter',{title: "Resetinter | OneAuth"});
+  }
+
+});
+router.get('/setnewpassword/:key' , function (req , res , next) {
+
+  if(req.user) {
+    res.redirect('users/me');
+  }
+  else {
+    res.render('resetpassword/setnewpassword',{title: "Setnewpassword | OneAuth" , key:req.params.key});
+  }
+
+});
+
 router.get('/client/add',
     cel.ensureLoggedIn('/login'),
     function(req, res, next) {
@@ -35,4 +67,3 @@ router.get('/client/add',
 
 
 module.exports = router;
-

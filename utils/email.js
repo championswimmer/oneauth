@@ -7,7 +7,8 @@ sgMail.setSubstitutionWrappers('{{', '}}');
 
 const sendgridTemplatesid = {
   'welcomeEmail':'b318c5d0-44b9-4a69-9d9a-01f08284b9a6',
-  'verifyEmail':'98855b98-08fd-482f-b273-273038d4f75f'
+  'verifyEmail':'98855b98-08fd-482f-b273-273038d4f75f',
+  'forgotUserEmail':'fab9108c-90ca-4612-b401-b089d06417be'
 }
 
 const senderEmail = config.EMAIL_SENDER_ADDR;
@@ -90,6 +91,24 @@ const verifyEmailPrivate = function(userEmails) {
 
 }
 
+const forgotUsernameEmail = function(user) {
+
+   let msgTemplate = {};
+   msgTemplate.template_id = sendgridTemplatesid.forgotUserEmail;
+   msgTemplate.from = senderEmail;
+
+   msgTemplate.to = user.email;
+
+   let username =  user.username;
+
+   msgTemplate.substitutions = {
+     "subject": "Forgot username codingblocks",
+     "username": user.username ,
+   };
+   return sgMail.send(msgTemplate)
+
+ }
 
 
-module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail , 'verifyEmailPrivate':verifyEmailPrivate };
+
+module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail ,'forgotUserEmail':forgotUsernameEmail, 'verifyEmailPrivate':verifyEmailPrivate };

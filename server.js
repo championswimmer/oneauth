@@ -20,6 +20,7 @@ const config = require('./config')
     , disconnectrouter = require('./routers/disconnect')
     , logoutrouter = require('./routers/logoutrouter')
     , signuprouter = require('./routers/signup')
+    , forgotusernamerouter = require('./routers/forgotusername')
     , apirouter = require('./routers/api')
     , oauthrouter = require('./routers/oauthrouter')
     , pagerouter = require('./routers/pagerouter')
@@ -78,6 +79,7 @@ app.use('/login', loginrouter);
 app.use('/connect', connectrouter);
 app.use('/disconnect', disconnectrouter);
 app.use('/logout', logoutrouter);
+app.use('/forgotusername', forgotusernamerouter);
 app.use('/signup', signuprouter);
 app.use('/api', apirouter);
 app.use('/oauth', oauthrouter);

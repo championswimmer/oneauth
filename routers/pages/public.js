@@ -25,6 +25,26 @@ router.get('/signup', function(req, res, next) {
   }
 });
 
+router.get('/forgotusername', function(req, res, next) {
+
+  if(req.user) {
+    res.redirect('/users/me');
+  }
+  else {
+    res.render('forgotusername/forgotusername', {title: "Resetusername | OneAuth"});
+  }
+});
+
+router.get('/forgotusername/inter', function(req, res, next) {
+
+  if(req.user) {
+    res.redirect('/users/me');
+  }
+  else {
+    res.render('forgotusername/inter', {title: "Resetusername | OneAuth"});
+  }
+});
+
 router.get('/client/add',
     cel.ensureLoggedIn('/login'),
     function(req, res, next) {
@@ -35,4 +55,3 @@ router.get('/client/add',
 
 
 module.exports = router;
-

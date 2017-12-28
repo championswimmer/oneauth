@@ -7,7 +7,8 @@ sgMail.setSubstitutionWrappers('{{', '}}');
 
 const sendgridTemplatesid = {
   'welcomeEmail':'b318c5d0-44b9-4a69-9d9a-01f08284b9a6',
-  'verifyEmail':'98855b98-08fd-482f-b273-273038d4f75f'
+  'verifyEmail':'98855b98-08fd-482f-b273-273038d4f75f',
+  'forgotPassEmail':'fab9108c-90ca-4612-b401-b089d06417be'
 }
 
 const senderEmail = config.EMAIL_SENDER_ADDR;
@@ -28,12 +29,11 @@ const welcomeEmail = function(user) {
     "name": user.firstname ,
   };
 
-  sgMail.send(msgTemplate)
+  return sgMail.send(msgTemplate)
   .then(() => {
   //  console.log('mail sent');
   })
   .catch(error => {
-
   //  Raven.captureException(error);
     console.error(error.toString());
 
@@ -66,6 +66,25 @@ const verifyEmail = function(userEmails) {
 
 }
 
+
+const forgotPassEmail = function(user , key) {
+
+  let msgTemplate = {};
+  msgTemplate.template_id = sendgridTemplatesid.forgotPassEmail;
+  msgTemplate.from = senderEmail;
+
+  msgTemplate.to = user.email;
+
+  let link = "https://account.codingblocks.com/setnewpassword/" + key;
+  msgTemplate.substitutions = {
+    "subject": "Forgot password codingblocks",
+    "username": user.username ,
+    "link": link
+  };
+  return sgMail.send(msgTemplate)
+
+}
+
 //Send a Single Email to Single or Multiple Recipients where they don't see each others email addresses
 
 const verifyEmailPrivate = function(userEmails) {
@@ -92,4 +111,4 @@ const verifyEmailPrivate = function(userEmails) {
 
 
 
-module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail , 'verifyEmailPrivate':verifyEmailPrivate };
+module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail , 'forgotPasswordEmail':forgotPassEmail , 'verifyEmailPrivate':verifyEmailPrivate };

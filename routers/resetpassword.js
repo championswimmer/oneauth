@@ -9,7 +9,7 @@ const passutils = require('../utils/password');
 const makeGaEvent = require('../utils/ga').makeGaEvent;
 const mail = require('../utils/email');
 const moment =require('moment');
-const randomKey = require("random-key");
+const uid = require('uid2');
 
 router.post('/', makeGaEvent('submit', 'form', 'resetpassword'), function (req, res) {
 
@@ -24,7 +24,7 @@ router.post('/', makeGaEvent('submit', 'form', 'resetpassword'), function (req, 
          let promises=[];
          users.map(user => {
 
-            let rKey = randomKey.generate(15);
+            let rKey = uid(15);
 
             promises.push(models.Resetpassword.create({
               key: rKey,

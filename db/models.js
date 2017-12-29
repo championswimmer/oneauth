@@ -33,6 +33,12 @@ const User = db.define('user', {
     role: {type: Sequelize.DataTypes.ENUM('admin', 'employee', 'intern'), allowNull: true}
 });
 
+const Resetpassword = db.define('resetpassword', {
+    id: {type: Sequelize.DataTypes.BIGINT, autoIncrement: true , primaryKey: true},
+    key: {type: Sequelize.DataTypes.STRING, unique: true, allowNull: false},
+    deletedAt:{type: Sequelize.DATE}
+});
+
 const UserLocal = db.define('userlocal', {
    password: Sequelize.DataTypes.STRING
 });
@@ -82,6 +88,8 @@ User.hasOne(UserGithub);
 UserLms.belongsTo(User);
 User.hasOne(UserLms);
 
+Resetpassword.belongsTo(User);
+
 
 const Client = db.define('client', {
     id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
@@ -127,6 +135,6 @@ db.sync({
 
 module.exports = {
     models: {User, UserLocal, UserFacebook, UserTwitter, UserGithub, UserLms,
-        Client, GrantCode, AuthToken},
+        Client, GrantCode, AuthToken , Resetpassword},
     db
 };

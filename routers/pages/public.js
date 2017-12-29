@@ -8,7 +8,7 @@ const router = require('express').Router();
 router.get('/login', function(req, res, next) {
 
   if (req.user) {
-    res.redirect('/users/me');
+    res.redirect('/');
   }
   else {
     res.render('login', {title: "Login | OneAuth", error: req.flash('error')});
@@ -18,7 +18,7 @@ router.get('/login', function(req, res, next) {
 router.get('/signup', function(req, res, next) {
 
   if(req.user) {
-    res.redirect('/users/me');
+    res.redirect('/');
   }
   else {
     res.render('signup', {title: "Signup | OneAuth"});
@@ -43,6 +43,38 @@ router.get('/forgotusername/inter', function(req, res, next) {
   else {
     res.render('forgotusername/inter', {title: "Resetusername | OneAuth"});
   }
+});
+
+router.get('/forgotpassword' , function (req , res , next) {
+
+  if(req.user) {
+    res.redirect('/');
+  }
+  else {
+    res.render('resetpassword/resetpassword',{title: "Resetpassword | OneAuth"});
+  }
+
+});
+
+router.get('/forgotpassword/inter' , function (req , res , next) {
+
+  if(req.user) {
+    res.redirect('/');
+  }
+  else {
+    res.render('resetpassword/inter',{title: "Resetinter | OneAuth"});
+  }
+
+});
+router.get('/setnewpassword/:key' , function (req , res , next) {
+
+  if(req.user) {
+    res.redirect('/');
+  }
+  else {
+    res.render('resetpassword/setnewpassword',{title: "Setnewpassword | OneAuth" , key:req.params.key});
+  }
+
 });
 
 router.get('/client/add',

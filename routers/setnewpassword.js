@@ -12,28 +12,31 @@ const moment =require('moment');
 
 
 router.post('/', makeGaEvent('submit', 'form', 'setnewpassword'), function (req, res) {
-
-  if((req.body.key.trim() === '') || req.body.key.length < 15) {
+  req.body.key = req.body.key.trim();
+  req.body.password = req.body.password.trim();
+  req.body.passwordagain = req.body.passwordagain.trim();
+  
+  if((req.body.key === '') || req.body.key.length != 15) {
 
     req.flash('error', 'Invalid key. please try again.');
     return res.redirect('/forgotpassword');
   }
 
-  if((req.body.password.trim() === '') || req.body.password.length < 5) {
+  if((req.body.password === '') || req.body.password.length < 5) {
 
     req.flash('error', 'Password too weak. Please use at least 5 characters.');
-    return res.render('resetpassword/setnewpassword',{title: "Setnewpassword | OneAuth" , key:req.body.key});
+    return res.render('resetpassword/setnewpassword', {title: "Setnewpassword | OneAuth" , key:req.body.key});
   }
 
   if(req.body.password !== req.body.passwordagain) {
 
     req.flash('error', 'Password does not match.');
-    return res.render('resetpassword/setnewpassword',{title: "Setnewpassword | OneAuth" , key:req.body.key});
+    return res.render('resetpassword/setnewpassword', {title: "Setnewpassword | OneAuth" , key:req.body.key});
   }
 
-  models.Resetpassword.findOne({where:{key:req.body.key}})
+  models.Resetpassword.findOne({ where: { key: req.body.key }})
 
-  .then((resetEntry)=> {
+  .then((resetEntry) => {
 
       if(!resetEntry) {
         req.flash('error', 'Invalid key. please try again.');

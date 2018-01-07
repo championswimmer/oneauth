@@ -1,9 +1,9 @@
 const sgMail = require('@sendgrid/mail');
 const secret = require('../secrets-sample');
 const config = require('../config');
-sgMail.setApiKey(secret.SENDGRID_API_KEY);
-sgMail.setSubstitutionWrappers('{{', '}}');
 
+sgMail.setApiKey(config.SECRETS.SENDGRID_API_KEY);
+sgMail.setSubstitutionWrappers('{{', '}}');
 
 const sendgridTemplatesid = {
   'welcomeEmail':'b318c5d0-44b9-4a69-9d9a-01f08284b9a6',
@@ -18,7 +18,7 @@ const senderEmail = config.EMAIL_SENDER_ADDR;
 const welcomeEmail = function(user) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = sendgridTemplatesid.welcomeEmail;
+  msgTemplate.template_id = config.WELCOME_EMAIL;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = {
@@ -48,7 +48,7 @@ const welcomeEmail = function(user) {
 const verifyEmail = function(userEmails) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = sendgridTemplatesid.verifyEmail;
+  msgTemplate.template_id = config.VERIFY_EMAIL;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = userEmails;
@@ -71,7 +71,7 @@ const verifyEmail = function(userEmails) {
 const forgotPassEmail = function(user , key) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = sendgridTemplatesid.forgotPassEmail;
+  msgTemplate.template_id = config.FORGOT_PASS_EMAIL;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = user.email;
@@ -91,7 +91,7 @@ const forgotPassEmail = function(user , key) {
 const verifyEmailPrivate = function(userEmails) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = sendgridTemplatesid.verifyEmail;
+  msgTemplate.template_id = config.VERIFY_EMAIL;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = userEmails;

@@ -5,6 +5,8 @@ const cel = require('connect-ensure-login');
 
 const router = require('express').Router();
 
+const verifyemail = require('../../routers/verifyemail');
+
 router.get('/login', function(req, res, next) {
 
   if (req.user) {
@@ -54,6 +56,12 @@ router.get('/setnewpassword/:key' , function (req , res , next) {
   else {
     res.render('resetpassword/setnewpassword',{title: "Setnewpassword | OneAuth" , key:req.params.key});
   }
+
+});
+
+router.get('/verifyemail/inter' , cel.ensureLoggedIn('/login') , function (req , res , next) {
+
+    res.render('verifyemail/inter',{title: "Verifyemailinter | OneAuth"});
 
 });
 

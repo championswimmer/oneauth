@@ -93,3 +93,22 @@
         {{/unless}}
     </div>
 </div>
+{{#unless user.isemailverified}}
+<div class="row verifyemail-row">
+<form class="form-group mt-2 pl-4 pr-4" method="post" action="/verifyemail">
+    {{#if messages.error}}
+        <div class="alert alert-danger" role="alert">
+            {{messages.error}}
+        </div>
+    {{/if}}
+{{#if messages.info}}
+<span>{{messages.info}}</span>
+{{/if}}
+    <p>Please enter your registered email id which you have used to buy courses.</p>
+    <div class="row verifyemail-input-row">
+   	 <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email" type="email" required>
+   	 <input class="btn btn-primary" type="submit" value="Verify">
+    </div>
+</form>
+</div>
+{{/unless}}

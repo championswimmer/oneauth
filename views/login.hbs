@@ -5,6 +5,9 @@
 {{#if error}}
     <div class="alert alert-danger">{{error}}</div>
 {{/if}}
+{{#if messages.info}}
+<div class="alert alert-info">{{messages.info}}</div>
+{{/if}}
 <form class="form-group mt-5 pl-4 pr-4" method="post" action="/login">
     <input class="form-control fontAwesome inputvalidation" placeholder="&#xf007; Username " name="username" type="text" required>
     <br>
@@ -53,3 +56,5 @@
         login as normal
     </div>
 </div>
+
+

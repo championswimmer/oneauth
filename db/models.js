@@ -30,10 +30,17 @@ const User = db.define('user', {
     lastname: Sequelize.DataTypes.STRING,
     photo: Sequelize.DataTypes.STRING,
     email: Sequelize.DataTypes.STRING,
-    role: {type: Sequelize.DataTypes.ENUM('admin', 'employee', 'intern'), allowNull: true}
+    role: {type: Sequelize.DataTypes.ENUM('admin', 'employee', 'intern'), allowNull: true},
+    isemailverified: {type:Sequelize.DataTypes.BOOLEAN , defaultValue: false}
 });
 
 const Resetpassword = db.define('resetpassword', {
+    id: {type: Sequelize.DataTypes.BIGINT, autoIncrement: true , primaryKey: true},
+    key: {type: Sequelize.DataTypes.STRING, unique: true, allowNull: false},
+    deletedAt:{type: Sequelize.DATE}
+});
+
+const Verifyemail = db.define('verifyemail', {
     id: {type: Sequelize.DataTypes.BIGINT, autoIncrement: true , primaryKey: true},
     key: {type: Sequelize.DataTypes.STRING, unique: true, allowNull: false},
     deletedAt:{type: Sequelize.DATE}
@@ -89,7 +96,7 @@ UserLms.belongsTo(User);
 User.hasOne(UserLms);
 
 Resetpassword.belongsTo(User);
-
+Verifyemail.belongsTo(User);
 
 const Client = db.define('client', {
     id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
@@ -135,6 +142,6 @@ db.sync({
 
 module.exports = {
     models: {User, UserLocal, UserFacebook, UserTwitter, UserGithub, UserLms,
-        Client, GrantCode, AuthToken , Resetpassword},
+        Client, GrantCode, AuthToken , Resetpassword , Verifyemail},
     db
 };

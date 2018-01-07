@@ -63,7 +63,13 @@ td , thead , tbody , tr , table{
 .form-control{
   background: #fbfbfc;
 }
-
+.verifyemail-input-row{
+display:flex;
+justify-content:space-around;
+}
+.verifyemail-row .form-control{
+width:80%;
+}
 .thin-font{
   font-weight: 400;
   font-size: 1.25rem;

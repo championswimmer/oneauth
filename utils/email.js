@@ -44,25 +44,22 @@ const welcomeEmail = function(user) {
 
 //Send a Single Email to Single or Multiple Recipients where they see each others email addresses
 
-const verifyEmail = function(userEmails) {
+const verifyEmail = function(user, key) {
 
   let msgTemplate = {};
   msgTemplate.template_id = sendgridTemplatesid.verifyEmail;
   msgTemplate.from = senderEmail;
 
-  msgTemplate.to = userEmails;
+  msgTemplate.to = user.email;
+  let link = "https://account.codingblocks.com/verifyemail/key/" + key;
 
-  sgMail.send(msgTemplate)
-  .then(() => {
-  //  console.log('mail sent');
-  })
-  .catch(error => {
+  msgTemplate.substitutions = {
+    "subject": "Verify Email Codingblocks Account",
+    "username": user.username ,
+    "link": link
+  };
 
-    Raven.captureException(error);
-    console.error(error.toString());
-
-  });
-
+  return sgMail.send(msgTemplate)
 
 }
 

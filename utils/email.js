@@ -1,15 +1,9 @@
 const sgMail = require('@sendgrid/mail');
 const secret = require('../secrets-sample');
 const config = require('../config');
-sgMail.setApiKey(secret.SENDGRID_API_KEY);
+
+sgMail.setApiKey(config.SECRETS.SENDGRID_API_KEY);
 sgMail.setSubstitutionWrappers('{{', '}}');
-
-
-const sendgridTemplatesid = {
-  'welcomeEmail':'b318c5d0-44b9-4a69-9d9a-01f08284b9a6',
-  'verifyEmail':'98855b98-08fd-482f-b273-273038d4f75f',
-  'forgotPassEmail':'fab9108c-90ca-4612-b401-b089d06417be'
-}
 
 const senderEmail = config.EMAIL_SENDER_ADDR;
 
@@ -17,7 +11,7 @@ const senderEmail = config.EMAIL_SENDER_ADDR;
 const welcomeEmail = function(user) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = sendgridTemplatesid.welcomeEmail;
+  msgTemplate.template_id = config.WELCOME_EMAIL;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = {
@@ -47,14 +41,14 @@ const welcomeEmail = function(user) {
 const verifyEmail = function(user, key) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = sendgridTemplatesid.verifyEmail;
+  msgTemplate.template_id = config.VERIFY_EMAIL;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = user.email;
   let link = "https://account.codingblocks.com/verifyemail/key/" + key;
 
   msgTemplate.substitutions = {
-    "subject": "Verify Email Codingblocks Account",
+    "subject": "Verify Email for Codingblocks Account",
     "username": user.username ,
     "link": link
   };
@@ -67,14 +61,14 @@ const verifyEmail = function(user, key) {
 const forgotPassEmail = function(user , key) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = sendgridTemplatesid.forgotPassEmail;
+  msgTemplate.template_id = config.FORGOT_PASS_EMAIL;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = user.email;
 
   let link = "https://account.codingblocks.com/setnewpassword/" + key;
   msgTemplate.substitutions = {
-    "subject": "Forgot password codingblocks",
+    "subject": "Forgot password Codingblocks",
     "username": user.username ,
     "link": link
   };
@@ -87,7 +81,7 @@ const forgotPassEmail = function(user , key) {
 const verifyEmailPrivate = function(userEmails) {
 
   let msgTemplate = {};
-  msgTemplate.template_id = sendgridTemplatesid.verifyEmail;
+  msgTemplate.template_id = config.VERIFY_EMAIL;
   msgTemplate.from = senderEmail;
 
   msgTemplate.to = userEmails;
@@ -106,6 +100,23 @@ const verifyEmailPrivate = function(userEmails) {
 
 }
 
+const forgotUsernameEmail = function(user) {
+
+   let msgTemplate = {};
+   msgTemplate.template_id = config.FORGOT_USER_EMAIL;
+   msgTemplate.from = senderEmail;
+
+   msgTemplate.to = user.email;
+
+   let username =  user.username;
+
+   msgTemplate.substitutions = {
+     "subject": "Forgot username Codingblocks",
+     "username": user.username ,
+   };
+   return sgMail.send(msgTemplate)
+
+ }
 
 
-module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail , 'forgotPasswordEmail':forgotPassEmail , 'verifyEmailPrivate':verifyEmailPrivate };
+module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail , 'forgotPasswordEmail':forgotPassEmail , 'forgotUserEmail':forgotUsernameEmail , 'verifyEmailPrivate':verifyEmailPrivate };

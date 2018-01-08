@@ -9,7 +9,11 @@ config = {
   "BCRYPT_SALT_ROUNDS": 8,
   "DEBUG": false,
   "NEWRELIC_LOG_LEVEL": "info",
-  "EMAIL_SENDER_ADDR": "info@codingblocks.com"
+  "EMAIL_SENDER_ADDR": "info@codingblocks.com",
+  "WELCOME_EMAIL": "51913645-587b-419c-af40-79fc10553451",
+  "FORGOT_USER_EMAIL": "a7e8ca83-0b5f-4ec8-b7cb-a3dbd2839c46",
+  "FORGOT_PASS_EMAIL":"64d80a73-194d-4988-a581-87fbcf5457c7",
+  "VERIFY_EMAIL" :"3e470c46-5d2b-471e-992e-4820f1599de3"
 };
 
 config.DEPLOY_CONFIG = process.env.ONEAUTH_DEV || 'production';
@@ -34,6 +38,9 @@ switch (config.DEPLOY_CONFIG) {
     }
     if (process.env.NEW_RELIC_LICENSE_KEY) {
       config.SECRETS.NEWRELIC_LICENSE_KEY = process.env.NEW_RELIC_LICENSE_KEY
+    }
+    if(process.env.SENDGRID_API_KEY) {
+      config.SECRETS.SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
     }
     config.NEWRELIC_LOG_LEVEL = 'trace'
     break;

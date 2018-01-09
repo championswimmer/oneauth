@@ -63,7 +63,9 @@ td , thead , tbody , tr , table{
 .form-control{
   background: #fbfbfc;
 }
-
+.alert{
+ text-align:justify;
+}
 .thin-font{
   font-weight: 400;
   font-size: 1.25rem;

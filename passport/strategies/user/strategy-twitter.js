@@ -26,18 +26,33 @@ module.exports = new TwitterStrategy({
 
     if (oldUser) {
         if (config.DEBUG) console.log('User exists, is connecting Twitter account');
-        models.UserTwitter.upsert({
-            id: profileJson.id,
-            token: token,
-            tokenSecret: tokenSecret,
-            username: profileJson.screen_name,
-            userId: oldUser.id
-        }).then(function (updated) {
-            return models.User.findById(oldUser.id)
-        }).then(function (user) {
-            return cb(null, user.get())
-        }).catch((err) => Raven.captureException(err))
-    } else {
+        models.UserTwitter.findOne({where:{id:profileJson.id}})
+        .then((twaccount)=>{
+            if(twaccount){
+                throw new Error('Your Twitter account is already linked with coding blocks account Id: ' + twaccount.dataValues.userId);
+            }
+            else {
+                models.UserTwitter.upsert({
+                id: profileJson.id,
+                token: token,
+                tokenSecret: tokenSecret,
+                username: profileJson.screen_name,
+                userId: oldUser.id
+                })
+                .then(function (updated) {
+                    return models.User.findById(oldUser.id)
+                })
+                .then(function (user) {
+                    return cb(null, user.get())
+                })
+                .catch((err) => Raven.captureException(err))
+            }
+        })
+        .catch((err)=>{
+            return cb(null,false,{message:err.message})
+        })
+    } 
+    else {
 
         models.User.count({where: {username: profileJson.screen_name}})
             .then(function (existCount) {
@@ -63,8 +78,14 @@ module.exports = new TwitterStrategy({
             if (!userTwitter) {
                 return cb(null, false, {message: 'Authentication Failed'});
             }
-            return cb(null, userTwitter.user.get())
-        }).catch((err) => Raven.captureException(err))
+            if(userTwitter.user) {
+                return cb(null, userTwitter.user.get())
+	    }
+            else {
+	        return cb(null,false,{message: 'Authentication Failed'})
+	    }
+        }).catch((err) => {
+		Raven.captureException(err)})
 
 
     }

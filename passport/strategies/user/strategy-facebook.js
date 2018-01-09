@@ -28,33 +28,52 @@ module.exports = new FacebookStrategy({
     let oldUser = req.user;
     // DATADOG TRACE: START SPAN
     const span = tracer.startSpan('passport.strategy.facebook')
-
-    if (oldUser) {
-        if (config.DEBUG) console.log('User exists, is connecting Facebook account');
-        models.UserFacebook.upsert({
-            id: profileJson.id,
-            accessToken: authToken,
-            refreshToken: refreshToken,
-            photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large",
-            userId: oldUser.id
-        }).then(function (updated) {
-            return models.User.findById(oldUser.id)
-        }).then(function (user) {
-          // DATADOG TRACE: END SPAN
-            user.update({photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large" });
-             
-              setImmediate(() => {
-                span.addTags({
-                  userId: oldUser.id,
-                  newUser: false,
-                  facebookId: profileJson.id
-                })
-                span.finish()
-              })
-            return cb(null, user.get())
-        }).catch((err) => Raven.captureException(err))
-    } else {
-        models.UserFacebook.findCreateFind({
+       if (oldUser) {
+           if (config.DEBUG)
+               console.log('User exists, is connecting Facebook account');
+           models.UserFacebook.findOne({where:{id:profileJson.id}})
+           .then((fbaccount)=>{ 
+               if(fbaccount){
+                   throw new Error('Your Facebook account is already linked with codingblocks account Id: ' + fbaccount.dataValues.userId); 
+               }
+               else { 
+                   models.UserFacebook.upsert({
+                   id: profileJson.id,
+                   accessToken: authToken,
+                   refreshToken: refreshToken,
+                   photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large",
+                   userId: oldUser.id
+                   })
+                   .then(function (updated) {
+                       return models.User.findById(oldUser.id)
+                   })
+                   .then(function (user) {
+                       // DATADOG TRACE: END SPAN
+                       user.update({photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large" });
+                       setImmediate(() => {
+                           span.addTags({
+                           userId: oldUser.id,
+                           newUser: false,
+                           facebookId: profileJson.id
+                           }) 
+                       span.finish()
+                       })
+                       return cb(null, user.get())
+                   })
+                   .catch((err) =>{ 
+                       Raven.captureException(err);
+                       return cb(err,null)
+                   })
+               }	
+           })
+           .catch((err) =>{
+               Raven.captureException(err);
+               return cb(null, false, {message: err.message});
+           })   
+       } 
+	else {
+	       
+	models.UserFacebook.findCreateFind({
             include: [models.User],
             where: {id: profileJson.id},
             defaults: {

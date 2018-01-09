@@ -82,7 +82,6 @@ module.exports = new FacebookStrategy({
                 refreshToken: refreshToken,
                 photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large",
                 user: {
-		    username: 'killer2',
                     firstname: profileJson.first_name,
                     lastname: profileJson.last_name,
                     email: profileJson.email,

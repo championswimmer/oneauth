@@ -38,6 +38,9 @@
     <div id="profile-row-role" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Role@CB: </p> <p class="custom-profile-padding"> {{user.role}} </p>
     </div>
+{{#if messages.error}}
+ <span class="alert alert-danger">{{messages.error}}</span>
+ {{/if}}
     {{#if user.userfacebook}}
     <div id="profile-row-fb" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Facebook </p>

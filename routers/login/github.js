@@ -18,7 +18,7 @@ function authnOrAuthzGithub(req, res, next) {
     if(config.DEBUG) console.log("Authz Github = = = = = = ");
     passport.authorize('github', {
       //TODO: Add failure flash
-      failureRedirect: '/user/me',
+	    failureRedirect: '/users/me',
       failureFlash: true
     })(req, res, next);
   }

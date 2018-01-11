@@ -1,12 +1,15 @@
 const Winston = require ('winston'),
       ExpressWinston = require ('express-winston'),
-      WinstonGraylog2 = require ('winston-graylog2')
+      WinstonGraylog2 = require ('winston-graylog2'),
+      Logentries = require('le_node')
 ;
 
 const GRAYLOG_HOST = process.env.GRAYLOG_HOST || 'graylog.cb.lk',
   GRAYLOG_PORT = process.env.GRAYLOG_PORT || 12201,
   NODE_ENV = process.env.NODE_ENV || 'development'
 ;
+
+const config = require('../config')
 
 const GrayLogger = new WinstonGraylog2 ({
   name: 'oneauth',
@@ -29,8 +32,15 @@ const GrayLogger = new WinstonGraylog2 ({
   }
 })
 
+const LogentriesTransport = Winston.transports.Logentries;
+
+let transports = [GrayLogger]
+if (config.DEPLOY_CONFIG === 'heroku') {
+  transports = [LogentriesTransport]
+}
+
 const expressLogger = ExpressWinston.logger ({
-  transports: [GrayLogger],
+  transports,
   meta: true,
   msg: "HTTP {{req.method}} {{req.url}}",
   expressFormat: true,

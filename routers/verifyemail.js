@@ -11,52 +11,76 @@ const moment =require('moment');
 const uid = require('uid2');
 const cel = require('connect-ensure-login');
  
-router.post('/', cel.ensureLoggedIn('/login') ,  makeGaEvent('submit', 'form', 'verifyemail'), function (req, res) {
+router.post('/', cel.ensureLoggedIn('/login') ,  makeGaEvent('submit', 'form', 'verifyemail') , function (req,res,next) {
 
-  if(req.body.email.trim() === '') {
-    req.flash('error', 'Email cannot be empty');
-    return res.redirect('/verifyemail')
-  }
+    if(req.body.email.trim() === '') {
+        req.flash('error', 'Email cannot be empty');
+        return res.redirect('/verifyemail')
+    }	
+    models.User.findOne({
+        where:{verifiedemail:req.body.email}
+    })
+    .then((user)=>{
+  
+        if(user) {
+            req.flash('error', 'Email already verified with codingblocks account ID:' + user.get('id'));
+            return res.redirect('/users/me');
+        }
+        else {
+            next();
+        }	
+    })
 
-  models.User.findOne({where:{email:req.body.email,id:req.user.id}})
-  .then((user)=> {
-	
-	 if(!user){	   
-           return user;      	
+}, function (req, res) {
+
+    if(req.user.email) {
+         var user =  models.User.findOne({where:{email:req.body.email,id:req.user.id}})      
+    }
+    else {
+        var user = models.User.update({
+                         email:req.body.email,
+                      },
+                      {where:{id:req.user.id}
+                      })
+                      .then(()=>{
+                          return models.User.findOne({where:{email:req.body.email,id:req.user.id}})
+                      }) 
+    }
+
+    user.then((user)=> {
+        
+        if(!user) {	   
+            return user;      	
 	 }
-	
-         let rKey = uid(15);
+
+         let uniqueKey = uid(15);
 
          return  models.Verifyemail.create({
-             	 key: rKey,
-             	 userId: user.dataValues.id,
-             	 include:[models.User]
-            	})
+                 key: uniqueKey,
+                 userId: user.dataValues.id,
+                 include:[models.User]
+                 })
             	.then((entry)=>{	
-            	    return mail.verifyEmail(user.dataValues , entry.key)
-           	 })
+                    return mail.verifyEmail(user.dataValues , entry.key)
+                })
      
-
-    })
-    .then((dataValue)=>{
-      if(dataValue){
-
-        return res.redirect('/verifyemail/inter');
-
-      }
-      else {
-
-        req.flash('error', 'The email id entered is not registered with this codingblocks account. Please enter your registered email.');
-        return res.redirect('/users/me');
-      }
-
+     })
+     .then((dataValue) => {
+         
+         if(dataValue){
+             return res.redirect('/verifyemail/inter');
+         }
+         else {    
+             req.flash('error', 'The email id entered is not registered with this codingblocks account. Please enter your registered email.');
+             return res.redirect('/users/me');
+         }
     })
     .catch (function (err) {
 
         console.error(err.toString());
         req.flash('error', 'Something went wrong. Please try again with your registered email.');
         return res.redirect('/users/me');
-    });
+    });     
 });
 
 router.get('/key/:key',function(req,res) {
@@ -69,46 +93,73 @@ router.get('/key/:key',function(req,res) {
 	models.Verifyemail.findOne({ where: { key: req.params.key }})
 	
 	.then((resetEntry) => {
-
-	if(!resetEntry) {
+	
+            if(!resetEntry) {
         	req.flash('error', 'Invalid key. please try again.');
-        	return resetEntry;
-     	 }
+        	return [];
+            }
 	
 	if(resetEntry.deletedAt) {
-		req.flash('info','Your email is already verified.');
-		return null;
+		return [];
 	}
-	
-	
+
+	if(req.user) {
+        
+            if(req.user.dataValues.id !== resetEntry.dataValues.userId) {
+                
+                req.flash('error','Key authorization failed.');
+                return [];
+	    }
+        }
+
 	if ( moment().diff(resetEntry.createdAt , 'seconds') <= 86400 ) {	
 
 		return Promise.all([ models.Verifyemail.update({
 		deletedAt:moment().format() },
 		{
          	 where:{userId:resetEntry.dataValues.userId , key:resetEntry.dataValues.key}
-		}) , models.User.update({
-			isemailverified: true},
-			{where:{id:resetEntry.dataValues.userId}}
-			) ]);
+		}) , models.User.findOne({
+			where:{id:resetEntry.dataValues.userId}
+		})]);
 	
 	} 
 	else {
 		
 		req.flash('error', 'Key expired. Please try again.');
-		return null;
+		return [];
 	}
-
+        
+       
      	})
-	.then((updates) => {
-	
-		if(updates) {
+	.then(([updates , user]) => {
+		
+            if(req.user){
+                if(req.user.dataValues.verifiedemail) {
+                    req.flash('info' , 'Your email is already verified.');
+                    return;
+                }
+            }
+
+            if(updates) {
+                
+                return models.User.update({
+                                  verifiedemail:user.dataValues.email},
+                                  {where:{id:user.dataValues.id}})
+            }
+            else {
+                return;
+	    }
+	})
+	.then((verifiedemail)=>{
+		
+		if(verifiedemail) {
 		  req.flash('info','Your email is verified. Thank you.');	
 		  return res.redirect('/users/me')
 		}
 		else{	
 		   return res.redirect('/');
 		}
+	
 	})
 	.catch (function (err) {
          console.error(err.toString());

@@ -38,9 +38,7 @@
     <div id="profile-row-role" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Role@CB: </p> <p class="custom-profile-padding"> {{user.role}} </p>
     </div>
-{{#if messages.error}}
- <span class="alert alert-danger">{{messages.error}}</span>
- {{/if}}
+
     {{#if user.userfacebook}}
     <div id="profile-row-fb" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Facebook </p>
@@ -74,6 +72,12 @@
             </p>
         </div>
     {{/if}}
+{{#if messages.error}}
+ <span class="alert alert-danger">{{messages.error}}</span>
+ {{/if}}
+{{#if messages.info}}
+ <span class="alert alert-info">{{messages.info}}</span>
+ {{/if}}
 </div>
 </div>
 
@@ -98,22 +102,22 @@
         {{/unless}}
     </div>
 </div>
-{{#unless user.isemailverified}}
+{{#unless user.verifiedemail}}
 <div class="row verifyemail-row">
-<form class="form-group mt-2 pl-4 pr-4" method="post" action="/verifyemail">
-    {{#if messages.error}}
-        <div class="alert alert-danger" role="alert">
-            {{messages.error}}
-        </div>
-    {{/if}}
-{{#if messages.info}}
-<span>{{messages.info}}</span>
-{{/if}}
+<form class="form-group mt-2 pl-4 pr-4 verifyemail-form" method="post" action="/verifyemail">
+   {{#if user.email}}
+    <p>This is your registered email please verify.</p>
+    <div class="row verifyemail-input-row">
+	    <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email" value="{{user.email}}" type="email" readonly required>
+   	    <input class="btn btn-primary" type="submit" value="Verify">
+    </div>
+    {{else}}
     <p>Please enter your registered email id which you have used to buy courses.</p>
     <div class="row verifyemail-input-row">
-   	 <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email" type="email" required>
-   	 <input class="btn btn-primary" type="submit" value="Verify">
+	    <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email" type="email" required>
+   	    <input class="btn btn-primary" type="submit" value="Verify">
     </div>
-</form>
+    {{/if}}
+  </form>
 </div>
 {{/unless}}

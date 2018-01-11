@@ -71,6 +71,9 @@ justify-content:space-around;
 .verifyemail-row .form-control{
 width:80%;
 }
+.verifyemail-form{
+width:100%;
+}
 .alert{
  text-align:justify;
 }

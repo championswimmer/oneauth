@@ -32,11 +32,10 @@ const GrayLogger = new WinstonGraylog2 ({
   }
 })
 
-const LogentriesTransport = Winston.transports.Logentries;
 
 let transports = [GrayLogger]
 if (config.DEPLOY_CONFIG === 'heroku') {
-  transports = [LogentriesTransport]
+  transports = [new Winston.transports.Logentries()]
 }
 
 const expressLogger = ExpressWinston.logger ({

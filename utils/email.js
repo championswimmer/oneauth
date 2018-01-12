@@ -5,13 +5,6 @@ const config = require('../config');
 sgMail.setApiKey(config.SECRETS.SENDGRID_API_KEY);
 sgMail.setSubstitutionWrappers('{{', '}}');
 
-const sendgridTemplatesid = {
-  'welcomeEmail':'b318c5d0-44b9-4a69-9d9a-01f08284b9a6',
-  'verifyEmail':'98855b98-08fd-482f-b273-273038d4f75f',
-  'forgotUserEmail':'fab9108c-90ca-4612-b401-b089d06417be',
-  'forgotPassEmail':'fab9108c-90ca-4612-b401-b089d06417be'
-}
-
 const senderEmail = config.EMAIL_SENDER_ADDR;
 
 
@@ -45,25 +38,22 @@ const welcomeEmail = function(user) {
 
 //Send a Single Email to Single or Multiple Recipients where they see each others email addresses
 
-const verifyEmail = function(userEmails) {
+const verifyEmail = function(user, key) {
 
   let msgTemplate = {};
   msgTemplate.template_id = config.VERIFY_EMAIL;
   msgTemplate.from = senderEmail;
 
-  msgTemplate.to = userEmails;
+  msgTemplate.to = user.email;
+  let link = "https://account.codingblocks.com/verifyemail/key/" + key;
 
-  sgMail.send(msgTemplate)
-  .then(() => {
-  //  console.log('mail sent');
-  })
-  .catch(error => {
+  msgTemplate.substitutions = {
+    "subject": "Verify Email for Codingblocks Account",
+    "username": user.username ,
+    "link": link
+  };
 
-    Raven.captureException(error);
-    console.error(error.toString());
-
-  });
-
+  return sgMail.send(msgTemplate)
 
 }
 
@@ -78,7 +68,7 @@ const forgotPassEmail = function(user , key) {
 
   let link = "https://account.codingblocks.com/setnewpassword/" + key;
   msgTemplate.substitutions = {
-    "subject": "Forgot password codingblocks",
+    "subject": "Forgot password Codingblocks",
     "username": user.username ,
     "link": link
   };
@@ -113,7 +103,7 @@ const verifyEmailPrivate = function(userEmails) {
 const forgotUsernameEmail = function(user) {
 
    let msgTemplate = {};
-   msgTemplate.template_id = sendgridTemplatesid.forgotUserEmail;
+   msgTemplate.template_id = config.FORGOT_USER_EMAIL;
    msgTemplate.from = senderEmail;
 
    msgTemplate.to = user.email;
@@ -121,7 +111,7 @@ const forgotUsernameEmail = function(user) {
    let username =  user.username;
 
    msgTemplate.substitutions = {
-     "subject": "Forgot username codingblocks",
+     "subject": "Forgot username Codingblocks",
      "username": user.username ,
    };
    return sgMail.send(msgTemplate)
@@ -129,4 +119,4 @@ const forgotUsernameEmail = function(user) {
  }
 
 
-module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail , 'forgotPasswordEmail':forgotPassEmail , 'verifyEmailPrivate':verifyEmailPrivate };
+module.exports = {'welcomeEmail':welcomeEmail , 'verifyEmail':verifyEmail , 'forgotPasswordEmail':forgotPassEmail , 'forgotUserEmail':forgotUsernameEmail , 'verifyEmailPrivate':verifyEmailPrivate };

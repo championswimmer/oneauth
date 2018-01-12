@@ -63,6 +63,17 @@ td , thead , tbody , tr , table{
 .form-control{
   background: #fbfbfc;
 }
+
+.verifyemail-input-row{
+display:flex;
+justify-content:space-around;
+}
+.verifyemail-row .form-control{
+width:80%;
+}
+.verifyemail-form{
+width:100%;
+}
 .alert{
  text-align:justify;
 }

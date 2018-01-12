@@ -20,7 +20,8 @@ const welcomeEmail = function(user) {
   };
 
   msgTemplate.substitutions = {
-    "name": user.firstname ,
+    "subject":"Welcome to Codingblocks"	  
+    "username": user.username ,
   };
 
   return sgMail.send(msgTemplate)

@@ -31,9 +31,11 @@
     <div id="profile-row-email" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Email: </p> <p class="custom-profile-padding"> <a href="mailto:{{user.email}}">{{user.email}}</a> </p>
     </div>
+    {{#if user.role}}
     <div id="profile-row-role" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Role@CB: </p> <p class="custom-profile-padding"> {{user.role}} </p>
     </div>
+    {{/if}}
 {{#if messages.error}}
  <span class="alert alert-danger">{{messages.error}}</span>
  {{/if}}
@@ -72,8 +74,6 @@
     {{/if}}
 </div>
 </div>
-
-
 
 <div class="row">
     <div class="social-btn-wrapper col-md-12">

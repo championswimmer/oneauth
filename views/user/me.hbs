@@ -28,11 +28,19 @@
     <div id="profile-row-lastname" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Lastname: </p> <p class="custom-profile-padding"> {{user.lastname}} </p>
     </div>
+    {{#unless user.verifiedemail}}
     <div id="profile-row-email" class="profile-row">
         <p class="font-weight-bold custom-profile-padding"> Email: </p> <p class="custom-profile-padding"> <a href="mailto:{{user.email}}">{{user.email}}</a> </p>
     </div>
+    {{/unless}}
     <div id="profile-row-email" class="profile-row">
-        <p class="font-weight-bold custom-profile-padding"> Emailverified: </p> <p class="custom-profile-padding"> <a href="mailto:{{user.email}}">{{user.isemailverified}}</a> </p>
+        <p class="font-weight-bold custom-profile-padding"> VerifiedEmail: </p> <p class="custom-profile-padding"> 
+	{{#if user.verifiedemail}}
+	<a href="mailto:{{user.email}}">{{user.verifiedemail}}</a>
+	{{else}}
+	<a href="#">Not Verified</a>
+	{{/if}}
+	</p>
     </div>
 
     <div id="profile-row-role" class="profile-row">

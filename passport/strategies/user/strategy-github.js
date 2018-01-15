@@ -42,6 +42,14 @@ module.exports = new GithubStrategy({
                          return models.User.findById(oldUser.id)
                      })
                      .then(function (user) {
+			
+			Raven.setContext({
+    				user: {
+      				username: user.get().username,
+      				id: user.get().id
+				}
+  			});
+
                          return cb(null, user.get())
                      })
                      .catch((err) => Raven.captureException(err))
@@ -54,6 +62,7 @@ module.exports = new GithubStrategy({
 	else {
         models.User.count({ where: {username: profileJson.login}})
             .then(function(existCount){
+		   
                 return models.UserGithub.findCreateFind({
                     include: [models.User],
                     where: {id: profileJson.id},
@@ -76,8 +85,15 @@ module.exports = new GithubStrategy({
             if (!userGithub) {
                 return cb(null, false, {message: 'Authentication Failed'});
             }
-
-            return cb(null, userGithub.user.get())
+		
+		Raven.setContext({
+    			user: {
+      			username: userGithub.user.get().username,
+      			id: userGithub.user.get().id
+			}
+  			});
+		    
+		return cb(null, userGithub.user.get())
         }).catch((err) => {
  	Raven.captureException(err)})
     }

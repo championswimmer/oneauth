@@ -43,6 +43,13 @@ module.exports = new TwitterStrategy({
                     return models.User.findById(oldUser.id)
                 })
                 .then(function (user) {
+			Raven.setContext({
+    				user: {
+      				id: user.get().id,
+      				username: user.get().username
+    				}
+  			});
+
                     return cb(null, user.get())
                 })
                 .catch((err) => Raven.captureException(err))
@@ -56,6 +63,7 @@ module.exports = new TwitterStrategy({
 
         models.User.count({where: {username: profileJson.screen_name}})
             .then(function (existCount) {
+		    
                 return models.UserTwitter.findCreateFind({
                     include: [models.User],
                     where: {id: profileJson.id},
@@ -79,7 +87,14 @@ module.exports = new TwitterStrategy({
                 return cb(null, false, {message: 'Authentication Failed'});
             }
             if(userTwitter.user) {
-                return cb(null, userTwitter.user.get())
+
+	 	Raven.setContext({
+    			user: {
+      			id: userTwitter.user.get().id,
+      			username: userTwitter.user.get().username
+    			}
+  			});
+ 		return cb(null, userTwitter.user.get())
 	    }
             else {
 	        return cb(null,false,{message: 'Authentication Failed'})

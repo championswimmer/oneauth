@@ -7,9 +7,17 @@ const router = require('express').Router();
 const models = require('../db/models').models;
 const makeGaEvent = require('../utils/ga').makeGaEvent;
 const mail = require('../utils/email');
+const Raven = require('raven');
 
 
 router.post('/', makeGaEvent('submit', 'form', 'forgotusername'), function (req, res) {
+
+  Raven.setContext({
+     		user: {
+       		ip:req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+       		email_entered: req.body.email
+ 		}
+ 	});
 
   if(req.body.email.trim() === '') {
     req.flash('error', 'Email cannot be empty');
@@ -33,6 +41,7 @@ router.post('/', makeGaEvent('submit', 'form', 'forgotusername'), function (req,
 
       if(dataValues.length){
 
+
         return res.redirect('/forgotusername/inter');
 
        }
@@ -44,7 +53,8 @@ router.post('/', makeGaEvent('submit', 'form', 'forgotusername'), function (req,
 
     })
     .catch (function (err) {
-
+	
+	Raven.captureException(err);
         console.error(err);
         req.flash('error', 'Something went wrong. Please try again.');
         return res.redirect('/forgotusername')

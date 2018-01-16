@@ -52,6 +52,7 @@ module.exports = new FacebookStrategy({
                             user.update({photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large"});
                             setImmediate(() => {
                                 span.addTags({
+                                    resource: req.path,
                                     type: 'web',
                                     'span.kind': 'server',
                                     userId: oldUser.id,
@@ -99,6 +100,7 @@ module.exports = new FacebookStrategy({
             // DATADOG TRACE: END SPAN
             setImmediate(() => {
                 span.addTags({
+                    resource: req.path,
                     type: 'web',
                     'span.kind': 'server',
                     userId: userFacebook.user.id,

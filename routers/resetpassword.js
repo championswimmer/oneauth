@@ -10,6 +10,7 @@ const makeGaEvent = require('../utils/ga').makeGaEvent;
 const mail = require('../utils/email');
 const moment =require('moment');
 const uid = require('uid2');
+const Raven = require('raven');
 
 router.post('/', makeGaEvent('submit', 'form', 'resetpassword'), function (req, res) {
 
@@ -17,7 +18,11 @@ router.post('/', makeGaEvent('submit', 'form', 'resetpassword'), function (req, 
     req.flash('error', 'Email cannot be empty');
     return res.redirect('/forgotpassword')
   }
-
+  Raven.setContext({
+     		user: {
+       		ip:req.headers['x-forwarded-for'] || req.connection.remoteAddress
+     		}
+  });  
   models.User.findAll({where:{email:req.body.email}})
   .then((users)=> {
 
@@ -56,7 +61,7 @@ router.post('/', makeGaEvent('submit', 'form', 'resetpassword'), function (req, 
 
     })
     .catch (function (err) {
-
+        Raven.captureException(err);
         console.error(err.toString());
         req.flash('error', 'Something went wrong. Please try again with your registered email.');
         return res.redirect('/forgotpassword');

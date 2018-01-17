@@ -60,13 +60,7 @@ module.exports = new FacebookStrategy({
                                 })
                                 span.finish()
                             })
-  			    Raven.setContext({
-    					user: {
-      					username: user.get().username,
-      					id: user.get().id
-    					}
-  			    });
-			    return cb(null, user.get())
+                            return cb(null, user.get())
                         })
                         .catch((err) => {
                             Raven.captureException(err);
@@ -112,14 +106,7 @@ module.exports = new FacebookStrategy({
                     facebookId: profileJson.id
                 })
                 span.finish()
-            })
-
-	    Raven.setContext({
-    			user: {
-      			username: userFacebook.user.get().username,
-      			id: userFacebook.user.get().id
-			}
-		 });		
+            })	   	
             return cb(null, userFacebook.user.get())
         }).catch((err) => Raven.captureException(err))
     }

@@ -25,13 +25,7 @@ module.exports = new LocalStrategy(function (username, password, cb) {
         passutils.compare2hash(password, userLocal.password)
             .then(function(match) {
                 if (match) {
-			Raven.setContext({
-    				user: {
-      				username: userLocal.user.get().username,
-      				id: userLocal.user.get().id
-    				}
-  			});
-		return cb(null, userLocal.user.get());
+		    return cb(null, userLocal.user.get());
                 } else {
                     return cb(null, false, {message: 'Invalid Password'});
                 }

@@ -42,15 +42,7 @@ module.exports = new GithubStrategy({
                          return models.User.findById(oldUser.id)
                      })
                      .then(function (user) {
-			
-			Raven.setContext({
-    				user: {
-      				username: user.get().username,
-      				id: user.get().id
-				}
-  			});
-
-                         return cb(null, user.get())
+		         return cb(null, user.get())
                      })
                      .catch((err) => Raven.captureException(err))
                  }
@@ -84,15 +76,7 @@ module.exports = new GithubStrategy({
             //TODO: Check created == true for first time
             if (!userGithub) {
                 return cb(null, false, {message: 'Authentication Failed'});
-            }
-		
-		Raven.setContext({
-    			user: {
-      			username: userGithub.user.get().username,
-      			id: userGithub.user.get().id
-			}
-  			});
-		    
+            }			    
 		return cb(null, userGithub.user.get())
         }).catch((err) => {
  	Raven.captureException(err)})

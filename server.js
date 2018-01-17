@@ -45,7 +45,19 @@ const redirectToHome = function (req, res, next) {
     next();
 
 };
-
+const setuserContext = function (req, res, next) {
+    if(req.user) {
+        Raven.setContext({
+	    user:{
+		    username: req.user.dataValues.username,
+		    id: req.user.dataValues.id
+	    }
+	
+	})
+      
+    }
+next();
+};
 // ====================== START SENTRY
 Raven.config(secrets.SENTRY_DSN).install()
 app.use(Raven.requestHandler())
@@ -75,6 +87,7 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(setuserContext);
 app.use(redirectToHome);
 app.use(expressGa('UA-83327907-7'));
 app.use(datadogRouter)

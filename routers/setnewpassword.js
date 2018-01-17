@@ -15,12 +15,7 @@ router.post('/', makeGaEvent('submit', 'form', 'setnewpassword'), function (req,
   req.body.key = req.body.key.trim();
   req.body.password = req.body.password.trim();
   req.body.passwordagain = req.body.passwordagain.trim();
-  Raven.setContext({
-     		user: {
-       		ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-     		}
-   	}); 
-  if((req.body.key === '') || req.body.key.length != 15) {
+   if((req.body.key === '') || req.body.key.length != 15) {
 
     req.flash('error', 'Invalid key. please try again.');
     return res.redirect('/forgotpassword');

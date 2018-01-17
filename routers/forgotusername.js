@@ -12,13 +12,6 @@ const Raven = require('raven');
 
 router.post('/', makeGaEvent('submit', 'form', 'forgotusername'), function (req, res) {
 
-  Raven.setContext({
-     		user: {
-       		ip:req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-       		email_entered: req.body.email
- 		}
- 	});
-
   if(req.body.email.trim() === '') {
     req.flash('error', 'Email cannot be empty');
     return res.redirect('/signup')

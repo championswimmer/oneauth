@@ -18,11 +18,7 @@ router.post('/', makeGaEvent('submit', 'form', 'resetpassword'), function (req, 
     req.flash('error', 'Email cannot be empty');
     return res.redirect('/forgotpassword')
   }
-  Raven.setContext({
-     		user: {
-       		ip:req.headers['x-forwarded-for'] || req.connection.remoteAddress
-     		}
-  });  
+   
   models.User.findAll({where:{email:req.body.email}})
   .then((users)=> {
 

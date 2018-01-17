@@ -14,12 +14,6 @@ const cel = require('connect-ensure-login');
 
 router.post('/', cel.ensureLoggedIn('/login'), makeGaEvent('submit', 'form', 'verifyemail'), function (req, res, next) {
     
-	Raven.setContext({
-     		user: {
-       		id: req.user.get('id'),
-       		username: req.user.get('username')
-     		}
-   	});
     if (req.body.email.trim() === '') {
         req.flash('error', 'Email cannot be empty');
         return res.redirect('/verifyemail')
@@ -120,14 +114,7 @@ router.get('/key/:key', function (req, res) {
             }
 
             if (req.user) {
-		
-		Raven.setContext({
-     			user: {
-       			id: req.user.get('id'),
-       			username: req.user.get('username')
-     			}
-   		});	
-
+			
                 if (req.user.dataValues.id !== resetEntry.dataValues.userId) {
 
                     req.flash('error', 'Key authorization failed.');

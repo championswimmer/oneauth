@@ -51,37 +51,79 @@ router.get('/me/edit',
 router.post('/me/edit',
   cel.ensureLoggedIn('/login'),
   function (req, res, next) {
-
+   
     if ((req.body.password) && (req.body.password !== req.body.repassword)) {
       req.flash('error', 'Passwords do not match');
       return res.redirect('edit')
     }
-
-    models.User.update({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-      },
-      {
-        where: {id: req.user.id},
-        returning: true
-      }).then(function (result) {
-      if (req.body.password) {
-        passutils.pass2hash(req.body.password).then(function (passhash) {
-          models.UserLocal.update({
-            password: passhash
-          }, {
-            where: {userId: req.user.id}
-          }).then(function(updated) {
-            return res.redirect('../me')
-          })
-        }).catch(err => console.log(err))
-      } else {
-        return res.redirect('../me')
+    models.User.findOne({
+      where: {id: req.user.id}
+    }).then((user)=>{
+    
+      if(user.verifiedemail) {
+        
+	 return models.User.update({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname
+            },
+            {where: {id: req.user.id},
+             returning: true
+        })
       }
-    }).catch(function(err) {
-      throw err
-    });
+      else {
+             
+	 return models.User.update({
+	     firstname: req.body.firstname,
+             lastname:  req.body.lasname,
+             email: req.body.email
+	     },
+	     {where: {id: req.user.id},
+	     returning: true	     
+	 })
+      }
 
+    })
+    .then((update)=>{
+
+	if(update) {
+	   req.flash('info','Successfully updated your profile.');
+	}
+    
+        if(update && req.body.password) {
+
+	    return passutils.pass2hash(req.body.password)
+	}
+	else {
+	
+	    return;
+	}
+    })
+    .then((passhash)=>{
+        
+	if(passhash) {
+	
+	    return  models.UserLocal.update({
+            	password: passhash
+          	}, {
+                where: {userId: req.user.id}
+              })
+	}
+	else {
+	    return;
+	}
+    
+    })
+    .then((updated)=>{
+        
+	  return res.redirect('../me');
+	    
+    })
+    .catch((err)=>{
+        console.log(err);
+        req.flash('error','Something went wrong your profile not saved');
+        return res.redirect('../me');
+    })	  
+          
   })
 
 router.get('/:id',

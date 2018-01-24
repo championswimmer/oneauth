@@ -23,7 +23,7 @@ module.exports = new TwitterStrategy({
 
     let profileJson = profile._json;
     let oldUser = req.user;
-
+    Raven.setContext({extra: { file:'twiiterstrategy' }});
     if (oldUser) {
         if (config.DEBUG) console.log('User exists, is connecting Twitter account');
         models.UserTwitter.findOne({where:{id:profileJson.id}})

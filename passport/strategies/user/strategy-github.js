@@ -22,7 +22,7 @@ module.exports = new GithubStrategy({
 }, function(req, token, tokenSecret, profile, cb) {
     let profileJson = profile._json;
     let oldUser = req.user;
-
+    Raven.setContext({extra: { file:'githubstrategy' }});
     if (oldUser) {
         if (config.DEBUG) console.log('User exists, is connecting Github account');
 	models.UserGithub.findOne({where:{id:profileJson.id}})

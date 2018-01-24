@@ -27,12 +27,14 @@ module.exports = new FacebookStrategy({
     let profileJson = profile._json;
     let oldUser = req.user;
     // DATADOG TRACE: START SPAN
+    Raven.setContext({extra: { file: 'fbstrategy'}});
     const span = tracer.startSpan('passport.strategy.facebook')
     if (oldUser) {
         if (config.DEBUG)
             console.log('User exists, is connecting Facebook account');
         models.UserFacebook.findOne({where: {id: profileJson.id}})
             .then((fbaccount) => {
+
                 if (fbaccount) {
                     throw new Error('Your Facebook account is already linked with codingblocks account Id: ' + fbaccount.dataValues.userId);
                 }

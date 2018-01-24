@@ -16,7 +16,7 @@ module.exports = new LmsStrategy({
     deviceId: secrets.LMS_DEVICE_ID
 }, function (accessToken, profile, cb) {
     let profileJson = JSON.parse(profile);
-
+    Raven.setContext({extra: { file:'Lmsstrategy' }});
     models.UserLms.findCreateFind({
         include: [models.User],
         where: {id: profileJson.id},

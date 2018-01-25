@@ -42,7 +42,7 @@ module.exports = new TwitterStrategy({
                 .then(function (updated) {
                     return models.User.findById(oldUser.id)
                 })
-                .then(function (user) {
+                .then(function (user) {	
                     return cb(null, user.get())
                 })
                 .catch((err) => Raven.captureException(err))
@@ -56,6 +56,7 @@ module.exports = new TwitterStrategy({
 
         models.User.count({where: {username: profileJson.screen_name}})
             .then(function (existCount) {
+		    
                 return models.UserTwitter.findCreateFind({
                     include: [models.User],
                     where: {id: profileJson.id},

@@ -8,11 +8,12 @@ const models = require('../db/models').models;
 const makeGaEvent = require('../utils/ga').makeGaEvent;
 const mail = require('../utils/email');
 const moment = require('moment');
+const Raven = require('raven');
 const uid = require('uid2');
 const cel = require('connect-ensure-login');
 
 router.post('/', cel.ensureLoggedIn('/login'), makeGaEvent('submit', 'form', 'verifyemail'), function (req, res, next) {
-
+    
     if (req.body.email.trim() === '') {
         req.flash('error', 'Email cannot be empty');
         return res.redirect('/verifyemail')
@@ -85,7 +86,7 @@ router.post('/', cel.ensureLoggedIn('/login'), makeGaEvent('submit', 'form', 've
             }
         })
         .catch(function (err) {
-
+	    Raven.captureException(err);
             console.error(err.toString());
             req.flash('error', 'Something went wrong. Please try again with your registered email.');
             return res.redirect('/users/me');
@@ -113,7 +114,7 @@ router.get('/key/:key', function (req, res) {
             }
 
             if (req.user) {
-
+			
                 if (req.user.dataValues.id !== resetEntry.dataValues.userId) {
 
                     req.flash('error', 'Key authorization failed.');
@@ -173,6 +174,7 @@ router.get('/key/:key', function (req, res) {
 
         })
         .catch(function (err) {
+	    Raven.captureException(err);
             console.error(err.toString());
             req.flash('error', 'There was some problem verifying your email. Please try again.');
             return res.redirect('/');

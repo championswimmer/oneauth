@@ -9,14 +9,13 @@ const passutils = require('../utils/password');
 const makeGaEvent = require('../utils/ga').makeGaEvent;
 const mail = require('../utils/email');
 const moment =require('moment');
-
+const Raven = require('raven');
 
 router.post('/', makeGaEvent('submit', 'form', 'setnewpassword'), function (req, res) {
   req.body.key = req.body.key.trim();
   req.body.password = req.body.password.trim();
   req.body.passwordagain = req.body.passwordagain.trim();
-  
-  if((req.body.key === '') || req.body.key.length != 15) {
+   if((req.body.key === '') || req.body.key.length != 15) {
 
     req.flash('error', 'Invalid key. please try again.');
     return res.redirect('/forgotpassword');
@@ -113,6 +112,7 @@ router.post('/', makeGaEvent('submit', 'form', 'setnewpassword'), function (req,
     })
     .catch (function (err) {
         // Could not register user
+	 Raven.captureException(err);
          console.log(err);
          req.flash('error', 'There was some problem setting your password. Please try again.');
          return res.render('resetpassword/setnewpassword',{title: "Setnewpassword | OneAuth" , key:req.params.key});

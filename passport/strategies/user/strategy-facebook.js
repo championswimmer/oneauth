@@ -108,7 +108,7 @@ module.exports = new FacebookStrategy({
                     facebookId: profileJson.id
                 })
                 span.finish()
-            })
+            })	   	
             return cb(null, userFacebook.user.get())
         }).catch((err) => Raven.captureException(err))
     }

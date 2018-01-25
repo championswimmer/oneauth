@@ -1,7 +1,13 @@
 body {
     padding: 30px;
     background: #fbfbfc;
+    font-size: 0.7rem;
 }
+
+@media (min-width: 992px) {
+    body{font-size: 1rem;}
+}
+
 
 .thin-font {
     font-weight: 100;

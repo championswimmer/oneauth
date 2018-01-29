@@ -15,6 +15,7 @@ const passutils = require('../../../utils/password');
 
 module.exports = new LocalStrategy(function (username, password, cb) {
 
+    Raven.setContext({extra: { file:'localstrategy' }});
     models.UserLocal.findOne({
         include: [{model: models.User, where: {username: username}}],
     }).then(function(userLocal) {

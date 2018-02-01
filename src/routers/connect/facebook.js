@@ -4,7 +4,7 @@
 const router = require('express').Router();
 const passport = require('../../passport/passporthandler');
 
-const config = require('../../config');
+const config = require('../../../config');
 
 router.get('/', passport.authorize('facebook', {
     scope: config.FACEBOOK_LOGIN_SCOPES

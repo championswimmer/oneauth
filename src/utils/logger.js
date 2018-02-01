@@ -9,7 +9,7 @@ const GRAYLOG_HOST = process.env.GRAYLOG_HOST || 'graylog.cb.lk',
   NODE_ENV = process.env.NODE_ENV || 'development'
 ;
 
-const config = require('../config')
+const config = require('../../config')
 
 const GrayLogger = new WinstonGraylog2 ({
   name: 'oneauth',

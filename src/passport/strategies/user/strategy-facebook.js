@@ -6,7 +6,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 
 const models = require('../../../db/models').models;
 
-const config = require('../../../config');
+const config = require('../../../../config');
 const secrets = config.SECRETS;
 const passutils = require('../../../utils/password');
 const tracer = require('../../../utils/ddtracer').tracer

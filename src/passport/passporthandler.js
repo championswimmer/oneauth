@@ -9,7 +9,7 @@ const UserStrategies = require('./strategies/user')
 
 const models = require('../db/models').models;
 
-const config = require('../config');
+const config = require('../../config');
 
 passport.use(UserStrategies.localStrategy);
 passport.use(UserStrategies.fbStrategy);

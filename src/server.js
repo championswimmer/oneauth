@@ -13,7 +13,7 @@ const express = require('express')
     , Raven = require('raven')
     , debug = require('debug')('oneauth:server')
 
-const config = require('./config')
+const config = require('../config')
     , secrets = config.SECRETS
     , loginrouter = require('./routers/login')
     , connectrouter = require('./routers/connect')
@@ -64,15 +64,15 @@ app.use(Raven.requestHandler())
 // ====================== END SENTRY
 
 app.engine('hbs', exphbs.express4({
-    partialsDir: path.join(__dirname, 'views/partials'),
-    layoutsDir: path.join(__dirname, 'views/layouts'),
+    partialsDir: path.join(__dirname, '../views/partials'),
+    layoutsDir: path.join(__dirname, '../views/layouts'),
     defaultLayout: 'views/layouts/main.hbs',
 }));
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set("view engine", "hbs");
 
 app.use(expressLogger);
-app.use(express.static(path.join(__dirname, 'public_static')));
+app.use(express.static(path.join(__dirname, '../public_static')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({

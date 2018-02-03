@@ -3,7 +3,7 @@
  */
 const router = require('express').Router();
 const Raven = require('raven');
-const config = require('../config')
+const config = require('../../config')
 const makeGaEvent = require('../utils/ga').makeGaEvent
 
 router.get('/', makeGaEvent('submit', 'form', 'logout'), function (req, res){

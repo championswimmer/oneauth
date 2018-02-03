@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail');
-const secret = require('../secrets-sample');
-const config = require('../config');
+const secret = require('../../secrets-sample');
+const config = require('../../config');
 
 sgMail.setApiKey(config.SECRETS.SENDGRID_API_KEY);
 sgMail.setSubstitutionWrappers('{{', '}}');

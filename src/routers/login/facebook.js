@@ -4,7 +4,7 @@
 const router = require('express').Router();
 const passport = require('../../passport/passporthandler');
 
-const config = require('../../config');
+const config = require('../../../config');
 
 function authnOrAuthzFacebook(req, res, next) {
     if (!req.isAuthenticated()) {

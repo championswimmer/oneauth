@@ -25,7 +25,7 @@ if (!flags.list && !flags.migrate) {
 }
 
 if (flags.list) {
-    fs.readdir(__dirname + '/../db/schema_update', (err, items) => {
+    fs.readdir(__dirname + '/../migrations', (err, items) => {
         if (err) throw err;
         for (item of items) {
             console.log(item);
@@ -34,12 +34,14 @@ if (flags.list) {
 }
 
 if (flags.migrate) {
-    const db = require('../db/models').db;
-    if (!flags.file.includes('db/schema_update')) {
-        flags.file = __dirname + '/../db/schema_update/' + flags.file;
+    const db = require('../src/db/models').db;
+    if (!flags.file.includes('migrations')) {
+        flags.file = __dirname + '/../migrations/' + flags.file;
     }
     fs.readFile(flags.file, (err, data) => {
         let mig = data.toString();
+        console.log("Running Migration :")
+        console.log(mig)
         process.nextTick(() => {
             db.query(mig).spread((results, meta) => {
                 console.log(results);

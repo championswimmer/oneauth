@@ -3,7 +3,7 @@
  */
 const bcrypt = require('bcrypt');
 
-const config = require('../config');
+const config = require('../../config');
 const saltRounds = config.BCRYPT_SALT_ROUNDS;
 
 /**

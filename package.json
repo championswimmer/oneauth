@@ -7,6 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js"
   },
+  "files": [
+    "src",
+    "views",
+    "public_static",
+    "config.js",
+    "newrelic.js",
+    "secrets-sample.json"
+  ],
   "repository": {
     "type": "git",
     "url": "http://github.com/coding-blocks/oneauth"

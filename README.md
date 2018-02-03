@@ -30,7 +30,7 @@ If you want to run it with https, and run it on a proper domain
 (not 127.0.0.1), and enable Facebook/Twitter/Github logins, you'll need to take care of 
 a few additional steps - 
 
-Please read the [required steps here](docs/RUNNING_LOCALLY.md)
+Please read the [required steps in the wiki](wiki)
 
 -------------------------
 
@@ -76,7 +76,7 @@ Retrieve the bearer token from the response body
 _Ensure you do not leak client secret
 to the frontend_
 
-Read in detailed [step by step instructions here](docs/AUTHENTICATE_EXPLICIT.md)
+Read in detailed [step by step instructions in the wiki](wiki)
 
 -------------------------
 
@@ -135,6 +135,7 @@ was a little lacking on lastuser, and (b) we were more comfortable on a
 NodeJS+Postgres based stack.
 
 ## Support on Beerpay
-Hey dude! Help me out for a couple of :beers:!
+You can support the project via BeerPay
+Buy us a beer !
 
 [![Beerpay](https://beerpay.io/coding-blocks/oneauth/badge.svg?style=beer-square)](https://beerpay.io/coding-blocks/oneauth)  [![Beerpay](https://beerpay.io/coding-blocks/oneauth/make-wish.svg?style=flat-square)](https://beerpay.io/coding-blocks/oneauth?focus=wish)

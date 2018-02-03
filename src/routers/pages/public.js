@@ -7,76 +7,22 @@ const router = require('express').Router()
 
 const verifyemail = require('../../routers/verifyemail')
 
-router.get('/login', function (req, res, next) {
-
+const notForLoggedIn = (req, res, next) => {
     if (req.user) {
-        res.redirect('/')
+        return res.redirect('/')
     }
-    else {
-        res.render('login', {title: "Login | OneAuth", error: req.flash('error')})
-    }
+    next()
+}
 
+router.get('/login', notForLoggedIn, function (req, res, next) {
+    res.render('login', {title: "Login | OneAuth", error: req.flash('error')})
 })
-router.get('/signup', function (req, res, next) {
-
-    if (req.user) {
-        res.redirect('/')
-    }
-    else {
-        res.render('signup', {title: "Signup | OneAuth"})
-    }
+router.get('/signup', notForLoggedIn, function (req, res, next) {
+    res.render('signup', {title: "Signup | OneAuth"})
 })
 
-router.get('/forgotusername', function (req, res, next) {
-
-    if (req.user) {
-        res.redirect('/users/me')
-    }
-    else {
-        res.render('forgotusername/forgotusername', {title: "Resetusername | OneAuth"})
-    }
-})
-
-router.get('/forgotusername/inter', function (req, res, next) {
-
-    if (req.user) {
-        res.redirect('/users/me')
-    }
-    else {
-        res.render('forgotusername/inter', {title: "Resetusername | OneAuth"})
-    }
-})
-
-router.get('/forgotpassword', function (req, res, next) {
-
-    if (req.user) {
-        res.redirect('/')
-    }
-    else {
-        res.render('resetpassword/resetpassword', {title: "Resetpassword | OneAuth"})
-    }
-
-})
-
-router.get('/forgotpassword/inter', function (req, res, next) {
-
-    if (req.user) {
-        res.redirect('/')
-    }
-    else {
-        res.render('resetpassword/inter', {title: "Resetinter | OneAuth"})
-    }
-
-})
-router.get('/setnewpassword/:key', function (req, res, next) {
-
-    if (req.user) {
-        res.redirect('/')
-    }
-    else {
-        res.render('resetpassword/setnewpassword', {title: "Setnewpassword | OneAuth", key: req.params.key})
-    }
-
+router.get('/setnewpassword/:key', notForLoggedIn, function (req, res, next) {
+    res.render('resetpassword/setnewpassword', {title: "Setnewpassword | OneAuth", key: req.params.key})
 })
 
 router.get('/verifyemail/inter', cel.ensureLoggedIn('/login'), function (req, res, next) {

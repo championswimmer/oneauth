@@ -18,7 +18,7 @@ router.post('/', makeGaEvent('submit', 'form', 'setnewpassword'), function (req,
     if ((req.body.key === '') || req.body.key.length != 15) {
 
         req.flash('error', 'Invalid key. please try again.')
-        return res.redirect('/forgotpassword')
+        return res.redirect('/forgot/password')
     }
 
     if ((req.body.password === '') || req.body.password.length < 5) {
@@ -39,7 +39,7 @@ router.post('/', makeGaEvent('submit', 'form', 'setnewpassword'), function (req,
 
             if (!resetEntry) {
                 req.flash('error', 'Invalid key. please try again.')
-                return res.redirect('/forgotpassword')
+                return res.redirect('/forgot/password')
             }
 
             if (moment().diff(resetEntry.createdAt, 'seconds') <= 86400) {
@@ -102,7 +102,7 @@ router.post('/', makeGaEvent('submit', 'form', 'setnewpassword'), function (req,
                 ).then(function () {
 
                     req.flash('error', 'Reset password Key expired. Please try again.')
-                    return res.redirect('/forgotpassword')
+                    return res.redirect('/forgot/password')
 
                 })
 

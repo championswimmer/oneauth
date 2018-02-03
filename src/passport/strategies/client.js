@@ -6,9 +6,9 @@
  * Created by championswimmer on 10/03/17.
  */
 
-const BasicStrategy = require('passport-http').BasicStrategy;
-const ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
-const models = require('../../db/models').models;
+const BasicStrategy = require('passport-http').BasicStrategy
+const ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy
+const models = require('../../db/models').models
 
 
 /**
@@ -22,23 +22,23 @@ const verifyClient = function (clientId, clientSecret, done) {
         where: {id: clientId}
     }).then(function (client) {
         if (!client) {
-            return done(null, false);
+            return done(null, false)
         }
         if (client.secret != clientSecret) {
-            return done(null, false);
+            return done(null, false)
         }
 
         return done(null, client)
     }).catch((err) => console.log(err))
-};
+}
 
 /**
  * This is used to authenticate a _client_ with
  * Authorization: Basic <base64(clientId:clientSecret)>
  */
-const basicStrategy = new BasicStrategy(verifyClient);
+const basicStrategy = new BasicStrategy(verifyClient)
 
-const clientPasswordStrategy = new ClientPasswordStrategy(verifyClient);
+const clientPasswordStrategy = new ClientPasswordStrategy(verifyClient)
 
 
-module.exports = {basicStrategy, clientPasswordStrategy};
+module.exports = {basicStrategy, clientPasswordStrategy}

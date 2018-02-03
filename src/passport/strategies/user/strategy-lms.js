@@ -2,12 +2,12 @@
  * Created by championswimmer on 07/05/17.
  */
 const Raven = require('raven')
-const LmsStrategy = require('./../custom/passport-lms').Strategy;
-const models = require('../../../db/models').models;
+const LmsStrategy = require('./../custom/passport-lms').Strategy
+const models = require('../../../db/models').models
 
-const config = require('../../../../config');
-const secrets = config.SECRETS;
-const passutils = require('../../../utils/password');
+const config = require('../../../../config')
+const secrets = config.SECRETS
+const passutils = require('../../../utils/password')
 
 
 module.exports = new LmsStrategy({
@@ -15,8 +15,8 @@ module.exports = new LmsStrategy({
     applicationId: secrets.LMS_APPLICATION_ID,
     deviceId: secrets.LMS_DEVICE_ID
 }, function (accessToken, profile, cb) {
-    let profileJson = JSON.parse(profile);
-    Raven.setContext({extra: { file:'lmsstrategy' }});
+    let profileJson = JSON.parse(profile)
+    Raven.setContext({extra: {file: 'lmsstrategy'}})
     models.UserLms.findCreateFind({
         include: [models.User],
         where: {id: profileJson.id},
@@ -34,12 +34,12 @@ module.exports = new LmsStrategy({
                 photo: profileJson.photo ? profileJson.photo.url : ""
             }
         }
-    }).spread(function(userLms, created) {
+    }).spread(function (userLms, created) {
         //TODO: Check created == true for first time
         if (!userLms) {
-            return cb(null, false, {message: 'Authentication Failed'});
+            return cb(null, false, {message: 'Authentication Failed'})
         }
 
         return cb(null, userLms.user.get())
     }).catch((err) => Raven.captureException(err))
-});
+})

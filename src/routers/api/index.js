@@ -3,7 +3,7 @@
  *
  * This is the /api/v1 path
  */
-const router = require('express').Router();
+const router = require('express').Router()
 
 router.use((req, res, next) => {
     res.set('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization')
@@ -13,7 +13,7 @@ router.use((req, res, next) => {
     next()
 })
 
-router.use('/users', require('./users'));
-router.use('/clients', require('./clients'));
+router.use('/users', require('./users'))
+router.use('/clients', require('./clients'))
 
-module.exports = router;
+module.exports = router

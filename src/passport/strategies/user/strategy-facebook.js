@@ -2,13 +2,13 @@
  * Created by championswimmer on 07/05/17.
  */
 const Raven = require('raven')
-const FacebookStrategy = require('passport-facebook').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy
 
-const models = require('../../../db/models').models;
+const models = require('../../../db/models').models
 
-const config = require('../../../../config');
-const secrets = config.SECRETS;
-const passutils = require('../../../utils/password');
+const config = require('../../../../config')
+const secrets = config.SECRETS
+const passutils = require('../../../utils/password')
 const tracer = require('../../../utils/ddtracer').tracer
 
 
@@ -24,19 +24,19 @@ module.exports = new FacebookStrategy({
     profileFields: ['id', 'name', 'picture', 'email'],
     passReqToCallback: true,
 }, function (req, authToken, refreshToken, profile, cb) {
-    let profileJson = profile._json;
-    let oldUser = req.user;
+    let profileJson = profile._json
+    let oldUser = req.user
     // DATADOG TRACE: START SPAN
-    Raven.setContext({extra: { file: 'fbstrategy'}});
+    Raven.setContext({extra: {file: 'fbstrategy'}})
     const span = tracer.startSpan('passport.strategy.facebook')
     if (oldUser) {
         if (config.DEBUG)
-            console.log('User exists, is connecting Facebook account');
+            console.log('User exists, is connecting Facebook account')
         models.UserFacebook.findOne({where: {id: profileJson.id}})
             .then((fbaccount) => {
 
                 if (fbaccount) {
-                    throw new Error('Your Facebook account is already linked with codingblocks account Id: ' + fbaccount.dataValues.userId);
+                    throw new Error('Your Facebook account is already linked with codingblocks account Id: ' + fbaccount.dataValues.userId)
                 }
                 else {
                     models.UserFacebook.upsert({
@@ -51,7 +51,7 @@ module.exports = new FacebookStrategy({
                         })
                         .then(function (user) {
                             // DATADOG TRACE: END SPAN
-                            user.update({photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large"});
+                            user.update({photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large"})
                             setImmediate(() => {
                                 span.addTags({
                                     resource: req.path,
@@ -66,14 +66,14 @@ module.exports = new FacebookStrategy({
                             return cb(null, user.get())
                         })
                         .catch((err) => {
-                            Raven.captureException(err);
+                            Raven.captureException(err)
                             return cb(err, null)
                         })
                 }
             })
             .catch((err) => {
-                Raven.captureException(err);
-                return cb(null, false, {message: err.message});
+                Raven.captureException(err)
+                return cb(null, false, {message: err.message})
             })
     }
     else {
@@ -97,7 +97,7 @@ module.exports = new FacebookStrategy({
         }).spread(function (userFacebook, created) {
             //TODO: Check 'created' == true to see if first time user
             if (!userFacebook) {
-                return cb(null, false, {message: 'Authentication Failed'});
+                return cb(null, false, {message: 'Authentication Failed'})
             }
             // DATADOG TRACE: END SPAN
             setImmediate(() => {
@@ -110,10 +110,10 @@ module.exports = new FacebookStrategy({
                     facebookId: profileJson.id
                 })
                 span.finish()
-            })	   	
+            })
             return cb(null, userFacebook.user.get())
         }).catch((err) => Raven.captureException(err))
     }
 
 
-});
+})

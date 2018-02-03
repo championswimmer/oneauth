@@ -2,10 +2,10 @@
  * Created by championswimmer on 07/05/17.
  */
 const Raven = require('raven')
-const LocalStrategy = require('passport-local').Strategy;
-const models = require('../../../db/models').models;
+const LocalStrategy = require('passport-local').Strategy
+const models = require('../../../db/models').models
 
-const passutils = require('../../../utils/password');
+const passutils = require('../../../utils/password')
 
 
 /**
@@ -15,28 +15,28 @@ const passutils = require('../../../utils/password');
 
 module.exports = new LocalStrategy(function (username, password, cb) {
 
-    Raven.setContext({extra: { file:'localstrategy' }});
+    Raven.setContext({extra: {file: 'localstrategy'}})
     models.UserLocal.findOne({
         include: [{model: models.User, where: {username: username}}],
-    }).then(function(userLocal) {
+    }).then(function (userLocal) {
         if (!userLocal) {
-            return cb(null, false, {message: 'Invalid Username'});
+            return cb(null, false, {message: 'Invalid Username'})
         }
 
         passutils.compare2hash(password, userLocal.password)
-            .then(function(match) {
+            .then(function (match) {
                 if (match) {
-		    return cb(null, userLocal.user.get());
+                    return cb(null, userLocal.user.get())
                 } else {
-                    return cb(null, false, {message: 'Invalid Password'});
+                    return cb(null, false, {message: 'Invalid Password'})
                 }
             })
             .catch(function (err) {
-                console.trace(err.message);
-		Raven.captureException(err);
+                console.trace(err.message)
+                Raven.captureException(err)
                 return cb(err, false, {message: err})
-            });
+            })
 
     }).catch((err) => Raven.captureException(err))
 
-});
+})

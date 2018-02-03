@@ -29,9 +29,9 @@ const config = require('../config')
     , pagerouter = require('./routers/pagerouter')
     , statusrouter = require('./routers/statusrouter')
     , {expresstracer, datadogRouter} = require('./utils/ddtracer')
-    , { expressLogger } = require ('./utils/logger');
+    , {expressLogger} = require('./utils/logger')
 
-const app = express();
+const app = express()
 
 // ============== START DATADOG
 app.use(expresstracer)
@@ -39,25 +39,25 @@ app.use(expresstracer)
 const redirectToHome = function (req, res, next) {
 
     if (req.path == '/') {
-        return res.redirect('/users/me');
+        return res.redirect('/users/me')
     }
 
-    next();
+    next()
 
-};
+}
 const setuserContext = function (req, res, next) {
-    if(req.user) {
+    if (req.user) {
         Raven.setContext({
-	    user:{
-		    username: req.user.dataValues.username,
-		    id: req.user.dataValues.id
-	    }
-	
-	})
-      
+            user: {
+                username: req.user.dataValues.username,
+                id: req.user.dataValues.id
+            }
+
+        })
+
     }
-next();
-};
+    next()
+}
 // ====================== START SENTRY
 Raven.config(secrets.SENTRY_DSN).install()
 app.use(Raven.requestHandler())
@@ -67,14 +67,14 @@ app.engine('hbs', exphbs.express4({
     partialsDir: path.join(__dirname, '../views/partials'),
     layoutsDir: path.join(__dirname, '../views/layouts'),
     defaultLayout: 'views/layouts/main.hbs',
-}));
-app.set('views', path.join(__dirname, '../views'));
-app.set("view engine", "hbs");
+}))
+app.set('views', path.join(__dirname, '../views'))
+app.set("view engine", "hbs")
 
-app.use(expressLogger);
-app.use(express.static(path.join(__dirname, '../public_static')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(expressLogger)
+app.use(express.static(path.join(__dirname, '../public_static')))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
     secret: secrets.EXPRESS_SESSION_SECRET,
     resave: false,
@@ -83,30 +83,30 @@ app.use(session({
     cookie: {
         domain: config.COOKIE_DOMAIN
     }
-}));
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(setuserContext);
-app.use(redirectToHome);
-app.use(expressGa('UA-83327907-7'));
+}))
+app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(setuserContext)
+app.use(redirectToHome)
+app.use(expressGa('UA-83327907-7'))
 app.use(datadogRouter)
-app.use('/login', loginrouter);
-app.use('/connect', connectrouter);
-app.use('/disconnect', disconnectrouter);
-app.use('/logout', logoutrouter);
-app.use('/forgotusername', forgotusernamerouter);
-app.use('/signup', signuprouter);
-app.use('/resetpassword', resetpasswordrouter);
-app.use('/verifyemail',verifyemailrouter);
-app.use('/setnewpassword', setnewpasswordrouter);
-app.use('/api', apirouter);
-app.use('/oauth', oauthrouter);
-app.use('/status', statusrouter);
-app.use('/', pagerouter);
+app.use('/login', loginrouter)
+app.use('/connect', connectrouter)
+app.use('/disconnect', disconnectrouter)
+app.use('/logout', logoutrouter)
+app.use('/forgotusername', forgotusernamerouter)
+app.use('/signup', signuprouter)
+app.use('/resetpassword', resetpasswordrouter)
+app.use('/verifyemail', verifyemailrouter)
+app.use('/setnewpassword', setnewpasswordrouter)
+app.use('/api', apirouter)
+app.use('/oauth', oauthrouter)
+app.use('/status', statusrouter)
+app.use('/', pagerouter)
 
-app.use(Raven.errorHandler());
+app.use(Raven.errorHandler())
 
-app.listen(process.env.PORT||3838, function () {
-    debug("Listening on " + config.SERVER_URL );
-});
+app.listen(process.env.PORT || 3838, function () {
+    debug("Listening on " + config.SERVER_URL)
+})

@@ -4,9 +4,9 @@
 
 module.exports = {
     prefixHttp: function (url) {
-        if (url.substr(0,4) != "http") {
+        if (url.substr(0, 4) != "http") {
             url = "http://" + url
         }
-        return url;
+        return url
     }
-};
+}

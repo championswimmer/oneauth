@@ -67,7 +67,7 @@ const forgotPassEmail = function (user, key) {
 
     msgTemplate.to = user.email
 
-    let link = "https://account.codingblocks.com/setnewpassword/" + key
+    let link = "https://account.codingblocks.com/forgot/password/new/" + key
     msgTemplate.substitutions = {
         "subject": "Forgot password Codingblocks",
         "username": user.username,

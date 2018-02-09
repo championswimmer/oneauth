@@ -114,13 +114,13 @@ router.post('/password/new', makeGaEvent('submit', 'form', 'forgot.password.new'
   if ((req.body.password === '') || req.body.password.length < 5) {
 
     req.flash('error', 'Password too weak. Please use at least 5 characters.')
-    return res.render('resetpassword/setnewpassword', {title: "Setnewpassword | OneAuth", key: req.body.key})
+    return res.render('forgot/password/new', {title: "Setnewpassword | OneAuth", key: req.body.key})
   }
 
   if (req.body.password !== req.body.passwordagain) {
 
     req.flash('error', 'Password does not match.')
-    return res.render('resetpassword/setnewpassword', {title: "Setnewpassword | OneAuth", key: req.body.key})
+    return res.render('forgot/password/new', {title: "Setnewpassword | OneAuth", key: req.body.key})
   }
 
   models.Resetpassword.findOne({where: {key: req.body.key}})
@@ -205,7 +205,7 @@ router.post('/password/new', makeGaEvent('submit', 'form', 'forgot.password.new'
       Raven.captureException(err)
       console.log(err)
       req.flash('error', 'There was some problem setting your password. Please try again.')
-      return res.render('resetpassword/setnewpassword', {title: "Setnewpassword | OneAuth", key: req.params.key})
+      return res.render('forgot/password/new', {title: "Setnewpassword | OneAuth", key: req.params.key})
     })
 })
 

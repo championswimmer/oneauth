@@ -5,6 +5,7 @@ const mail = require('../../utils/email')
 const Raven = require('raven')
 const moment = require('moment')
 const uid = require('uid2')
+const passutils = require('../../utils/password')
 
 const router = require('express').Router()
 

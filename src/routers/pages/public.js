@@ -22,7 +22,7 @@ router.get('/signup', notForLoggedIn, function (req, res, next) {
 })
 
 router.get('/setnewpassword/:key', notForLoggedIn, function (req, res, next) {
-    res.render('resetpassword/setnewpassword', {title: "Setnewpassword | OneAuth", key: req.params.key})
+    res.render('forgot/password/new', {title: "Setnewpassword | OneAuth", key: req.params.key})
 })
 
 router.get('/verifyemail/inter', cel.ensureLoggedIn('/login'), function (req, res, next) {

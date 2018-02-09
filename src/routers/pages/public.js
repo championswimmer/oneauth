@@ -18,6 +18,7 @@ router.get('/signup', cel.ensureNotLoggedIn('/'), function (req, res, next) {
 })
 
 router.get('/forgot/password/new/:key', cel.ensureNotLoggedIn('/'), function (req, res, next) {
+    //FIXME: Check if the key is correct, and prevent rendering if so
     res.render('forgot/password/new', {title: "Setnewpassword | OneAuth", key: req.params.key})
 })
 
@@ -27,12 +28,9 @@ router.get('/verifyemail/inter', cel.ensureLoggedIn('/login'), function (req, re
 
 })
 
-router.get('/client/add',
-    cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
+router.get('/client/add', cel.ensureLoggedIn('/login'), function (req, res, next) {
         res.render('client/add', {title: "Add New Client | OneAuth"})
-    }
-)
+    })
 
 
 module.exports = router

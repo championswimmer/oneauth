@@ -102,7 +102,6 @@ const verifyEmailPrivate = function (userEmails) {
 }
 
 const forgotUsernameEmail = function (user) {
-
     let msgTemplate = {}
     msgTemplate.template_id = config.FORGOT_USER_EMAIL
     msgTemplate.from = senderEmail
@@ -114,6 +113,7 @@ const forgotUsernameEmail = function (user) {
     msgTemplate.substitutions = {
         "subject": "Forgot username Codingblocks",
         "username": user.username,
+        "firstname": user.firstname
     }
     return sgMail.send(msgTemplate)
 

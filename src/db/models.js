@@ -151,24 +151,28 @@ const College = db.define('college', {
     college_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
 })
 
+User.belongsTo(College)
 College.hasOne(User)
 
 const Company = db.define('company', {
     company_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
 })
 
+User.belongsTo(Company)
 Company.hasOne(User)
 
 const Branch = db.define('branch', {
     branch_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
 })
 
+User.belongsTo(Branch)
 Branch.hasOne(User)
 
 const State = db.define('state', {
     state_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
 })
 
+AddressBook.belongsTo(State)
 State.hasOne(AddressBook)
 
 const Country = db.define('country', {
@@ -176,6 +180,7 @@ const Country = db.define('country', {
     country_code: {type: Sequelize.DataTypes.STRING, allowNull: false}
 })
 
+AddressBook.belongsTo(Country)
 Country.hasOne(AddressBook)
 
 
@@ -190,7 +195,8 @@ db.sync({
 module.exports = {
     models: {
         User, UserLocal, UserFacebook, UserTwitter, UserGithub, UserLms,
-        Client, GrantCode, AuthToken, Resetpassword, Verifyemail
+        Client, GrantCode, AuthToken, Resetpassword, Verifyemail, AddressBook,
+        College, Company, Branch, State, Country
     },
     db
 }

@@ -18,7 +18,17 @@ router.get('/me',
                 models.UserGithub,
                 models.UserFacebook,
                 models.UserLms,
-                models.UserTwitter
+                models.UserTwitter,
+                models.College,
+                models.Branch,
+                {
+                    model: models.AddressBook,
+                    include: [
+                        models.State,
+                        models.Country
+                    ]
+                },
+                models.Company
             ]
         }).then(function (user) {
             if (!user) {

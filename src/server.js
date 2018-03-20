@@ -101,6 +101,10 @@ app.use('/', pagerouter)
 
 app.use(Raven.errorHandler())
 
+if(process.env.ONEAUTH_DEV === 'localhost'){
+    Raven.captureException = (E) => console.error (E)
+}
+
 app.listen(process.env.PORT || 3838, function () {
     debug("Listening on " + config.SERVER_URL)
 })

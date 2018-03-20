@@ -132,6 +132,53 @@ User.hasMany(AuthToken)
 AuthToken.belongsTo(Client)
 Client.hasMany(AuthToken)
 
+const AddressBook = db.define('address_book', {
+    first_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
+    last_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
+    mobile_number: {type: Sequelize.DataTypes.INTEGER, allowNull: false},
+    email: {type: Sequelize.DataTypes.STRING, allowNull: false},
+    pincode: {type: Sequelize.DataTypes.INTEGER, allowNull: false},
+    street_address: {type: Sequelize.DataTypes.STRING, allowNull: false},
+    landmark: {type: Sequelize.DataTypes.STRING, allowNull: true},
+    city: {type: Sequelize.DataTypes.STRING, allowNull: false},
+    primary: {type: Sequelize.DataTypes.BOOLEAN, allowNull: false}
+})
+
+AddressBook.belongsTo(User)
+User.hasMany(AddressBook)
+
+const College = db.define('college', {
+    college_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
+})
+
+College.hasOne(User)
+
+const Company = db.define('company', {
+    company_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
+})
+
+Company.hasOne(User)
+
+const Branch = db.define('branch', {
+    branch_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
+})
+
+Branch.hasOne(User)
+
+const State = db.define('state', {
+    state_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
+})
+
+State.hasOne(AddressBook)
+
+const Country = db.define('country', {
+    country_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
+    country_code: {type: Sequelize.DataTypes.STRING, allowNull: false}
+})
+
+Country.hasOne(AddressBook)
+
+
 
 db.sync({
     force: config.DEPLOY_CONFIG === 'heroku', // Clear DB on each run on heroku

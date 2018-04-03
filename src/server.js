@@ -26,7 +26,8 @@ const config = require('../config')
     , pagerouter = require('./routers/pages')
     , statusrouter = require('./routers/statusrouter')
     , {expresstracer, datadogRouter} = require('./utils/ddtracer')
-    , {expressLogger} = require('./utils/logger')
+    , {expressLogger} = require('./utils/logger'),
+      handlebarsHelpers = require('./utils/handlebars');
 
 const app = express()
 
@@ -64,6 +65,7 @@ app.engine('hbs', exphbs.express4({
     partialsDir: path.join(__dirname, '../views/partials'),
     layoutsDir: path.join(__dirname, '../views/layouts'),
     defaultLayout: 'views/layouts/main.hbs',
+    //helpers: handlebarsHelpers
 }))
 app.set('views', path.join(__dirname, '../views'))
 app.set("view engine", "hbs")

@@ -1,0 +1,33 @@
+{{!< centercolumn}}
+
+<a href="/address/add"><div class="btn btn-sm btn-info m-t-5">Add</div></a>
+
+{{#each addresses as |address|}}
+
+    <div class="row p-2">
+        <div class="col p-2">
+            <div class="row h1 m-2">{{address.first_name}}</div>
+            <div class="row">
+                <div class="col align-self-center align-items-center">
+                    <a href="/address/{{address.id}}"><div class="btn btn-sm btn-info">Details</div></a>
+                    <a href="/address/{{address.id}}/edit"><div class="btn btn-sm btn-info">Edit</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{else}}
+
+    <div class="row p-2">
+        <div class="col p-2 text-center">
+            <h3 class="thin-font">
+                You have registered no address yet
+            </h3>
+            <a href="/address/add">
+            <h4> Add one now</h4>
+            </a>
+        </div>
+    </div>
+
+
+{{/each}}

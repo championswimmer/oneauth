@@ -37,6 +37,32 @@
         <label for="repassword" class=" col-sm-3 col-form-label"> Re-enter </label>
         <input class="col-sm-9 form-control" type="password" name="repassword" placeholder="Leave empty to keep unchanged" id="repassword"> </input>
     </div>
+    <div class="form-group row" id="profile-row-id">
+        <label>College Name:</label>
+        <select name="collegeId" class="m-2a form-control">
+            {{#each colleges}}
+                {{#ifeq expected=id val=../user.collegeId}}
+                    <option value="{{id}}" selected>{{college_name}}</option>
+                {{/ifeq}}
+                {{#ifneq expected=id val=../user.collegeId}}
+                    <option value="{{id}}">{{college_name}}</option>
+                {{/ifneq}}
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group row" id="profile-row-id">
+        <label>Branch Name:</label>
+        <select name="branchId" class="m-2a form-control">
+            {{#each branches}}
+                {{#ifeq expected=id val=../user.branchId}}
+                    <option value="{{id}}" selected>{{branch_name}}</option>
+                {{/ifeq}}
+                {{#ifneq expected=id val=../user.branchId}}
+                    <option value="{{id}}">{{branch_name}}</option>
+                {{/ifneq}}
+            {{/each}}
+        </select>
+    </div>
     <div class="form-group row">
         <div class="col hidden-md-down"></div>
         <input type="submit" class="col-lg-3 m-2 btn btn-success" value="SUBMIT">

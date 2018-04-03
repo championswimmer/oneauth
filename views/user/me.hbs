@@ -48,7 +48,14 @@
                 {{/if}}
             </p>
         </div>
-
+        <div id="profile-row-collegename" class="profile-row">
+            <p class="font-weight-bold custom-profile-padding"> College Name: </p>
+            <p class="custom-profile-padding"> {{user.college.college_name}} </p>
+        </div>
+        <div id="profile-row-branchname" class="profile-row">
+            <p class="font-weight-bold custom-profile-padding"> Branch Name: </p>
+            <p class="custom-profile-padding"> {{user.branch.branch_name}} </p>
+        </div>
         {{#if user.role}}
             <div id="profile-row-role" class="profile-row">
                 <p class="font-weight-bold custom-profile-padding"> Role@CB: </p>

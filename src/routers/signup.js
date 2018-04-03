@@ -40,6 +40,8 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
                     models.UserLocal.create({
                         user: {
                             username: req.body.username,
+                            branchId: req.body.branchId,
+                            collegeId: req.body.collegeId,
                             firstname: req.body.firstname,
                             lastname: req.body.lastname,
                             email: req.body.email

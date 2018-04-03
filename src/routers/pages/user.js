@@ -44,14 +44,18 @@ router.get('/me',
 router.get('/me/edit',
     cel.ensureLoggedIn('/login'),
     function (req, res, next) {
-
-        models.User.findOne({
-            where: {id: req.user.id},
-        }).then(function (user) {
-            if (!user) {
+        Promise.all([
+            models.User.findOne({
+                where: {id: req.user.id},
+                include:[{model:models.College}, {model:models.Branch}]
+            }),
+            models.College.findAll({}), 
+            models.Branch.findAll({})
+        ]).then(function (result) {
+            if (!result[0]) {
                 res.redirect('/login')
             }
-            return res.render('user/me/edit', {user: user})
+            return res.render('user/me/edit', { user: result[0], colleges:result[1], branches:result[2] })
         }).catch(function (err) {
             throw err
         })
@@ -73,8 +77,10 @@ router.post('/me/edit',
             if (user.verifiedemail) {
 
                 return models.User.update({
-                        firstname: req.body.firstname,
-                        lastname: req.body.lastname
+                    firstname: req.body.firstname,
+                    lastname: req.body.lastname,
+                    branchId: req.body.branchId,
+                    collegeId: req.body.collegeId,
                     },
                     {
                         where: {id: req.user.id},
@@ -84,9 +90,11 @@ router.post('/me/edit',
             else {
 
                 return models.User.update({
-                        firstname: req.body.firstname,
-                        lastname: req.body.lasname,
-                        email: req.body.email
+                    firstname: req.body.firstname,
+                    lastname: req.body.lasname,
+                    email: req.body.email,
+                    branchId: req.body.branchId,
+                    collegeId: req.body.collegeId,
                     },
                     {
                         where: {id: req.user.id},

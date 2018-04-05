@@ -7,7 +7,7 @@ const urlutils = require('../../utils/urlutils');
 const { hasNull } = require('../../utils/nullCheck');
 
 router.post('/add', cel.ensureLoggedIn('/login'), function (req, res) {
-    if(hasNull(req.body)) {
+    if(hasNull(req.body, ['label','first_name','last_name','number','email','pincode','street_address','landmark','city','stateId','countryId'])) {
         res.send(400);
     } else {
         models.AddressBook.create({
@@ -28,15 +28,14 @@ router.post('/add', cel.ensureLoggedIn('/login'), function (req, res) {
             res.redirect('/address/' + address.id)
         }).catch(err => Raven.captureException(err))
     }
-})
+});
 
 router.post('/edit/:id', cel.ensureLoggedIn('/login'), function (req, res) {
-    if(hasNull(req.body)) {
+    if(hasNull(req.body, ['label','first_name','last_name','number','email','pincode','street_address','landmark','city','stateId','countryId'])) {
         res.send(400);
     } else {
         let id = parseInt(req.params.id);
         if (req.body.primary === 'on' ? true : false) {
-            console.log("HELLO");
             models.AddressBook.update({
                 primary:false
             },{where: {userId:req.user.id}}).then( _ => {
@@ -86,7 +85,7 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'), function (req, res) {
             })
         }
     }
-})
+});
 
 
 module.exports = router

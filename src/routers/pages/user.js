@@ -52,7 +52,7 @@ router.get('/me/edit',
             models.College.findAll({}), 
             models.Branch.findAll({})
         ]).then(function ([user, colleges, branches]) {
-            if (user) {
+            if (!user) {
                 res.redirect('/login')
             }
             return res.render('user/me/edit', { user: user, colleges:colleges, branches:branches })
@@ -74,7 +74,9 @@ router.post('/me/edit',
         models.User.findOne({
             where: {id: req.user.id}
         }).then((user) => {
-
+            if(hasNull(req.body, ['firstname','lastname','branchId','collegeId'])) {
+                res.send(400);
+            }
             if (user.verifiedemail) {
 
                 return models.User.update({

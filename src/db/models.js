@@ -133,6 +133,7 @@ AuthToken.belongsTo(Client)
 Client.hasMany(AuthToken)
 
 const AddressBook = db.define('address_book', {
+    label: {type: Sequelize.DataTypes.STRING, allowNull: false},
     first_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
     last_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
     mobile_number: {type: Sequelize.DataTypes.STRING, allowNull: false},

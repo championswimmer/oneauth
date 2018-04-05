@@ -1,15 +1,23 @@
 {{!< centercolumn}}
-
-<a href="/address/add"><div class="btn btn-sm btn-info m-t-5">Add</div></a>
-
+{{#ifneq expected=0 val=address.length}}
+    <a href="/address/add"><div class="btn btn-sm btn-info m-t-5">Add</div></a>
+{{/ifneq}}
 {{#each addresses as |address|}}
 
     <div class="row p-2">
         <div class="col p-2">
-            <div class="row h1 m-2">{{address.first_name}}</div>
+            <div class="row m-2">
+                <h5>{{address.label}}</h5>
+            </div>
+            <div class="row m-2">
+                <h6>{{address.street_address}} Near {{address.landmark}}</h6>
+            </div>
+            <div class="row m-2">
+                <p>{{address.city}}, {{address.pincode}}</p>
+            </div>
             <div class="row">
                 <div class="col align-self-center align-items-center">
-                    <a href="/address/{{address.id}}"><div class="btn btn-sm btn-info">Details</div></a>
+                    <a href="/address/{{address.id}}"><div class="btn btn-sm btn-info">View</div></a>
                     <a href="/address/{{address.id}}/edit"><div class="btn btn-sm btn-info">Edit</div></a>
                 </div>
             </div>

@@ -16,8 +16,8 @@ router.get('/signup', cel.ensureNotLoggedIn('/'), function (req, res, next) {
     Promise.all([
         models.College.findAll({}), 
         models.Branch.findAll({})
-    ]).then(function (result) {
-        res.render('signup', {title: "Signup | OneAuth", colleges:result[0], branches:result[1]})
+    ]).then(function ([colleges, branches]) {
+        res.render('signup', {title: "Signup | OneAuth", colleges:colleges, branches:branches})
     })
 })
 

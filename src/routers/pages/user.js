@@ -51,16 +51,17 @@ router.get('/me/edit',
             }),
             models.College.findAll({}), 
             models.Branch.findAll({})
-        ]).then(function (result) {
-            if (!result[0]) {
+        ]).then(function ([user, colleges, branches]) {
+            if (user) {
                 res.redirect('/login')
             }
-            return res.render('user/me/edit', { user: result[0], colleges:result[1], branches:result[2] })
+            return res.render('user/me/edit', { user: user, colleges:colleges, branches:branches })
         }).catch(function (err) {
             throw err
         })
 
-    })
+    }
+)
 
 router.post('/me/edit',
     cel.ensureLoggedIn('/login'),

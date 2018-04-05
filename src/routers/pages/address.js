@@ -22,8 +22,8 @@ router.get('/add',
         Promise.all([
             models.State.findAll({}), 
             models.Country.findAll({})
-        ]).then(function (result) {
-            return res.render('address/add',{states:result[0],countries:result[1]})
+        ]).then(function ([states,countries]) {
+            return res.render('address/add',{states:states,countries:countries})
         }).catch(function (err) {
             res.send("Error Fetching Data.")
         })
@@ -60,17 +60,16 @@ router.get('/:id/edit',
             }),
             models.State.findAll({}), 
             models.Country.findAll({})
-        ]).then(function (result) {
-            if (!result[0]) {
+        ]).then(function ([address, states, countries]) {
+            if (!address) {
                 return res.send("Invalid Address Id")
             }
-            if (result[0].userId != req.user.id) {
+            if (address.userId != req.user.id) {
                 return res.send("Unauthorized user")
             }
-            return res.render('address/edit', { address: result[0], states:result[1], countries:result[2] })
+            return res.render('address/edit', { address:address, states:states, countries:countries })
         })
     }
 )
 
 module.exports = router
-

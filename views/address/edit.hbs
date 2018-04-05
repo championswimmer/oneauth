@@ -3,6 +3,7 @@
 
 <form class="form-group" method="post" action="/api/address/edit/{{address.id}}">
     <p>Edit Details for {{address.id}}</p>
+    <input class="form-control" type="text" autocomplete='given-name' placeholder="Label" name="label" value="{{address.label}}"><br>
     <input class="form-control" type="text" autocomplete='given-name' placeholder="First Name" name="first_name" value="{{address.first_name}}"><br>
     <input class="form-control" type="text" autocomplete='family-name' placeholder="Last Name" name="last_name" value="{{address.last_name}}"><br>
     <input class="form-control" type="text" autocomplete='tel' pattern="[0-9]{10}" maxlength="10" placeholder="Mobile Number" name="number" value="{{address.mobile_number}}"><br>

@@ -3,22 +3,23 @@
 
 
 <form class="form-group" method="post" action="/api/address/add">
-    <input class="form-control" type="text" placeholder="First Name" name="first_name"><br>
-    <input class="form-control" type="text" placeholder="Last Name" name="last_name"><br>
-    <input class="form-control" type="text" pattern="[0-9]{10}" maxlength="10" placeholder="Mobile Number" name="number"><br>
-    <input class="form-control" type="email" placeholder="E-mail" name="email"><br>
-    <input class="form-control" type="text" placeholder="Street Address" name="street_address"><br>
-    <input class="form-control" type="text" placeholder="Landmark" name="landmark"><br>
-    <input class="form-control" type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" placeholder="Pin Code"><br>
-    <input class="form-control" type="text" placeholder="City" name="city"><br>
+    <input class="form-control" type="text" placeholder="Label" name="label" required><br>
+    <input class="form-control" type="text" placeholder="First Name" name="first_name" required><br>
+    <input class="form-control" type="text" placeholder="Last Name" name="last_name" required><br>
+    <input class="form-control" type="text" pattern="[0-9]{10}" maxlength="10" placeholder="Mobile Number" name="number" required><br>
+    <input class="form-control" type="email" placeholder="E-mail" name="email" required><br>
+    <input class="form-control" type="text" placeholder="Street Address" name="street_address" required><br>
+    <input class="form-control" type="text" placeholder="Landmark" name="landmark" required><br>
+    <input class="form-control" type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" placeholder="Pin Code" required><br>
+    <input class="form-control" type="text" placeholder="City" name="city" required><br>
     <label>State:</label>
-    <select name="stateId" class="m-2a form-control">
+    <select name="stateId" class="m-2a form-control" required>
         {{#each states}}
             <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{state_name}}</option>
         {{/each}}
     </select>
     <label>Country:</label>
-    <select name="countryId" class="m-2a form-control">
+    <select name="countryId" class="m-2a form-control" required>
         {{#each countries}}
             <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{country_name}}</option>
         {{/each}}

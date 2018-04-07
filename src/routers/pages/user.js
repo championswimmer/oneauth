@@ -3,7 +3,7 @@
  */
 const cel = require('connect-ensure-login')
 const router = require('express').Router()
-
+const { hasNull } = require('../../utils/nullCheck');
 const passutils = require('../../utils/password')
 const models = require('../../db/models').models
 const acl = require('../../middlewares/acl')
@@ -55,7 +55,7 @@ router.get('/me/edit',
             if (!user) {
                 res.redirect('/login')
             }
-            return res.render('user/me/edit', { user: user, colleges:colleges, branches:branches })
+            return res.render('user/me/edit', { user, colleges, branches })
         }).catch(function (err) {
             throw err
         })

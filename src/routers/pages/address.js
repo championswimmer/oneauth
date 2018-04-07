@@ -9,7 +9,7 @@ router.get('/',
         models.AddressBook.findAll({
             where: {userId: req.user.id}
         }).then(function (addresses) {
-            return res.render('address/all', {addresses: addresses})
+            return res.render('address/all', {addresses})
         }).catch(function (err) {
             res.send("No Address registered")
         })
@@ -23,7 +23,7 @@ router.get('/add',
             models.State.findAll({}), 
             models.Country.findAll({})
         ]).then(function ([states,countries]) {
-            return res.render('address/add',{states:states,countries:countries})
+            return res.render('address/add',{states,countries})
         }).catch(function (err) {
             res.send("Error Fetching Data.")
         })
@@ -44,7 +44,7 @@ router.get('/:id',
                 return res.send("Unauthorized user")
             }
 
-            return res.render('address/id', {address: address})
+            return res.render('address/id', {address})
         })
     }
 )
@@ -67,7 +67,7 @@ router.get('/:id/edit',
             if (address.userId != req.user.id) {
                 return res.send("Unauthorized user")
             }
-            return res.render('address/edit', { address:address, states:states, countries:countries })
+            return res.render('address/edit', { address, states, countries })
         })
     }
 )

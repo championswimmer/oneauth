@@ -1,9 +1,8 @@
 {{!< centercolumn}}
-{{#ifneq expected=0 val=address.length}}
-    <a href="/address/add"><div class="btn btn-sm btn-info mt-5p">Add</div></a>
-{{/ifneq}}
-{{#each addresses as |address|}}
-
+{{#each addresses as |address index|}}
+    {{#ifeq expected=0 val=index}}
+        <a href="/address/add"><div class="btn btn-sm btn-info mt-5p">Add</div></a>
+    {{/ifeq}}
     <div class="row p-2">
         <div class="col p-2">
             <div class="row m-2">

@@ -52,7 +52,7 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'), function (req, res) {
                     stateId: req.body.stateId,
                     countryId: req.body.countryId,
                     userId: req.user.id,
-                    primary: req.body.primary === 'on' ? true : false
+                    primary: req.body.primary === 'on'
                 }, {
                     where: {id: id}
                 });
@@ -75,7 +75,7 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'), function (req, res) {
                 stateId: req.body.stateId,
                 countryId: req.body.countryId,
                 userId: req.user.id,
-                primary: req.body.primary === 'on' ? true : false
+                primary: req.body.primary === 'on'
             }, {
                 where: {id: id}
             }).then(function (address) {

@@ -1,0 +1,41 @@
+{{!< centercolumn}}
+
+
+<form class="form-group" method="post" action="/api/address/edit/{{address.id}}">
+    <p>Edit Details for {{address.id}}</p>
+    <input class="form-control" type="text" autocomplete='given-name' placeholder="Label" name="label" value="{{address.label}}"><br>
+    <input class="form-control" type="text" autocomplete='given-name' placeholder="First Name" name="first_name" value="{{address.first_name}}"><br>
+    <input class="form-control" type="text" autocomplete='family-name' placeholder="Last Name" name="last_name" value="{{address.last_name}}"><br>
+    <input class="form-control" type="text" autocomplete='tel' pattern="[0-9]{10}" maxlength="10" placeholder="Mobile Number" name="number" value="{{address.mobile_number}}"><br>
+    <input class="form-control" autocomplete='email' type="email" placeholder="E-mail" name="email" value="{{address.email}}"><br>
+    <input class="form-control" type="text" autocomplete='street-address' placeholder="Street Address" name="street_address" value="{{address.street_address}}"><br>
+    <input class="form-control" type="text" placeholder="Landmark" autocomplete='address-level1' name="landmark" value="{{address.landmark}}"><br>
+    <input class="form-control" autocomplete='postal-code' type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" placeholder="Pin Code" value="{{address.pincode}}"><br>
+    <input class="form-control" type="text" placeholder="City" autocomplete='address-level2' name="city" value="{{address.city}}"><br>
+    <label>State:</label>
+    <select name="stateId" value="{{address.stateId}}" autocomplete='address-level2' class="m-2a form-control">
+        {{#each states}}
+            {{#ifeq expected=id val=../address.stateId}}
+                <option value="{{id}}" selected>{{state_name}}</option>
+            {{/ifeq}}
+            {{#ifneq expected=id val=../address.stateId}}
+                <option value="{{id}}">{{state_name}}</option>
+            {{/ifneq}}
+        {{/each}}
+    </select>
+    <label>Country:</label>
+    <select name="countryId" class="m-2a form-control" autocomplete='country-name'>
+        {{#each countries}}
+            {{#ifeq expected=id val=../address.countryId}}
+                <option value="{{id}}" selected>{{country_name}}</option>
+            {{/ifeq}}
+            {{#ifneq expected=id val=../address.countryId}}
+                <option value="{{id}}">{{country_name}}</option>
+            {{/ifneq}}
+        {{/each}}
+    </select>
+    <input type="checkbox" {{#if address.primary}} checked {{/if}} name="primary"> This a primary address.<br>
+    <div class="row mt-5p">
+        <input class="btn btn-warning mx-auto" value="Update Address" type="submit">
+    </div>
+</form>

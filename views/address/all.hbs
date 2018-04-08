@@ -1,0 +1,40 @@
+{{!< centercolumn}}
+{{#each addresses as |address index|}}
+    {{#ifeq expected=0 val=index}}
+        <a href="/address/add"><div class="btn btn-sm btn-info mt-5p">Add</div></a>
+    {{/ifeq}}
+    <div class="row p-2">
+        <div class="col p-2">
+            <div class="row m-2">
+                <h5>{{address.label}}</h5>
+            </div>
+            <div class="row m-2">
+                <h6>{{address.street_address}} Near {{address.landmark}}</h6>
+            </div>
+            <div class="row m-2">
+                <p>{{address.city}}, {{address.pincode}}</p>
+            </div>
+            <div class="row">
+                <div class="col align-self-center align-items-center">
+                    <a href="/address/{{address.id}}"><div class="btn btn-sm btn-info">View</div></a>
+                    <a href="/address/{{address.id}}/edit"><div class="btn btn-sm btn-info">Edit</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{else}}
+
+    <div class="row p-2">
+        <div class="col p-2 text-center">
+            <h3 class="thin-font">
+                You have registered no address yet
+            </h3>
+            <a href="/address/add">
+            <h4> Add one now</h4>
+            </a>
+        </div>
+    </div>
+
+
+{{/each}}

@@ -3,7 +3,7 @@
  */
 const cel = require('connect-ensure-login')
 const router = require('express').Router()
-
+const { hasNull } = require('../../utils/nullCheck');
 const passutils = require('../../utils/password')
 const models = require('../../db/models').models
 const acl = require('../../middlewares/acl')
@@ -44,19 +44,24 @@ router.get('/me',
 router.get('/me/edit',
     cel.ensureLoggedIn('/login'),
     function (req, res, next) {
-
-        models.User.findOne({
-            where: {id: req.user.id},
-        }).then(function (user) {
+        Promise.all([
+            models.User.findOne({
+                where: {id: req.user.id},
+                include:[{model:models.College}, {model:models.Branch}]
+            }),
+            models.College.findAll({}), 
+            models.Branch.findAll({})
+        ]).then(function ([user, colleges, branches]) {
             if (!user) {
                 res.redirect('/login')
             }
-            return res.render('user/me/edit', {user: user})
+            return res.render('user/me/edit', { user, colleges, branches })
         }).catch(function (err) {
             throw err
         })
 
-    })
+    }
+)
 
 router.post('/me/edit',
     cel.ensureLoggedIn('/login'),
@@ -69,12 +74,16 @@ router.post('/me/edit',
         models.User.findOne({
             where: {id: req.user.id}
         }).then((user) => {
-
+            if(hasNull(req.body, ['firstname','lastname','branchId','collegeId'])) {
+                res.send(400);
+            }
             if (user.verifiedemail) {
 
                 return models.User.update({
-                        firstname: req.body.firstname,
-                        lastname: req.body.lastname
+                    firstname: req.body.firstname,
+                    lastname: req.body.lastname,
+                    branchId: req.body.branchId,
+                    collegeId: req.body.collegeId,
                     },
                     {
                         where: {id: req.user.id},
@@ -84,9 +93,11 @@ router.post('/me/edit',
             else {
 
                 return models.User.update({
-                        firstname: req.body.firstname,
-                        lastname: req.body.lasname,
-                        email: req.body.email
+                    firstname: req.body.firstname,
+                    lastname: req.body.lasname,
+                    email: req.body.email,
+                    branchId: req.body.branchId,
+                    collegeId: req.body.collegeId,
                     },
                     {
                         where: {id: req.user.id},

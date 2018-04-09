@@ -10,7 +10,7 @@ router.post('/add', cel.ensureLoggedIn('/login'), function (req, res) {
     if(hasNull(req.body, ['label','first_name','last_name','number','email','pincode','street_address','landmark','city','stateId','countryId'])) {
         res.send(400);
     } else {
-        models.AddressBook.create({
+        models.Address.create({
             label: req.body.label,
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -36,10 +36,10 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'), function (req, res) {
     } else {
         let id = parseInt(req.params.id);
         if (req.body.primary === 'on' ? true : false) {
-            models.AddressBook.update({
+            models.Address.update({
                 primary:false
             },{where: {userId:req.user.id}}).then( _ => {
-                return models.AddressBook.update({
+                return models.Address.update({
                     label: req.body.label,
                     first_name: req.body.first_name,
                     last_name: req.body.last_name,
@@ -62,7 +62,7 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'), function (req, res) {
                 Raven.captureException(error)
             })
         } else {
-            models.AddressBook.update({
+            models.Address.update({
                 label: req.body.label,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,

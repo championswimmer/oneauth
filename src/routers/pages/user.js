@@ -22,7 +22,7 @@ router.get('/me',
                 models.College,
                 models.Branch,
                 {
-                    model: models.AddressBook,
+                    model: models.Address,
                     include: [
                         models.State,
                         models.Country

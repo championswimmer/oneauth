@@ -108,35 +108,41 @@ User.hasMany(AuthToken)
 AuthToken.belongsTo(Client)
 Client.hasMany(AuthToken)
 
-const AddressBook = db.define('address_book', definitions.demographics.address)
+const Demographic = db.define('demographic', {})
 
-AddressBook.belongsTo(User)
-User.hasMany(AddressBook)
+Demographic.belongsTo(User)
+User.hasOne(Demographic)
 
+const Address = db.define('address', definitions.demographics.address)
+const State = db.define('state', definitions.demographics.state)
+const Country = db.define('country', definitions.demographics.country)
 const College = db.define('college', definitions.demographics.college)
-
-User.belongsTo(College)
-College.hasOne(User)
-
 const Company = db.define('company', definitions.demographics.company)
-
-User.belongsTo(Company)
-Company.hasOne(User)
-
 const Branch = db.define('branch', definitions.demographics.branch)
 
-User.belongsTo(Branch)
-Branch.hasOne(User)
 
-const State = db.define('state', definitions.demographics.state)
+Address.belongsTo(State)
+State.hasMany(Address)
 
-AddressBook.belongsTo(State)
-State.hasOne(AddressBook)
+Address.belongsTo(Country)
+Country.hasMany(Address)
 
-const Country = db.define('country', definitions.demographics.country)
 
-AddressBook.belongsTo(Country)
-Country.hasMany(AddressBook)
+// "Demographic" is the demographic of 'one' user
+
+Address.belongsTo(Demographic) //address will have demographicId
+Demographic.hasMany(Address)   //user can have multiple Address
+
+
+Demographic.belongsTo(College)
+College.hasMany(Demographic)
+
+Demographic.belongsTo(Company)
+Company.hasMany(Demographic)
+
+
+Demographic.belongsTo(Branch)
+Branch.hasMany(Demographic)
 
 
 db.sync({
@@ -150,7 +156,7 @@ db.sync({
 module.exports = {
     models: {
         User, UserLocal, UserFacebook, UserTwitter, UserGithub, UserLms,
-        Client, GrantCode, AuthToken, Resetpassword, Verifyemail, AddressBook,
+        Client, GrantCode, AuthToken, Resetpassword, Verifyemail, Address,
         College, Company, Branch, State, Country
     },
     db

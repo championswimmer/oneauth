@@ -6,7 +6,7 @@ const models = require('../../db/models').models
 router.get('/',
     cel.ensureLoggedIn('/login'),
     function (req, res, next) {
-        models.AddressBook.findAll({
+        models.Address.findAll({
             where: {userId: req.user.id}
         }).then(function (addresses) {
             return res.render('address/all', {addresses})
@@ -33,7 +33,7 @@ router.get('/add',
 router.get('/:id',
     cel.ensureLoggedIn('/login'),
     function (req, res, next) {
-        models.AddressBook.findOne({
+        models.Address.findOne({
             where: {id: req.params.id},
             include:[{model:models.State}, {model:models.Country}]
         }).then(function (address) {
@@ -54,7 +54,7 @@ router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     function (req, res, next) {
         Promise.all([
-            models.AddressBook.findOne({
+            models.Address.findOne({
                 where: {id: req.params.id},
                 include:[{model:models.State}, {model:models.Country}]
             }),

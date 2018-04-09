@@ -22,6 +22,10 @@ const db = new Sequelize(DATABASE_URL, {
     logging: config.DEBUG ? console.log : false
 })
 
+const definitions = {
+    social: require('./definitions/social'),
+    demographics: require('./definitions/demographics')
+}
 
 const User = db.define('user', {
     id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
@@ -46,39 +50,11 @@ const Verifyemail = db.define('verifyemail', {
     deletedAt: {type: Sequelize.DATE}
 })
 
-const UserLocal = db.define('userlocal', {
-    password: Sequelize.DataTypes.STRING
-})
-
-const UserFacebook = db.define('userfacebook', {
-    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
-    accessToken: Sequelize.DataTypes.STRING,
-    refreshToken: {type: Sequelize.DataTypes.STRING, allowNull: true},
-    photo: {type: Sequelize.DataTypes.STRING, allowNull: true},
-
-})
-
-const UserTwitter = db.define('usertwitter', {
-    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
-    token: Sequelize.DataTypes.STRING,
-    tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
-    username: {type: Sequelize.DataTypes.STRING, allowNull: true}
-})
-
-const UserGithub = db.define('usergithub', {
-    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
-    token: Sequelize.DataTypes.STRING,
-    tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
-    username: {type: Sequelize.DataTypes.STRING, allowNull: true}
-})
-
-const UserLms = db.define('userlms', {
-    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
-    roll_number: Sequelize.DataTypes.STRING,
-    accessToken: Sequelize.DataTypes.STRING,
-    course_identifier: Sequelize.DataTypes.STRING,
-    courses: Sequelize.DataTypes.JSONB
-})
+const UserLocal = db.define('userlocal', definitions.social.local)
+const UserFacebook = db.define('userfacebook', definitions.social.facebook)
+const UserTwitter = db.define('usertwitter', definitions.social.twitter)
+const UserGithub = db.define('usergithub', definitions.social.github)
+const UserLms = db.define('userlms', definitions.social.lms)
 
 UserLocal.belongsTo(User)
 User.hasOne(UserLocal)
@@ -132,61 +108,39 @@ User.hasMany(AuthToken)
 AuthToken.belongsTo(Client)
 Client.hasMany(AuthToken)
 
-const AddressBook = db.define('address_book', {
-    label: {type: Sequelize.DataTypes.STRING, allowNull: false},
-    first_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
-    last_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
-    mobile_number: {type: Sequelize.DataTypes.STRING, allowNull: false, validate: {len: [10,10]}},
-    email: {type: Sequelize.DataTypes.STRING, allowNull: false},
-    pincode: {type: Sequelize.DataTypes.INTEGER, allowNull: false},
-    street_address: {type: Sequelize.DataTypes.STRING, allowNull: false},
-    landmark: {type: Sequelize.DataTypes.STRING, allowNull: true},
-    city: {type: Sequelize.DataTypes.STRING, allowNull: false},
-    primary: {type: Sequelize.DataTypes.BOOLEAN, allowNull: false}
-})
+const AddressBook = db.define('address_book', definitions.demographics.address)
 
 AddressBook.belongsTo(User)
 User.hasMany(AddressBook)
 
-const College = db.define('college', {
-    college_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
-})
+const College = db.define('college', definitions.demographics.college)
 
 User.belongsTo(College)
 College.hasOne(User)
 
-const Company = db.define('company', {
-    company_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
-})
+const Company = db.define('company', definitions.demographics.company)
 
 User.belongsTo(Company)
 Company.hasOne(User)
 
-const Branch = db.define('branch', {
-    branch_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
-})
+const Branch = db.define('branch', definitions.demographics.branch)
 
 User.belongsTo(Branch)
 Branch.hasOne(User)
 
-const State = db.define('state', {
-    state_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
-})
+const State = db.define('state', definitions.demographics.state)
 
 AddressBook.belongsTo(State)
 State.hasOne(AddressBook)
 
-const Country = db.define('country', {
-    country_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
-    country_code: {type: Sequelize.DataTypes.STRING, allowNull: false}
-})
+const Country = db.define('country', definitions.demographics.country)
 
 AddressBook.belongsTo(Country)
-Country.hasOne(AddressBook)
-
+Country.hasMany(AddressBook)
 
 
 db.sync({
+    alter: process.env.ONEAUTH_ALTER_TABLE || false,
     force: config.DEPLOY_CONFIG === 'heroku', // Clear DB on each run on heroku
 }).then(() => {
     console.log('Database configured')

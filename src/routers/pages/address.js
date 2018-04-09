@@ -7,7 +7,7 @@ router.get('/',
     cel.ensureLoggedIn('/login'),
     function (req, res, next) {
         models.Address.findAll({
-            where: {userId: req.user.id}
+            where: {'demographic.userId': req.user.id}
         }).then(function (addresses) {
             return res.render('address/all', {addresses})
         }).catch(function (err) {

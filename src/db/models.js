@@ -129,6 +129,8 @@ const College = db.define('college', definitions.demographics.college)
 const Company = db.define('company', definitions.demographics.company)
 const Branch = db.define('branch', definitions.demographics.branch)
 
+State.belongsTo(Country)
+Country.hasMany(State)
 
 Address.belongsTo(State)
 State.hasMany(Address)
@@ -165,8 +167,8 @@ db.sync({
 module.exports = {
     models: {
         User, UserLocal, UserFacebook, UserTwitter, UserGithub, UserLms,
-        Client, GrantCode, AuthToken, Resetpassword, Verifyemail, Address,
-        College, Company, Branch, State, Country
+        Client, GrantCode, AuthToken, Resetpassword, Verifyemail,
+        Demographic, Address, College, Company, Branch, State, Country
     },
     db
 }

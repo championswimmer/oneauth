@@ -15,19 +15,26 @@ module.exports = {
     },
 
     state: {
-        state_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
-    },
-
-    country: {
-        country_name: {
+        name: {
             type: Sequelize.DataTypes.STRING,
             unique: true,
             allowNull: false
         },
-        country_code: {
+        id: {
             type: Sequelize.DataTypes.STRING(2),
+            primaryKey: true,
+        }
+    },
+
+    country: {
+        name: {
+            type: Sequelize.DataTypes.STRING,
             unique: true,
-            allowNull: false,
+            allowNull: false
+        },
+        id: {
+            type: Sequelize.DataTypes.STRING(2),
+            primaryKey: true
         }
     },
 

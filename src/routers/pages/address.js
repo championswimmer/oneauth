@@ -66,8 +66,11 @@ router.get('/:id/edit',
     function (req, res, next) {
         Promise.all([
             models.Address.findOne({
-                where: {id: req.params.id},
-                include: [{model: models.State}, {model: models.Country}]
+                where: {
+                    id: req.params.id,
+                    '$demographic.userId$': req.user.id
+                },
+                include: [models.Demographic, models.State, models.Country]
             }),
             models.State.findAll({}),
             models.Country.findAll({})

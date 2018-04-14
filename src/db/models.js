@@ -151,7 +151,6 @@ College.hasMany(Demographic)
 Demographic.belongsTo(Company)
 Company.hasMany(Demographic)
 
-
 Demographic.belongsTo(Branch)
 Branch.hasMany(Demographic)
 

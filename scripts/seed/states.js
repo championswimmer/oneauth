@@ -1,16 +1,16 @@
 const config = require('../../config');
 const secret = config.SECRETS;
-const {models: {
+const {db, models: {
         Country,
         State
     }} = require('../../src/db/models');
 
 async function runSeed() {
     try {
+        // await db.sync()
         const country = await Country.findOne({where: {id: 'IN'}})
         if (!country) { throw new Error("Country India is not yet added, so cannot add states")}
 
-        await State.sync()
 
         await State.bulkCreate([
             { countryId: 'IN', name: 'Andhra Pradesh', id: 'AP' },

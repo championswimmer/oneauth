@@ -15,13 +15,13 @@
     <label>State:</label>
     <select name="stateId" class="m-2a form-control" required>
         {{#each states}}
-            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{state_name}}</option>
+            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
         {{/each}}
     </select>
     <label>Country:</label>
     <select name="countryId" class="m-2a form-control" required>
         {{#each countries}}
-            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{country_name}}</option>
+            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
         {{/each}}
     </select>
     <div class="row mt-5p">

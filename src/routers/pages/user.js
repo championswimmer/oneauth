@@ -1,6 +1,7 @@
 /**
  * Created by championswimmer on 13/03/17.
  */
+const Raven = require('raven')
 const cel = require('connect-ensure-login')
 const router = require('express').Router()
 const {hasNull} = require('../../utils/nullCheck')
@@ -45,7 +46,16 @@ router.get('/me/edit',
         Promise.all([
             models.User.findOne({
                 where: {id: req.user.id},
-                include: [{model: models.College}, {model: models.Branch}]
+                include: [
+                    {
+                        model: models.Demographic,
+                        include: [
+                            models.College,
+                            models.Branch,
+                            models.Company,
+                        ]
+                    }
+                ]
             }),
             models.College.findAll({}),
             models.Branch.findAll({})
@@ -63,87 +73,56 @@ router.get('/me/edit',
 
 router.post('/me/edit',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
+    async function (req, res, next) {
 
+        //exit if password doesn't match
         if ((req.body.password) && (req.body.password !== req.body.repassword)) {
             req.flash('error', 'Passwords do not match')
             return res.redirect('edit')
         }
-        models.User.findOne({
-            where: {id: req.user.id}
-        }).then((user) => {
-            if (hasNull(req.body, ['firstname', 'lastname', 'branchId', 'collegeId'])) {
-                res.send(400)
+
+        // Check name isn't null
+        if (hasNull(req.body, ['firstname', 'lastname'])) {
+            req.flash('error', 'Null values for name not allowed')
+            return res.redirect('/')
+        }
+
+        try {
+            const user = models.User.findOne({
+                where: {id: req.user.id},
+                include: [models.Demographic]
+            })
+            const demographic = user.demographic
+
+            user.firstname = req.body.firstname
+            user.lastname = req.body.lastname
+            if (!user.verifiedemail && req.body.email) {
+                user.email = req.body.email
             }
-            if (user.verifiedemail) {
+            await user.save()
 
-                return models.User.update({
-                        firstname: req.body.firstname,
-                        lastname: req.body.lastname,
-                        branchId: req.body.branchId,
-                        collegeId: req.body.collegeId,
-                    },
-                    {
-                        where: {id: req.user.id},
-                        returning: true
-                    })
+            if (req.body.branchId) {
+                demographic.branchId = req.body.branchId
             }
-            else {
+            if (req.body.collegeId) {
+                demographic.branchId = req.body.collegeId
+            }
+            await demographic.save()
 
-                return models.User.update({
-                        firstname: req.body.firstname,
-                        lastname: req.body.lasname,
-                        email: req.body.email,
-                        branchId: req.body.branchId,
-                        collegeId: req.body.collegeId,
-                    },
-                    {
-                        where: {id: req.user.id},
-                        returning: true
-                    })
+            if (req.body.password) {
+                const passHash = await passutils.pass2hash(req.body.password)
+                await models.UserLocal.update({
+                    password: passHash
+                }, {
+                    where: {userId: req.user.id}
+                })
             }
 
-        })
-            .then((update) => {
-
-                if (update) {
-                    req.flash('info', 'Successfully updated your profile.')
-                }
-
-                if (update && req.body.password) {
-
-                    return passutils.pass2hash(req.body.password)
-                }
-                else {
-
-                    return
-                }
-            })
-            .then((passhash) => {
-
-                if (passhash) {
-
-                    return models.UserLocal.update({
-                        password: passhash
-                    }, {
-                        where: {userId: req.user.id}
-                    })
-                }
-                else {
-                    return
-                }
-
-            })
-            .then((updated) => {
-
-                return res.redirect('../me')
-
-            })
-            .catch((err) => {
-                console.log(err)
-                req.flash('error', 'Something went wrong your profile not saved')
-                return res.redirect('../me')
-            })
+        } catch (err) {
+            Raven.captureException(err)
+            req.flash('error', 'Error in Server')
+            return res.redirect('/')
+        }
 
     })
 

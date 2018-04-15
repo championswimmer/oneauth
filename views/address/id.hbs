@@ -1,0 +1,62 @@
+{{!< centercolumn}}
+<div class="h3 thin-font text-center">Address Details</div>
+<div class="row">
+    <div class="col-4 offset-4">
+        <a class="col-12 btn btn-sm btn-info" href="/address/{{address.id}}/edit">
+            <i class="fa fa-edit"></i> Edit
+        </a>
+    </div>
+</div>
+<table class="table table-striped m-2">
+    <tbody>
+    <tr>
+        <th scope="row">Label</th>
+        <td> {{address.label}}</td>
+    </tr>
+    <tr>
+        <th scope="row">First Name</th>
+        <td> {{address.first_name}}</td>
+    </tr>
+    <tr>
+        <th>Last Name</th>
+        <td> {{address.last_name}}</td>
+    </tr>
+    <tr>
+        <th>Mobile Number</th>
+        <td> {{address.mobile_number}}</td>
+    </tr>
+    <tr>
+        <th>E-mail</th>
+        <td> {{address.email}}</td>
+    </tr>
+    <tr>
+        <th>Pincode</th>
+        <td> {{address.pincode}}</td>
+    </tr>
+    <tr>
+        <th>Street Address</th>
+        <td> {{address.street_address}}</td>
+    </tr>
+    <tr>
+        <th>Landmark</th>
+        <td> {{address.landmark}}</td>
+    </tr>
+    <tr>
+        <th>City</th>
+        <td> {{address.city}}</td>
+    </tr>
+    <tr>
+        <th>State</th>
+        <td> {{address.state.name}}</td>
+    </tr>
+    <tr>
+        <th> Country</th>
+        <td> {{address.country.name}}</td>
+    </tr>
+    <tr>
+        <th> Primary Address</th>
+        <td>{{#if address.primary}}Yes{{else}}No{{/if}}</td>
+    </tr>
+    </tbody>
+
+</table>

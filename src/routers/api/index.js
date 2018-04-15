@@ -15,5 +15,6 @@ router.use((req, res, next) => {
 
 router.use('/users', require('./users'))
 router.use('/clients', require('./clients'))
+router.use('/address', require('./address'))
 
 module.exports = router

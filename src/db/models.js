@@ -22,6 +22,10 @@ const db = new Sequelize(DATABASE_URL, {
     logging: config.DEBUG ? console.log : false
 })
 
+const definitions = {
+    social: require('./definitions/social'),
+    demographics: require('./definitions/demographics')
+}
 
 const User = db.define('user', {
     id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
@@ -46,39 +50,11 @@ const Verifyemail = db.define('verifyemail', {
     deletedAt: {type: Sequelize.DATE}
 })
 
-const UserLocal = db.define('userlocal', {
-    password: Sequelize.DataTypes.STRING
-})
-
-const UserFacebook = db.define('userfacebook', {
-    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
-    accessToken: Sequelize.DataTypes.STRING,
-    refreshToken: {type: Sequelize.DataTypes.STRING, allowNull: true},
-    photo: {type: Sequelize.DataTypes.STRING, allowNull: true},
-
-})
-
-const UserTwitter = db.define('usertwitter', {
-    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
-    token: Sequelize.DataTypes.STRING,
-    tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
-    username: {type: Sequelize.DataTypes.STRING, allowNull: true}
-})
-
-const UserGithub = db.define('usergithub', {
-    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
-    token: Sequelize.DataTypes.STRING,
-    tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
-    username: {type: Sequelize.DataTypes.STRING, allowNull: true}
-})
-
-const UserLms = db.define('userlms', {
-    id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
-    roll_number: Sequelize.DataTypes.STRING,
-    accessToken: Sequelize.DataTypes.STRING,
-    course_identifier: Sequelize.DataTypes.STRING,
-    courses: Sequelize.DataTypes.JSONB
-})
+const UserLocal = db.define('userlocal', definitions.social.local)
+const UserFacebook = db.define('userfacebook', definitions.social.facebook)
+const UserTwitter = db.define('usertwitter', definitions.social.twitter)
+const UserGithub = db.define('usergithub', definitions.social.github)
+const UserLms = db.define('userlms', definitions.social.lms)
 
 UserLocal.belongsTo(User)
 User.hasOne(UserLocal)
@@ -132,8 +108,55 @@ User.hasMany(AuthToken)
 AuthToken.belongsTo(Client)
 Client.hasMany(AuthToken)
 
+const Demographic = db.define('demographic', {})
+
+Demographic.belongsTo(User)
+User.hasOne(Demographic)
+
+const Address = db.define('address', definitions.demographics.address, {
+    indexes: [
+        {
+            name: 'unique_primary_address_index',
+            unique: true,
+            fields: ['demographicId'],
+            where: {primary: true}
+        }
+    ]
+})
+const State = db.define('state', definitions.demographics.state)
+const Country = db.define('country', definitions.demographics.country)
+const College = db.define('college', definitions.demographics.college)
+const Company = db.define('company', definitions.demographics.company)
+const Branch = db.define('branch', definitions.demographics.branch)
+
+State.belongsTo(Country)
+Country.hasMany(State)
+
+Address.belongsTo(State)
+State.hasMany(Address)
+
+Address.belongsTo(Country)
+Country.hasMany(Address)
+
+
+// "Demographic" is the demographic of 'one' user
+
+Address.belongsTo(Demographic) //address will have demographicId
+Demographic.hasMany(Address)   //user can have multiple Address
+
+
+Demographic.belongsTo(College)
+College.hasMany(Demographic)
+
+Demographic.belongsTo(Company)
+Company.hasMany(Demographic)
+
+Demographic.belongsTo(Branch)
+Branch.hasMany(Demographic)
+
 
 db.sync({
+    alter: process.env.ONEAUTH_ALTER_TABLE || false,
     force: config.DEPLOY_CONFIG === 'heroku', // Clear DB on each run on heroku
 }).then(() => {
     console.log('Database configured')
@@ -143,7 +166,8 @@ db.sync({
 module.exports = {
     models: {
         User, UserLocal, UserFacebook, UserTwitter, UserGithub, UserLms,
-        Client, GrantCode, AuthToken, Resetpassword, Verifyemail
+        Client, GrantCode, AuthToken, Resetpassword, Verifyemail,
+        Demographic, Address, College, Company, Branch, State, Country
     },
     db
 }

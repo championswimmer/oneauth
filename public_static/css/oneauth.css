@@ -105,3 +105,14 @@ width:100%;
 .inputvalidation:focus:invalid {
   border: 1px dashed #f25f52;
 }
+.m-2a {
+    margin: 2% auto;
+}
+
+.mt-5p {
+    margin-top:5%;
+}
+
+.form-group label {
+    font-weight: bold;
+}

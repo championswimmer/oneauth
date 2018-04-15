@@ -13,6 +13,18 @@
     <input class="form-control fontAwesome inputvalidation" name="lastname" placeholder="&#xf061; Lastname" type="text" required> <br>
     <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email" type="email" required> <br>
     <input class="form-control fontAwesome inputvalidation" name="password" placeholder="&#xf023; Password" type="password" minlength="5" required> <br>
+    <label>College Name:</label>
+    <select name="collegeId" class="m-2a form-control">
+        {{#each colleges}}
+            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{college_name}}</option>
+        {{/each}}
+    </select>
+    <label>Branch Name:</label>
+    <select name="branchId" class="m-2a form-control">
+        {{#each branches}}
+            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{branch_name}}</option>
+        {{/each}}
+    </select>
     <div class="row">
         <input class="btn btn-primary mx-auto" type="submit" value="Signup">
     </div>

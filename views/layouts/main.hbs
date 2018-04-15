@@ -15,39 +15,48 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse bg-inverse fixed-top text-white navbar-toggleable-sm p-2">
+<nav class="navbar navbar-dark navbar-expand-md bg-dark justify-content-between fixed-top text-white p-2">
     <a class="navbar-brand thin-font" href="/">
         <img src="/img/CB_Logo_White.png" height="50" class="d-inline-block align-top" alt="">
     </a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-
+        <ul class="navbar-nav mr-auto">
             {{#if loggedIn}}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Clients
                     </a>
-                    <div class="dropdown-menu bg-inverse text-white">
-                        <a class="dropdown-item bg-inverse text-white" href="/clients">
+                    <div class="dropdown-menu bg-dark text-white">
+                        <a class="dropdown-item bg-dark text-white" href="/clients">
                              My Clients
                         </a>
-                        <a class="dropdown-item bg-inverse text-white" href="/clients/add">
+                        <a class="dropdown-item bg-dark text-white" href="/clients/add">
                             Add New Clients
                         </a>
                     </div>
                 </li>
-
-                <li class="nav-item navbar-toggler-right">
-                    <a class="nav-link" href="/logout">Logout</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/me">My Profile</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/address">My Addresses</a>
+                </li>
+
             {{/if}}
-
-
         </ul>
+        {{#if loggedIn}}
+            <a href="/logout">
+                <span  class="mr-3 navbar-text">
+                Logout
+                </span>
+            </a>
+
+
+        {{/if}}
     </div>
 </nav>
 {{{body}}}

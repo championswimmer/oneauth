@@ -1,4 +1,8 @@
 {{!< centercolumn}}
+    {{#if messages.error}}
+        <div class="row alert alert-danger m-2">{{messages.error}}</div>
+    {{/if}}
+
 {{#each addresses as |address index|}}
     {{#ifeq expected=0 val=index}}
         <a href="/address/add"><div class="btn btn-sm btn-info mt-5p">Add</div></a>

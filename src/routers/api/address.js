@@ -41,7 +41,7 @@ router.post('/:id', cel.ensureLoggedIn('/login'), function (req, res) {
         return res.send(400);
     }
     let id = parseInt(req.params.id);
-    if (req.body.primary === 'on' ? true : false) {
+    if (req.body.primary === 'on') {
         models.Address.update({
             primary:false
         },{where: {userId:req.user.id}}).then( _ => {

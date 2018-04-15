@@ -45,12 +45,9 @@ router.get('/:id',
             include: [models.Demographic, models.State, models.Country]
         }).then(function (address) {
             if (!address) {
-                return res.send("Invalid Client Id")
+                req.flash('error', 'Address not found')
+                return res.redirect('.')
             }
-            if (address.userId != req.user.id) {
-                return res.send("Unauthorized user")
-            }
-
             return res.render('address/id', {address})
         }).catch((err) => {
             Raven.captureException(err)

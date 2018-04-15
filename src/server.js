@@ -26,7 +26,8 @@ const config = require('../config')
     , pagerouter = require('./routers/pages')
     , statusrouter = require('./routers/statusrouter')
     , {expresstracer, datadogRouter} = require('./utils/ddtracer')
-    , {expressLogger} = require('./utils/logger')
+    , {expressLogger} = require('./utils/logger'),
+      handlebarsHelpers = require('./utils/handlebars');
 
 const app = express()
 
@@ -100,6 +101,10 @@ app.use('/status', statusrouter)
 app.use('/', pagerouter)
 
 app.use(Raven.errorHandler())
+
+if(process.env.ONEAUTH_DEV === 'localhost'){
+    Raven.captureException = (E) => console.error (E)
+}
 
 app.listen(process.env.PORT || 3838, function () {
     debug("Listening on " + config.SERVER_URL)

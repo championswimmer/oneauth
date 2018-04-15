@@ -4,9 +4,8 @@
  * This route contains pages that are visible to public (without logging in)
  */
 const cel = require('connect-ensure-login')
-
+const models = require('../../db/models').models
 const router = require('express').Router()
-
 const verifyemail = require('../../routers/verifyemail')
 
 
@@ -14,7 +13,12 @@ router.get('/login', cel.ensureNotLoggedIn('/'), function (req, res, next) {
     res.render('login', {title: "Login | OneAuth", error: req.flash('error')})
 })
 router.get('/signup', cel.ensureNotLoggedIn('/'), function (req, res, next) {
-    res.render('signup', {title: "Signup | OneAuth"})
+    Promise.all([
+        models.College.findAll({}), 
+        models.Branch.findAll({})
+    ]).then(function ([colleges, branches]) {
+        res.render('signup', {title: "Signup | OneAuth", colleges:colleges, branches:branches})
+    })
 })
 
 router.get('/forgot/password/new/:key', cel.ensureNotLoggedIn('/'), function (req, res, next) {

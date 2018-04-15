@@ -112,3 +112,7 @@ width:100%;
 .mt-5p {
     margin-top:5%;
 }
+
+.form-group label {
+    font-weight: bold;
+}

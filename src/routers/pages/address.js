@@ -73,10 +73,8 @@ router.get('/:id/edit',
             models.Country.findAll({})
         ]).then(function ([address, states, countries]) {
             if (!address) {
-                return res.send("Invalid Address Id")
-            }
-            if (address.userId != req.user.id) {
-                return res.send("Unauthorized user")
+                req.flash('error', 'Address not found')
+                return res.redirect('.')
             }
             return res.render('address/edit', {address, states, countries})
         }).catch((err) => {

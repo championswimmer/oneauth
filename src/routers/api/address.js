@@ -11,7 +11,8 @@ router.post('/', cel.ensureLoggedIn('/login'), function (req, res) {
         res.send(400)
     } else {
         models.Demographic.findCreateFind({
-            where: {userId: req.user.id}
+            where: {userId: req.user.id},
+            include: [models.Address]
         }).then(([demographics, created]) => models.Address.create({
             label: req.body.label,
             first_name: req.body.first_name,
@@ -25,7 +26,9 @@ router.post('/', cel.ensureLoggedIn('/login'), function (req, res) {
             stateId: req.body.stateId,
             countryId: req.body.countryId,
             demographicId: demographics.id,
-            primary: false
+            // if no addresses, then first one added is primary
+            primary: !demographics.address || demographics.addresses.length === 0
+
         }))
             .then((address) => res.redirect('/address/' + address.id))
             .catch(err => {

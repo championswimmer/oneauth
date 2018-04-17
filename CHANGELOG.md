@@ -2,6 +2,13 @@
 
 ## 1.0.0
 
+#### 0.4.8
+
+  - Add college and branch details
+
+#### 0.4.7
+
+  - Add address to users
 #### 0.4.2
 
   - Make username field non-null
@@ -23,7 +30,7 @@
   
 #### 0.3.3 
 
-  - [validation] check empty email
+  - \[validation\] check empty email
   - [validation] give user feedback on frontend 
   - redirect away from /login or /signup if already logged in
   - allow ?redirect=xxxx on /logout path

@@ -154,13 +154,14 @@ Company.hasMany(Demographic)
 Demographic.belongsTo(Branch)
 Branch.hasMany(Demographic)
 
-
-db.sync({
-    alter: process.env.ONEAUTH_ALTER_TABLE || false,
-    force: config.DEPLOY_CONFIG === 'heroku', // Clear DB on each run on heroku
-}).then(() => {
-    console.log('Database configured')
-}).catch(err => console.error(err))
+if (!process.env.ONEAUTH_DB_NO_SYNC) {
+    db.sync({
+        alter: process.env.ONEAUTH_ALTER_TABLE || false,
+        force: config.DEPLOY_CONFIG === 'heroku', // Clear DB on each run on heroku
+    }).then(() => {
+        console.log('Database configured')
+    }).catch(err => console.error(err))
+}
 
 
 module.exports = {

@@ -39,15 +39,30 @@ module.exports = {
     },
 
     college: {
-        college_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
+        name: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false,
+            unique: true
+        }
     },
 
     branch: {
-        branch_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
+        code: {
+            type: Sequelize.DataTypes.STRING(6),
+            primaryKey: true
+        },
+        name: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false,
+        }
     },
 
     company: {
-        company_name: {type: Sequelize.DataTypes.STRING, allowNull: false}
+        name: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+        }
     },
 
 

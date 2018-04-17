@@ -42,10 +42,10 @@
         <select name="collegeId" class="m-2a form-control">
             {{#each colleges}}
                 {{#ifeq expected=id val=../user.collegeId}}
-                    <option value="{{id}}" selected>{{college_name}}</option>
+                    <option value="{{id}}" selected>{{name}}</option>
                 {{/ifeq}}
                 {{#ifneq expected=id val=../user.collegeId}}
-                    <option value="{{id}}">{{college_name}}</option>
+                    <option value="{{id}}">{{name}}</option>
                 {{/ifneq}}
             {{/each}}
         </select>
@@ -55,10 +55,10 @@
         <select name="branchId" class="m-2a form-control">
             {{#each branches}}
                 {{#ifeq expected=id val=../user.branchId}}
-                    <option value="{{id}}" selected>{{branch_name}}</option>
+                    <option value="{{id}}" selected>{{name}}</option>
                 {{/ifeq}}
                 {{#ifneq expected=id val=../user.branchId}}
-                    <option value="{{id}}">{{branch_name}}</option>
+                    <option value="{{id}}">{{name}}</option>
                 {{/ifneq}}
             {{/each}}
         </select>

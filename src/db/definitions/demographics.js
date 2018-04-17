@@ -49,7 +49,7 @@ module.exports = {
     branch: {
         code: {
             type: Sequelize.DataTypes.STRING(6),
-            primaryKey: true
+            unique: true
         },
         name: {
             type: Sequelize.DataTypes.STRING,

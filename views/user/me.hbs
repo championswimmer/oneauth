@@ -16,31 +16,31 @@
 
 <div class="container mt-3">
     <div class="profile-parent-row">
-        <div id="profile-row-id" class="profile-row">
-            <p class="font-weight-bold custom-profile-padding"> CodingBlocks Account: </p>
-            <p class="custom-profile-padding"> {{user.id}} </p>
+        <div id="profile-row-id" class="row">
+            <p class="font-weight-bold custom-profile-padding col-6"> CodingBlocks Account: </p>
+            <p class="custom-profile-padding col-6"> {{user.id}} </p>
         </div>
-        <div id="profile-row-username" class="profile-row">
-            <p class="font-weight-bold custom-profile-padding"> Username: </p>
-            <p class="custom-profile-padding"> {{user.username}} </p>
+        <div id="profile-row-username" class="row">
+            <p class="font-weight-bold custom-profile-padding col-6"> Username: </p>
+            <p class="custom-profile-padding col-6"> {{user.username}} </p>
         </div>
-        <div id="profile-row-firstname" class="profile-row">
-            <p class="font-weight-bold custom-profile-padding"> Firstname: </p>
-            <p class="custom-profile-padding"> {{user.firstname}} </p>
+        <div id="profile-row-firstname" class="row">
+            <p class="font-weight-bold custom-profile-padding col-6"> Firstname: </p>
+            <p class="custom-profile-padding col-6"> {{user.firstname}} </p>
         </div>
-        <div id="profile-row-lastname" class="profile-row">
-            <p class="font-weight-bold custom-profile-padding"> Lastname: </p>
-            <p class="custom-profile-padding"> {{user.lastname}} </p>
+        <div id="profile-row-lastname" class="row">
+            <p class="font-weight-bold custom-profile-padding col-6"> Lastname: </p>
+            <p class="custom-profile-padding col-6"> {{user.lastname}} </p>
         </div>
         {{#unless user.verifiedemail}}
-            <div id="profile-row-email" class="profile-row">
-                <p class="font-weight-bold custom-profile-padding"> Email: </p>
-                <p class="custom-profile-padding"><a href="mailto:{{user.email}}">{{user.email}}</a></p>
+            <div id="profile-row-email" class="row">
+                <p class="font-weight-bold custom-profile-padding col-6"> Email: </p>
+                <p class="custom-profile-padding col-6"><a href="mailto:{{user.email}}">{{user.email}}</a></p>
             </div>
         {{/unless}}
-        <div id="profile-row-email" class="profile-row">
-            <p class="font-weight-bold custom-profile-padding"> VerifiedEmail: </p>
-            <p class="custom-profile-padding">
+        <div id="profile-row-email" class="row">
+            <p class="font-weight-bold custom-profile-padding col-6"> VerifiedEmail: </p>
+            <p class="custom-profile-padding col-6">
                 {{#if user.verifiedemail}}
                     <a href="mailto:{{user.email}}">{{user.verifiedemail}}</a>
                 {{else}}
@@ -48,18 +48,18 @@
                 {{/if}}
             </p>
         </div>
-        <div id="profile-row-collegename" class="profile-row">
-            <p class="font-weight-bold custom-profile-padding"> College Name: </p>
-            <p class="custom-profile-padding"> {{user.college.name}} </p>
+        <div id="profile-row-collegename" class="row">
+            <p class="font-weight-bold custom-profile-padding col-6"> College Name: </p>
+            <p class="custom-profile-padding col-6"> {{user.demographic.college.name}} </p>
         </div>
-        <div id="profile-row-branchname" class="profile-row">
-            <p class="font-weight-bold custom-profile-padding"> Branch Name: </p>
-            <p class="custom-profile-padding"> {{user.branch.name}} </p>
+        <div id="profile-row-branchname" class="row">
+            <p class="font-weight-bold custom-profile-padding col-6"> Branch Name: </p>
+            <p class="custom-profile-padding col-6"> {{user.demographic.branch.name}} </p>
         </div>
         {{#if user.role}}
-            <div id="profile-row-role" class="profile-row">
-                <p class="font-weight-bold custom-profile-padding"> Role@CB: </p>
-                <p class="custom-profile-padding"> {{user.role}} </p>
+            <div id="profile-row-role" class="row">
+                <p class="font-weight-bold custom-profile-padding col-6"> Role@CB: </p>
+                <p class="custom-profile-padding col-6"> {{user.role}} </p>
             </div>
         {{/if}}
         {{#if messages.error}}
@@ -67,9 +67,9 @@
         {{/if}}
 
         {{#if user.userfacebook}}
-            <div id="profile-row-fb" class="profile-row">
-                <p class="font-weight-bold custom-profile-padding"> Facebook </p>
-                <p class="custom-profile-padding"><span class="hidden-md-down">Connected to</span>
+            <div id="profile-row-fb" class="row">
+                <p class="font-weight-bold custom-profile-padding col-6"> Facebook </p>
+                <p class="custom-profile-padding col-6"><span class="hidden-md-down">Connected to</span>
                     <a target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
                         {{user.userfacebook.id}}
                     </a>
@@ -79,9 +79,9 @@
             </div>
         {{/if}}
         {{#if user.usertwitter}}
-            <div id="profile-row-twitter" class="profile-row">
-                <p class="font-weight-bold custom-profile-padding"> Twitter </p>
-                <p class="custom-profile-padding"><span class="hidden-md-down">Connected to</span>
+            <div id="profile-row-twitter" class="row">
+                <p class="font-weight-bold custom-profile-padding col-6"> Twitter </p>
+                <p class="custom-profile-padding col-6"><span class="hidden-md-down">Connected to</span>
                     <a target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
                         {{user.usertwitter.username}}
                     </a>
@@ -91,9 +91,9 @@
             </div>
         {{/if}}
         {{#if user.usergithub}}
-            <div id="profile-row-github" class="profile-row">
-                <p class="font-weight-bold custom-profile-padding"> Github </p>
-                <p class="custom-profile-padding"><span class="hidden-md-down">Connected to</span>
+            <div id="profile-row-github" class="row">
+                <p class="font-weight-bold custom-profile-padding col-6"> Github </p>
+                <p class="custom-profile-padding col-6"><span class="hidden-md-down">Connected to</span>
                     <a target="_blank" href="http://github.com/{{user.usergithub.username}}">
                         {{user.usergithub.username}}
                     </a>

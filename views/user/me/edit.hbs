@@ -41,10 +41,10 @@
         <label>College Name:</label>
         <select name="collegeId" class="m-2a form-control">
             {{#each colleges}}
-                {{#ifeq expected=id val=../user.collegeId}}
+                {{#ifeq expected=id val=../user.demographic.collegeId}}
                     <option value="{{id}}" selected>{{name}}</option>
                 {{/ifeq}}
-                {{#ifneq expected=id val=../user.collegeId}}
+                {{#ifneq expected=id val=../user.demographic.collegeId}}
                     <option value="{{id}}">{{name}}</option>
                 {{/ifneq}}
             {{/each}}
@@ -54,10 +54,10 @@
         <label>Branch Name:</label>
         <select name="branchId" class="m-2a form-control">
             {{#each branches}}
-                {{#ifeq expected=id val=../user.branchId}}
+                {{#ifeq expected=id val=../user.demographic.branchId}}
                     <option value="{{id}}" selected>{{name}}</option>
                 {{/ifeq}}
-                {{#ifneq expected=id val=../user.branchId}}
+                {{#ifneq expected=id val=../user.demographic.branchId}}
                     <option value="{{id}}">{{name}}</option>
                 {{/ifneq}}
             {{/each}}

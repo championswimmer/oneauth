@@ -50,7 +50,9 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
                         },
                         password: passhash
                     }, {
-                        include: [models.User]
+                        include: [
+                            {model: models.User, include: [models.Demographic]}
+                        ]
                     }).then(function (user) {
 
                         mail.welcomeEmail(user.user.dataValues)

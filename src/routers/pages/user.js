@@ -88,7 +88,7 @@ router.post('/me/edit',
         }
 
         try {
-            const user = models.User.findOne({
+            const user = await models.User.findOne({
                 where: {id: req.user.id},
                 include: [models.Demographic]
             })
@@ -102,10 +102,10 @@ router.post('/me/edit',
             await user.save()
 
             if (req.body.branchId) {
-                demographic.branchId = req.body.branchId
+                demographic.branchId = +req.body.branchId
             }
             if (req.body.collegeId) {
-                demographic.branchId = req.body.collegeId
+                demographic.collegeId = +req.body.collegeId
             }
             await demographic.save()
 
@@ -117,7 +117,7 @@ router.post('/me/edit',
                     where: {userId: req.user.id}
                 })
             }
-
+            res.redirect('/users/me')
         } catch (err) {
             Raven.captureException(err)
             req.flash('error', 'Error in Server')

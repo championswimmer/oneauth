@@ -96,7 +96,7 @@ router.post('/me/edit',
 
             user.firstname = req.body.firstname
             user.lastname = req.body.lastname
-            if (!user.verifiedemail && req.body.email) {
+            if (!user.verifiedemail && req.body.email !== user.email) {
                 user.email = req.body.email
             }
             await user.save()

@@ -46,7 +46,6 @@ server.grant(oauth.grant.code(
  */
 server.grant(oauth.grant.token(
     function (client, user, ares, done) {
-
         models.AuthToken.create({
             token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
             scope: ['*'],
@@ -160,6 +159,40 @@ const authorizationMiddleware = [
     }
 ]
 
+// Exchange the client id and password/secret for an access token. The callback accepts the
+// `client`, which is exchanging the client's id and password/secret from the
+// authorization request for verification. If these values are validated, the
+// application issues an access token on behalf of the client who authorized the code.
+
+server.exchange(oauth.exchange.clientCredentials((client, scope, done) => {
+  // Validate the client
+  models.Client.findOne({
+      where: {id: client.get().id}
+  })
+ .then((localClient) => {
+    if (!localClient) return done(null, false);
+     if (localClient.get().secret !== client.get().secret) return done(null, false);
+     if (!localClient.get().trusted) return done(null, false);
+     // Everything validated, return the token
+     const token = generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE)
+     // Pass in a null for user id since there is no user with this grant type
+     return models.AuthToken.create({
+         token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
+         scope: ['*'],
+         explicit: false,
+         clientId: client.get().id,
+         userId: null
+     }).then((Authtoken) => {
+      return done(null , Authtoken.get().token)
+     })
+       .catch((err) => {
+         return done(err)
+     });
+ }).catch((err) => {
+     return done(err)
+ })
+}));
+
 const decisionMiddleware = [
     cel.ensureLoggedIn('/login'),
     server.decision()
@@ -171,6 +204,12 @@ const tokenMiddleware = [
     server.errorHandler()
 ]
 
+const clientTokenMiddleware = [
+    passport.authenticate(['clientBasic', 'clientPassword'], {session: false}),
+    server.token(),
+    server.errorHandler()
+]
+
 module.exports = {
-    Middlewares: {tokenMiddleware, decisionMiddleware, authorizationMiddleware}
+    Middlewares: {tokenMiddleware, clientTokenMiddleware, decisionMiddleware, authorizationMiddleware}
 }

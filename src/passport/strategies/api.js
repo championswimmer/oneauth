@@ -18,7 +18,11 @@ const bearerStrategy = new BearerStrategy(function (token, done) {
             scope: authToken.scope,
             explicit: authToken.explicit
         }
+        if (authToken.user) {
         return done(null, authToken.user.get(), info)
+        } else {
+        return done(null, null, info)
+        }
     }).catch((err) => console.log(err))
 })
 

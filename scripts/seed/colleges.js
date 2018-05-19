@@ -72,7 +72,7 @@ const {db, models: {
             {"name":"Muffakham Jah College Of Engineering And Technology (Hyderabad)"},
             {"name":"NIT, Karnataka (Mangalore)"},
             {"name":"National Institute Of Science & Technology (Berhampur)"},
-            {"name":"Netaji Subhas Institute Of Technology* (New Delhi)"},
+            {"name":"Netaji Subhas Institute Of Technology (New Delhi)"},
             {"name":"P.E.S. College Of Engineering (Mandya)"},
             {"name":"PES University (Bangalore)"},
             {"name":"PSG College of Technology (Coimbatore)"},

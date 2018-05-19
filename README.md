@@ -30,7 +30,7 @@ If you want to run it with https, and run it on a proper domain
 (not 127.0.0.1), and enable Facebook/Twitter/Github logins, you'll need to take care of 
 a few additional steps - 
 
-Please read the [required steps in the wiki](https://github.com/coding-blocks/oneauth/wiki/Testing-on-Localhost-(with-Social-Logins))
+Please read the [required steps in the wiki](https://github.com/coding-blocks/oneauth/wiki/)
 
 -------------------------
 

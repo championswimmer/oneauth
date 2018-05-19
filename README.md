@@ -21,7 +21,7 @@ Simple clone and  -
 
 ```
 npm install
-npm run startLocal
+npm run start:dev
 ```
 
 ### Option 2: With SSL (HTTPS), and try out social logins too

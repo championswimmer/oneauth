@@ -92,7 +92,7 @@ router.post('/me/edit',
                 where: {id: req.user.id},
                 include: [models.Demographic]
             })
-            const demographic = user.demographic
+            const demographic = user.demographic || {};
 
             user.firstname = req.body.firstname
             user.lastname = req.body.lastname
@@ -101,13 +101,18 @@ router.post('/me/edit',
             }
             await user.save()
 
+            demographic.userId = demographic.userId || req.user.id;
             if (req.body.branchId) {
                 demographic.branchId = +req.body.branchId
             }
             if (req.body.collegeId) {
                 demographic.collegeId = +req.body.collegeId
             }
-            await demographic.save()
+            await models.Demographic.upsert(demographic, {
+                where: {
+                    userId: req.user.id
+                }
+            })
 
             if (req.body.password) {
                 const passHash = await passutils.pass2hash(req.body.password)

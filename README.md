@@ -17,18 +17,18 @@
 ## Running Locally (for Development)
 
 ### Option 1: Without SSL, only local logins
-Simple clone and  - 
+Simple clone and  -
 
 ```
 npm install
-npm start
+npm run start:dev
 ```
 
 ### Option 2: With SSL (HTTPS), and try out social logins too
 
 If you want to run it with https, and run it on a proper domain
-(not 127.0.0.1), and enable Facebook/Twitter/Github logins, you'll need to take care of 
-a few additional steps - 
+(not 127.0.0.1), and enable Facebook/Twitter/Github logins, you'll need to take care of
+a few additional steps -
 
 Please read the [required steps in the wiki](wiki)
 

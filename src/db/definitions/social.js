@@ -26,6 +26,13 @@ module.exports = {
         username: {type: Sequelize.DataTypes.STRING, allowNull: true}
     },
 
+    google:{
+        id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
+        token: Sequelize.DataTypes.STRING,
+        tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
+        username: {type: Sequelize.DataTypes.STRING, allowNull: true}
+    },
+
     lms: {
         id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
         roll_number: Sequelize.DataTypes.STRING,

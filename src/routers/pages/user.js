@@ -17,6 +17,7 @@ router.get('/me',
             where: {id: req.user.id},
             include: [
                 models.UserGithub,
+                models.UserGoogle,
                 models.UserFacebook,
                 models.UserLms,
                 models.UserTwitter,
@@ -135,6 +136,7 @@ router.get('/:id',
             where: {id: req.params.id},
             include: [
                 models.UserGithub,
+                models.UserGoogle,
                 models.UserFacebook,
                 models.UserLms,
                 models.UserTwitter

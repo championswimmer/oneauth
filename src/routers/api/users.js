@@ -29,6 +29,9 @@ router.get('/me',
                         case 'github':
                             includes.push(models.UserGithub)
                             break
+                        case 'google':
+                            includes.push(models.UserGoogle)
+                            break
                         case 'lms':
                             includes.push(models.UserLms)
                             break
@@ -76,6 +79,9 @@ router.get('/me/address',
                             break
                         case 'github':
                             includes.push(models.UserGithub)
+                            break
+                        case 'google':
+                            includes.push(models.UserGoogle)
                             break
                         case 'lms':
                             includes.push(models.UserLms)

@@ -12,4 +12,6 @@ const githubStrategy = require('./strategy-github')
 
 const lmsStrategy = require('./strategy-lms')
 
-module.exports = {localStrategy, fbStrategy, twitterStrategy, githubStrategy, lmsStrategy}
+const googleStrategy = require('./strategy-google')
+
+module.exports = {localStrategy, fbStrategy, twitterStrategy, githubStrategy,googleStrategy, lmsStrategy}

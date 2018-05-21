@@ -9,7 +9,7 @@ const models = require('../../db/models').models
 router.get('/',
     cel.ensureLoggedIn('/login'),
     function (req, res, next) {
-        models.GrantCode.findAll({
+        models.AuthToken.findAll({
             where: {userId: req.user.id},
             include: [models.Client]
         }).then(function (apps) {
@@ -22,19 +22,19 @@ router.get('/',
 
 router.get('/:clientId/delete',cel.ensureLoggedIn('/login'),
     function (req, res, next) {
-        models.GrantCode.findOne({
+        models.AuthToken.findOne({
             where: {
                 userId: req.user.id,
                 clientId: +req.params.clientId
             }
-        }).then(function (grantCode) {
-            if (!grantCode) {
+        }).then(function (token) {
+            if (!token) {
                 return res.send("Invalid App")
             }
-            if (grantCode.userId != req.user.id) {
+            if (token.userId != req.user.id) {
                 return res.send("Unauthorized user")
             }
-            grantCode.destroy();
+            token.destroy();
 
             return res.redirect('/apps/')
         })

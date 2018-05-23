@@ -21,16 +21,16 @@ router.get('/me',
                 for (ia of includedAccounts) {
                     switch (ia) {
                         case 'facebook':
-                            includes.push(models.UserFacebook)
+                            includes.push({model: models.UserFacebook, exclude: [token]})
                             break
                         case 'twitter':
-                            includes.push(models.UserTwitter)
+                            includes.push({model: models.UserTwitter, exclude: [token]})
                             break
                         case 'github':
-                            includes.push(models.UserGithub)
+                            includes.push({model: models.UserGithub, exclude: [token]})
                             break
                         case 'google':
-                            includes.push(models.UserGoogle)
+                            includes.push({model: models.UserGoogle, exclude: [token]})
                             break
                         case 'lms':
                             includes.push(models.UserLms)

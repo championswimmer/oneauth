@@ -17,8 +17,8 @@ passport.use(UserStrategies.twitterStrategy)
 passport.use(UserStrategies.githubStrategy)
 passport.use(UserStrategies.lmsStrategy)
 
-passport.use('clientBasic', ClientStrategies.basicStrategy)
-passport.use('clientPassword', ClientStrategies.clientPasswordStrategy)
+passport.use(ClientStrategies.basicStrategy)
+passport.use(ClientStrategies.clientPasswordStrategy)
 
 passport.use(ApiStrategies.bearerStrategy)
 

@@ -59,7 +59,6 @@ router.get('/me/address',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
     passport.authenticate(['bearer', 'session']),
     function (req, res) {
-
         if (req.user) {
             let includes = [{model: models.Demographic,
             include: [models.Address]

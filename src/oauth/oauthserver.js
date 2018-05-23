@@ -203,13 +203,6 @@ const tokenMiddleware = [
     server.token(),
     server.errorHandler()
 ]
-
-const clientTokenMiddleware = [
-    passport.authenticate(['clientBasic', 'clientPassword'], {session: false}),
-    server.token(),
-    server.errorHandler()
-]
-
 module.exports = {
-    Middlewares: {tokenMiddleware, clientTokenMiddleware, decisionMiddleware, authorizationMiddleware}
+    Middlewares: {tokenMiddleware, decisionMiddleware, authorizationMiddleware}
 }

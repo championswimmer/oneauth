@@ -105,7 +105,7 @@ const {db, models: {
             {"name":"University Institute Of Engineering & Technology, Panjab University (Chandigarh)"},
             {"name":"University Institute Of Engineering, Chandigarh University (Chandigarh)"},
             {"name":"VIT University (Vellore)"},
-            {"name":"Veltech High Tech Dr .Rangarajan Dr. Sakunthala Engineering College (Chennai)"},
+            {"name":"Veltech High Tech Dr. Rangarajan Dr. Sakunthala Engineering College (Chennai)"},
             {"name":"Vishwakarma Institute of Technology (Pune)"},
             {"name":"Visvesvaraya National Institute Of Technology (Nagpur)"},
             {"name":"Zakir Husain College Of Engineering & Technology, Aligarh (Aligarh)"}

@@ -27,7 +27,7 @@ module.exports = {
     },
 
     google:{
-        id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true},
+        id: {type: Sequelize.DataTypes.STRING, primaryKey: true},
         token: Sequelize.DataTypes.STRING,
         tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
         username: {type: Sequelize.DataTypes.STRING, allowNull: true}

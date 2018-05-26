@@ -1,6 +1,8 @@
 /**
  * Created by championswimmer on 08/03/17.
  */
+
+require('newrelic')
 const express = require('express')
     , bodyParser = require('body-parser')
     , session = require('express-session')

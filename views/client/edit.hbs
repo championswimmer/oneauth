@@ -2,10 +2,26 @@
 
 
 <form class="form-group" method="post" action="/api/clients/edit/{{client.id}}">
-	<p>Edit Details for {{client.id}}</p>
+    <p>Edit Details for {{client.id}}</p>
     <input class="form-control" type="text" name="clientname" value="{{client.name}}" placeholder="Client name"><br>
-    <input class="form-control" type="text" placeholder="domains (; separated)"  value="{{client.clientDomains}}" name="domain"><br>
-    <input class="form-control" type="text" placeholder="callbackurl (; separated)"  value= "{{client.clientCallbacks}}" name="callback"><br>
+    <input class="form-control" type="text" placeholder="domains (; separated)" value="{{client.clientDomains}}"
+           name="domain"><br>
+    <input class="form-control" type="text" placeholder="callbackurl (; separated)" value="{{client.clientCallbacks}}"
+           name="callback"><br>
+    {{#ifeq val=userRole expected="admin"}}
+        <div class="row">
+            <div class="col-4">
+                Trusted Client:
+            </div>
+            <div class="col-1">
+                <div class="input-group mb-3">
+                    <div class="input-group-text">
+                        <input type="checkbox" name="trustedClient">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/ifeq}}
     <div class="row">
         <input class="btn btn-warning mx-auto" value="Edit Client" type="submit">
     </div>

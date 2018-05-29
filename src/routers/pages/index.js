@@ -14,6 +14,8 @@ const makeGaEvent = require('../../utils/ga').makeGaEvent
 router.use(function (req, res, next) {
     // One '!' doesn't cancel the other'!'. This is not wrong code. Learn JS
     res.locals.loggedIn = !!req.user
+    res.locals.userRole = req.user && req.user.role
+    res.locals.userId = req.user && req.user.id
     next()
 })
 

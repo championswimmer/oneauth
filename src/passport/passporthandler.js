@@ -39,6 +39,10 @@ passport.deserializeUser(function (userid, cb) {
     models.User.findOne({
         where: {id: userid}
     }).then(function (user) {
+        if (process.env.ONEAUTH_DEV === 'localhost') {
+            user.role = 'admin'
+        }
+
         return cb(null, user)
     }).catch((err) => console.log(err))
 })

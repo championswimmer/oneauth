@@ -3,35 +3,42 @@
 <div class="container p-4 mt-4">
     <div class="h3 thin-font text-center">Client Details</div>
     <div class="col-md-12 col-lg-10 offset-lg-1">
-        <a href="/clients/{{client.id}}/edit"><div class="btn btn-sm btn-info">Edit</div></a>
+        <a href="/clients/{{client.id}}/edit">
+            <div class="btn btn-sm btn-info">Edit</div>
+        </a>
 
         <table class="table table-bordered table-responsive">
-        <tr>
-            <th> Client Name</th>
-            <td> {{client.name}}</td>
-        </tr>
-        <tr>
-            <th> Client Id</th>
-            <td> {{client.id}}</td>
-        </tr>
-        <tr>
-            <th> Client Secret</th>
-            <td> {{client.secret}}</td>
-        </tr>
-
-        {{#each client.domain as |domain|}}
             <tr>
-                <th>Domain</th>
-                <td>{{domain}}</td>
+                <th> Client Name</th>
+                <td> {{client.name}}</td>
             </tr>
-        {{/each}}
-        {{#each client.callbackURL as |callback|}}
             <tr>
-                <th>Callback URL</th>
-                <td>{{callback}}</td>
+                <th> Client Id</th>
+                <td> {{client.id}}</td>
             </tr>
-        {{/each}}
+            <tr>
+                <th> Client Secret</th>
+                <td> {{client.secret}}</td>
+            </tr>
 
-    </table>
+            {{#each client.domain as |domain|}}
+                <tr>
+                    <th>Domain</th>
+                    <td>{{domain}}</td>
+                </tr>
+            {{/each}}
+            {{#each client.callbackURL as |callback|}}
+                <tr>
+                    <th>Callback URL</th>
+                    <td>{{callback}}</td>
+                </tr>
+            {{/each}}
+
+            <tr>
+                <th> Trusted Client</th>
+                <td> {{client.trusted}}</td>
+            </tr>
+
+        </table>
     </div>
 </div>

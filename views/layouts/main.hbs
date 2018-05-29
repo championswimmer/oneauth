@@ -22,7 +22,7 @@
         gtag('js', new Date())
         gtag('config', 'UA-83327907-7')
             {{#if user}}
-            gtag('set', {'user_id': {{user.id}} }) // Set the user ID using signed-in user_id.
+            gtag('set', {'user_id': {{userId}} }) // Set the user ID using signed-in user_id.
             {{/if}}
     </script>
 

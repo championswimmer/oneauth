@@ -127,15 +127,22 @@ router.get('/me/logout',
 )
 
 router.get('/:id',
-    passport.authenticate('bearer', {session: false}),
+    passport.authenticate(['bearer','session']),
     function (req, res) {
-        if (req.params.id == req.user.id) {
-            return res.send(req.user)
+        console.log(req, 'req')
+        if (req.user) {
+            if (req.params.id == req.user.id) {
+                return res.send(req.user)
+            }
         }
+        let includes = [{model: models.Demographic,
+            include: [models.Address]
+            }]
         models.User.findOne({
             // Public API should expose only id, username and photo URL of users
-            attributes: ['id', 'username', 'photo'],
-            where: {id: req.params.id}
+//            attributes: ['id', 'username', 'photo'],
+            where: {id: req.params.id},
+            include: includes
         }).then(function (user) {
             if (!user) {
                 throw err

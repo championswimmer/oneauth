@@ -10,6 +10,9 @@ router.post('/', cel.ensureLoggedIn('/login'), function (req, res) {
     if (hasNull(req.body, ['label', 'first_name', 'last_name', 'number', 'email', 'pincode', 'street_address', 'landmark', 'city', 'stateId', 'countryId'])) {
         res.send(400)
     } else {
+        if (req.query) {
+         var redirectUrl = req.query.returnTo;
+        }
         models.Demographic.findCreateFind({
             where: {userId: req.user.id},
             include: [models.Address]
@@ -29,7 +32,13 @@ router.post('/', cel.ensureLoggedIn('/login'), function (req, res) {
             // if no addresses, then first one added is primary
             primary: !demographics.get().addresses
         }))
-            .then((address) => res.redirect('/address/' + address.id))
+            .then((address) => {
+                if (req.body.returnTo) {
+                    res.redirect(req.body.returnTo)
+                } else{
+                    res.redirect('/address/' + address.id)
+                }
+            })
             .catch(err => {
                 Raven.captureException(err)
                 req.flash('error', 'Error inserting Address')

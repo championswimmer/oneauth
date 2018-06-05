@@ -16,7 +16,7 @@ module.exports = new GoogleStrategy({
     }, function (req, accessToken, refreshToken, profile, cb) {
         let profileJson = profile._json
         let oldUser = req.user
-        profileJson.username = profileJson.emails[0].value.split('@')[0], //Pre-@ part of first email
+        profileJson.username = profileJson.emails[0].value.split('@')[0] //Pre-@ part of first email
         Raven.setContext({extra: {file: 'googlestrategy'}})
         if (oldUser) {
             if (config.DEBUG) console.log('User exists, is connecting Google account')

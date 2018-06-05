@@ -1,5 +1,5 @@
 const Raven = require('raven')
-const GoogleStrategy = require('passport-google-oauth2').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 
 const models = require('../../../db/models').models
 

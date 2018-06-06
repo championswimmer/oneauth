@@ -119,7 +119,10 @@ router.post('/me/edit',
                 user.email = req.body.email
             }
 
-            let prevPhoto = user.photo.split('/').pop()
+            let prevPhoto = ""
+            if (user.photo) {
+                prevPhoto = user.photo.split('/').pop()
+            }
             if (req.file) {
                 user.photo = req.file.location
             } else if(req.body.avatarselect) {
@@ -128,7 +131,7 @@ router.post('/me/edit',
 
             await user.save()
 
-            if (req.file) {
+            if ((req.file || req.body.avatarselect) && prevPhoto) {
                 multer.deleteMinio(prevPhoto)
             }
 

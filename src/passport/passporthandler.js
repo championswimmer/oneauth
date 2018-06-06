@@ -6,6 +6,7 @@ const passport = require('passport')
 const UserStrategies = require('./strategies/user')
     , ClientStrategies = require('./strategies/client')
     , ApiStrategies = require('./strategies/api')
+    , debug = require('debug')('oauth:passporthandler')
 
 const models = require('../db/models').models
 
@@ -25,8 +26,8 @@ passport.use(ApiStrategies.bearerStrategy)
 
 passport.serializeUser(function (user, cb) {
     if (config.DEBUG) {
-        console.log("Serialize =  = = = ")
-        console.log(user)
+        debug("Serialize =  = = = ")
+        debug(user)
     }
 
     cb(null, user.id)
@@ -34,14 +35,14 @@ passport.serializeUser(function (user, cb) {
 
 passport.deserializeUser(function (userid, cb) {
     if (config.DEBUG) {
-        console.log("Deserialize =  = = = ")
-        console.log(userid)
+        debug("Deserialize =  = = = ")
+        dbeug(userid)
     }
     models.User.findOne({
         where: {id: userid}
     }).then(function (user) {
         return cb(null, user)
-    }).catch((err) => console.log(err))
+    }).catch((err) => debug(err))
 })
 
 module.exports = passport

@@ -9,6 +9,7 @@ const models = require('../../../db/models').models
 const config = require('../../../../config')
 const secrets = config.SECRETS
 const passutils = require('../../../utils/password')
+const debug = require('debug')('oauth:strategies/github')
 
 /**
  * Authenticate _users_ using their Github Accounts
@@ -24,7 +25,7 @@ module.exports = new GithubStrategy({
     let oldUser = req.user
     Raven.setContext({extra: {file: 'githubstrategy'}})
     if (oldUser) {
-        if (config.DEBUG) console.log('User exists, is connecting Github account')
+        if (config.DEBUG) debug('User exists, is connecting Github account')
         models.UserGithub.findOne({where: {id: profileJson.id}})
             .then((ghaccount) => {
                 if (ghaccount) {

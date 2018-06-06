@@ -8,6 +8,7 @@ const models = require('../db/models').models
     , generator = require('../utils/generator')
     , passport = require('../passport/passporthandler')
     , config = require('../../config')
+    , debug = require('debug')('oauth:oauthserver')
 
 const server = oauth.createServer()
 
@@ -20,7 +21,7 @@ server.deserializeClient(function (clientId, done) {
         where: {id: clientId}
     }).then(function (client) {
         return done(null, client)
-    }).catch(err => console.log(err))
+    }).catch(err => debug(err))
 })
 
 /**
@@ -29,7 +30,7 @@ server.deserializeClient(function (clientId, done) {
  */
 server.grant(oauth.grant.code(
     function (client, redirectURL, user, ares, done) {
-        console.log('oauth: getting grant code for ' + client.id + ' and ' + user.id)
+        debug('oauth: getting grant code for ' + client.id + ' and ' + user.id)
         models.GrantCode.create({
             code: generator.genNcharAlphaNum(config.GRANT_TOKEN_SIZE),
             clientId: client.id,
@@ -67,7 +68,7 @@ server.grant(oauth.grant.token(
  */
 server.exchange(oauth.exchange.code(
     function (client, code, redirectURI, done) {
-        console.log('oneauth: exchange')
+        debug('oneauth: exchange')
         models.GrantCode.findOne({
             where: {code: code},
             include: [models.Client]
@@ -109,7 +110,7 @@ server.exchange(oauth.exchange.code(
             //so it cannot be reused
             grantCode.destroy()
 
-        }).catch(err => console.log(err))
+        }).catch(err => debug(err))
     }
 ))
 
@@ -118,21 +119,21 @@ server.exchange(oauth.exchange.code(
 const authorizationMiddleware = [
     cel.ensureLoggedIn('/login'),
     server.authorization(function (clientId, callbackURL, done) {
-        console.log('oauth: authorize')
+        debug('oauth: authorize')
         models.Client.findOne({
             where: {id: clientId}
         }).then(function (client) {
             if (!client) {
                 return done(null, false)
             }
-            console.log(callbackURL)
+           debug(callbackURL)
             for (url of client.callbackURL) {
                 if (callbackURL.startsWith(url)) {
                     return done(null, client, callbackURL)
                 }
             }
             return done(null, false)
-        }).catch(err => console.log(err))
+        }).catch(err => debug(err))
     }, function (client, user, done) {
         //TODO: Check if we can auto approve
         models.AuthToken.findOne({

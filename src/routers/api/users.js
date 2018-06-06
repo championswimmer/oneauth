@@ -14,7 +14,7 @@ router.get('/me',
     passport.authenticate(['bearer', 'session']),
     function (req, res) {
 
-        if (req.user) {
+        if (req.user && req.user.id) {
             let includes = []
             if (req.query.include) {
                 let includedAccounts = req.query.include.split(',')
@@ -33,7 +33,7 @@ router.get('/me',
                             includes.push({model: models.UserGoogle, attributes: {exclude: ["token","tokenSecret"]}})
                             break
                         case 'lms':
-                            includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]})
+                            includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]}})
                             break
                     }
                 }
@@ -62,7 +62,7 @@ router.get('/me/address',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
     passport.authenticate(['bearer', 'session']),
     function (req, res) {
-        if (req.user) {
+        if (req.user && req.user.id) {
             let includes = [{model: models.Demographic,
             include: [models.Address]
             }]
@@ -83,7 +83,7 @@ router.get('/me/address',
                             includes.push({model: models.UserGoogle, attributes: {exclude: ["token","tokenSecret"]}})
                             break
                         case 'lms':
-                            includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]})
+                            includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]}})
                             break
                     }
                 }
@@ -113,7 +113,7 @@ router.get('/me/address',
 router.get('/me/logout',
     passport.authenticate('bearer', {session: false}),
     function (req, res) {
-        if (req.user) {
+        if (req.user && req.user.id) {
             models.AuthToken.destroy({
                 where: {
                     token: req.header('Authorization').split(' ')[1]
@@ -135,15 +135,17 @@ router.get('/me/logout',
 router.get('/:id',
     passport.authenticate('bearer', {session: false}),
     function (req, res) {
-        if (req.user) {
+        if (req.user && req.user.id) {
             if (req.params.id == req.user.id) {
                 return res.send(req.user)
             }
         }
+        let trustedClient = req.client && req.client.trusted
         models.User.findOne({
             // Public API should expose only id, username and photo URL of users
-           attributes: ['id', 'username', 'photo'],
-            where: {id: req.params.id},
+            // But for trusted clients we will pull down our pants
+            attributes: trustedClient ? undefined: ['id', 'username', 'photo'],
+            where: {id: req.params.id}
         }).then(function (user) {
             if (!user) {
                 throw err

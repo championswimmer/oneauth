@@ -134,7 +134,10 @@ const authorizationMiddleware = [
             return done(null, false)
         }).catch(err => console.log(err))
     }, function (client, user, done) {
-        //TODO: Check if we can auto approve
+        // Auto approve if this is trusted client
+        if (client.trusted) {
+            return done(null, true)
+        }
         models.AuthToken.findOne({
             where: {
                 clientId: client.id,

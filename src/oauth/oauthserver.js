@@ -125,6 +125,7 @@ const authorizationMiddleware = [
                 return done(null, false)
             }
             console.log(callbackURL)
+            // We validate that callbackURL matches with any one registered in DB
             for (url of client.callbackURL) {
                 if (callbackURL.startsWith(url)) {
                     return done(null, client, callbackURL)
@@ -170,9 +171,19 @@ server.exchange(oauth.exchange.clientCredentials((client, scope, done) => {
       where: {id: client.get().id}
   })
  .then((localClient) => {
-    if (!localClient) return done(null, false);
-     if (localClient.get().secret !== client.get().secret) return done(null, false);
-     if (!localClient.get().trusted) return done(null, false);
+    if (!localClient) {
+        return done(null, false);
+    }
+     if (localClient.get().secret !== client.get().secret) {
+         // Password (secret) of client is wrong
+         return done(null, false);
+     }
+
+     if (!localClient.get().trusted) {
+         // Client is not trusted
+         return done(null, false);
+     }
+
      // Everything validated, return the token
      const token = generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE)
      // Pass in a null for user id since there is no user with this grant type
@@ -181,7 +192,7 @@ server.exchange(oauth.exchange.clientCredentials((client, scope, done) => {
          scope: ['*'],
          explicit: false,
          clientId: client.get().id,
-         userId: null
+         userId: null // This is a client scoped token, so no related user here
      }).then((Authtoken) => {
       return done(null , Authtoken.get().token)
      })

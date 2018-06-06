@@ -99,6 +99,18 @@
                 </p>
             </div>
         {{/if}}
+        {{#if user.usergoogle}}
+            <div id="profile-row-google" class="row">
+                <p class="font-weight-bold custom-profile-padding col-6"> Google </p>
+                <p class="custom-profile-padding col-6"><span class="hidden-md-down">Connected to</span>
+                    <a target="_blank" href="http://plus.google.com/{{user.usergoogle.id}}">
+                        {{user.usergoogle.username}}
+                    </a>
+                    <a href="/disconnect/google" title="Disconnect Google"><i class="fa fa-times"
+                                                                              aria-hidden="true"></i></a>
+                </p>
+            </div>
+        {{/if}}
         {{#if messages.error}}
             <span class="alert alert-danger">{{messages.error}}</span>
         {{/if}}
@@ -125,6 +137,11 @@
         {{#unless user.usergithub}}
             <a class="btn text-white custom-social-btn btn-github ml-1 mt-2" href="/connect/github">
                 <span class="fa fa-github"></span> Connect Github
+            </a>
+        {{/unless}}
+        {{#unless user.usergoogle}}
+            <a class="btn text-white custom-social-btn btn-google ml-1 mt-2" href="/connect/google">
+                <span class="fa fa-google"></span> Connect Google
             </a>
         {{/unless}}
     </div>

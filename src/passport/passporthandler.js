@@ -15,6 +15,7 @@ passport.use(UserStrategies.localStrategy)
 passport.use(UserStrategies.fbStrategy)
 passport.use(UserStrategies.twitterStrategy)
 passport.use(UserStrategies.githubStrategy)
+passport.use(UserStrategies.googleStrategy)
 passport.use(UserStrategies.lmsStrategy)
 
 passport.use(ClientStrategies.basicStrategy)

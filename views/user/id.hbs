@@ -65,5 +65,15 @@
             </td>
         </tr>
     {{/if}}
+    {{#if user.usergoogle}}
+        <tr id="profile-row-google">
+            <td class="font-weight-bold"> Google </td>
+            <td> Connected to
+                <a target="_blank" href="http://google.com/{{user.usergoogle.username}}">
+                    {{user.usergoogle.username}}
+                </a>
+            </td>
+        </tr>
+    {{/if}}
 
 </table>

@@ -135,9 +135,10 @@ router.get('/me/logout',
 router.get('/:id',
     passport.authenticate('bearer', {session: false}),
     function (req, res) {
-
-        if (req.user && req.user.id && req.params.id === req.user.id) {
-            return res.send(req.user)
+        if (req.user && req.user.id) {
+            if (req.params.id == req.user.id) {
+                return res.send(req.user)
+            }
         }
         let trustedClient = req.client && req.client.trusted
         models.User.findOne({
@@ -152,6 +153,29 @@ router.get('/:id',
             res.send(user)
         }).catch(function (err) {
             res.send('Unknown user or unauthorized request')
+        })
+    }
+)
+router.get('/:id/address',
+    // Only for server-to-server calls, no session auth
+    passport.authenticate('bearer', {session: false}),
+    function (req, res) {
+        let includes = [{model: models.Demographic,
+            include: [{model: models.Address, include:[models.State, models.Country]}]
+        }]
+
+        models.Address.findAll({
+            where: {'$demographic.userId$': req.params.id},
+            include: includes
+        }).then(function (addresses) {
+            if (!addresses || addresses.length === 0) {
+                throw err
+            }
+            return res.json(addresses)
+        }).catch(function (err) {
+            Raven.captureException(err)
+            req.flash('error', 'Something went wrong trying to query address database')
+            return res.status(501).json({error: err.message})
         })
     }
 )

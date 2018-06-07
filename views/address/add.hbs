@@ -3,6 +3,7 @@
 
 
 <form class="form-group" method="post" action="/api/address">
+    <input type="hidden" name="returnTo" id="redirect-input">
     <input class="form-control" type="text" placeholder="Label" name="label" required><br>
     <input class="form-control" type="text" placeholder="First Name" name="first_name" required><br>
     <input class="form-control" type="text" placeholder="Last Name" name="last_name" required><br>
@@ -28,3 +29,10 @@
         <input class="btn btn-warning mx-auto" value="Add Address" type="submit">
     </div>
 </form>
+<script>
+    $(function(){
+        let params = (new URL(document.location)).searchParams;
+        let url = params.get('returnTo')
+        $('#redirect-input').val(url)
+    })
+</script>

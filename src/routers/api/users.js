@@ -45,7 +45,7 @@ router.get('/me',
                 include: includes
             }).then(function (user) {
                 if (!user) {
-                    throw err
+                    throw new Error("User not found")
                 }
                 res.send(user)
             }).catch(function (err) {
@@ -96,7 +96,7 @@ router.get('/me/address',
             }).then(function (user) {
                 console.log(user)
                 if (!user) {
-                    throw err
+                    throw new Error("User not found")
                 }
                 res.send(user)
             }).catch(function (err) {
@@ -148,7 +148,7 @@ router.get('/:id',
             where: {id: req.params.id}
         }).then(function (user) {
             if (!user) {
-                throw err
+                throw new Error("User not found")
             }
             res.send(user)
         }).catch(function (err) {
@@ -169,7 +169,7 @@ router.get('/:id/address',
             include: includes
         }).then(function (addresses) {
             if (!addresses || addresses.length === 0) {
-                throw err
+                throw new Error("User has no addresses")
             }
             return res.json(addresses)
         }).catch(function (err) {

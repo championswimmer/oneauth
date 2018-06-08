@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const config = require('../config');
 const secret = config.SECRETS;
-const debug = require('debug')('oauth:scripts/migrate')
+const debug = require('debug')('oauth:scripts:migrate')
 
 args
     .option('file', 'path to migration file')

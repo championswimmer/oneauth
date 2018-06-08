@@ -5,7 +5,7 @@ const router = require('express').Router()
 const passport = require('../../passport/passporthandler')
 
 const config = require('../../../config')
-const debug = require('debug')('oauth:login/facebook')
+const debug = require('debug')('oauth:login:facebook')
 
 function authnOrAuthzFacebook(req, res, next) {
     if (!req.isAuthenticated()) {

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const passport = require('../../passport/passporthandler')
-const debug = require('debug')('oauth:login/google')
+const debug = require('debug')('oauth:login:google')
 
 function authnOrAuthzGoogle(req, res, next) {
     if (!req.isAuthenticated()) {

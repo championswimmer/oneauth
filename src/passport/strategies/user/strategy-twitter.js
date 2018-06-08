@@ -9,7 +9,7 @@ const models = require('../../../db/models').models
 const config = require('../../../../config')
 const secrets = config.SECRETS
 const passutils = require('../../../utils/password')
-const debug = require('debug')('oauth:strategies/twitter')
+const debug = require('debug')('oauth:strategies:twitter')
 
 /**
  * Authenticate _users_ using their Twitter accounts

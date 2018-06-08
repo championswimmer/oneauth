@@ -6,7 +6,7 @@ const Raven = require('raven')
 const moment = require('moment')
 const uid = require('uid2')
 const passutils = require('../../utils/password')
-const debug = require('debug')('oauth:pages/forgot')
+const debug = require('debug')('oauth:pages:forgot')
 
 const router = require('express').Router()
 

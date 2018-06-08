@@ -6,7 +6,7 @@ const models = require('../../../db/models').models
 const config = require('../../../../config')
 const secrets = config.SECRETS
 const passutils = require('../../../utils/password')
-const debug = require('debug')('oaauth:strategies/google')
+const debug = require('debug')('oauth:strategies:google')
 
 module.exports = new GoogleStrategy({
         clientID: secrets.GOOGLE_CLIENT_ID,

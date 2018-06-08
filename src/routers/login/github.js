@@ -5,7 +5,7 @@
 
 const router = require('express').Router()
 const passport = require('../../passport/passporthandler')
-const debug = require('debug')('oauth:login/github')
+const debug = require('debug')('oauth:login:github')
 
 function authnOrAuthzGithub(req, res, next) {
     if (!req.isAuthenticated()) {

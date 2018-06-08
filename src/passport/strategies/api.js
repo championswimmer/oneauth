@@ -5,7 +5,7 @@
 const BearerStrategy = require('passport-http-bearer').Strategy
 
 const models = require('../../db/models').models
-const debug = require('debug')('oauth:strategies/api')
+const debug = require('debug')('oauth:strategies:api')
 
 const bearerStrategy = new BearerStrategy(function (token, done) {
     models.AuthToken.findOne({

@@ -10,7 +10,7 @@ const config = require('../../../../config')
 const secrets = config.SECRETS
 const passutils = require('../../../utils/password')
 const tracer = require('../../../utils/ddtracer').tracer
-const debug = require('debug')('oauth:strategy/facebook')
+const debug = require('debug')('oauth:strategy:facebook')
 
 
 /**

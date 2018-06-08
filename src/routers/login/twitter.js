@@ -4,7 +4,7 @@
 
 const router = require('express').Router()
 const passport = require('../../passport/passporthandler')
-const debug = require('debug')('oauth:login/twitter')
+const debug = require('debug')('oauth:login:twitter')
 
 function authnOrAuthzTwitter(req, res, next) {
     if (!req.isAuthenticated()) {

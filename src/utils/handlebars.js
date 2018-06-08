@@ -1,5 +1,5 @@
 const hbs = require('express-hbs');
-const debug = require('debug')('oauth:utils/handlebars')
+const debug = require('debug')('oauth:utils:handlebars')
 hbs.registerHelper('ifneq', function(options) {
         return (options.hash.expected != options.hash.val) ? options.fn(this) : options.inverse(this);
 });

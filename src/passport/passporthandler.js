@@ -36,7 +36,7 @@ passport.serializeUser(function (user, cb) {
 passport.deserializeUser(function (userid, cb) {
     if (config.DEBUG) {
         debug("Deserialize =  = = = ")
-        dbeug(userid)
+        debug(userid)
     }
     models.User.findOne({
         where: {id: userid}

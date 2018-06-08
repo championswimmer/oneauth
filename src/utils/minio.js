@@ -5,7 +5,7 @@ const Raven = require('raven')
 const minioClient = new AWS.S3 ({
     accessKeyId: config.SECRETS.MINIO.ACCESS_KEY_ID ,
     secretAccessKey: config.SECRETS.MINIO.SECRET_ACCESS_KEY,
-    endpoint: 'https://minio.cb.lk' ,
+    endpoint: config.SECRETS.MINIO.ENDPOINT ,
     s3ForcePathStyle: true,
     signatureVersion: 'v4'
 })

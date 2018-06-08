@@ -32,6 +32,10 @@
             <p class="font-weight-bold custom-profile-padding col-6"> Lastname: </p>
             <p class="custom-profile-padding col-6"> {{user.lastname}} </p>
         </div>
+        <div id="profile-row-gender" class="row">
+            <p class="font-weight-bold custom-profile-padding col-6"> Gender: </p>
+            <p class="custom-profile-padding col-6"> {{user.gender}} </p>
+        </div>
         {{#unless user.verifiedemail}}
             <div id="profile-row-email" class="row">
                 <p class="font-weight-bold custom-profile-padding col-6"> Email: </p>

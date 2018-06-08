@@ -10,6 +10,7 @@ const config = require('../../../../config')
 const secrets = config.SECRETS
 const passutils = require('../../../utils/password')
 const tracer = require('../../../utils/ddtracer').tracer
+const debug = require('debug')('oauth:strategy:facebook')
 
 
 /**
@@ -31,7 +32,7 @@ module.exports = new FacebookStrategy({
     const span = tracer.startSpan('passport.strategy.facebook')
     if (oldUser) {
         if (config.DEBUG)
-            console.log('User exists, is connecting Facebook account')
+            debug('User exists, is connecting Facebook account')
         models.UserFacebook.findOne({where: {id: profileJson.id}})
             .then((fbaccount) => {
 

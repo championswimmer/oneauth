@@ -5,17 +5,18 @@
 
 const router = require('express').Router()
 const passport = require('../../passport/passporthandler')
+const debug = require('debug')('oauth:login:github')
 
 function authnOrAuthzGithub(req, res, next) {
     if (!req.isAuthenticated()) {
-        if (config.DEBUG) console.log("Authn Github = = = = = ")
+        if (config.DEBUG) debug("Authn Github = = = = = ")
         passport.authenticate('github', {
             failureRedirect: '/login',
             successReturnToOrRedirect: '/users/me',
             failureFlash: true
         })(req, res, next)
     } else {
-        if (config.DEBUG) console.log("Authz Github = = = = = = ")
+        if (config.DEBUG) debug("Authz Github = = = = = = ")
         passport.authorize('github', {
             //TODO: Add failure flash
             failureRedirect: '/users/me',

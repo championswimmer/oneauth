@@ -6,6 +6,7 @@ const models = require('../../../db/models').models
 const config = require('../../../../config')
 const secrets = config.SECRETS
 const passutils = require('../../../utils/password')
+const debug = require('debug')('oauth:strategies:google')
 
 module.exports = new GoogleStrategy({
         clientID: secrets.GOOGLE_CLIENT_ID,
@@ -19,7 +20,7 @@ module.exports = new GoogleStrategy({
         profileJson.username = profileJson.emails[0].value.split('@')[0] //Pre-@ part of first email
         Raven.setContext({extra: {file: 'googlestrategy'}})
         if (oldUser) {
-            if (config.DEBUG) console.log('User exists, is connecting Google account')
+            if (config.DEBUG) debug('User exists, is connecting Google account')
             models.UserGoogle.findOne({where: {id: profileJson.id}})
                 .then((glaccount) => {
                     if (glaccount) {

@@ -5,6 +5,8 @@
 const BearerStrategy = require('passport-http-bearer').Strategy
 
 const models = require('../../db/models').models
+const debug = require('debug')('oauth:strategies:api')
+
 
 const bearerStrategy = new BearerStrategy(
     {passReqToCallback: true},
@@ -34,7 +36,7 @@ const bearerStrategy = new BearerStrategy(
             }
 
             return done(null, null, info)
-        }).catch((err) => console.log(err))
+        }).catch((err) => debug(err))
     })
 
 module.exports = {

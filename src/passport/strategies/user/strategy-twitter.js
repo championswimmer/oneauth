@@ -9,6 +9,7 @@ const models = require('../../../db/models').models
 const config = require('../../../../config')
 const secrets = config.SECRETS
 const passutils = require('../../../utils/password')
+const debug = require('debug')('oauth:strategies:twitter')
 
 /**
  * Authenticate _users_ using their Twitter accounts
@@ -25,7 +26,7 @@ module.exports = new TwitterStrategy({
     let oldUser = req.user
     Raven.setContext({extra: {file: 'twitterstrategy'}})
     if (oldUser) {
-        if (config.DEBUG) console.log('User exists, is connecting Twitter account')
+        if (config.DEBUG) debug('User exists, is connecting Twitter account')
         models.UserTwitter.findOne({where: {id: profileJson.id}})
             .then((twaccount) => {
                 if (twaccount) {

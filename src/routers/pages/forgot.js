@@ -6,6 +6,7 @@ const Raven = require('raven')
 const moment = require('moment')
 const uid = require('uid2')
 const passutils = require('../../utils/password')
+const debug = require('debug')('oauth:pages:forgot')
 
 const router = require('express').Router()
 
@@ -204,7 +205,7 @@ router.post('/password/new', makeGaEvent('submit', 'form', 'forgot.password.new'
     .catch(function (err) {
       // Could not register user
       Raven.captureException(err)
-      console.log(err)
+      debug(err)
       req.flash('error', 'There was some problem setting your password. Please try again.')
       return res.render('forgot/password/new', {title: "Setnewpassword | OneAuth", key: req.params.key})
     })

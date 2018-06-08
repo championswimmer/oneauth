@@ -41,5 +41,8 @@ module.exports = new LmsStrategy({
         }
 
         return cb(null, userLms.user.get())
-    }).catch((err) => Raven.captureException(err))
+    }).catch((err) => {
+        Raven.captureException(err)
+        return cb(null, false, {message: 'Could not create account'})
+    })
 })

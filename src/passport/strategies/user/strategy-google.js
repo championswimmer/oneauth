@@ -1,5 +1,5 @@
 const Raven = require('raven')
-const GoogleStrategy = require('passport-google-oauth2').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 
 const models = require('../../../db/models').models
 
@@ -13,10 +13,11 @@ module.exports = new GoogleStrategy({
         clientSecret: secrets.GOOGLE_CLIENT_SECRET,
         callbackURL: config.SERVER_URL + config.GOOGLE_CALLBACK,
         passReqToCallback: true,
-        scope: 'https://www.googleapis.com/auth/plus.login'
+        scope: ['email', 'profile']
     }, function (req, accessToken, refreshToken, profile, cb) {
         let profileJson = profile._json
         let oldUser = req.user
+        profileJson.username = profileJson.emails[0].value.split('@')[0] //Pre-@ part of first email
         Raven.setContext({extra: {file: 'googlestrategy'}})
         if (oldUser) {
             if (config.DEBUG) debug('User exists, is connecting Google account')
@@ -29,6 +30,7 @@ module.exports = new GoogleStrategy({
                             id: profileJson.id,
                             accessToken: accessToken,
                             refreshToken: refreshToken,
+                            username: profileJson.username,
                             userId: oldUser.id
                         })
                             .then(function (updated) {
@@ -44,7 +46,7 @@ module.exports = new GoogleStrategy({
                     cb(null, false, {message: err.message})
                 })
         } else {
-            models.User.count({where: {username: profileJson.login}})
+            models.User.count({where: {username: profileJson.username}})
                 .then(function (existCount) {
 
                     return models.UserGoogle.findCreateFind({
@@ -54,11 +56,14 @@ module.exports = new GoogleStrategy({
                             id: profileJson.id,
                             accessToken: accessToken,
                             refreshToken: refreshToken,
+                            username: profileJson.username,
                             user: {
-                                username: profileJson.displayName,
+                                username: existCount === 0 ? profileJson.username : profileJson.username + '-g',
                                 firstname: profileJson.name.givenName,
                                 lastname: profileJson.name.familyName,
-                                photo: profileJson.image.url
+                                photo: profileJson.image.url,
+                                email: profileJson.emails[0].value,
+                                verifiedemail: profileJson.emails[0].value
                             }
                         }
                     })

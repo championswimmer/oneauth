@@ -93,7 +93,7 @@ module.exports = new FacebookStrategy({
                     resource: req.path,
                     type: 'web',
                     'span.kind': 'server',
-                    userId: userFacebook.user.id,
+                    userId: userFacebook && userFacebook.user && userFacebook.user.id,
                     newUser: true,
                     facebookId: profileJson.id
                 })

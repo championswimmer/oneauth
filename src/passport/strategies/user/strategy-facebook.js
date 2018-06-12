@@ -30,8 +30,9 @@ module.exports = new FacebookStrategy({
     // DATADOG TRACE: START SPAN
     Raven.setContext({extra: {file: 'fbstrategy'}})
     const span = tracer.startSpan('passport.strategy.facebook')
+
     try{
-        if(oldUser){
+        if(oldUser) {
             const fbaccount = await  models.UserFacebook.findOne({where: {id: profileJson.id}})
 
             if (fbaccount) {
@@ -65,8 +66,34 @@ module.exports = new FacebookStrategy({
                     return cb(err, null,{message: "Could not retrieve existing Twitter linked account"})
                 }
             }
-        }else{
-            const [userFacebook,created] = await  models.UserFacebook.findCreateFind({
+        } else {
+            /*
+            First ensure there aren't already users with the same email
+            id that comes from facebook
+             */
+            const existingUsers = await models.User.findAll({
+                include: [{
+                    model: models.UserFacebook,
+                    attributes: ['id'],
+                    required: false
+                }],
+                where: {
+                    email: profileJson.email,
+                    '$userfacebook.id$': {$eq: null}
+                }
+            })
+            if (existingUsers && existingUsers.length > 0) {
+                let oldIds = existingUsers.map(eu => eu.id).join(',')
+                return cb(null, false, {
+                    message: `
+                    Your email id "${profileJson.email}" is already used in the following Coding Blocks Account(s): 
+                    [ ${oldIds} ]
+                    Please log into your old account and connect Facebook in it instead.
+                    Use 'Forgot Password' option if you do not remember password of old account`
+                })
+            }
+
+            const [userFacebook, created] = await  models.UserFacebook.findCreateFind({
                 include: [models.User],
                 where: {id: profileJson.id},
                 defaults: {

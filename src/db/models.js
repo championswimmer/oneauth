@@ -43,13 +43,15 @@ const User = db.define('user', {
 const Resetpassword = db.define('resetpassword', {
     id: {type: Sequelize.DataTypes.BIGINT, autoIncrement: true, primaryKey: true},
     key: {type: Sequelize.DataTypes.STRING, unique: true, allowNull: false},
-    deletedAt: {type: Sequelize.DATE}
+}, {
+    paranoid: true
 })
 
 const Verifyemail = db.define('verifyemail', {
     id: {type: Sequelize.DataTypes.BIGINT, autoIncrement: true, primaryKey: true},
     key: {type: Sequelize.DataTypes.STRING, unique: true, allowNull: false},
-    deletedAt: {type: Sequelize.DATE}
+}, {
+    paranoid: true
 })
 
 const UserLocal = db.define('userlocal', definitions.social.local)

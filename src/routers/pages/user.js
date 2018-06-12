@@ -230,4 +230,17 @@ router.post('/:id/edit',
     }
 )
 
+router.get('/me/clients',
+    cel.ensureLoggedIn('/login'),
+    function (req, res, next) {
+        models.Client.findAll({
+            where: {userId: req.user.id}
+        }).then(function (clients) {
+            return res.render('client/all', {clients: clients})
+        }).catch(function (err) {
+            res.send("No clients registered")
+        })
+    }
+)
+
 module.exports = router

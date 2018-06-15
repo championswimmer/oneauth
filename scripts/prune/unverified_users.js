@@ -3,7 +3,10 @@ const secret = config.SECRETS;
 const {db, models: {
     User
 }} = require('../../src/db/models');
-
+/*
+ * All those users who have multiple accounts with same email
+ * among which one is verified
+ */
 async function runPrune() {
     try {
 

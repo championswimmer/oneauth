@@ -9,7 +9,6 @@ const models = require('../../../db/models').models
 const config = require('../../../../config')
 const secrets = config.SECRETS
 const passutils = require('../../../utils/password')
-const tracer = require('../../../utils/ddtracer').tracer
 const debug = require('debug')('oauth:strategy:facebook')
 
 
@@ -29,7 +28,6 @@ module.exports = new FacebookStrategy({
     let oldUser = req.user
     // DATADOG TRACE: START SPAN
     Raven.setContext({extra: {file: 'fbstrategy'}})
-    const span = tracer.startSpan('passport.strategy.facebook')
 
     try{
         if(oldUser) {
@@ -126,23 +124,13 @@ module.exports = new FacebookStrategy({
                         email: profileJson.email,
                         photo: "https://graph.facebook.com/" + profileJson.id + "/picture?type=large"
                     }
+                }, {
+                    include: [models.User],
                 })
                 if (!userFacebook) {
                     return cb(null, false, {message: 'Authentication Failed'})
                 }
             }
-
-            setImmediate(() => {
-                span.addTags({
-                    resource: req.path,
-                    type: 'web',
-                    'span.kind': 'server',
-                    userId: userFacebook && userFacebook.user && userFacebook.user.id,
-                    newUser: true,
-                    facebookId: profileJson.id
-                })
-                span.finish()
-            })
             return cb(null, userFacebook.user.get())
 
         }

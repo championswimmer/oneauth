@@ -23,12 +23,13 @@ having
     count("usergithubs"."id") < 1 and
     count("usertwitters"."id") < 1
         `)
-        // console.log(users)
+        console.log("Going to delete " + users.length + " users")
         for (user of users) {
             console.log("Deleting for " + user.email )
             await User.destroy({
                 where: {
                     email: user.email,
+                    verifiedemail: {$eq: null}
                 }
             })
         }

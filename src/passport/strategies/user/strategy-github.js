@@ -50,6 +50,28 @@ module.exports = new GithubStrategy({
         }else{
             const existCount = await models.User.count({where: {username: profileJson.login}})
 
+            const existingUsers = await models.User.findAll({
+                include: [{
+                    model: models.UserGithub,
+                    attributes: ['id'],
+                    required: false
+                }],
+                where: {
+                    email: profileJson.email,
+                    '$usergithub.id$': {$eq: null}
+                }
+            })
+            if (existingUsers && existingUsers.length > 0) {
+                let oldIds = existingUsers.map(eu => eu.id).join(',')
+                return cb(null, false, {
+                    message: `
+                    Your email id "${profileJson.email}" is already used in the following Coding Blocks Account(s): 
+                    [ ${oldIds} ]
+                    Please log into your old account and connect Github in it instead.
+                    Use 'Forgot Password' option if you do not remember password of old account`
+                })
+            }
+
             const [userGithub, created] = await models.UserGithub.findCreateFind({
                 include: [models.User],
                 where: {id: profileJson.id},

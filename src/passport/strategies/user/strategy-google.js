@@ -43,6 +43,29 @@ module.exports = new GoogleStrategy({
                 }
             } else {
                 const existCount = await models.User.count({where: {username: profileJson.username}})
+
+                const existingUsers = await models.User.findAll({
+                    include: [{
+                        model: models.UserGoogle,
+                        attributes: ['id'],
+                        required: false
+                    }],
+                    where: {
+                        email: profileJson.email,
+                        '$usergoogle.id$': {$eq: null}
+                    }
+                })
+                if (existingUsers && existingUsers.length > 0) {
+                    let oldIds = existingUsers.map(eu => eu.id).join(',')
+                    return cb(null, false, {
+                        message: `
+                    Your email id "${profileJson.email}" is already used in the following Coding Blocks Account(s): 
+                    [ ${oldIds} ]
+                    Please log into your old account and connect Google in it instead.
+                    Use 'Forgot Password' option if you do not remember password of old account`
+                    })
+                }
+
                 const [userGoogle, created] = await models.UserGoogle.findCreateFind({
                     include: [models.User],
                     where: {id: profileJson.id},

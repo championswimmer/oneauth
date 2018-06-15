@@ -7,6 +7,7 @@ const fs = require('fs');
 
 const config = require('../config');
 const secret = config.SECRETS;
+const debug = require('debug')('oauth:scripts:migrate')
 
 args
     .option('file', 'path to migration file')
@@ -28,7 +29,7 @@ if (flags.list) {
     fs.readdir(__dirname + '/../migrations', (err, items) => {
         if (err) throw err;
         for (item of items) {
-            console.log(item);
+            debug(item);
         }
     })
 }
@@ -40,11 +41,11 @@ if (flags.migrate) {
     }
     fs.readFile(flags.file, (err, data) => {
         let mig = data.toString();
-        console.log("Running Migration :")
-        console.log(mig)
+        debug("Running Migration :")
+        debug(mig)
         process.nextTick(() => {
             db.query(mig).spread((results, meta) => {
-                console.log(results);
+                debug(results);
             })
         })
     })

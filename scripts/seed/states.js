@@ -1,5 +1,6 @@
 const config = require('../../config');
 const secret = config.SECRETS;
+const debug = require('debug')('oauth:states.js')
 const {db, models: {
         Country,
         State
@@ -47,10 +48,10 @@ async function runSeed() {
             { countryId: 'IN', name: 'Uttarakhand', id: 'UK' },
             { countryId: 'IN', name: 'West Bengal', id: 'WB' }
         ])
-        console.log("Seed ran")
+        debug("Seed ran")
 
     } catch (err) {
-        console.log(err)
+        debug(err)
     } finally {
         process.exit()
     }

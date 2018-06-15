@@ -8,6 +8,7 @@ const {hasNull} = require('../../utils/nullCheck')
 const passutils = require('../../utils/password')
 const models = require('../../db/models').models
 const acl = require('../../middlewares/acl')
+const multer = require('../../utils/multer')
 
 router.get('/me',
     cel.ensureLoggedIn('/login'),
@@ -74,8 +75,25 @@ router.get('/me/edit',
 
 router.post('/me/edit',
     cel.ensureLoggedIn('/login'),
-    async function (req, res, next) {
 
+    function(req, res, next) {
+        var upload = multer.upload.single('userpic')
+        upload(req, res, function (err) {
+            if(err) {
+                if (err.message === 'File too large') {
+                    req.flash('error', 'Profile photo size exceeds 2 MB')
+                    return res.redirect('edit')
+                } else {
+                    Raven.captureException(err)
+                    req.flash('error', 'Error in Server')
+                    return res.redirect('/')
+                }
+            } else {
+                next()
+            }
+        })
+    },
+    async function (req, res, next) {
         //exit if password doesn't match
         if ((req.body.password) && (req.body.password !== req.body.repassword)) {
             req.flash('error', 'Passwords do not match')
@@ -93,22 +111,42 @@ router.post('/me/edit',
                 where: {id: req.user.id},
                 include: [models.Demographic]
             })
-            const demographic = user.demographic
-
+            const demographic = user.demographic || {};
+            
             user.firstname = req.body.firstname
             user.lastname = req.body.lastname
             if (!user.verifiedemail && req.body.email !== user.email) {
                 user.email = req.body.email
             }
+
+            let prevPhoto = ""
+            if (user.photo) {
+                prevPhoto = user.photo.split('/').pop()
+            }
+            if (req.file) {
+                user.photo = req.file.location
+            } else if(req.body.avatarselect) {
+                user.photo = `https://minio.cb.lk/img/avatar-${req.body.avatarselect}.svg`
+            }
+
             await user.save()
 
+            if ((req.file || req.body.avatarselect) && prevPhoto) {
+                multer.deleteMinio(prevPhoto)
+            }
+
+            demographic.userId = demographic.userId || req.user.id;
             if (req.body.branchId) {
                 demographic.branchId = +req.body.branchId
             }
             if (req.body.collegeId) {
                 demographic.collegeId = +req.body.collegeId
             }
-            await demographic.save()
+            await models.Demographic.upsert(demographic, {
+                where: {
+                    userId: req.user.id
+                }
+            })
 
             if (req.body.password) {
                 const passHash = await passutils.pass2hash(req.body.password)
@@ -188,6 +226,19 @@ router.post('/:id/edit',
             return res.redirect('../' + req.params.id)
         }).catch(function (err) {
             throw err
+        })
+    }
+)
+
+router.get('/me/clients',
+    cel.ensureLoggedIn('/login'),
+    function (req, res, next) {
+        models.Client.findAll({
+            where: {userId: req.user.id}
+        }).then(function (clients) {
+            return res.render('client/all', {clients: clients})
+        }).catch(function (err) {
+            res.send("No clients registered")
         })
     }
 )

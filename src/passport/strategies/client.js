@@ -9,6 +9,7 @@
 const BasicStrategy = require('passport-http').BasicStrategy
 const ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy
 const models = require('../../db/models').models
+const Raven = require('raven')
 
 
 /**
@@ -17,10 +18,12 @@ const models = require('../../db/models').models
  * @param clientSecret
  * @param done
  */
-const verifyClient = function (clientId, clientSecret, done) {
-    models.Client.findOne({
-        where: {id: clientId}
-    }).then(function (client) {
+const verifyClient = async function (clientId, clientSecret, done) {
+    try {
+        const client = await models.Client.findOne({
+            where: {id: clientId}
+        })
+
         if (!client) {
             return done(null, false)
         }
@@ -29,7 +32,11 @@ const verifyClient = function (clientId, clientSecret, done) {
         }
 
         return done(null, client)
-    }).catch((err) => console.log(err))
+
+    } catch (err) {
+        Raven.captureException(err)
+        done(err)
+    }
 }
 
 /**

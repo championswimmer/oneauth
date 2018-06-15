@@ -3,21 +3,19 @@
  */
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
+const acl = require('../../middlewares/acl')
 
 const models = require('../../db/models').models
 
-router.get('/',
-    cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Client.findAll({
-            where: {userId: req.user.id}
-        }).then(function (clients) {
-            return res.render('client/all', {clients: clients})
-        }).catch(function (err) {
-            res.send("No clients registered")
-        })
-    }
-)
+
+router.get('/',acl.ensureAdmin,function (req,res,next) {
+    models.Client.findAll({})
+        .then(function (clients) {
+            return res.render('client/all',{clients:clients})
+        }).catch(function(err){
+            res.send("No clients Registered")
+    })
+})
 
 router.get('/add',
     cel.ensureLoggedIn('/login'),

@@ -36,6 +36,7 @@ body {
   padding-bottom: 8px;
 }
 .custom-profile-image{
+  padding-bottom: 20px;
   width: 150px;
   height:auto;
 }
@@ -115,4 +116,24 @@ width:100%;
 
 .form-group label {
     font-weight: bold;
+}
+
+.profile-pad {
+    padding-bottom: 20px;
+}
+img.avatar {
+    margin: 10px;
+    width: 50px;
+    cursor: pointer;
+    border: 1px solid #dee6e4
+
+}
+img.avatar:hover {
+    margin: 10px;
+    width: 50px;
+    cursor: pointer;
+    border: 2px solid #e6c914
+}
+img.avatar.click-pic {
+    border: 2px solid #e66836
 }

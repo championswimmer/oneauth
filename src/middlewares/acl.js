@@ -1,5 +1,5 @@
 function ensureAdmin(req, res, next) {
-    if (req.user.role === 'admin') {
+    if ((req.user.role === 'admin')) {
         next()
     } else {
         res.status(403).send({error: 'Unauthorized'})
@@ -18,5 +18,5 @@ function ensureRole(role) {
 
 module.exports = {
     ensureAdmin,
-    ensureRole
+    ensureRole,
 }

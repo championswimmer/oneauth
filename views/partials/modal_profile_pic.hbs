@@ -1,0 +1,85 @@
+<script type="application/javascript">
+    $(function () {
+        var picInput = $("#userpic")
+        var avatarPics = $("img.avatar")
+        var editFrom = $("#edit-form")
+        var hiddenInput = $("#avatar-selector")
+        var btnClear = $("#btn-clear")
+        var userImg = $('#user-pic')
+        const origPic = userImg.attr('src')
+
+        picInput.change(function () {
+            if (picInput.val() === "") {
+              if (hiddenInput.val() === "") {
+                userImg.attr('src', origPic)
+              } else {
+                userImg.attr('src', `https://minio.cb.lk/img/avatar-${hiddenInput.val()}.svg`)
+              }
+            } else {
+                $(avatarPics).removeClass("click-pic")
+                hiddenInput.val("")
+                readURL(this)
+            }
+        }) 
+        avatarPics.click(function () {
+            picInput.val("")
+            $(avatarPics).removeClass("click-pic")
+            $(this).addClass("click-pic")
+            let idx = avatarPics.index(this)
+            ++idx
+            let loc = `https://minio.cb.lk/img/avatar-${idx}.svg`
+            hiddenInput.val(idx)
+            picInput.change()
+        })
+
+        btnClear.click(function () {
+            $(avatarPics).removeClass("click-pic")
+            picInput.val("")
+            hiddenInput.val("")
+            picInput.change()
+        })
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#user-pic').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    })
+</script>
+<!-- Trigger the modal with a button -->
+<button type="button" style="margin-bottom: 10px; transform: scale(0.8)" class="btn btn-info" data-toggle="modal" data-target="#myModal">Change Profile Pic</button>
+<!-- Modal -->
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Change Profile Pic</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                {{#for 1 36 1}}
+
+                    <img class="avatar" src="https://minio.cb.lk/img/avatar-{{this}}.svg">
+
+                {{/for}}
+                <div class="form-group row justify-content-center" id="profile-row-id">
+
+                    <input class="col-sm-8 form-control"  type="file" id="userpic" accept="image/jpeg, image/png" name="userpic">
+                    <input id="avatar-selector" type="hidden" name="avatarselect" value="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-clear" type="button" class="btn btn-default">Clear</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -46,6 +46,10 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'),
         let clientName = req.body.clientname
         let clientDomains = req.body.domain.replace(/ /g, '').split(';')
         let clientCallbacks = req.body.callback.replace(/ /g, '').split(';')
+        let trustedClient = false
+        if(req.user.role === 'admin'){
+            trustedClient = req.body.trustedClient
+        }
 
         //Make sure all urls have http in them
         clientDomains.forEach(function (url, i, arr) {
@@ -58,7 +62,8 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'),
         models.Client.update({
             name: clientName,
             domain: clientDomains,
-            callbackURL: clientCallbacks
+            callbackURL: clientCallbacks,
+            trusted:trustedClient
         }, {
             where: {id: clientId}
         }).then(function (client) {

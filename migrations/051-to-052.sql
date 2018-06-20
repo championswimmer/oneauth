@@ -1,0 +1,1 @@
+alter table clients add column defaultURL varchar(255) NOT NULL default 'https://codingblocks.com/';

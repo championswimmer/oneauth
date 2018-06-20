@@ -8,7 +8,7 @@
             <div class="row m-2">Connected On: {{formatDate app.createdAt}}</div>
             <div class="row">
                 <div class="col align-self-center align-items-center">
-                    <a href="{{app.client.domain}}"><div class="btn btn-sm btn-info">View App</div></a>
+                    <a href="{{app.client.defaultURL}}"><div class="btn btn-sm btn-info">View App</div></a>
                     <a href="/apps/{{app.client.id}}/delete"><div class="btn btn-sm btn-info">Remove App</div></a>
                 </div>
             </div>

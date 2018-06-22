@@ -8,6 +8,7 @@
            name="domain"><br>
     <input class="form-control" type="text" placeholder="callbackurl (; separated)" value="{{client.clientCallbacks}}"
            name="callback"><br>
+    <input class="form-control" type="text" placeholder="Default URL" name="defaulturl" value="{{client.clientdefaultURL}}" ><br>
     {{#ifeq val=userRole expected="admin"}}
         <div class="row">
             <div class="col-4">

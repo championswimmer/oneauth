@@ -57,6 +57,7 @@ router.get('/:id/edit',
             }
             client.clientDomains = client.domain.join(";")
             client.clientCallbacks = client.callbackURL.join(";")
+            client.clientdefaultURL = client.defaultURL;
 
             return res.render('client/edit', {client: client})
         })

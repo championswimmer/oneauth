@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/jquery-3.1.1.min.js"></script>
     <script src="/js/tether.min.js"></script>
+    <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/152fef14b6.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
@@ -26,24 +28,23 @@
         gtag('config', 'UA-83327907-7')
     </script>
 
-
     <link rel="stylesheet" href="/css/bootstrap-social.css">
     <link rel="stylesheet" href="/css/motley.css">
 </head>
 <body>
 
-<nav class="navbar navbar-dark navbar-expand-md bg-dark justify-content-between fixed-top text-white p-2">
-    <a class="navbar-brand thin-font" href="/">
-        <img src="/img/CB_Logo_White.png" height="50" class="d-inline-block align-top" alt="">
-    </a>
-    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mr-auto">
-            {{#if loggedIn}}
+<header>
+    <nav>
+        <span class="hamburger-parent">
+          <i class="hamburger fas fa-bars"></i>
+        </span>
+        <span class="logo-parent">
+             <a class="logo-link" href="/">
+                <img src="/images/online-logo.png" alt="online-logo" class="nav-logo pointer">
+            </a>
+        </span>
+        {{#if loggedIn}}
+            <ul class="nav-list">
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
@@ -63,29 +64,39 @@
                         </a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/apps/">My Apps</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/me">My Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/address">My Addresses</a>
-                </li>
 
-            {{/if}}
-        </ul>
-        {{#if loggedIn}}
-            <a href="/logout">
-                <span class="mr-3 navbar-text">
-                Logout
-                </span>
-            </a>
+                <a href="/apps">
+                    <li class="nav-items pointer">
+                        My Apps
+                    </li>
+                </a>
 
+                <a href="/users/me">
+                    <li class="nav-items pointer">
+                        My Profile
+                    </li>
+                </a>
 
+                <a href="/address">
+                    <li class="nav-items pointer">
+                        My Addresses
+                    </li>
+                </a>
+
+                <a href="/logout">
+                    <li class="nav-items pointer">
+                        <div class="button-solid">
+                            <button>Logout</button>
+                        </div>
+                    </li>
+                </a>
+
+            </ul>
         {{/if}}
-    </div>
-</nav>
+
+    </nav>
+</header>
+
 {{{body}}}
 </body>
 </html>

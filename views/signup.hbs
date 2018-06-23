@@ -1,31 +1,47 @@
 {{!< centercolumn}}
-<div class="signup-head">
-  <h2 class="text-center thin-font custom-h2">SIGN UP</h2>
-</div>
-<form class="form-group  mt-5 pl-4 pr-4" method="post" action="/signup">
-    {{#if messages.error}}
-        <div class="alert alert-danger" role="alert">
-            {{messages.error}}
-        </div>
-    {{/if}}
-    <input class="form-control fontAwesome inputvalidation" name="username" placeholder="&#xf007; Username" type="text" required> <br>
-    <input class="form-control fontAwesome inputvalidation" name="firstname" placeholder="&#xf061; Firstname" type="text" required> <br>
-    <input class="form-control fontAwesome inputvalidation" name="lastname" placeholder="&#xf061; Lastname" type="text" required> <br>
-    <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email" type="email" required> <br>
-    <input class="form-control fontAwesome inputvalidation" name="password" placeholder="&#xf023; Password" type="password" minlength="5" required> <br>
-    <label>College Name:</label>
-    <select name="collegeId" class="m-2a form-control">
-        {{#each colleges}}
-            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
-        {{/each}}
-    </select>
-    <label>Branch Name:</label>
-    <select name="branchId" class="m-2a form-control">
-        {{#each branches}}
-            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
-        {{/each}}
-    </select>
-    <div class="row">
-        <input class="btn btn-primary mx-auto" type="submit" value="Signup">
+
+{{#if messages.error}}
+    <div class="alert alert-danger" role="alert">
+        {{messages.error}}
     </div>
-</form>
+{{/if}}
+
+<div class="login-signup">
+    <div class="card o-signup">
+        <div class="heading-u-red">
+            SIGNUP
+        </div>
+
+        <form method="post" action="/signup">
+            <input type="text" class="input-text icon" name="username" placeholder="Username" required>
+
+            <div class="row no-gutters">
+                <div class="col-sm-12 col-md-6 first-name">
+                    <input type="text" class="input-text icon" name="firstname" placeholder="First Name" required>
+                </div>
+                <div class="col-sm-12 col-md-6 last-name">
+                    <input type="text" class="input-text icon" name="lastname" placeholder="Last Name" required>
+                </div>
+            </div>
+
+            <input type="email" class="input-text icon" name="email" placeholder="Email Address" required>
+
+            <input type="password" class="input-text icon" name="password" placeholder="Password" required>
+
+            <div class="row footer">
+                <div class="button-solid">
+                    <button type="submit"> SIGNUP NOW</button>
+                </div>
+
+                <div class="signup d-flex flex-column justify-content-center">
+                    Already have an account?
+                    <a href="/login">
+                        <button type="button" class="red">LOGIN NOW</button>
+                    </a>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

@@ -1,58 +1,100 @@
 {{!< centercolumn}}
-<div class="login-head">
-  <h3 class="text-center thin-font custom-h2">LOGIN</h3>
-</div>
 {{#if error}}
     <div class="alert alert-danger">{{error}}</div>
 {{/if}}
 {{#if messages.info}}
 <div class="alert alert-info">{{messages.info}}</div>
 {{/if}}
-<form class="form-group mt-5 pl-4 pr-4" method="post" action="/login">
-    <input class="form-control fontAwesome inputvalidation" placeholder="&#xf007; Username " name="username" type="text" required>
-    <br>
-    <input class="form-control fontAwesome inputvalidation" placeholder="&#xf023; Password" name="password" type="password" required>
-    <br>
-    <div class="row">
-        <input class="btn btn-success mx-auto" type="submit" value="Login"><br>
-    </div>
-    <div class="text-center h4 thin-font"> or</div>
 
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-12 col-sm-6">
-            <a class="btn custom-social-btn btn-block btn-facebook" href="/login/facebook">
-              <i class="fa fa-facebook"></i> Login
-              <span class="hidden-xs-down">with Facebook</span>
-            </a>
 
-            <a class="btn custom-social-btn btn-block btn-twitter" href="/login/twitter">
-                 <i class="fa fa-twitter"></i> Login
-                 <span class="hidden-xs-down">with Twitter</span>
-            </a>
-            <a class="btn custom-social-btn btn-block btn-github" href="/login/github">
-                <i class="fa fa-github"></i> Login
-                <span class="hidden-xs-down">with Github</span>
-            </a>
-            <a class="btn custom-social-btn btn-block btn-google" href="/login/google">
-                <i class="fa fa-google"></i> Login
-                <span class="hidden-xs-down">with Google</span>
-            </a>
+<div class="login-signup">
+    <div class="card o-login">
+        <div class="heading-u-red">
+            LOGIN NOW TO GET STARTED
         </div>
-        <div class="col"></div>
+
+        <form method="post" action="/login">
+            <div class="input-btn">
+                <input type="text" class="input-text icon" placeholder="Enter Username" name="username">
+                <a href="/forgot/username">
+                    <button type="button" class="grey">Forgot?</button>
+                </a>
+            </div>
+
+            <div class="input-btn">
+                <input type="text" class="input-text icon" placeholder="Enter Password" name="password">
+                <a href="/forgot/password">
+                    <button type="button" class="grey">Forgot?</button>
+                </a>
+            </div>
+
+            <input type="checkbox" id="remember" class="input-checkbox">
+            <label for="remember"> Remember me</label>
+
+            <div class="row">
+                <div class="button-solid">
+                    <button type="submit"> LOGIN NOW</button>
+                </div>
+
+                <div class="signup d-flex flex-column justify-content-center">
+                    New to Coding Blocks?
+                    <a href="/signup">
+                        <button type="button" class="red">SIGN UP NOW</button>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="divider row align-items-center">
+                OR <span class="bg-black"></span>
+            </div>
+
+            <p class="link-heading">You may also try login with:</p>
+
+            <div class="links flex-row">
+                <div class="auth-link">
+                    <a href="/login/facebook">
+                        <button type="button" class="button-circle facebook">
+                            <i class="fab fa-facebook-f fa-2x"></i>
+                        </button>
+                    </a>
+
+                    <div class="link-text">FACEBOOK</div>
+                </div>
+                <div class="auth-link">
+                    <a href="/login/google">
+                        <button type="button" class="button-circle google">
+                            <i class="fab fa-google-plus-g fa-2x"></i>
+                        </button>
+                    </a>
+
+                    <div class="link-text">GOOGLE</div>
+                </div>
+                <div class="auth-link">
+                    <a href="/login/twitter">
+                        <button type="button" class="button-circle twitter">
+                            <i class="fab fa-twitter fa-2x"></i>
+                        </button>
+                    </a>
+
+                    <div class="link-text">TWITTER</div>
+                </div>
+                <div class="auth-link">
+                    <a href="/login/github">
+                        <button type="button" class="button-circle github">
+                            <i class="fab fa-github fa-2x"></i>
+                        </button>
+                    </a>
+                    <div class="link-text">GITHUB</div>
+                </div>
+            </div>
+
+
+        </form>
+
+
     </div>
-
-
-</form>
-<br>
-<div class="text-center thin-font">
-    New User? </i><a class="font-weight-normal" href="/signup"> Signup </a>
 </div>
-<div class="text-center thin-font">
-  <a class="font-weight-normal" href="/forgot/password"> Forgot password </a>
- </div>
-<div class="text-center thin-font"> 
-  <a class="font-weight-normal" href="/forgot/username"> Forgot username </a>
-</div>
+
 
 

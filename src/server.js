@@ -74,6 +74,7 @@ app.set("view engine", "hbs")
 
 app.use(expressLogger)
 app.use(express.static(path.join(__dirname, '../public_static')))
+app.use(express.static(path.join(__dirname, '../submodules/motley/examples/public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({

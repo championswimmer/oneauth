@@ -1,0 +1,35 @@
+<div class="nav-info col-md-3">
+    <div class="profile-pic">
+      <div class="d-flex justify-content-center profile-container">
+        {{#if user.photo}}
+            <img class="round-img" src="{{user.photo}}">
+        {{else}}
+            <img class="round-img" src="https://minio.cb.lk/img/avatar-10.svg">
+        {{/if}}
+      </div>
+      <div class="card">
+        <p>Hi, Darsh</p>
+      </div>
+    </div>
+    <div>
+      <div class="flex-row">
+        <a href="/users/me"><span class="pointer red">MY PROFILE</span></a>
+      </div>
+      <div class="separator"></div>
+      <div class="flex-row">
+        <a href="/address"><span class="pointer">MY ADDRESSES</span></a>
+      </div>
+      <div class="separator"></div>
+      <div class="flex-row">
+        <a href="/apps"><span class="pointer">MY APPS</span></a>
+      </div>
+      <div class="separator"></div>
+      <div class="flex-row">
+        <a href="/users/me/clients"><span class="pointer">MY CLIENTS</span></a>
+      </div>
+      <div class="separator"></div>
+      <div class="flex-row faded">
+        <a href="/logout"><span class="pointer">LOGOUT</span></a>
+      </div>
+    </div>
+  </div>

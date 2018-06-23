@@ -1,169 +1,222 @@
 {{!< centercolumn}}
 
-<h2 class="text-center thin-font custom-h2">
-    My Profile &nbsp;&nbsp;
-    <a href="/users/me/edit"><i class="fa fa-edit"></i></a>
-</h2>
-<div id="profile-row-photo" class="mt-3 pl-5 pr-5">
-    <div class="text-center">
-        {{#if user.photo}}
-            <img class="img-thumbnail custom-profile-image" src="{{user.photo}}">
-        {{else}}
-            <img class="img-thumbnail custom-profile-image" src="https://minio.cb.lk/img/avatar-10.svg">
-        {{/if}}
-    </div>
-</div>
-
-<div class="container mt-3">
-    <div class="profile-parent-row">
-        <div id="profile-row-id" class="row">
-            <p class="font-weight-bold custom-profile-padding col-6"> CodingBlocks Account: </p>
-            <p class="custom-profile-padding col-6"> {{user.id}} </p>
-        </div>
-        <div id="profile-row-username" class="row">
-            <p class="font-weight-bold custom-profile-padding col-6"> Username: </p>
-            <p class="custom-profile-padding col-6"> {{user.username}} </p>
-        </div>
-        <div id="profile-row-firstname" class="row">
-            <p class="font-weight-bold custom-profile-padding col-6"> Firstname: </p>
-            <p class="custom-profile-padding col-6"> {{user.firstname}} </p>
-        </div>
-        <div id="profile-row-lastname" class="row">
-            <p class="font-weight-bold custom-profile-padding col-6"> Lastname: </p>
-            <p class="custom-profile-padding col-6"> {{user.lastname}} </p>
-        </div>
-        {{#unless user.verifiedemail}}
-            <div id="profile-row-email" class="row">
-                <p class="font-weight-bold custom-profile-padding col-6"> Email: </p>
-                <p class="custom-profile-padding col-6"><a href="mailto:{{user.email}}">{{user.email}}</a></p>
+<div class="col-md-8 o-profile">
+    <div class="card">
+        <div class="details">
+            <div class="flex-row">
+                <div class="heading-u-red">My Profile</div>
+                <div class="button-solid">
+                    <a class="white" href="/users/me/edit">
+                        <button>EDIT PROFILE</button>
+                    </a>
+                </div>
             </div>
-        {{/unless}}
-        <div id="profile-row-email" class="row">
-            <p class="font-weight-bold custom-profile-padding col-6"> VerifiedEmail: </p>
-            <p class="custom-profile-padding col-6">
-                {{#if user.verifiedemail}}
-                    <a href="mailto:{{user.email}}">{{user.verifiedemail}}</a>
-                {{else}}
-                    <a href="#">Not Verified</a>
+            <div class="attributes">
+                <div id="profile-row-id" class="flex-row">
+                    <div>UserID</div>
+                    <div>
+                        <span class="faded">{{user.id}}</span>
+                    </div>
+                </div>
+                <div id="profile-row-username" class="flex-row">
+                    <div>Username</div>
+                    <div>
+                        <span class="faded">{{user.username}}</span>
+                    </div>
+                </div>
+                <div id="profile-row-firstname" class="flex-row">
+                    <div>Firstname</div>
+                    <div>
+                        <span class="faded">{{user.firstname}}</span>
+                    </div>
+                </div>
+                <div id="profile-row-lastname" class="flex-row">
+                    <div>Lastname</div>
+                    <div>
+                        <span class="faded">{{user.lastname}}</span>
+                    </div>
+                </div>
+                {{#unless user.verifiedemail}}
+                    <div id="profile-row-email" class="flex-row">
+                        <div>Email Address</div>
+                        <div>
+                            <span class="faded">
+                                <a class="grey" href="mailto:{{user.email}}">{{user.email}}</a>
+                            </span>
+                        </div>
+                    </div>
+                {{/unless}}
+                <div id="profile-row-email" class="flex-row">
+                    <div>Verified Email</div>
+                    <div>
+                        <span class="faded">
+                            {{#if user.verifiedemail}}
+                                <a href="mailto:{{user.email}}">{{user.verifiedemail}}</a>
+                            {{else}}
+                                <a href="#">Not Verified</a>
+                            {{/if}}
+                        </span>
+                    </div>
+                </div>
+                <div id="profile-row-collegename" class="flex-row">
+                    <div>College</div>
+                    <div>
+                        <span class="faded">{{user.demographic.college.name}}</span>
+                    </div>
+                </div>
+                <div id="profile-row-branchname" class="flex-row">
+                    <div>Branch</div>
+                    <div>
+                        <span class="faded">{{user.demographic.branch.name}}</span>
+                    </div>
+                </div>
+                {{#if user.role}}
+                    <div id="profile-row-role" class="flex-row">
+                        <div>Role@CB</div>
+                        <div>
+                            <span class="faded">{{user.role}}</span>
+                        </div>
+                    </div>
                 {{/if}}
-            </p>
-        </div>
-        <div id="profile-row-collegename" class="row">
-            <p class="font-weight-bold custom-profile-padding col-6"> College Name: </p>
-            <p class="custom-profile-padding col-6"> {{user.demographic.college.name}} </p>
-        </div>
-        <div id="profile-row-branchname" class="row">
-            <p class="font-weight-bold custom-profile-padding col-6"> Branch Name: </p>
-            <p class="custom-profile-padding col-6"> {{user.demographic.branch.name}} </p>
-        </div>
-        {{#if user.role}}
-            <div id="profile-row-role" class="row">
-                <p class="font-weight-bold custom-profile-padding col-6"> Role@CB: </p>
-                <p class="custom-profile-padding col-6"> {{user.role}} </p>
+                {{#if user.userfacebook}}
+                    <div id="profile-row-fb" class="flex-row">
+                        <div>Facebook Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
+                                    {{user.firstname}} {{user.lastname}}
+                                </a>
+                                <a class="grey" href="/disconnect/facebook" title="Disconnect Facebook">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if user.usergoogle}}
+                    <div id="profile-row-google" class="flex-row">
+                        <div>Google Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="http://google.com/{{user.usergoogle.id}}">
+                                    {{user.firstname}} {{user.lastname}}
+                                </a>
+                                <a class="grey" href="/disconnect/google" title="Disconnect Google">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if user.usertwitter}}
+                    <div id="profile-row-twitter" class="flex-row">
+                        <div>Twitter Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
+                                    {{user.usertwitter.username}}
+                                </a>
+                                <a class="grey" href="/disconnect/twitter" title="Disconnect Twitter">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if user.usergithub}}    
+                    <div id="profile-row-github" class="flex-row">
+                        <div>Github Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="http://github.com/{{user.usergithub.username}}">
+                                    {{user.usergithub.username}}
+                                </a>
+                                <a class="grey" href="/disconnect/github" title="Disconnect Github">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#ifCond user.userfacebook user.usergithub user.usergoogle user.usertwitter}}   
+                    <div class="flex-row">
+                        You may also connect to:
+                    </div>
+                {{/ifCond}}
             </div>
-        {{/if}}
-
-        {{#if user.userfacebook}}
-            <div id="profile-row-fb" class="row">
-                <p class="font-weight-bold custom-profile-padding col-6"> Facebook </p>
-                <p class="custom-profile-padding col-6"><span class="hidden-md-down">Connected to</span>
-                    <a target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
-                        {{user.firstname}} {{user.lastname}}
-                    </a>
-                    <a href="/disconnect/facebook" title="Disconnect Facebook"><i class="fa fa-times"
-                                                                                  aria-hidden="true"></i></a>
-                </p>
-            </div>
-        {{/if}}
-        {{#if user.usertwitter}}
-            <div id="profile-row-twitter" class="row">
-                <p class="font-weight-bold custom-profile-padding col-6"> Twitter </p>
-                <p class="custom-profile-padding col-6"><span class="hidden-md-down">Connected to</span>
-                    <a target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
-                        {{user.usertwitter.username}}
-                    </a>
-                    <a href="/disconnect/twitter" title="Disconnect Twitter"><i class="fa fa-times"
-                                                                                aria-hidden="true"></i></a>
-                </p>
-            </div>
-        {{/if}}
-        {{#if user.usergithub}}
-            <div id="profile-row-github" class="row">
-                <p class="font-weight-bold custom-profile-padding col-6"> Github </p>
-                <p class="custom-profile-padding col-6"><span class="hidden-md-down">Connected to</span>
-                    <a target="_blank" href="http://github.com/{{user.usergithub.username}}">
-                        {{user.usergithub.username}}
-                    </a>
-                    <a href="/disconnect/github" title="Disconnect Github"><i class="fa fa-times"
-                                                                              aria-hidden="true"></i></a>
-                </p>
-            </div>
-        {{/if}}
-        {{#if user.usergoogle}}
-            <div id="profile-row-google" class="row">
-                <p class="font-weight-bold custom-profile-padding col-6"> Google </p>
-                <p class="custom-profile-padding col-6"><span class="hidden-md-down">Connected to</span>
-                    <a target="_blank" href="http://plus.google.com/{{user.usergoogle.id}}">
-                        {{user.usergoogle.username}}
-                    </a>
-                    <a href="/disconnect/google" title="Disconnect Google"><i class="fa fa-times"
-                                                                              aria-hidden="true"></i></a>
-                </p>
-            </div>
-        {{/if}}
-        {{#if messages.error}}
-            <span class="alert alert-danger">{{messages.error}}</span>
-        {{/if}}
-        {{#if messages.info}}
-            <span class="alert alert-info">{{messages.info}}</span>
-        {{/if}}
-    </div>
-</div>
-
-<div class="row">
-    <div class="social-btn-wrapper col-md-12">
-        {{#unless user.userfacebook}}
-            <a class="btn text-white custom-social-btn btn-facebook mt-2 mr-1" href="/connect/facebook">
-                <span class="fa fa-facebook"></span> Connect Facebook
-            </a>
-        {{/unless}}
-
-        {{#unless user.usertwitter}}
-            <a class="btn text-white custom-social-btn btn-twitter mt-2" href="/connect/twitter">
-                <span class="fa fa-twitter"></span> Connect Twitter
-            </a>
-        {{/unless}}
-
-        {{#unless user.usergithub}}
-            <a class="btn text-white custom-social-btn btn-github ml-1 mt-2" href="/connect/github">
-                <span class="fa fa-github"></span> Connect Github
-            </a>
-        {{/unless}}
-        {{#unless user.usergoogle}}
-            <a class="btn text-white custom-social-btn btn-google ml-1 mt-2" href="/connect/google">
-                <span class="fa fa-google"></span> Connect Google
-            </a>
-        {{/unless}}
-    </div>
-</div>
-{{#unless user.verifiedemail}}
-    <div class="row verifyemail-row">
-        <form class="form-group mt-2 pl-4 pr-4 verifyemail-form" method="post" action="/verifyemail">
-            {{#if user.email}}
-                <p>This is your registered email please verify.</p>
-                <div class="row verifyemail-input-row">
-                    <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email"
-                           value="{{user.email}}" type="email" readonly required>
-                    <input class="btn btn-primary" type="submit" value="Verify">
+            <div>
+                <div class="links row">
+                    {{#unless user.userfacebook}}
+                        <div class="auth-link">
+                            <a href="/connect/facebook">
+                                <button class="button-circle facebook">
+                                    <i class="fab fa-facebook-f fa-2x"></i>
+                                </button>
+                                <div class="link-text">FACEBOOK</div>
+                            </a>
+                        </div>
+                    {{/unless}}
+                    {{#unless user.usergoogle}}
+                        <div class="auth-link">
+                            <a href="/connect/google">
+                                <button class="button-circle google">
+                                    <i class="fab fa-google-plus-g fa-2x"></i>
+                                </button>
+                                <div class="link-text">GOOGLE</div>
+                            </a>
+                        </div>
+                    {{/unless}}
+                    {{#unless user.usertwitter}}
+                        <div class="auth-link">
+                            <a href="/connect/twitter">
+                                <button class="button-circle twitter">
+                                    <i class="fab fa-twitter fa-2x"></i>
+                                </button>
+                                <div class="link-text">TWITTER</div>
+                            </a>
+                        </div>
+                    {{/unless}}
+                    {{#unless user.usergithub}}
+                        <div class="auth-link">
+                            <a href="/connect/github">
+                                <button class="button-circle github">
+                                    <i class="fab fa-github fa-2x"></i>
+                                </button>
+                                <div class="link-text">GITHUB</div>
+                            </a>
+                        </div>
+                    {{/unless}}
                 </div>
-            {{else}}
-                <p>Please enter your registered email id which you have used to buy courses.</p>
-                <div class="row verifyemail-input-row">
-                    <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email"
-                           type="email" required>
-                    <input class="btn btn-primary" type="submit" value="Verify">
+            </div>
+            {{#unless user.verifiedemail}}
+                <div class="row">
+                    <form method="post" action="/verifyemail">
+                    {{#if user.email}}
+                        <div>This is your registered email please verify.</div>
+                        <div class="flex-row">
+                            <input class="input-text inputvalidation" name="email" placeholder="&#xf0e0; Email" value="{{user.email}}" type="email" disabled required/>
+                            <div class="button-solid">
+                                <button type="submit">Verify</button>
+                            </div>
+                        </div>
+                    {{else}}
+                        <div>Please enter your registered email id which you have used to buy courses.</div>
+                        <div class="flex-row">
+                            <input class="input-text" name="email" placeholder="&#xf0e0; Email" type="email" required/>
+                            <div class="button-solid">
+                                <button type="submit">Verify</button>
+                            </div>
+                        </div>
+                    {{/if}}
+                    </form>
                 </div>
+            {{/unless}}
+            {{#if messages.error}}
+                <span class="alert alert-danger">{{messages.error}}</span>
             {{/if}}
-        </form>
+            {{#if messages.info}}
+                <span class="alert alert-info">{{messages.info}}</span>
+            {{/if}}
+        </div>
     </div>
-{{/unless}}
+</div>

@@ -3,7 +3,11 @@ const secret = config.SECRETS;
 const {db, models: {
     User
 }} = require('../../src/db/models');
-
+/*
+ * People with multiple accounts with same email
+ * One of them being verified
+ * But no Github connected
+ */
 async function runPrune() {
     try {
 
@@ -16,19 +20,21 @@ from "users"
     left outer join "userfacebooks" on "userfacebooks"."userId" = "users"."id"
     left outer join "usergithubs" on "usergithubs"."userId" = "users"."id"
     left outer join "usertwitters" on "usertwitters"."userId" = "users"."id"
+where "deletedAt" is null
 group by "email"
 having 
     count("email") > 1 and
-    count("verifiedemail") = 0 and
-    (count("userfacebooks"."id") > 0 or count("usertwitters"."id") > 0) and 
-    count("usergithubs") < 1
+    count("usergithubs"."id") < 1 and
+    count("verifiedemail") > 0
         `)
-        // console.log(users)
+        console.log("Going to delete " + users.length + " users")
+        /* Delete all without verified emails */
         for (user of users) {
             console.log("Deleting for " + user.email )
             await User.destroy({
                 where: {
                     email: user.email,
+                    verifiedemail: {$eq: null}
                 }
             })
         }

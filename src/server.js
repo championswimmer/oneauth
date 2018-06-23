@@ -16,6 +16,7 @@ const express = require('express')
 
 const config = require('../config')
     , secrets = config.SECRETS
+    , {sessionStore} = require('./middlewares/sessionstore')
     , loginrouter = require('./routers/login')
     , connectrouter = require('./routers/connect')
     , disconnectrouter = require('./routers/disconnect')
@@ -31,6 +32,7 @@ const config = require('../config')
       handlebarsHelpers = require('./utils/handlebars');
 
 const app = express()
+
 
 // ============== START DATADOG
 app.use(expresstracer)
@@ -75,9 +77,10 @@ app.use(express.static(path.join(__dirname, '../public_static')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
+    store: sessionStore,
     secret: secrets.EXPRESS_SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     name: 'oneauth',
     cookie: {
         domain: config.COOKIE_DOMAIN

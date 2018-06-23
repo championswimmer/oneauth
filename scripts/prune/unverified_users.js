@@ -3,7 +3,10 @@ const secret = config.SECRETS;
 const {db, models: {
     User
 }} = require('../../src/db/models');
-
+/*
+ * All those users who have multiple accounts with same email
+ * among which one is verified
+ */
 async function runPrune() {
     try {
 
@@ -21,6 +24,7 @@ HAVING
         count("verifiedemail") = 1
 ORDER BY "count" DESC, "public"."users"."email" ASC
         `)
+        console.log("Going to delete " + users.length + " users")
         for (user of users) {
             console.log("Deleting for " + user.email )
             await User.destroy({
@@ -29,10 +33,6 @@ ORDER BY "count" DESC, "public"."users"."email" ASC
                     verifiedemail: { $eq: null}
                 }
             })
-//             await db.query(`
-// DELETE FROM "users"
-// WHERE "email" = '${user.email}' AND "verifiedemail" IS NULL
-//             `)
         }
 
 

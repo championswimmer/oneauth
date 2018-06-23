@@ -24,13 +24,19 @@ module.exports = new GithubStrategy({
     let profileJson = profile._json
     let oldUser = req.user
     Raven.setContext({extra: {file: 'githubstrategy'}})
-    try{
-        if(oldUser){
+    try {
+        if (oldUser) {
             debug('User exists, is connecting Github account')
-            const ghaccount =  await models.UserGithub.findOne({where: {id: profileJson.id}})
+            /*
+            This means an already logged in users is trying to
+            connect Github to his account. Let us see if there
+            are any connections to his Github already
+            */
+
+            const ghaccount = await models.UserGithub.findOne({where: {id: profileJson.id}})
             if (ghaccount) {
                 throw new Error('Your Github account is already linked with codingblocks account Id: ' + ghaccount.dataValues.userId)
-            }else{
+            } else {
                 const updated = await models.UserGithub.upsert({
                     id: profileJson.id,
                     token: token,
@@ -41,19 +47,59 @@ module.exports = new GithubStrategy({
 
                 const user = await models.User.findById(oldUser.id)
 
-                if(user){
+                if (user) {
                     return cb(null, user.get())
-                }else{
+                } else {
                     return cb(null, false, {message: "Could not retrieve existing Github linked account"})
                 }
             }
-        }else{
-            const existCount = await models.User.count({where: {username: profileJson.login}})
-
-            const [userGithub, created] = await models.UserGithub.findCreateFind({
+        } else {
+            /*
+            This means either -
+                a. This is a new signup via Github
+                b. Someone is trying to login via Github
+             */
+            let userGithub = await models.UserGithub.findOne({
                 include: [models.User],
-                where: {id: profileJson.id},
-                defaults: {
+                where: {id: profileJson.id}
+            })
+            /*
+            If userGithub exists then
+            Case (a): login
+             */
+            if (!userGithub) {
+                /*
+                Case (b): New Signup
+                First ensure there aren't already users with the same email
+                id that comes from Github
+                 */
+                const existingUsers = await models.User.findAll({
+                    include: [{
+                        model: models.UserGithub,
+                        attributes: ['id'],
+                        required: false
+                    }],
+                    where: {
+                        email: profileJson.email,
+                        '$usergithub.id$': {$eq: null}
+                    }
+                })
+                if (existingUsers && existingUsers.length > 0) {
+                    let oldIds = existingUsers.map(eu => eu.id).join(',')
+                    return cb(null, false, {
+                        message: `
+                    Your email id "${profileJson.email}" is already used in the following Coding Blocks Account(s): 
+                    [ ${oldIds} ]
+                    Please log into your old account and connect Github in it instead.
+                    Use 'Forgot Password' option if you do not remember password of old account`
+                    })
+                }
+
+
+                /* Check if users with same username exist. Modify username accordingly */
+                const existCount = await models.User.count({where: {username: profileJson.login}})
+
+                userGithub = await models.UserGithub.create({
                     id: profileJson.id,
                     token: token,
                     tokenSecret: tokenSecret,
@@ -65,15 +111,18 @@ module.exports = new GithubStrategy({
                         email: profileJson.email,
                         photo: profileJson.avatar_url
                     }
+                }, {
+                    include: [models.User],
+                })
+                if (!userGithub) {
+                    return cb(null, false, {message: 'Authentication Failed'})
                 }
-            })
 
-            if (!userGithub) {
-                return cb(null, false, {message: 'Authentication Failed'})
             }
+
             return cb(null, userGithub.user.get())
         }
-    }catch (err) {
+    } catch (err) {
         Raven.captureException(err)
         cb(null, false, {message: err.message})
     }

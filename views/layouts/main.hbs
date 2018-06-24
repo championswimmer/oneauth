@@ -6,8 +6,6 @@
     <title>{{title}}</title>
     <script src="/js/jquery-3.1.1.min.js"></script>
     <script src="/js/tether.min.js"></script>
-    <script src="/js/popper.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/152fef14b6.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
@@ -44,41 +42,22 @@
         </span>
         {{#if loggedIn}}
             <ul class="nav-list">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        Clients
-                    </a>
-                    <div class="dropdown-menu bg-dark text-white">
-                        {{#ifeq val=userRole expected="admin"}}
-                            <a class="dropdown-item bg-dark text-white" href="/clients">
-                                All Clients
-                            </a>
-                        {{/ifeq}}
-                        <a class="dropdown-item bg-dark text-white" href="/users/me/clients">
-                            My Clients
-                        </a>
-                        <a class="dropdown-item bg-dark text-white" href="/clients/add">
-                            Add New Clients
-                        </a>
-                    </div>
-                </li>
 
-                <a href="/apps">
+                <a href="https://codingblocks.com/">
                     <li class="nav-items pointer">
-                        My Apps
+                        CLASSROOM COURSES
                     </li>
                 </a>
 
-                <a href="/users/me">
+                <a href="https://online.codingblocks.com/">
                     <li class="nav-items pointer">
-                        My Profile
+                        ONLINE COURSES
                     </li>
                 </a>
 
-                <a href="/address">
+                <a href="https://hack.codingblocks.com/">
                     <li class="nav-items pointer">
-                        My Addresses
+                        HACKER BLOCKS
                     </li>
                 </a>
 

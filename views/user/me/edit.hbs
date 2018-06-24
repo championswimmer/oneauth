@@ -1,88 +1,87 @@
 {{!< centercolumn}}
-<h2 class="text-center thin-font custom-h2"> Edit Profile </h2>
-
-{{#if messages.error}}
-    <div class="alert alert-danger" role="alert">
-        {{messages.error}}
+<div class="col-md-8 o-profile-edit">
+    <div class="card">
+        <div class="details">
+            <div class="flex-row">
+                <div class="heading-u-red">Edit Profile</div>
+            </div>
+            {{#if messages.error}}
+            <div class="alert alert-danger" role="alert">
+                {{messages.error}}
+            </div>
+            {{/if}}
+            <form id="edit-form" enctype="multipart/form-data" method="POST">
+                <div class="attributes d-flex flex-column">
+                    <div class="row justify-content-between">
+                        <div id="profile-row-id" class="row no-gutters align-items-center justify-content-between detail-row">
+                            <div for="userid" class="label-input col-md-4 col-sm-3">UserID</div>
+                            <input class="input-text col-md-8 col-sm-8" type="text" id="userid" disabled value="{{user.id}}" />
+                        </div>
+                        <div id="profile-row-id" class="row no-gutters align-items-center justify-content-between detail-row">
+                            <div for="username" class="label-input col-md-4 col-sm-3">Username</div>
+                            <input type="text" class="input-text col-md-8 col-sm-8" id="username" disabled value="{{user.username}}" />
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div id="profile-row-id" class="row no-gutters align-items-center justify-content-between detail-row">
+                            <div for="firstname" class="label-input col-md-4 col-sm-3">Firstname</div>
+                            <input type="text" id="firstname" class="input-text col-md-8 col-sm-8" name="firstname" value="{{user.firstname}}" />
+                        </div>
+                        <div id="profile-row-id" class="row no-gutters align-items-center justify-content-between detail-row">
+                            <div for="lastname" class="label-input col-md-4 col-sm-3">Lastname</div>
+                            <input class="input-text col-md-8 col-sm-8" type="text" name="lastname" id="lastname" value="{{user.lastname}}" />
+                        </div>
+                    </div>
+                    <div id="profile-row-id" class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div for="email" class="label-input col-md-4 col-sm-3">Email</div>
+                        {{#if user.verifiedemail}}
+                        <input type="text" id="email" name="email" class="input-text col-md-8 col-sm-8" disabled value="{{user.email}}" /> {{else}}
+                        <input type="text" id="email" name="email" class="input-text col-md-8 col-sm-8" value="{{user.email}}" /> {{/if}}
+                    </div>
+                    <div class="row justify-content-between">
+                        <div id="profile-row-id" class="row no-gutters align-items-center justify-content-between detail-row">
+                            <div for="password" class="label-input col-md-4 col-sm-3">Password</div>
+                            <input class="input-text col-md-8 col-sm-8" type="password" name="password" placeholder="Enter Password" id="password"
+                            />
+                        </div>
+                        <div id="profile-row-id" class="row no-gutters align-items-center justify-content-between detail-row">
+                            <div for="repassword" class="label-input col-md-4 col-sm-3">Re-Enter</div>
+                            <input class="input-text col-md-8 col-sm-8" type="password" name="repassword" placeholder="Re-Enter Password"
+                                id="repassword" />
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div id="profile-row-id" class="row no-gutters align-items-center justify-content-between detail-row">
+                            <div class="label-input col-md-4 col-sm-3">College</div>
+                            <select name="collegeId" class="dropdown-ul input-text col-md-8 col-sm-8">
+                                {{#each colleges}} {{#ifeq expected=id val=../user.demographic.collegeId}}
+                                <option class="dropdown-li" value="{{id}}" selected>{{name}}</option>
+                                {{/ifeq}} {{#ifneq expected=id val=../user.demographic.collegeId}}
+                                <option class="dropdown-li" value="{{id}}">{{name}}</option>
+                                {{/ifneq}} {{/each}}
+                            </select>
+                        </div>
+                        <div class="row no-gutters align-items-center justify-content-between detail-row">
+                            <div id="profile-row-id" class="label-input col-md-4 col-sm-3">Branch</div>
+                            <select name="branchId" class="dropdown-ul input-text col-md-8 col-sm-8">
+                                {{#each branches}} {{#ifeq expected=id val=../user.demographic.branchId}}
+                                <option class="dropdown-li" value="{{id}}" selected>{{name}}</option>
+                                {{/ifeq}} {{#ifneq expected=id val=../user.demographic.branchId}}
+                                <option class="dropdown-li" value="{{id}}">{{name}}</option>
+                                {{/ifneq}} {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex-row justify-content-end button-div">
+                        <div class="grey reset-button">
+                            <button type="reset">RESET</button>
+                        </div>
+                        <div class="button-solid">
+                            <button type="submit">SAVE CHANGES</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-{{/if}}
-
-<form id="edit-form" class="form-group pl-2 pr-4 pt-4" method="post" enctype="multipart/form-data">
-
-    <div class="text-center">
-        {{#if user.photo}}
-            <img class="img-thumbnail custom-profile-image" src="{{user.photo}}" id="user-pic">
-        {{else}}
-            <img class="img-thumbnail custom-profile-image" src="https://minio.cb.lk/img/avatar-10.svg" id="user-pic">
-        {{/if}}
-    </div>
-    <div class="text-center">
-        {{>modal_profile_pic}}
-    </div>
-
-    <div class="form-group row" id="profile-row-id">
-        <label for="userid" class=" col-sm-3 col-form-label"> User ID </label>
-        <input class="col-sm-9 form-control" type="text" disabled id="userid" value="{{user.id}}"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="username" class=" col-sm-3 col-form-label"> Username </label>
-        <input class="col-sm-9 form-control" type="text" disabled id="username" value="{{user.username}}"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="firstname" class=" col-sm-3 col-form-label"> First Name </label>
-        <input class="col-sm-9 form-control" type="text" name="firstname" id="firstname" value="{{user.firstname}}"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="lastname" class=" col-sm-3 col-form-label"> Last Name </label>
-        <input class="col-sm-9 form-control" type="text" name="lastname" id="lastname" value="{{user.lastname}}"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="email" class="col-sm-3 col-form-label"> Email ID </label>
-        {{#if user.verifiedemail}}
-            <input class="col-sm-9 form-control" type="text" id="email" name="email" disabled value="{{user.email}}"> </input>
-        {{else}}
-            <input class="col-sm-9 form-control" type="text" id="email" name="email" value="{{user.email}}"> </input>
-        {{/if}}
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="password" class="col-sm-3 col-form-label"> New Password </label>
-        <input class="col-sm-9 form-control" type="password" name="password" placeholder="Leave empty to keep unchanged" id="password"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="repassword" class=" col-sm-3 col-form-label"> Re-enter </label>
-        <input class="col-sm-9 form-control" type="password" name="repassword" placeholder="Leave empty to keep unchanged" id="repassword"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label>College Name:</label>
-        <select name="collegeId" class="m-2a form-control">
-            {{#each colleges}}
-                {{#ifeq expected=id val=../user.demographic.collegeId}}
-                    <option value="{{id}}" selected>{{name}}</option>
-                {{/ifeq}}
-                {{#ifneq expected=id val=../user.demographic.collegeId}}
-                    <option value="{{id}}">{{name}}</option>
-                {{/ifneq}}
-            {{/each}}
-        </select>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label>Branch Name:</label>
-        <select name="branchId" class="m-2a form-control">
-            {{#each branches}}
-                {{#ifeq expected=id val=../user.demographic.branchId}}
-                    <option value="{{id}}" selected>{{name}}</option>
-                {{/ifeq}}
-                {{#ifneq expected=id val=../user.demographic.branchId}}
-                    <option value="{{id}}">{{name}}</option>
-                {{/ifneq}}
-            {{/each}}
-        </select>
-    </div>
-    <div class="form-group row">
-        <div class="col hidden-md-down"></div>
-        <input type="submit" class="col-lg-3 m-2 btn btn-success" value="SUBMIT">
-        <input type="reset" class="col-lg-3 m-2 p-2 btn btn-danger" value="RESET">
-        <div class="col hidden-md-down"></div>
-    </div>
-
-</form>
+</div>

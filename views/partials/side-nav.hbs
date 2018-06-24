@@ -2,9 +2,9 @@
     <div class="profile-pic">
       <div class="d-flex justify-content-center profile-container">
         {{#if user.photo}}
-            <img class="round-img" src="{{user.photo}}">
+            <img class="round-img" src="{{user.photo}}" id="user-pic">
         {{else}}
-            <img class="round-img" src="https://minio.cb.lk/img/avatar-10.svg">
+            <img class="round-img" src="https://minio.cb.lk/img/avatar-10.svg" id="user-pic">
         {{/if}}
       </div>
       <div class="card">

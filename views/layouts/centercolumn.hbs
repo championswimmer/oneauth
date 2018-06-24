@@ -1,5 +1,8 @@
 {{!< main}}
 <div class="row e-arrangement">
-    {{>side-nav}}
+    {{#if user}}
+        {{>side-nav}}
+    {{/if}}
+
     {{{body}}}
 </div>

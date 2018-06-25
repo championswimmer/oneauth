@@ -36,5 +36,6 @@ function saveIp (req, res, next) {
 }
 
 module.exports = {
-    sessionStore
+    sessionStore,
+    saveIp
 }

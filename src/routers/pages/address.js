@@ -9,7 +9,7 @@ router.get('/',
     function (req, res, next) {
         models.Address.findAll({
             where: {'$demographic.userId$': req.user.id},
-            include: [models.Demographic]
+            include: [models.Demographic, models.State, models.Country]
         }).then(function (addresses) {
             return res.render('address/all', {addresses})
         }).catch(function (err) {

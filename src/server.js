@@ -83,7 +83,8 @@ app.use(session({
     saveUninitialized: true,
     name: 'oneauth',
     cookie: {
-        domain: config.COOKIE_DOMAIN
+        domain: config.COOKIE_DOMAIN,
+        maxAge: 86400000
     }
 }))
 app.use(flash())

@@ -1,4 +1,4 @@
-{{!< centercolumn}}
+{{!< main}}
 
 <div class="col-md-8 o-profile">
     <div class="card">
@@ -51,9 +51,9 @@
                     <div>
                         <span class="faded">
                             {{#if user.verifiedemail}}
-                                <a href="mailto:{{user.email}}">{{user.verifiedemail}}</a>
+                                <a class="grey" href="mailto:{{user.email}}">{{user.verifiedemail}}</a>
                             {{else}}
-                                <a href="#">Not Verified</a>
+                                <a class="grey" href="#">Not Verified</a>
                             {{/if}}
                         </span>
                     </div>

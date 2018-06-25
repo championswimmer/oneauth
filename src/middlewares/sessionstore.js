@@ -9,7 +9,7 @@ const sessions = db.define('session', {
         type: Sequelize.STRING,
         primaryKey: true
     },
-    userId: Sequelize.STRING,
+    userId: Sequelize.INTEGER,
     expires: Sequelize.DATE,
     data: Sequelize.STRING(50000)
 })

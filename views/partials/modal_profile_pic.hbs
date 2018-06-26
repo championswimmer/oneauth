@@ -5,15 +5,15 @@
         var editFrom = $("#edit-form")
         var hiddenInput = $("#avatar-selector")
         var btnClear = $("#btn-clear")
-        var userImg = $('#user-pic')
-        const origPic = userImg.attr('src')
+        var userImg = $('.user-pic')
+        const origPic = $(userImg[0]).attr('src')
 
         picInput.change(function () {
             if (picInput.val() === "") {
               if (hiddenInput.val() === "") {
-                userImg.attr('src', origPic)
+                userImg.map(i=>{$(userImg[i]).attr('src', origPic)});
               } else {
-                userImg.attr('src', `https://minio.cb.lk/img/avatar-${hiddenInput.val()}.svg`)
+                userImg.map(i=>{$(userImg[i]).attr('src', `https://minio.cb.lk/img/avatar-${hiddenInput.val()}.svg`)});
               }
             } else {
                 $(avatarPics).removeClass("click-pic")
@@ -42,7 +42,7 @@
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    $('#user-pic').attr('src', e.target.result);
+                    $('.user-pic').map(i=>{$(userImg[i]).attr('src', e.target.result)});
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -50,34 +50,47 @@
 
     })
 </script>
-<!-- Trigger the modal with a button -->
-<button type="button" style="margin-bottom: 10px; transform: scale(0.8)" class="btn btn-info" data-toggle="modal" data-target="#myModal">Change Profile Pic</button>
-<!-- Modal -->
 
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+<div class="o-changedp">
+    <div class="modal fade o-modal" id="change-dp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="row justify-content-between no-gutters">
+                    <div class="heading">
+                        Change Profile Image
+                    </div>
+                    <span class="pointer" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times"></i></span>
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Change Profile Pic</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                {{#for 1 36 1}}
-
-                    <img class="avatar" src="https://minio.cb.lk/img/avatar-{{this}}.svg">
-
-                {{/for}}
-                <div class="form-group row justify-content-center" id="profile-row-id">
-
-                    <input class="col-sm-8 form-control"  type="file" id="userpic" accept="image/jpeg, image/png" name="userpic">
-                    <input id="avatar-selector" type="hidden" name="avatarselect" value="">
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button id="btn-clear" type="button" class="btn btn-default">Clear</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <p class="red">Choose from existing avatars</p>
+
+                <div class="row no-gutters">
+                    {{#for 1 36 1}}
+                        <div class="col-2 images">
+                            <img class="avatar" src="https://minio.cb.lk/img/avatar-{{this}}.svg">
+                        </div>
+                    {{/for}}
+
+                </div>
+
+                <p>OR</p>
+
+                <p class="red">Upload Image from your computer</p>
+
+                <input type="file" id="userpic" accept="image/jpeg, image/png" name="userpic">
+                <input id="avatar-selector" type="hidden" name="avatarselect" value="">
+
+                <div class="footer row justify-content-end no-gutters">
+                    <div class="button">
+                        <button id="btn-clear" type="button">RESET</button>
+                    </div>
+
+                    <div class="button-solid">
+                        <button type="button" data-toggle="modal" data-target="#change-dp">SAVE CHANGES</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 

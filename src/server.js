@@ -16,7 +16,7 @@ const express = require('express')
 
 const config = require('../config')
     , secrets = config.SECRETS
-    , {sessionStore} = require('./middlewares/sessionstore')
+    , {sessionStore, saveIp} = require('./middlewares/sessionstore')
     , loginrouter = require('./routers/login')
     , connectrouter = require('./routers/connect')
     , disconnectrouter = require('./routers/disconnect')
@@ -33,7 +33,7 @@ const config = require('../config')
 
 const app = express()
 
-
+app.set('trust proxy', true)
 // ============== START DATADOG
 app.use(expresstracer)
 // ================= END DATADOG
@@ -83,9 +83,11 @@ app.use(session({
     saveUninitialized: true,
     name: 'oneauth',
     cookie: {
-        domain: config.COOKIE_DOMAIN
+        domain: config.COOKIE_DOMAIN,
+        maxAge: 86400000
     }
 }))
+app.use(saveIp)
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())

@@ -1,4 +1,4 @@
-{{!< main}}
+{{!< centercolumn}}
 <div class="col-md-8 o-profile-edit">
     <div class="card">
             <div class="heading-u-red">Edit Profile</div>
@@ -11,8 +11,8 @@
                 {{>modal_profile_pic}}
                 <div class="row justify-content-between align-items-center profile-row">
                     <div class="round-img">
-                        {{#if user.photo}}
-                            <img class="round-img user-pic" src="{{user.photo}}">
+                        {{#if userPhoto}}
+                            <img class="round-img user-pic" src="{{userPhoto}}">
                         {{else}}
                             <img class="round-img user-pic" src="https://minio.cb.lk/img/avatar-10.svg">
                         {{/if}}

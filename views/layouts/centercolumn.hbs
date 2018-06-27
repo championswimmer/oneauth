@@ -1,1 +1,8 @@
 {{!< main}}
+<div class="row e-arrangement">
+    {{#if loggedIn}}
+        {{>side-nav}}
+    {{/if}}
+
+    {{{body}}}
+</div>

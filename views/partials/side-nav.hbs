@@ -1,31 +1,36 @@
 <div class="nav-info col-md-3">
     <div class="profile-pic">
       <div class="d-flex justify-content-center profile-container">
-        {{#if user.photo}}
-            <img class="round-img user-pic" src="{{user.photo}}">
+        {{#if userPhoto}}
+            <img class="round-img user-pic" src="{{userPhoto}}">
         {{else}}
             <img class="round-img user-pic" src="https://minio.cb.lk/img/avatar-10.svg">
         {{/if}}
       </div>
       <div class="card">
-        <p>Hi, {{user.firstname}}</p>
+          {{#if userName}}
+              <p>Hi, {{userName}}</p>
+          {{else}}
+              <p>Hi, Guest User</p>
+          {{/if}}
+
       </div>
     </div>
     <div>
       <div class="flex-row">
-        <a href="/users/me"><span class="pointer red">MY PROFILE</span></a>
+        <a href="/users/me"><span class="pointer {{#ifeq  val=currentUrl expected="users"}}red{{/ifeq}}">MY PROFILE</span></a>
       </div>
       <div class="separator"></div>
       <div class="flex-row">
-        <a href="/address"><span class="pointer">MY ADDRESSES</span></a>
+        <a href="/address"><span class="pointer {{#ifeq  val=currentUrl expected="address"}}red{{/ifeq}}">MY ADDRESSES</span></a>
       </div>
       <div class="separator"></div>
       <div class="flex-row">
-        <a href="/apps"><span class="pointer">MY APPS</span></a>
+        <a href="/apps"><span class="pointer {{#ifeq  val=currentUrl expected="apps"}}red{{/ifeq}}">MY APPS</span></a>
       </div>
       <div class="separator"></div>
       <div class="flex-row">
-        <a href="/users/me/clients"><span class="pointer">MY CLIENTS</span></a>
+        <a href="/users/me/clients"><span class="pointer {{#ifeq  val=currentUrl expected="clients"}}red{{/ifeq}}">MY CLIENTS</span></a>
       </div>
       <div class="separator"></div>
       <div class="flex-row faded">

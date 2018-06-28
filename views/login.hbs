@@ -1,12 +1,4 @@
 {{!< centercolumn}}
-{{#if error}}
-    <div class="alert alert-danger">{{error}}</div>
-{{/if}}
-{{#if messages.info}}
-<div class="alert alert-info">{{messages.info}}</div>
-{{/if}}
-
-
 <div class="login-signup">
     <div class="card o-login">
         <div class="heading-u-red">
@@ -14,6 +6,12 @@
         </div>
 
         <form method="post" action="/login">
+            {{#if error}}
+                <div class="alert alert-danger">{{error}}</div>
+            {{/if}}
+            {{#if messages.info}}
+                <div class="alert alert-info">{{messages.info}}</div>
+            {{/if}}
             <div class="input-btn">
                 <input type="text" class="input-text icon" placeholder="Enter Username" name="username" required>
                 <a href="/forgot/username">

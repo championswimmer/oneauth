@@ -6,6 +6,7 @@
     <title>{{title}}</title>
     <script src="/js/jquery-3.1.1.min.js"></script>
     <script src="/js/tether.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/152fef14b6.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
@@ -27,50 +28,12 @@
 
     <link rel="stylesheet" href="/css/bootstrap-social.css">
     <link rel="stylesheet" href="/css/motley.css">
+    <script src="/js/script.js"></script>
 </head>
 <body>
 
 <header>
-    <nav>
-        <span class="hamburger-parent">
-          <i class="hamburger fas fa-bars"></i>
-        </span>
-        <span class="logo-parent">
-             <a class="logo-link" href="/">
-                <img src="/images/online-logo.png" alt="online-logo" class="nav-logo pointer">
-            </a>
-        </span>
-        {{#if loggedIn}}
-            <ul class="nav-list">
-
-                <a href="https://codingblocks.com/">
-                    <li class="nav-items pointer">
-                        CLASSROOM COURSES
-                    </li>
-                </a>
-
-                <a href="https://online.codingblocks.com/">
-                    <li class="nav-items pointer">
-                        ONLINE COURSES
-                    </li>
-                </a>
-
-                <a href="https://hack.codingblocks.com/">
-                    <li class="nav-items pointer">
-                        HACKER BLOCKS
-                    </li>
-                </a>
-
-                <a href="/logout">
-                    <li class="nav-items pointer">
-                        <div class="button-solid">
-                            <button>Logout</button>
-                        </div>
-                    </li>
-                </a>
-            </ul>
-        {{/if}}
-    </nav>
+  g  {{> navbar}}
 </header>
 {{{body}}}
 </body>

@@ -1,21 +1,24 @@
 <div class="nav-info col-md-3">
-    <div class="profile-pic">
-      <div class="d-flex justify-content-center profile-container">
-        {{#if userPhoto}}
-            <img class="round-img user-pic" src="{{userPhoto}}">
-        {{else}}
-            <img class="round-img user-pic" src="https://minio.cb.lk/img/avatar-10.svg">
-        {{/if}}
-      </div>
-      <div class="card">
-          {{#if userName}}
-              <p>Hi, {{userName}}</p>
-          {{else}}
-              <p>Hi, Guest User</p>
-          {{/if}}
+    <a href="/users/me">
+        <div class="profile-pic">
+            <div class="d-flex justify-content-center profile-container">
+                {{#if userPhoto}}
+                    <img class="round-img user-pic" src="{{userPhoto}}">
+                {{else}}
+                    <img class="round-img user-pic" src="img/user.svg">
+                {{/if}}
+            </div>
+            <div class="card">
+                {{#if userName}}
+                    <p>Hi, {{userName}}</p>
+                {{else}}
+                    <p>Hi, Guest User</p>
+                {{/if}}
 
-      </div>
-    </div>
+            </div>
+        </div>
+    </a>
+
     <div>
       <div class="flex-row">
         <a href="/users/me"><span class="pointer {{#ifeq  val=currentUrl expected="users"}}red{{/ifeq}}">MY PROFILE</span></a>

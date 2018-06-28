@@ -1,11 +1,5 @@
 {{!< centercolumn}}
 
-{{#if messages.error}}
-    <div class="alert alert-danger" role="alert">
-        {{messages.error}}
-    </div>
-{{/if}}
-
 <div class="login-signup">
     <div class="card o-signup">
         <div class="heading-u-red">
@@ -13,6 +7,12 @@
         </div>
 
         <form method="post" action="/signup">
+            {{#if messages.error}}
+                <div class="alert alert-danger" role="alert">
+                    {{messages.error}}
+                </div>
+            {{/if}}
+
             <input type="text" class="input-text icon" name="username" placeholder="Username" required>
 
             <div class="row no-gutters">

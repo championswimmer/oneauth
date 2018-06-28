@@ -33,7 +33,8 @@ const config = require('../config')
 
 const app = express()
 
-app.set('trust proxy', true)
+app.set('trust proxy', 'loopback, linklocal, uniquelocal')
+
 // ============== START DATADOG
 app.use(expresstracer)
 // ================= END DATADOG

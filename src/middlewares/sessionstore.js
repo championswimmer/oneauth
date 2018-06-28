@@ -11,7 +11,7 @@ const sessions = db.define('session', {
         primaryKey: true
     },
     userId: Sequelize.INTEGER,
-    ipAddr: Sequelize.STRING(15),
+    ipAddr: Sequelize.STRING(39),
     expires: Sequelize.DATE,
     data: Sequelize.STRING(50000)
 })

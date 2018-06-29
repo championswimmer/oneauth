@@ -33,7 +33,8 @@ const config = require('../config')
 
 const app = express()
 
-app.set('trust proxy', true)
+app.set('trust proxy', 'loopback, linklocal, uniquelocal')
+
 // ============== START DATADOG
 app.use(expresstracer)
 // ================= END DATADOG
@@ -47,7 +48,13 @@ const redirectToHome = function (req, res, next) {
 
 }
 const setuserContext = function (req, res, next) {
+    if (req.authInfo) {
+        if (req.authInfo.clientOnly) {
+            return next()
+        }
+    }
     if (req.user) {
+        if (req.authInfo)
         Raven.setContext({
             user: {
                 username: req.user.dataValues.username,

@@ -16,17 +16,19 @@ const sessions = db.define('session', {
         type: DataTypes.STRING,
         primaryKey: true
     },
+    user: DataTypes.JSONB,
     userId: DataTypes.INTEGER,
     ipAddr: DataTypes.STRING(39),
     realIp: DataTypes.STRING(39),
-    proxyPath: DataTypes.ARRAY(DataTypes.STRING),
+    proxyPath: DataTypes.ARRAY(DataTypes.STRING(39)),
     expires: DataTypes.DATE,
     data: DataTypes.STRING(50000)
 })
 const extendDefaultFields = (defaults, session) => ({
     data: defaults.data,
     expires: defaults.expires,
-    userId: session.passport && session.passport.user,
+    user: session.passport && session.passport.user,
+    userId: session.passport && session.passport.user && session.passport.user.id,
     ipAddr: session.ipAddr,
     realIp: session.realIp,
     proxyPath: session.proxyPath
@@ -36,7 +38,9 @@ const sessionStore = new SequelizeSessionStore({
     table: 'session',
     extendDefaultFields
 })
-sessionStore.sync()
+sessionStore.sync({
+    force: process.env.ONEAUTH_DROP_SESSIONS
+})
 
 function saveIp (req, res, next) {
     if (req.session) {

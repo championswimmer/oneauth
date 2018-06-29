@@ -15,6 +15,7 @@ const bearerStrategy = new BearerStrategy(
             where: {token: token},
             include: [models.User, models.Client]
         }).then(function (authToken) {
+            // No such token exists
             if (!authToken) {
                 return done(null, false)
             }
@@ -27,12 +28,14 @@ const bearerStrategy = new BearerStrategy(
 
             // When authtoken has both user and client
             if (authToken.user) {
+                info.clientOnly = false
                 return done(null, authToken.user.get(), info)
             }
 
             // When it is a client-only token
             if (authToken.client.trusted) {
-                return done(null, true, info)
+                info.clientOnly = true
+                return done(null, authToken.client.get(), info)
             }
 
             return done(null, null, info)

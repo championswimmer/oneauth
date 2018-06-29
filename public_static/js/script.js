@@ -54,7 +54,6 @@ $(function () {
     var hamburger= $('.hamburger-parent');
     var sidebar= $('.sidebar');
     var closeSidebar= $('.close');
-    console.log(hamburger);
 
     hamburger.click((e)=>{
         sidebar.toggleClass('sidebar-none');

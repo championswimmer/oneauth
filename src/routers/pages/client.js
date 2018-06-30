@@ -29,7 +29,7 @@ router.get('/:id',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const client = findClient(req.params.id)    
+            const client = await findClient(req.params.id)  
             if (!client) {
                 return res.send("Invalid Client Id")
             }
@@ -47,7 +47,7 @@ router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const client = findClient(req.params.id)    
+            const client = await findClient(req.params.id)    
             if (!client) {
                 return res.send("Invalid Client Id")
             }

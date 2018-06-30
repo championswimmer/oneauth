@@ -10,6 +10,7 @@ const models = require('../../db/models').models
 const acl = require('../../middlewares/acl')
 const multer = require('../../utils/multer')
 const {findUserById,UpdareUser} = require('../../controllers/user');
+const {findAllClientbyUser} = require('../../controllers/clients');
 
 router.get('/me',
     cel.ensureLoggedIn('/login'),
@@ -214,14 +215,13 @@ router.post('/:id/edit',
 
 router.get('/me/clients',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Client.findAll({
-            where: {userId: req.user.id}
-        }).then(function (clients) {
+    async function (req, res, next) {
+        try {
+            const clients = await findAllClientbyUser(req.user.id);
             return res.render('client/all', {clients: clients})
-        }).catch(function (err) {
+        } catch (error) {
             res.send("No clients registered")
-        })
+        }
     }
 )
 

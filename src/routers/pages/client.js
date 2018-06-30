@@ -4,18 +4,15 @@
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const acl = require('../../middlewares/acl')
-const {findClient} =require('../../controllers/clients');
+const {findClient, findAllClient} =require('../../controllers/clients');
 
-const models = require('../../db/models').models
-
-
-router.get('/',acl.ensureAdmin,function (req,res,next) {
-    models.Client.findAll({})
-        .then(function (clients) {
-            return res.render('client/all',{clients:clients})
-        }).catch(function(err){
-            res.send("No clients Registered")
-    })
+router.get('/',acl.ensureAdmin, async function (req,res,next) {
+    try {
+        const clients = await findAllClient();
+        return res.render('client/all',{clients:clients})
+    } catch (error) {
+        res.send("No clients Registered")
+    }
 })
 
 router.get('/add',
@@ -57,7 +54,6 @@ router.get('/:id/edit',
             client.clientDomains = client.domain.join(";")
             client.clientCallbacks = client.callbackURL.join(";")
             client.clientdefaultURL = client.defaultURL;
-
             return res.render('client/edit', {client: client})
         } catch (error) {
         }

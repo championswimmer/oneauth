@@ -33,6 +33,29 @@ function findClient(clientId) {
     });
 }
 
+function findAllClient() {
+    return new Promise ((resolve,reject)=>{
+        models.Client.findAll({
+        }).then(function (clients) {
+            resolve(clients)
+        }).catch(function(){
+            reject();
+        })
+    });
+}
+
+function findAllClientbyUser(userId) {
+    return new Promise ((resolve,reject)=>{
+        models.Client.findAll({
+            where: {userId: userId}
+        }).then(function (clients) {
+            resolve(clients)
+        }).catch(function(){
+            reject();
+        })
+    });
+}
+
 module.exports = {
-    createClient, updateClient, findClient
+    createClient, updateClient, findClient, findAllClient, findAllClientbyUser
 }

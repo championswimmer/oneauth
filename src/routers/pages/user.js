@@ -11,6 +11,7 @@ const acl = require('../../middlewares/acl')
 const multer = require('../../utils/multer')
 const {findUserById,UpdareUser} = require('../../controllers/user');
 const {findAllClientbyUser} = require('../../controllers/clients');
+const {getBranches, getColleges} = require('../../controllers/demographics');
 
 router.get('/me',
     cel.ensureLoggedIn('/login'),
@@ -54,8 +55,8 @@ router.get('/me/edit',
                     ]
                 }
             ]),
-            models.College.findAll({}),
-            models.Branch.findAll({})
+            await getBranches(), 
+            await getColleges()
         ]).then(function ([user, colleges, branches]) {
             if (!user) {
                 res.redirect('/login')

@@ -59,9 +59,15 @@ function findAllCountries(){
     return models.Country.findAll({});
 }
 
+function getBranches() {
+    return models.Branch.findAll({})
+}
+function getColleges() {
+    return models.College.findAll({})
+}
 
 module.exports = {
     findCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
-    findAddress, createAddress, findAllAddress,findDemographic, findAllStates, findAllCountries
+    findAddress, createAddress, findAllAddress,findDemographic, findAllStates, findAllCountries, getBranches, getColleges
 }
 

@@ -2,14 +2,13 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const Raven = require('raven')
 
-const models = require('../../db/models').models
-const { findAddress, findAllAddress} = require('../../controllers/demographics');
+const { findAddress, findAllAddress, findAllStates, findAllCountries} = require('../../controllers/demographics');
 
 router.get('/',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const addresses = await findAllAddress(req.user.id,[models.Demographic])
+            const addresses = await findAllAddress(req.user.id)
             if (!addresses || addresses.length === 0) {
                 throw new Error("User has no addresses")
             }
@@ -24,10 +23,10 @@ router.get('/',
 
 router.get('/add',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
+    async function (req, res, next) {
         Promise.all([
-            models.State.findAll({}),
-            models.Country.findAll({})
+            await findAllStates,
+            await findAllCountries
         ]).then(function ([states, countries]) {
             return res.render('address/add', {states, countries})
         }).catch(function (err) {
@@ -59,8 +58,8 @@ router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         Promise.all([await findAddress(req.params.id,req.user.id ),
-            models.State.findAll({}),
-            models.Country.findAll({})
+            await findAllStates,
+            await findAllCountries
         ]).then(function ([address, states, countries]) {
             if (!address) {
                 req.flash('error', 'Address not found')

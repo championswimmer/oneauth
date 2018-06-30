@@ -38,7 +38,7 @@ router.post('/add', async function (req, res) {
             callbackURL: clientCallbacks,
             userId: req.user.id
         })
-        res.redirect('/clients/' + clientid)
+        res.redirect('/clients/' + clientid.id)
     } catch (error) {
         console.log(error)
     }

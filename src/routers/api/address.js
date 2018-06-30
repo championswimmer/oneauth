@@ -3,8 +3,10 @@ const {db} = require('../../db/models')
 const cel = require('connect-ensure-login')
 const Raven = require('raven')
 const {hasNull} = require('../../utils/nullCheck')
+const demographicController = require('../../controllers/demographics');
+
 const {findCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
-    findDemographic, createAddress} = require('../../controllers/demographics');
+    findDemographic, createAddress} = demographicController;
 
 router.post('/', cel.ensureLoggedIn('/login'),async function (req, res) {
     if (hasNull(req.body, ['label', 'first_name', 'last_name', 'number', 'email', 'pincode', 'street_address', 'landmark', 'city', 'stateId', 'countryId'])) {

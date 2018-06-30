@@ -4,7 +4,7 @@
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const acl = require('../../middlewares/acl')
-const {findClient, findAllClient} =require('../../controllers/clients');
+const {findClientById, findAllClient} =require('../../controllers/clients');
 
 router.get('/',acl.ensureAdmin, async function (req,res,next) {
     try {
@@ -26,7 +26,7 @@ router.get('/:id',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const client = await findClient(req.params.id)  
+            const client = await findClientById(req.params.id)  
             if (!client) {
                 return res.send("Invalid Client Id")
             }
@@ -44,7 +44,7 @@ router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const client = await findClient(req.params.id)    
+            const client = await findClientById(req.params.id)    
             if (!client) {
                 return res.send("Invalid Client Id")
             }

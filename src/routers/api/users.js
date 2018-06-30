@@ -7,7 +7,8 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
-const {findUserById, deleteAuthToken} = require('../../controllers/user');
+const {findUserById} = require('../../controllers/user');
+const {deleteAuthToken} = require('../../controllers/oauth');
 const  {findAllAddress} = require('../../controllers/demographics');
 router.get('/me',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)

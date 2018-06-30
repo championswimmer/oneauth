@@ -4,9 +4,13 @@
 const oauth = require('oauth2orize')
     , cel = require('connect-ensure-login')
 
-const {getClientById, createGrantCode,createAuthToken, findGrantCode, findAuthToken, findCreateAuthToken} = require('../controllers/oauth')
+const oauthController = require('../controllers/oauth')
+    , clientController = require('../controllers/clients')
     , passport = require('../passport/passporthandler')
     , debug = require('debug')('oauth:oauthserver')
+
+const {createGrantCode,createAuthToken, findGrantCode, findAuthToken, findCreateAuthToken} = oauthController;
+const {findClientById} = clientController;
 
 const server = oauth.createServer()
 
@@ -16,7 +20,7 @@ server.serializeClient(function (client, done) {
 
 server.deserializeClient(async function (clientId, done) {
     try {
-        const client = await getClientById(clientId);
+        const client = await findClientById(clientId);
         return done(null, client);
     } catch (error) {
         debug(error)
@@ -32,7 +36,7 @@ server.grant(oauth.grant.code(
         debug('oauth: getting grant code for ' + client.id + ' and ' + user.id)
         try {
             const grantCode = await createGrantCode(client.id,user.id);
-            return done(null, grantCode);
+            return done(null, grantCode.code);
         } catch (error) {
             return done(error)
         }
@@ -45,7 +49,7 @@ server.grant(oauth.grant.token(
     async function (client, user, ares, done) {
         try {
             const authToken = await createAuthToken(client.id,user.id);
-            return done(null, authToken);
+            return done(null, authToken.token);
         } catch (error) {
             return done(error)
         }
@@ -58,9 +62,23 @@ server.grant(oauth.grant.token(
 server.exchange(oauth.exchange.code(
     async function (client, code, redirectURI, done) {
         try {
-            const grantCode = await findGrantCode(client, code, redirectURI)
+            const grantCode = await findGrantCode(code)    
+            if (!grantCode) {
+                return done(null,false) // Grant code does not exist
+            }
+            if (client.id !== grantCode.client.id) {
+                return done(null,false) //Wrong Client ID
+            }
+            let callbackMatch = false
+            for (url of client.callbackURL) {
+                if (redirectURI.startsWith(url)) callbackMatch = true
+            }
+            if (!callbackMatch) {
+                return done(null,false) // Wrong redirect URI
+            }
             const authToken = await findCreateAuthToken(grantCode )
-            return done(null, authToken);
+            grantCode.destroy()
+            return done(null, authToken.token);
         } catch (error) {
             return done(error)
         }
@@ -74,7 +92,7 @@ const authorizationMiddleware = [
     server.authorization(async function (clientId, callbackURL, done) {
         debug('oauth: authorize')
         try {
-            const client = await getClientById(clientId);
+            const client = await findClientById(clientId);
             debug(callbackURL)
             for (url of client.callbackURL) {
                 if (callbackURL.startsWith(url)) {
@@ -92,6 +110,11 @@ const authorizationMiddleware = [
         }
         try {
             const authToken = await findAuthToken(client.id,user.id)
+            if (!authToken) {
+                return done(null, false)
+            } else {
+                return done(null, true)
+            }
             return done(null, authToken);
         } catch (error) {
             return done(error);
@@ -115,7 +138,7 @@ const authorizationMiddleware = [
 server.exchange(oauth.exchange.clientCredentials(async (client, scope, done) => {
     // Validate the client
     try {
-        const localClient = await getClientById(client.get().id);
+        const localClient = await findClientById(client.get().id);
         if (!localClient) {
             return done(null, false);
         }
@@ -132,7 +155,7 @@ server.exchange(oauth.exchange.clientCredentials(async (client, scope, done) => 
         // Everything validated, return the token
         // const token = generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE)
         const authToken = await createAuthToken(client.get().id)
-        return done(null,authToken)
+        return done(null,authToken.get().token)
     } catch (error) {
         debug(error)
     }

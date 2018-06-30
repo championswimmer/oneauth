@@ -4,7 +4,7 @@
  * This is the /api/v1/clients path
  */
 const router = require('express').Router()
-const models = require('../../db/models').models
+const {createClient, updateClient} =require('../../controllers/clients');
 const generator = require('../../utils/generator')
 const cel = require('connect-ensure-login')
 
@@ -28,19 +28,20 @@ router.post('/add', function (req, res) {
     clientCallbacks.forEach(function (url, i, arr) {
         arr[i] = urlutils.prefixHttp(url)
     })
-
-
-    models.Client.create({
-        id: generator.genNdigitNum(10),
-        secret: generator.genNcharAlphaNum(64),
-        name: clientName,
-        domain: clientDomains,
-        defaultURL: defaultURL,
-        callbackURL: clientCallbacks,
-        userId: req.user.id
-    }).then(function (client) {
-        res.redirect('/clients/' + client.id)
-    }).catch(err => console.log(err))
+    try {
+        const clientid = createClient({
+            id: generator.genNdigitNum(10),
+            secret: generator.genNcharAlphaNum(64),
+            name: clientName,
+            domain: clientDomains,
+            defaultURL: defaultURL,
+            callbackURL: clientCallbacks,
+            userId: req.user.id
+        })
+        res.redirect('/clients/' + clientid)
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 router.post('/edit/:id', cel.ensureLoggedIn('/login'),
@@ -62,22 +63,18 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'),
         clientCallbacks.forEach(function (url, i, arr) {
             arr[i] = urlutils.prefixHttp(url)
         })
-
-        models.Client.update({
-            name: clientName,
-            domain: clientDomains,
-            defaultURL: defaultURL,
-            callbackURL: clientCallbacks,
-            trusted:trustedClient
-        }, {
-            where: {id: clientId}
-        }).then(function (client) {
+        try {
+            await updateClient({
+                name: clientName,
+                domain: clientDomains,
+                defaultURL: defaultURL,
+                callbackURL: clientCallbacks,
+                trusted:trustedClient
+            },clientId)
             res.redirect('/clients/' + clientId)
-        }).catch(function (error) {
+        } catch (error) {
             console.error(error)
-        })
-
+        }
     })
-
 
 module.exports = router

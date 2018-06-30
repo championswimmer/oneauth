@@ -3,17 +3,19 @@ const cel = require('connect-ensure-login')
 const Raven = require('raven')
 
 const models = require('../../db/models').models
-const {findCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
-    findAddress, createAddress, findAllAddress} = require('../../controllers/demographics');
+const { findAddress, findAllAddress} = require('../../controllers/demographics');
 
 router.get('/',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const addresses = findAllAddress(req.user.id,[models.Demographic])
+            const addresses = await findAllAddress(req.user.id,[models.Demographic])
+            if (!addresses || addresses.length === 0) {
+                throw new Error("User has no addresses")
+            }
             return res.render('address/all', {addresses})
         } catch (error) {
-            Raven.captureException(err)
+            Raven.captureException(error)
             req.flash('error', 'Something went wrong trying to query address database')
             return res.redirect('/users/me')
         }
@@ -45,7 +47,7 @@ router.get('/:id',
             }
             return res.render('address/id', {address})
         } catch (error) {
-            Raven.captureException(err)
+            Raven.captureException(error)
             req.flash('error', 'Something went wrong trying to query address database')
             return res.redirect('/users/me')
         }

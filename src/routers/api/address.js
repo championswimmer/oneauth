@@ -4,7 +4,7 @@ const cel = require('connect-ensure-login')
 const Raven = require('raven')
 const {hasNull} = require('../../utils/nullCheck')
 const {findCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
-    findAddress, createAddress} = require('../../controllers/demographics');
+    findDemographic, createAddress} = require('../../controllers/demographics');
 
 router.post('/', cel.ensureLoggedIn('/login'),async function (req, res) {
     if (hasNull(req.body, ['label', 'first_name', 'last_name', 'number', 'email', 'pincode', 'street_address', 'landmark', 'city', 'stateId', 'countryId'])) {
@@ -56,7 +56,7 @@ router.post('/:id', cel.ensureLoggedIn('/login'), async function (req, res) {
     try {
         await db.transaction(async (t) => {
             if (req.body.primary === 'on') {
-                let demo = await findAddress(req.user.id);
+                let demo = await findDemographic(req.user.id);
                 let demoId = demo.id
                 await updateAddressbyDemoId(demoId, {primary: false})
             }

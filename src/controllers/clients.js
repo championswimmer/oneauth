@@ -21,6 +21,18 @@ function updateClient(options,clientId) {
     });
 }
 
+function findClient(clientId) {
+    return new Promise ((resolve,reject)=>{
+        models.Client.findOne({
+            where: {id: clientId}
+        }).then(function (client) {
+            resolve(client)
+        }).catch(function(){
+            reject();
+        })
+    });
+}
+
 module.exports = {
-    createClient, updateClient
+    createClient, updateClient, findClient
 }

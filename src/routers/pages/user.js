@@ -9,14 +9,13 @@ const passutils = require('../../utils/password')
 const models = require('../../db/models').models
 const acl = require('../../middlewares/acl')
 const multer = require('../../utils/multer')
+const {findUserById,UpdareUser} = require('../../controllers/user');
 
 router.get('/me',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-
-        models.User.findOne({
-            where: {id: req.user.id},
-            include: [
+    async function (req, res, next) {
+        try {
+            const user = await findUserById(req.user.id,[
                 models.UserGithub,
                 models.UserGoogle,
                 models.UserFacebook,
@@ -30,35 +29,30 @@ router.get('/me',
                         models.Company,
                     ]
                 }
-            ]
-        }).then(function (user) {
+            ]);
             if (!user) {
                 res.redirect('/login')
             }
             return res.render('user/me', {user: user})
-        }).catch(function (err) {
+        } catch (error) {
             throw err
-        })
-
+        }
     })
 
 router.get('/me/edit',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
+    async function (req, res, next) {
         Promise.all([
-            models.User.findOne({
-                where: {id: req.user.id},
-                include: [
-                    {
-                        model: models.Demographic,
-                        include: [
-                            models.College,
-                            models.Branch,
-                            models.Company,
-                        ]
-                    }
-                ]
-            }),
+            await findUserById(req.user.id,[
+                {
+                    model: models.Demographic,
+                    include: [
+                        models.College,
+                        models.Branch,
+                        models.Company,
+                    ]
+                }
+            ]),
             models.College.findAll({}),
             models.Branch.findAll({})
         ]).then(function ([user, colleges, branches]) {
@@ -107,10 +101,7 @@ router.post('/me/edit',
         }
 
         try {
-            const user = await models.User.findOne({
-                where: {id: req.user.id},
-                include: [models.Demographic]
-            })
+            const user = await findUserById(req.user.id,[models.Demographic])
             const demographic = user.demographic || {};
             
             user.firstname = req.body.firstname
@@ -168,65 +159,56 @@ router.post('/me/edit',
 router.get('/:id',
     cel.ensureLoggedIn('/login'),
     acl.ensureRole('admin'),
-    function (req, res, next) {
-
-        models.User.findOne({
-            where: {id: req.params.id},
-            include: [
+    async function (req, res, next) {
+        try {
+            const user = await findUserById(req.params.id,[
                 models.UserGithub,
                 models.UserGoogle,
                 models.UserFacebook,
                 models.UserLms,
                 models.UserTwitter
-            ]
-        }).then(function (user) {
+            ]) 
             if (!user) {
                 return res.status(404).send({error: "Not found"})
             }
             return res.render('user/id', {user: user})
-        }).catch(function (err) {
-            throw err
-        })
+        } catch (error) {
+            throw erorr
+        }
     }
 )
 
 router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     acl.ensureRole('admin'),
-    function (req, res, next) {
-
-        models.User.findOne({
-            where: {id: req.params.id},
-        }).then(function (user) {
+    async function (req, res, next) {
+        try {
+            const user = await findUserById(req.params.id) 
             if (!user) {
                 return res.status(404).send({error: "Not found"})
             }
             return res.render('user/id/edit', {user: user})
-        }).catch(function (err) {
-            throw err
-        })
+        } catch (error) {
+            throw erorr
+        }
     }
 )
 
 router.post('/:id/edit',
     cel.ensureLoggedIn('/login'),
     acl.ensureRole('admin'),
-    function (req, res, next) {
-
-        models.User.update({
+    async function (req, res, next) {
+        try {
+            const user = await UpdareUser(req.params.id,{
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 email: req.body.email,
                 role: req.body.role !== 'unchanged' ? req.body.role : undefined
-            },
-            {
-                where: {id: req.params.id},
-                returning: true
-            }).then(function (result) {
-            return res.redirect('../' + req.params.id)
-        }).catch(function (err) {
-            throw err
-        })
+            }) 
+            return res.redirect('../' + req.params.id);
+        } catch (error) {
+            throw erorr
+        }
     }
 )
 

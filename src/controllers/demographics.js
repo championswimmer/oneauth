@@ -26,11 +26,28 @@ function createAddress(options){
 }
 
 
-function findAddress(userId){
+function findDemographic(userId){
     return new Promise((resolve,reject) => {
         models.Demographic.findOne({where: {userId: userId}})
     })
 }
+
+function findAddress(userId, demoUserId){
+    return new Promise((resolve,reject) => {
+        models.Address.findOne({
+            where: {
+                id: userId,
+                '$demographic.userId$': demoUserId
+            },
+            include: [models.Demographic, models.State, models.Country]
+        }).then(function (address) {
+            resolve(address);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
 
 function updateAddressbyAddrId(addrId,options){
     return new Promise((resolve,reject) => {
@@ -77,6 +94,6 @@ function findAllAddress(userId, includes){
 
 module.exports = {
     findCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
-    findAddress, createAddress, findAllAddress
+    findAddress, createAddress, findAllAddress,findDemographic
 }
 

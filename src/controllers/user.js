@@ -14,6 +14,19 @@ function findUserById(userid,includes, attributes){
     })
 }
 
+function UpdareUser(userid, newValues){
+    return new Promise((resolve,reject) => {
+        models.User.update(newValues, {
+            where: {id: userid},
+            returning: true
+        }).then(function (user) {
+            resolve(user);
+        }).catch(function (err) {
+            reject();
+        })
+    })
+}
+
 function deleteAuthToken(token){
     return new Promise((resolve,reject) => {
         models.AuthToken.destroy({
@@ -27,5 +40,5 @@ function deleteAuthToken(token){
 }
 
 module.exports = {
-    findUserById, deleteAuthToken
+    findUserById, deleteAuthToken, UpdareUser
 }

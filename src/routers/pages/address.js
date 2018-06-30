@@ -3,20 +3,20 @@ const cel = require('connect-ensure-login')
 const Raven = require('raven')
 
 const models = require('../../db/models').models
+const {findCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
+    findAddress, createAddress, findAllAddress} = require('../../controllers/demographics');
 
 router.get('/',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Address.findAll({
-            where: {'$demographic.userId$': req.user.id},
-            include: [models.Demographic]
-        }).then(function (addresses) {
+    async function (req, res, next) {
+        try {
+            const addresses = findAllAddress(req.user.id,[models.Demographic])
             return res.render('address/all', {addresses})
-        }).catch(function (err) {
+        } catch (error) {
             Raven.captureException(err)
             req.flash('error', 'Something went wrong trying to query address database')
             return res.redirect('/users/me')
-        })
+        }
     }
 )
 
@@ -36,39 +36,27 @@ router.get('/add',
 
 router.get('/:id',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Address.findOne({
-            where: {
-                id: req.params.id,
-                '$demographic.userId$': req.user.id
-            },
-            include: [models.Demographic, models.State, models.Country]
-        }).then(function (address) {
+    async function (req, res, next) {
+        try {
+            const address = await findAddress(req.params.id,req.user.id );    
             if (!address) {
                 req.flash('error', 'Address not found')
                 return res.redirect('.')
             }
             return res.render('address/id', {address})
-        }).catch((err) => {
+        } catch (error) {
             Raven.captureException(err)
             req.flash('error', 'Something went wrong trying to query address database')
             return res.redirect('/users/me')
-        })
+        }
     }
 )
 
 
 router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        Promise.all([
-            models.Address.findOne({
-                where: {
-                    id: req.params.id,
-                    '$demographic.userId$': req.user.id
-                },
-                include: [models.Demographic, models.State, models.Country]
-            }),
+    async function (req, res, next) {
+        Promise.all([await findAddress(req.params.id,req.user.id ),
             models.State.findAll({}),
             models.Country.findAll({})
         ]).then(function ([address, states, countries]) {

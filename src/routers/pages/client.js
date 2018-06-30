@@ -4,6 +4,7 @@
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const acl = require('../../middlewares/acl')
+const {findClient} =require('../../controllers/clients');
 
 const models = require('../../db/models').models
 
@@ -26,29 +27,27 @@ router.get('/add',
 
 router.get('/:id',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Client.findOne({
-            where: {id: req.params.id}
-        }).then(function (client) {
+    async function (req, res, next) {
+        try {
+            const client = findClient(req.params.id)    
             if (!client) {
                 return res.send("Invalid Client Id")
             }
             if (client.userId != req.user.id) {
                 return res.send("Unauthorized user")
             }
-
             return res.render('client/id', {client: client})
-        })
+        } catch (error) {
+        }
     }
 )
 
 
 router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Client.findOne({
-            where: {id: req.params.id}
-        }).then(function (client) {
+    async function (req, res, next) {
+        try {
+            const client = findClient(req.params.id)    
             if (!client) {
                 return res.send("Invalid Client Id")
             }
@@ -60,7 +59,8 @@ router.get('/:id/edit',
             client.clientdefaultURL = client.defaultURL;
 
             return res.render('client/edit', {client: client})
-        })
+        } catch (error) {
+        }
     }
 )
 

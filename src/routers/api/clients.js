@@ -29,7 +29,7 @@ router.post('/add', async function (req, res) {
         arr[i] = urlutils.prefixHttp(url)
     })
     try {
-        const clientid = createClient({
+        const clientid = await createClient({
             id: generator.genNdigitNum(10),
             secret: generator.genNcharAlphaNum(64),
             name: clientName,

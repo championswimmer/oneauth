@@ -25,8 +25,8 @@ router.get('/add',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         Promise.all([
-            await findAllStates,
-            await findAllCountries
+            await findAllStates(),
+            await findAllCountries()
         ]).then(function ([states, countries]) {
             return res.render('address/add', {states, countries})
         }).catch(function (err) {
@@ -58,8 +58,8 @@ router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         Promise.all([await findAddress(req.params.id,req.user.id ),
-            await findAllStates,
-            await findAllCountries
+            await findAllStates(),
+            await findAllCountries()
         ]).then(function ([address, states, countries]) {
             if (!address) {
                 req.flash('error', 'Address not found')

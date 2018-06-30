@@ -33,14 +33,14 @@ function findAddress(userId, demoUserId){
 
 
 function updateAddressbyAddrId(addrId,options){
-    return models.Address.update(options,
-        { where: {id: addrId} 
+    return models.Address.update(options,{ 
+        where: {id: addrId} 
     })
 }
 
 function updateAddressbyDemoId(demoId,options){
-    return models.Address.update(options,
-        { where: {id: demoId} 
+    return models.Address.update(options,{
+        where: {id: demoId} 
     })
 }
 

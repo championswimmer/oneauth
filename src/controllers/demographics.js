@@ -29,6 +29,12 @@ function createAddress(options){
 function findDemographic(userId){
     return new Promise((resolve,reject) => {
         models.Demographic.findOne({where: {userId: userId}})
+        .then((demo) => {
+            resolve(demo);
+        })
+        .catch(err => {
+            reject(err);
+        })
     })
 }
 

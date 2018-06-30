@@ -10,7 +10,7 @@ const cel = require('connect-ensure-login')
 
 const urlutils = require('../../utils/urlutils')
 
-router.post('/add', function (req, res) {
+router.post('/add', async function (req, res) {
     if (!req.user) {
         return res.status(403).send("Only logged in users can make clients")
     }
@@ -45,7 +45,7 @@ router.post('/add', function (req, res) {
 })
 
 router.post('/edit/:id', cel.ensureLoggedIn('/login'),
-    function (req, res) {
+    async function (req, res) {
         let clientId = parseInt(req.params.id)
         let clientName = req.body.clientname
         let clientDomains = req.body.domain.replace(/ /g, '').split(';')

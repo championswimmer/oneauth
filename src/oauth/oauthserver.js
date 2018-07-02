@@ -9,7 +9,7 @@ const oauthController = require('../controllers/oauth')
     , passport = require('../passport/passporthandler')
     , debug = require('debug')('oauth:oauthserver')
 
-const {createGrantCode,createAuthToken, findGrantCode, findAuthToken, findCreateAuthToken} = oauthController;
+const {createGrantCode,createAuthToken, findGrantCode, findAuthToken, findOrCreateAuthToken} = oauthController;
 const {findClientById} = clientController;
 
 const server = oauth.createServer()
@@ -76,7 +76,7 @@ server.exchange(oauth.exchange.code(
             if (!callbackMatch) {
                 return done(null,false) // Wrong redirect URI
             }
-            const authToken = await findCreateAuthToken(grantCode )
+            const authToken = await findOrCreateAuthToken(grantCode )
             grantCode.destroy()
             return done(null, authToken.token);
         } catch (error) {

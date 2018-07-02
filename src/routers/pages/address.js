@@ -2,13 +2,13 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const Raven = require('raven')
 
-const { findAddress, findAllAddress, findAllStates, findAllCountries} = require('../../controllers/demographics');
+const { findAddress, findAllAddresses, findAllStates, findAllCountries} = require('../../controllers/demographics');
 
 router.get('/',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const addresses = await findAllAddress(req.user.id)
+            const addresses = await findAllAddresses(req.user.id)
             if (!addresses || addresses.length === 0) {
                 throw new Error("User has no addresses")
             }

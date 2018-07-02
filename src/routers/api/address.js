@@ -5,7 +5,7 @@ const Raven = require('raven')
 const {hasNull} = require('../../utils/nullCheck')
 const demographicController = require('../../controllers/demographics');
 
-const {findCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
+const {findOrCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
     findDemographic, createAddress} = demographicController;
 
 router.post('/', cel.ensureLoggedIn('/login'),async function (req, res) {
@@ -16,7 +16,7 @@ router.post('/', cel.ensureLoggedIn('/login'),async function (req, res) {
             var redirectUrl = req.query.returnTo;
         }
         try {
-            const demographics = await findCreateDemographic(req.user.id);
+            const demographics = await findOrCreateDemographic(req.user.id);
             const options = {
                 label: req.body.label,
                 first_name: req.body.first_name,

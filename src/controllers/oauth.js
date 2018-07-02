@@ -26,7 +26,7 @@ function findGrantCode(code) {
     })
 }
 
-function findCreateAuthToken(grantCode){
+function findOrCreateAuthToken(grantCode){
     return models.AuthToken.findCreateFind({
         where: {
             clientId: grantCode.clientId,
@@ -65,5 +65,5 @@ function deleteAuthToken(token){
 }
 
 module.exports = {
-    createGrantCode,createAuthToken, findGrantCode, findAuthToken, findCreateAuthToken, deleteAuthToken
+    createGrantCode,createAuthToken, findGrantCode, findAuthToken, findOrCreateAuthToken, deleteAuthToken
 }

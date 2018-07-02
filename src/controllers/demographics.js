@@ -1,6 +1,6 @@
 const {models} = require('../db/models')
 
-function findCreateDemographic(userId){
+function findOrCreateDemographic(userId){
     return models.Demographic.findCreateFind({
         where: {userId: userId},
         include: [models.Address]
@@ -44,7 +44,7 @@ function updateAddressbyDemoId(demoId,options){
     })
 }
 
-function findAllAddress(userId, includes = [models.Demographic]){
+function findAllAddresses(userId, includes = [models.Demographic]){
     return models.Address.findAll({
         where: {'$demographic.userId$': userId},
         include: includes
@@ -59,15 +59,15 @@ function findAllCountries(){
     return models.Country.findAll({});
 }
 
-function getBranches() {
+function findAllBranches() {
     return models.Branch.findAll({})
 }
-function getColleges() {
+function findAllColleges() {
     return models.College.findAll({})
 }
 
 module.exports = {
-    findCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
-    findAddress, createAddress, findAllAddress,findDemographic, findAllStates, findAllCountries, getBranches, getColleges
+    findOrCreateDemographic,updateAddressbyDemoId,updateAddressbyAddrId,
+    findAddress, createAddress, findAllAddresses,findDemographic, findAllStates, findAllCountries, findAllBranches, findAllColleges
 }
 

@@ -4,11 +4,11 @@
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const acl = require('../../middlewares/acl')
-const {findClientById, findAllClient} =require('../../controllers/clients');
+const {findClientById, findAllClients} =require('../../controllers/clients');
 
 router.get('/',acl.ensureAdmin, async function (req,res,next) {
     try {
-        const clients = await findAllClient();
+        const clients = await findAllClients();
         return res.render('client/all',{clients:clients})
     } catch (error) {
         res.send("No clients Registered")

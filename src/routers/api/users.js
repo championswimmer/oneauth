@@ -9,7 +9,7 @@ const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
 const {findUserById} = require('../../controllers/user');
 const {deleteAuthToken} = require('../../controllers/oauth');
-const  {findAllAddress} = require('../../controllers/demographics');
+const  {findAllAddresses} = require('../../controllers/demographics');
 router.get('/me',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
     passport.authenticate(['bearer', 'session']),
@@ -163,7 +163,7 @@ router.get('/:id/address',
             }
         }
         try {
-            const addresses = await findAllAddress(req.params.id, includes)
+            const addresses = await findAllAddresses(req.params.id, includes)
             return res.json(addresses)
         } catch (error) {
             Raven.captureException(err)

@@ -10,8 +10,8 @@ const models = require('../../db/models').models
 const acl = require('../../middlewares/acl')
 const multer = require('../../utils/multer')
 const {findUserById,UpdareUser} = require('../../controllers/user');
-const {findAllClientbyUser} = require('../../controllers/clients');
-const {getBranches, getColleges} = require('../../controllers/demographics');
+const {findAllClientsByUser} = require('../../controllers/clients');
+const {findAllBranches, findAllColleges} = require('../../controllers/demographics');
 
 router.get('/me',
     cel.ensureLoggedIn('/login'),
@@ -55,8 +55,8 @@ router.get('/me/edit',
                     ]
                 }
             ]),
-            await getBranches(), 
-            await getColleges()
+            await findAllBranches(), 
+            await findAllColleges()
         ]).then(function ([user, colleges, branches]) {
             if (!user) {
                 res.redirect('/login')
@@ -218,7 +218,7 @@ router.get('/me/clients',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const clients = await findAllClientbyUser(req.user.id);
+            const clients = await findAllClientsByUser(req.user.id);
             return res.render('client/all', {clients: clients})
         } catch (error) {
             res.send("No clients registered")

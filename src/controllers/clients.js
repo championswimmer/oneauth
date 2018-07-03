@@ -19,12 +19,12 @@ function findAllClients() {
     return models.Client.findAll({});
 }
 
-function findAllClientsbyUser(userId) {
+function findAllClientsByUser(userId) {
     return models.Client.findAll({
         where: {userId: userId}
     })
 }
 
 module.exports = {
-    createClient, updateClient, findClientById, findAllClients, findAllClientsbyUser
+    createClient, updateClient, findClientById, findAllClients, findAllClientsByUser
 }

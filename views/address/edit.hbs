@@ -1,6 +1,7 @@
 {{!< centercolumn}}
 
 <form class="form-group" method="post" action="/api/address/{{address.id}}">
+    <input type="hidden" name="returnTo" id="redirect-input">
     <p>Edit Details for {{address.id}}</p>
     <div class="form-group">
         <label>Label</label>
@@ -75,3 +76,10 @@
         <input class="btn btn-warning mx-auto" value="Update Address" type="submit">
     </div>
 </form>
+<script>
+    $(function(){
+        let params = (new URL(document.location)).searchParams;
+        let url = params.get('returnTo')
+        $('#redirect-input').val(url)
+    })
+</script>

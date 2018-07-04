@@ -4,30 +4,24 @@
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 
-const models = require('../../db/models').models
+const { findAllAuthTokens,findAuthToken } = require('../../controllers/oauth');
 
 router.get('/',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.AuthToken.findAll({
-            where: {userId: req.user.id},
-            include: [models.Client]
-        }).then(function (apps) {
+    async function (req, res, next) {
+        try{
+            const apps = await findAllAuthTokens(req.user.id);
             return res.render('apps/all', {apps: apps})
-        }).catch(function (err) {
+        } catch(error){
             res.send("No clients registered")
-        })
+        }
     }
 )
 
 router.get('/:clientId/delete',cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.AuthToken.findOne({
-            where: {
-                userId: req.user.id,
-                clientId: +req.params.clientId
-            }
-        }).then(function (token) {
+    async function (req, res, next) {
+        try {
+            const token  = await findAuthToken(+req.params.clientId,req.user.id)
             if (!token) {
                 return res.send("Invalid App")
             }
@@ -35,9 +29,10 @@ router.get('/:clientId/delete',cel.ensureLoggedIn('/login'),
                 return res.send("Unauthorized user")
             }
             token.destroy();
-
             return res.redirect('/apps/')
-        })
+        } catch (error) {
+            return res.send("Invalid App")
+        }
     }
 )
 

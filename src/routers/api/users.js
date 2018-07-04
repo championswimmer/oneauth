@@ -103,10 +103,10 @@ router.get('/me/logout',
         if (req.user && req.user.id) {
             let token = req.header('Authorization').split(' ')[1];
             try {
-                const del  = await deleteAuthToken(token)
+                const del = await deleteAuthToken(token)
                 res.status(202).send({
                     'user_id': req.user.id,
-                    'logout': del
+                    'logout': "success"
                 })
             } catch (error) {
                 res.status(501).send(error)

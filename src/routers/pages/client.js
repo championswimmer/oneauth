@@ -38,7 +38,7 @@ router.get('/:id',
             }
             return res.render('client/id', {client: client})
         } catch (error) {
-            Raven.captureException(err)
+            Raven.captureException(error)
             req.flash('error', 'Error Getting Client')
             res.status(500).json({error: error})
         }
@@ -62,7 +62,7 @@ router.get('/:id/edit',
             client.clientdefaultURL = client.defaultURL;
             return res.render('client/edit', {client: client})
         } catch (error) {
-            Raven.captureException(err)
+            Raven.captureException(error)
             req.flash('error', 'Error Editing Client')
             res.status(500).json({error: error})
         }

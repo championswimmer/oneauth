@@ -7,9 +7,11 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
-const {findUserById} = require('../../controllers/user');
-const {deleteAuthToken} = require('../../controllers/oauth');
-const  {findAllAddresses} = require('../../controllers/demographics');
+
+const Raven = require('raven');
+const { findUserById } = require('../../controllers/user');
+const { deleteAuthToken } = require('../../controllers/oauth');
+const  { findAllAddresses } = require('../../controllers/demographics');
 router.get('/me',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
     passport.authenticate(['bearer', 'session']),
@@ -128,8 +130,7 @@ router.get('/:id',
         }
         let trustedClient = req.client && req.client.trusted
         try {
-            let attributes = trustedClient ? undefined: ['id', 'username', 'photo']
-            const user = await findUserById(req.params.id, includes, attributes);
+            const user = await findUserForTrustedClient(trustedClient, req.params.id);
             if (!user) {
                 throw new Error("User not found")
             }
@@ -168,7 +169,7 @@ router.get('/:id/address',
         } catch (error) {
             Raven.captureException(err)
             req.flash('error', 'Something went wrong trying to query address database')
-            return res.status(501).json({error: error})
+            return res.status(500).json({error: error.message})
         }
     }
 )

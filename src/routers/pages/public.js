@@ -6,18 +6,25 @@
 const cel = require('connect-ensure-login')
 const router = require('express').Router()
 const verifyemail = require('../../routers/verifyemail')
-const {findAllBranches, findAllColleges} = require('../../controllers/demographics');
+const {
+    findAllBranches,
+    findAllColleges
+} = require('../../controllers/demographics');
 
 router.get('/login', cel.ensureNotLoggedIn('/'), function (req, res, next) {
     res.render('login', {title: "Login | OneAuth", error: req.flash('error')})
 })
 router.get('/signup', cel.ensureNotLoggedIn('/'), async function (req, res, next) {
-    Promise.all([
-        findAllBranches(), 
-        findAllColleges()
-    ]).then(function ([colleges, branches]) {
+    try {
+        const [colleges, branches] = await Promise.all([
+            findAllBranches(), 
+            findAllColleges()
+        ])
         res.render('signup', {title: "Signup | OneAuth", colleges:colleges, branches:branches})
-    })
+    } catch (error) {
+        Raven.captureException(error)
+        res.send("Error Fetching College and Branches Data.")
+    }
 })
 
 router.get('/forgot/password/new/:key', cel.ensureNotLoggedIn('/'), function (req, res, next) {

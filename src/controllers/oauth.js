@@ -52,7 +52,7 @@ function findAuthToken(clientId, userId) {
   });
 }
 
-function findAllAuthTokens(clientId) {
+function findAuthTokensByClientId(clientId) {
   return models.AuthToken.findAll({
     where: { userId: clientId },
     include: [models.Client]
@@ -74,5 +74,5 @@ module.exports = {
   findAuthToken,
   findOrCreateAuthToken,
   deleteAuthToken,
-  findAllAuthTokens
+  findAuthTokensByClientId
 };

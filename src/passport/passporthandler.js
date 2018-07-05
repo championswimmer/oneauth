@@ -9,6 +9,8 @@ const UserStrategies = require('./strategies/user')
     , debug = require('debug')('oauth:passporthandler')
 
 const models = require('../db/models').models
+const { findUserById } = require('../controllers/user')
+const { findClientById } = require('../controllers/client')
 
 const config = require('../../config')
 
@@ -49,14 +51,14 @@ passport.deserializeUser(async (idHash, cb) => {
     debug(idHash)
     try {
         if (idHash.type === 'user') {
-            const user = await models.User.findOne({where: {id: idHash.id}})
+            const user = await findUserById(idHash.id)
             if (process.env.ONEAUTH_DEV === 'localhost') {
                 user.role = 'admin'
             }
             return cb(null, user)
         }
         if (idHash.type === 'client') {
-            const client = await models.Client.findOne({where: {id: idHash.id}})
+            const client = await findClientById(idHash.id)
             return cb(null, client)
         }
     } catch (err) {

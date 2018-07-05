@@ -9,9 +9,16 @@ const passutils = require('../../utils/password')
 const models = require('../../db/models').models
 const acl = require('../../middlewares/acl')
 const multer = require('../../utils/multer')
-const {findUserById,UpdareUser} = require('../../controllers/user');
-const {findAllClientsByUser} = require('../../controllers/clients');
-const {findAllBranches, findAllColleges} = require('../../controllers/demographics');
+
+const { 
+    findUserById,
+    updateUser
+} = require('../../controllers/user');
+const { findAllClientsByUserId } = require('../../controllers/clients');
+const {
+    findAllBranches, 
+    findAllColleges
+} = require('../../controllers/demographics');
 
 router.get('/me',
     cel.ensureLoggedIn('/login'),
@@ -44,27 +51,29 @@ router.get('/me',
 router.get('/me/edit',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
-        Promise.all([
-            await findUserById(req.user.id,[
-                {
-                    model: models.Demographic,
-                    include: [
-                        models.College,
-                        models.Branch,
-                        models.Company,
-                    ]
-                }
-            ]),
-            await findAllBranches(), 
-            await findAllColleges()
-        ]).then(function ([user, colleges, branches]) {
+        try {
+            const [user, colleges, branches] = await Promise.all([
+                findUserById(req.user.id,[
+                    {
+                        model: models.Demographic,
+                        include: [
+                            models.College,
+                            models.Branch,
+                            models.Company,
+                        ]
+                    }
+                ]),
+                findAllBranches(), 
+                findAllColleges()
+            ])
             if (!user) {
                 res.redirect('/login')
             }
             return res.render('user/me/edit', {user, colleges, branches})
-        }).catch(function (err) {
-            throw err
-        })
+        } catch (error) {
+            Raven.captureException(error)
+            res.send("Error Fetching College and Branches Data.")
+        }
 
     }
 )
@@ -201,7 +210,7 @@ router.post('/:id/edit',
     acl.ensureRole('admin'),
     async function (req, res, next) {
         try {
-            const user = await UpdareUser(req.params.id,{
+            const user = await updateUser(req.params.id,{
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 email: req.body.email,
@@ -218,7 +227,7 @@ router.get('/me/clients',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const clients = await findAllClientsByUser(req.user.id);
+            const clients = await findAllClientsByUserId(req.user.id);
             return res.render('client/all', {clients: clients})
         } catch (error) {
             res.send("No clients registered")

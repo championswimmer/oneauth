@@ -4,7 +4,10 @@
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const acl = require('../../middlewares/acl')
-const {findClientById, findAllClients} =require('../../controllers/clients');
+const { 
+    findClientById, 
+    findAllClients
+} =require('../../controllers/clients');
 
 router.get('/',acl.ensureAdmin, async function (req,res,next) {
     try {
@@ -35,6 +38,9 @@ router.get('/:id',
             }
             return res.render('client/id', {client: client})
         } catch (error) {
+            Raven.captureException(err)
+            req.flash('error', 'Error Getting Client')
+            res.status(500).json({error: error})
         }
     }
 )
@@ -56,6 +62,9 @@ router.get('/:id/edit',
             client.clientdefaultURL = client.defaultURL;
             return res.render('client/edit', {client: client})
         } catch (error) {
+            Raven.captureException(err)
+            req.flash('error', 'Error Editing Client')
+            res.status(500).json({error: error})
         }
     }
 )

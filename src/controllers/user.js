@@ -1,20 +1,28 @@
-const models = require('../db/models').models;
+const { User } = require("../db/models").models;
 
-function findUserById(userid,includes, attributes){
-    return models.User.findOne({
-        attributes: attributes,
-        where: {id: userid},
-        include: includes
-    })
+function findUserById(userid, includes) {
+  return User.findOne({
+    where: { id: userid },
+    include: includes
+  });
 }
 
-function UpdareUser(userid, newValues){
-    return models.User.update(newValues, {
-        where: {id: userid},
-        returning: true
-    })
+function updateUser(userid, newValues) {
+  return User.update(newValues, {
+    where: { id: userid },
+    returning: true
+  });
+}
+
+function findUserForTrustedClient(trustedClient, userId) {
+  return User.findOne({
+    attributes: trustedClient ? undefined : ["id", "username", "photo"],
+    where: { id: userId }
+  });
 }
 
 module.exports = {
-    findUserById, UpdareUser
-}
+  findUserById,
+  updateUser,
+  findUserForTrustedClient
+};

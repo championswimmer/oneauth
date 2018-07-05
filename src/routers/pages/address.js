@@ -2,7 +2,12 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const Raven = require('raven')
 
-const { findAddress, findAllAddresses, findAllStates, findAllCountries} = require('../../controllers/demographics');
+const { 
+    findAddress, 
+    findAllAddresses, 
+    findAllStates, 
+    findAllCountries
+} = require('../../controllers/demographics');
 
 router.get('/',
     cel.ensureLoggedIn('/login'),
@@ -24,14 +29,16 @@ router.get('/',
 router.get('/add',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
-        Promise.all([
-            await findAllStates(),
-            await findAllCountries()
-        ]).then(function ([states, countries]) {
+        try {
+            const [states, countries] = await Promise.all([
+                findAllStates(),
+                findAllCountries()
+            ])
             return res.render('address/add', {states, countries})
-        }).catch(function (err) {
+        } catch (error) {
+            Raven.captureException(error)
             res.send("Error Fetching Data.")
-        })
+        }
     }
 )
 
@@ -57,20 +64,22 @@ router.get('/:id',
 router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
-        Promise.all([await findAddress(req.params.id,req.user.id ),
-            await findAllStates(),
-            await findAllCountries()
-        ]).then(function ([address, states, countries]) {
+        try {
+            const [address, states, countries] = await Promise.all([
+                findAddress(req.params.id,req.user.id ),
+                findAllStates(),
+                findAllCountries()
+            ]) 
             if (!address) {
                 req.flash('error', 'Address not found')
                 return res.redirect('.')
             }
             return res.render('address/edit', {address, states, countries})
-        }).catch((err) => {
+        } catch (err) {
             Raven.captureException(err)
             req.flash('error', 'Something went wrong trying to query address database')
             return res.redirect('/users/me')
-        })
+        }
     }
 )
 

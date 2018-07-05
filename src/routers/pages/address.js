@@ -14,9 +14,6 @@ router.get('/',
     async function (req, res, next) {
         try {
             const addresses = await findAllAddresses(req.user.id)
-            if (!addresses || addresses.length === 0) {
-                throw new Error("User has no addresses")
-            }
             return res.render('address/all', {addresses})
         } catch (error) {
             Raven.captureException(error)

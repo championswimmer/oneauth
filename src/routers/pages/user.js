@@ -63,8 +63,8 @@ router.get('/me/edit',
                         ]
                     }
                 ]),
-                findAllBranches(), 
-                findAllColleges()
+                findAllColleges(),
+                findAllBranches() 
             ])
             if (!user) {
                 res.redirect('/login')

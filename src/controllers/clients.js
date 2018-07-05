@@ -1,5 +1,5 @@
-const generator = require("../../utils/generator");
-const urlutils = require("../../utils/urlutils");
+const generator = require("../utils/generator");
+const urlutils = require("../utils/urlutils");
 const { Client } = require("../db/models").models;
 
 function findClientById(clientId) {
@@ -8,8 +8,8 @@ function findClientById(clientId) {
   });
 }
 
-function createClient(options) {
-  options.defaultURL = urlutils.prefixHttp(defaultURL);
+function createClient(options, userId) {
+  options.defaultURL = urlutils.prefixHttp(options.defaultURL);
 
   //Make sure all urls have http in them
   options.clientDomains.forEach(function(url, i, arr) {
@@ -29,7 +29,7 @@ function createClient(options) {
   });
 }
 function updateClient(options, clientId) {
-  options.defaultURL = urlutils.prefixHttp(defaultURL);
+  options.defaultURL = urlutils.prefixHttp(options.defaultURL);
   //Make sure all urls have http in them
   options.clientDomains.forEach(function(url, i, arr) {
     arr[i] = urlutils.prefixHttp(url);

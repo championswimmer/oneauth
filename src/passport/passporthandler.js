@@ -10,7 +10,7 @@ const UserStrategies = require('./strategies/user')
 
 const models = require('../db/models').models
 const { findUserById } = require('../controllers/user')
-const { findClientById } = require('../controllers/client')
+const { findClientById } = require('../controllers/clients')
 
 const config = require('../../config')
 

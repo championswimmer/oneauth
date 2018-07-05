@@ -32,9 +32,6 @@ router.post('/add', async function (req, res) {
 
 router.post('/edit/:id', cel.ensureLoggedIn('/login'),
     async function (req, res) {
-        if(req.user.role === 'admin'){
-            options.trustedClient = req.body.trustedClient
-        }
         try {
             let clientId = parseInt(req.params.id)
             let options = {
@@ -43,6 +40,9 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'),
                 clientCallbacks : req.body.callback.replace(/ /g, '').split(';'),
                 defaultURL : req.body.defaulturl.replace(/ /g, ''),
                 trustedClient : false
+            }
+            if(req.user.role === 'admin'){
+                options.trustedClient = req.body.trustedClient
             }
             await updateClient(options, clientId)
             res.redirect('/clients/' + clientId)

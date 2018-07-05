@@ -20,7 +20,7 @@ router.post('/', cel.ensureLoggedIn('/login'),async function (req, res) {
             var redirectUrl = req.query.returnTo;
         }
         try {
-            const demographics = await findOrCreateDemographic(req.user.id);
+            const [demographics, created] = await findOrCreateDemographic(req.user.id);
             const options = {
                 label: req.body.label,
                 first_name: req.body.first_name,
@@ -43,7 +43,7 @@ router.post('/', cel.ensureLoggedIn('/login'),async function (req, res) {
             } else{
                 res.redirect('/address/' + address.id)
             }           
-        } catch (error) {
+        } catch (err) {
             Raven.captureException(err)
             req.flash('error', 'Error inserting Address')
             res.redirect('/users/me')

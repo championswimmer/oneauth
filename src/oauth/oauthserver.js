@@ -3,14 +3,17 @@
  */
 const oauth = require('oauth2orize')
     , cel = require('connect-ensure-login')
-
-const oauthController = require('../controllers/oauth')
-    , clientController = require('../controllers/clients')
     , passport = require('../passport/passporthandler')
     , debug = require('debug')('oauth:oauthserver')
 
-const {createGrantCode,createAuthToken, findGrantCode, findAuthToken, findOrCreateAuthToken} = oauthController;
-const {findClientById} = clientController;
+const {
+    createGrantCode,
+    createAuthToken,
+    findGrantCode,
+    findAuthToken, 
+    findOrCreateAuthToken
+} = require('../controllers/oauth');
+const {findClientById} = require('../controllers/clients');
 
 const server = oauth.createServer()
 

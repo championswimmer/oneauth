@@ -1,16 +1,27 @@
 {{!< centercolumn}}
- <div class="resetpass-head">
-   <h2 class="text-center thin-font custom-h2">Forgot Username</h2>
- </div>
- <p class="text-center">Enter your registered Email-Id.</p>
- <form class="form-group  mt-5 pl-4 pr-4" method="post" action="/forgot/username">
-     {{#if messages.error}}
-        <div class="alert alert-danger" role="alert">
-             {{messages.error}}
+
+ <div class="col-12 col-8 o-add-address">
+     <div class="card">
+         <div class="heading-u-red">
+             Forgot Username
          </div>
-     {{/if}}
-       <input class="form-control fontAwesome inputvalidation" name="email" placeholder="&#xf0e0; Email" type="email" required> <br>
-     <div class="row">
-         <input class="btn btn-primary mx-auto" type="submit" value="Submit">
+         <form action="/forgot/username" method="post">
+             {{#if messages.error}}
+                 <div class="alert alert-danger" role="alert">
+                     {{messages.error}}
+                 </div>
+             {{/if}}
+             <div class="row no-gutters align-items-center justify-content-between detail-row">
+                 <div class="label-input col-md-4 col-sm-3">Enter your registered Email-Id</div>
+                 <input type="email" class="input-text col-8" placeholder="abc@gmail.com" name="email" required/>
+             </div>
+
+             <div class="row justify-content-end button-row">
+                 <div class="button-solid">
+                     <button type="submit"> SUBMIT</button>
+                 </div>
+             </div>
+         </form>
+
      </div>
- </form>
+ </div>

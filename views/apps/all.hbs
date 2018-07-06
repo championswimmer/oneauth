@@ -1,30 +1,36 @@
 {{!< centercolumn}}
 
-{{#each apps as |app|}}
-
-    <div class="row p-2">
-        <div class="col p-2">
-            <div class="row h1 m-2">{{app.client.name}}</div>
-            <div class="row m-2">Connected On: {{formatDate app.createdAt}}</div>
-            <div class="row">
-                <div class="col align-self-center align-items-center">
-                    <a href="{{app.client.defaultURL}}"><div class="btn btn-sm btn-info">View App</div></a>
-                    <a href="/apps/{{app.client.id}}/delete"><div class="btn btn-sm btn-info">Remove App</div></a>
-                </div>
+<div class="col-md-8 o-app-page">
+    <div class="card">
+        <div class="heading-u-red">My Apps</div>
+        <div class="attributes">
+            <div class="row justify-content-between">
+                {{#each apps as |app|}}
+                    <div class="border-card">
+                        <div class="app-row heading">{{app.client.name}}</div>
+                        <div class="app-row">
+                            <span class="faded">Connected on {{formatDate app.createdAt}}</span>
+                        </div>
+                        <div class="row justify-content-between button-row align-items-center">
+                            <a href="/apps/{{app.client.id}}/delete">
+                                <div class="grey">
+                                    <button>Remove App</button>
+                                </div>
+                            </a>
+                            <a href="{{app.client.defaultURL}}">
+                                <div class="button-dashed">
+                                    <button>View</button>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="border-card">
+                        <div class="app-row heading">You have no authorized apps yet.</div>
+                    </div>
+                {{/each}}
             </div>
         </div>
-
     </div>
+</div>
 
-{{else}}
-
-    <div class="row p-2">
-        <div class="col p-2 text-center">
-            <h3 class="thin-font">
-                You have authorized no apps yet
-            </h3>
-        </div>
-    </div>
-
-
-{{/each}}

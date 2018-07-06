@@ -21,3 +21,8 @@ hbs.registerHelper('for', function(from, to, incr, block) {
     accum += block.fn(i);
   return accum;
 });
+
+hbs.registerHelper('ifCond', function (...args) {
+    const options = args.pop()
+    return args.some(x => !x) ? options.fn(this): options.inverse(this);
+});

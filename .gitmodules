@@ -1,0 +1,4 @@
+
+[submodule "submodules/motley"]
+	path = submodules/motley
+	url = https://github.com/coding-blocks/motley.git

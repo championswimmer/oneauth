@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-motley": "node-sass ./submodules/motley/sass/styles/app.scss ./public_static/css/motley.css --output-style compressed",
-    "start": "npm run build-motley && node src/server.js",
+    "start": "node src/server.js",
     "start:dev": "cross-env ONEAUTH_DEV=localhost npm start"
   },
   "files": [

@@ -1,29 +1,46 @@
 {{!< centercolumn}}
 
+<div class="col-md-8 o-client-add">
+    <div class="card">
+        <div class="heading-u-red">Edit Details for {{client.id}}</div>
+        <div class="attributes d-flex flex-column">
+            <form method="post" action="/api/clients/edit/{{client.id}}">
+                <div class="row justify-content-between">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Client Name</div>
+                        <input type="text" class="input-text col-8" placeholder="Client Name" name="clientname" value="{{client.name}}"/>
+                    </div>
 
-<form class="form-group" method="post" action="/api/clients/edit/{{client.id}}">
-    <p>Edit Details for {{client.id}}</p>
-    <input class="form-control" type="text" name="clientname" value="{{client.name}}" placeholder="Client name"><br>
-    <input class="form-control" type="text" placeholder="domains (; separated)" value="{{client.clientDomains}}"
-           name="domain"><br>
-    <input class="form-control" type="text" placeholder="callbackurl (; separated)" value="{{client.clientCallbacks}}"
-           name="callback"><br>
-    <input class="form-control" type="text" placeholder="Default URL" name="defaulturl" value="{{client.clientdefaultURL}}" ><br>
-    {{#ifeq val=userRole expected="admin"}}
-        <div class="row">
-            <div class="col-4">
-                Trusted Client:
-            </div>
-            <div class="col-1">
-                <div class="input-group mb-3">
-                    <div class="input-group-text">
-                        <input type="checkbox" name="trustedClient">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Domain</div>
+                        <input type="text" class="input-text col-8" placeholder="Domains" name="domain" value="{{client.clientDomains}}"/>
                     </div>
                 </div>
-            </div>
+
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                    <div class="label-input col-md-4 col-sm-3">CallBack Url</div>
+                    <input type="text" class="input-text col-8" placeholder="Callback URL" name="callback" value="{{client.clientCallbacks}}"/>
+                </div>
+
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                    <div class="label-input col-md-4 col-sm-3">Default Url</div>
+                    <input type="text" class="input-text col-8" placeholder="Default URL" name="defaulturl" value="{{client.clientdefaultURL}}"/>
+                </div>
+
+                {{#ifeq val=userRole expected="admin"}}
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Trusted Client</div>
+                        <input type="checkbox" class="input-checkbox col-7" placeholder="Default URL" name="trustedClient" {{#if client.trusted}}checked{{/if}}/>
+                    </div>
+                {{/ifeq}}
+
+                <div class="row justify-content-end button-row">
+                    <div class="button-solid">
+                        <button type="submit">SAVE CHANGES</button>
+                    </div>
+                </div>
+            </form>
+
         </div>
-    {{/ifeq}}
-    <div class="row">
-        <input class="btn btn-warning mx-auto" value="Edit Client" type="submit">
     </div>
-</form>
+</div>

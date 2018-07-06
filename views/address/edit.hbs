@@ -1,5 +1,7 @@
 {{!< centercolumn}}
-
+<div class="col-md-8 o-add-address">
+    <div class="card">
+        <div class="heading-u-red">Edit Details for {{address.id}}</div>
 <form class="form-group" method="post" action="/api/address/{{address.id}}">
     <input type="hidden" name="returnTo" id="redirect-input">
     <p>Edit Details for {{address.id}}</p>
@@ -11,69 +13,90 @@
         <label>First Name</label>
         <input class="form-control" type="text" autocomplete='given-name' placeholder="First Name" name="first_name" value="{{address.first_name}}">
     </div>
+            <div class="attributes">
+                <div class="row justify-content-between">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">First Name</div>
+                        <input class="input-text col-md-8 col-sm-8"  type="text" placeholder="First Name" name="first_name" value="{{address.first_name}}" required />
+                    </div>
 
-    <div class="form-group">
-        <label>Last Name</label>
-        <input class="form-control" type="text" autocomplete='family-name' placeholder="Last Name" name="last_name" value="{{address.last_name}}">
-    </div>
-    <div class="form-group">
-        <label>Mobile Number</label>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="plus-one">+91</span>
-            </div>
-            <input class="form-control" aria-describedby="plus-one" type="text" autocomplete='tel' pattern="[0-9]{10}" maxlength="10" placeholder="Mobile Number" name="number" value="{{address.mobile_number}}">
-        </div>
-    </div>
-    <div class="form-group">
-        <input class="form-control" autocomplete='email' type="email" placeholder="E-mail" name="email" value="{{address.email}}"><br>
-    </div>
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Last Name</div>
+                        <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Last Name" name="last_name" value="{{address.last_name}}" required />
+                    </div>
+                </div>
 
-    <div class="form-group">
-        <label>Street Address</label>
-        <textarea class="form-control" rows="3"
-                  autocomplete='street-address'
-                  placeholder="Street Address"
-                  name="street_address"
-        >{{address.street_address}}</textarea>
-    </div>
-    <div class="form-group">
-        <label>Landmark</label>
-        <input class="form-control" type="text" placeholder="Landmark" autocomplete='address-level1' name="landmark" value="{{address.landmark}}">
-    </div>
-    <div class="form-group">
-        <label>PIN/ZIP Code</label>
-        <input class="form-control" autocomplete='postal-code' type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" placeholder="Pin Code" value="{{address.pincode}}">
-    </div>
-    <div class="form-group">
-        <label>City</label>
-        <input class="form-control" type="text" placeholder="City" autocomplete='address-level2' name="city" value="{{address.city}}">
-    </div>
-    <label>State:</label>
-    <select name="stateId" value="{{address.stateId}}" autocomplete='address-level2' class="m-2a form-control">
-        {{#each states}}
-            {{#ifeq expected=id val=../address.stateId}}
-                <option value="{{id}}" selected>{{name}}</option>
-            {{/ifeq}}
-            {{#ifneq expected=id val=../address.stateId}}
-                <option value="{{id}}">{{name}}</option>
-            {{/ifneq}}
-        {{/each}}
-    </select>
-    <label>Country:</label>
-    <select name="countryId" class="m-2a form-control" autocomplete='country-name'>
-        {{#each countries}}
-            {{#ifeq expected=id val=../address.countryId}}
-                <option value="{{id}}" selected>{{name}}</option>
-            {{/ifeq}}
-            {{#ifneq expected=id val=../address.countryId}}
-                <option value="{{id}}">{{name}}</option>
-            {{/ifneq}}
-        {{/each}}
-    </select>
-    <input type="checkbox" {{#if address.primary}} checked {{/if}} name="primary"> This a primary address.<br>
-    <div class="row mt-5p">
-        <input class="btn btn-warning mx-auto" value="Update Address" type="submit">
+                <div class="row justify-content-between">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Mobile No.</div>
+                        <input class="input-text col-md-8 col-sm-8" type="text" pattern="[0-9]{10}" maxlength="10" placeholder="Mobile Number" name="number" value="{{address.mobile_number}}" required />
+                    </div>
+
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Email</div>
+                        <input class="input-text col-md-8 col-sm-8" type="email" placeholder="E-mail" name="email" value="{{address.email}}" required />
+                    </div>
+                </div>
+
+                <div class="row justify-content-between">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Address Line</div>
+                        <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Street Address" name="street_address" value="{{address.street_address}}" required />
+                    </div>
+
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Landmark</div>
+                        <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Landmark" name="landmark" value="{{address.landmark}}" required />
+                    </div>
+                </div>
+
+                <div class="row justify-content-between">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Pincode</div>
+                        <input class="input-text col-md-8 col-sm-8" type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" placeholder="Pin Code" value="{{address.pincode}}" required />
+                    </div>
+
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">City</div>
+                        <input class="input-text col-md-8 col-sm-8" type="text" placeholder="City" name="city" value="{{address.city}}" required />
+                    </div>
+                </div>
+
+                <div class="row justify-content-between">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">State</div>
+
+                        <select name="stateId" value="{{address.stateId}}" required class="dropdown-ul input-text col-md-8 col-sm-8">
+                            {{#each states}}
+                                <option class="dropdown-li" value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Country</div>
+                        <select name="countryId" value="{{address.countryId}}" required class="dropdown-ul input-text col-md-8 col-sm-8">
+                            {{#each countries}}
+                                <option class="dropdown-li" value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Label</div>
+                        <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Label" name="label" required />
+                    </div>
+                </div>
+
+                <div class="row justify-content-end button-row">
+                    <div class="grey reset-button">
+                        <button type="reset">RESET</button>
+                    </div>
+
+                    <div class="button-solid">
+                        <button type="submit">SAVE CHANGES</button>
+                    </div>
+                </div>
     </div>
 </form>
 <script>

@@ -1,49 +1,62 @@
 {{!< centercolumn}}
 
-<h2 class="text-center thin-font"> Edit Profile </h2>
+<div class="col-md-8 o-profile-edit">
+    <div class="card">
+        <div class="heading-u-red">Edit Profile</div>
+        {{#if messages.error}}
+            <div class="alert alert-danger" role="alert">
+                {{messages.error}}
+            </div>
+        {{/if}}
 
-{{#if messages.error}}
-    <div class="alert alert-danger" role="alert">
-        {{messages.error}}
-    </div>
-{{/if}}
+        <form class="form-group" method="post">
+            <div class="attributes">
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                    <div class="label-input col-2">UserID</div>
+                    <input class="input-text col-9" type="text" id="userid" disabled value="{{user.id}}" />
+                </div>
 
-<form class="form-group" method="post">
-    <div class="form-group row" id="profile-row-id">
-        <label for="userid" class=" col-sm-3 col-form-label"> User ID </label>
-        <input class="col-sm-9 form-control" type="text" disabled id="userid" value="{{user.id}}"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="username" class=" col-sm-3 col-form-label"> Username </label>
-        <input class="col-sm-9 form-control" type="text" disabled id="username" value="{{user.username}}"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="firstname" class=" col-sm-3 col-form-label"> First Name </label>
-        <input class="col-sm-9 form-control" type="text" name="firstname" id="firstname" value="{{user.firstname}}"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="lastname" class=" col-sm-3 col-form-label"> Last Name </label>
-        <input class="col-sm-9 form-control" type="text" name="lastname" id="lastname" value="{{user.lastname}}"> </input>
-    </div>
-    <div class="form-group row" id="profile-row-id">
-        <label for="email" class="col-sm-3 col-form-label"> Email ID </label>
-        <input class="col-sm-9 form-control" type="text" id="email" value="{{user.email}}"> </input>
-    </div>
-    <div class="form-group row">
-        <label for="role" class="col-sm-3 col-form-label"> Role@CB </label>
-        <select name="role" id="role" class="col-sm-9 form-control">
-            <option selected value="unchanged">Unchanged</option>
-            <option value="NULL">None</option>
-            <option value="admin">Administrator</option>
-            <option value="employee">Employee</option>
-            <option value="intern">Intern</option>
-        </select>
-    </div>
-    <div class="form-group row">
-        <div class="col hidden-md-down"></div>
-        <input type="submit" class="col-lg-3 m-2 btn btn-success" value="SUBMIT">
-        <input type="reset" class="col-lg-3 m-2 p-2 btn btn-danger" value="RESET">
-        <div class="col hidden-md-down"></div>
-    </div>
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                    <div class="label-input col-2">Username</div>
+                    <input type="text" class="input-text col-9" id="username" disabled value="{{user.username}}" />
+                </div>
 
-</form>
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                    <div class="label-input col-2">Firstname</div>
+                    <input type="text" id="firstname" class="input-text col-9" name="firstname" value="{{user.firstname}}" />
+                </div>
+
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                    <div class="label-input col-2">Lastname</div>
+                    <input class="input-text col-9" type="text" name="lastname" id="lastname" value="{{user.lastname}}" />
+                </div>
+
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-2">Email ID</div>
+                        <input type="text" id="email" name="email" class="input-text col-9" value="{{user.email}}" />
+                </div>
+
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                    <div class="label-input col-2">Role@CB</div>
+                    <select name="role" class="dropdown-ul input-text col-9">
+                        <option class="dropdown-li" value="unchanged" selected>Unchanged</option>
+                        <option class="dropdown-li" value="NULL">None</option>
+                        <option class="dropdown-li" value="admin">Administrator</option>
+                        <option class="dropdown-li" value="employee">Employee</option>
+                        <option class="dropdown-li" value="intern">Intern</option>
+                    </select>
+                </div>
+
+                <div class="flex-row justify-content-end button-div">
+                    <div class="reset-button">
+                        <button type="reset">RESET</button>
+                    </div>
+                    <div class="button-solid">
+                        <button type="submit">SAVE CHANGES</button>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>

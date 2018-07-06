@@ -1,44 +1,41 @@
 {{!< centercolumn}}
-    {{#if messages.error}}
-        <div class="row alert alert-danger m-2">{{messages.error}}</div>
-    {{/if}}
+{{#if messages.error}}
+    <div class="row alert alert-danger m-2">{{messages.error}}</div>
+{{/if}}
 
-{{#each addresses as |address index|}}
-    {{#ifeq expected=0 val=index}}
-        <a href="/address/add"><div class="btn btn-sm btn-info mt-5p">Add</div></a>
-    {{/ifeq}}
-    <div class="row p-2">
-        <div class="col p-2">
-            <div class="row m-2">
-                <h5>{{address.label}}</h5>
-            </div>
-            <div class="row m-2">
-                <h6>{{address.street_address}} Near {{address.landmark}}</h6>
-            </div>
-            <div class="row m-2">
-                <p>{{address.city}}, {{address.pincode}}</p>
-            </div>
-            <div class="row">
-                <div class="col align-self-center align-items-center">
-                    <a href="/address/{{address.id}}"><div class="btn btn-sm btn-info">View</div></a>
-                    <a href="/address/{{address.id}}/edit"><div class="btn btn-sm btn-info">Edit</div></a>
+<div class="col-md-8 o-address-page">
+  <div class="card">
+    <div class="flex-row justify-content-between">
+      <div class="heading-u-red">My Addresses</div>
+        <div class="button-solid">
+          <a class="white" href="/address/add">
+            <button>+ Add New Address</button>
+          </a>  
+        </div>
+      </div>
+      <div class="attributes">
+        <div class="row justify-content-between">
+          {{#each addresses as |address index|}}
+            <div class="border-card">
+              <div class="address-row heading red">{{address.label}}</div>
+              <div class="address-row heading">
+                {{address.first_name}} {{address.last_name}} {{address.email}} | {{address.mobile_number}}
+              </div>
+              <div class="address-row grey">
+                {{address.street_address}} Near {{address.landmark}}, {{address.city}}<br> {{address.state.name}}: {{address.pincode}}
+                  <br>{{address.country.name}}
+              </div>
+              <div class="row justify-content-end button-row">
+                <div class="button-dashed">
+                  <a class="red" href="/address/{{address.id}}/edit">
+                    <button>Edit Address</button>
+                  </a>  
                 </div>
+              </div>
             </div>
+          {{/each}}
         </div>
+      </div>
     </div>
-
-{{else}}
-
-    <div class="row p-2">
-        <div class="col p-2 text-center">
-            <h3 class="thin-font">
-                You have registered no address yet
-            </h3>
-            <a href="/address/add">
-            <h4> Add one now</h4>
-            </a>
-        </div>
-    </div>
-
-
-{{/each}}
+  </div>
+</div>

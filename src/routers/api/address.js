@@ -83,7 +83,11 @@ router.post('/:id', cel.ensureLoggedIn('/login'), async function (req, res) {
                 },
                 { where: {id: addrId} }
             )
-            return res.redirect('/address');
+            if (req.body.returnTo) {
+              return res.redirect(req.body.returnTo)
+            } else {
+              return res.redirect(`/address/${addrId}`)
+            }
         })
 
     } catch (err) {

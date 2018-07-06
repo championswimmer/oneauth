@@ -7,14 +7,14 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
-
+const Raven = require('raven')
 
 router.get('/me',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
     passport.authenticate(['bearer', 'session']),
     function (req, res) {
 
-        if (req.user && req.user.id) {
+        if (req.user && !req.authInfo.clientOnly && req.user.id) {
             let includes = []
             if (req.query.include) {
                 let includedAccounts = req.query.include.split(',')
@@ -53,7 +53,7 @@ router.get('/me',
             })
 
         } else {
-            return res.sendStatus(403)
+            return res.status(403).json({error: 'Unauthorized'})
         }
 
     })
@@ -135,7 +135,8 @@ router.get('/me/logout',
 router.get('/:id',
     passport.authenticate('bearer', {session: false}),
     function (req, res) {
-        if (req.user && req.user.id) {
+        // Send the user his own object if the token is user scoped
+        if (req.user && !req.authInfo.clientOnly && req.user.id) {
             if (req.params.id == req.user.id) {
                 return res.send(req.user)
             }
@@ -164,18 +165,31 @@ router.get('/:id/address',
             include: [{model: models.Address, include:[models.State, models.Country]}]
         }]
 
+        if (!req.authInfo.clientOnly) {
+            // If user scoped token
+
+            // Scoped to some other user: Fuck off bro
+            if (req.params.id != req.user.id) {
+                return res.status(403).json({error: 'Unauthorized'})
+            }
+        } else {
+            // If not user scoped
+
+            // Check if trusted client or not
+            if (!req.client.trusted) {
+                return res.status(403).json({error: 'Unauthorized'})
+            }
+        }
+
         models.Address.findAll({
             where: {'$demographic.userId$': req.params.id},
             include: includes
         }).then(function (addresses) {
-            if (!addresses || addresses.length === 0) {
-                throw new Error("User has no addresses")
-            }
             return res.json(addresses)
         }).catch(function (err) {
             Raven.captureException(err)
             req.flash('error', 'Something went wrong trying to query address database')
-            return res.status(501).json({error: err.message})
+            return res.status(500).json({error: err.message})
         })
     }
 )

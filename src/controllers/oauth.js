@@ -9,7 +9,18 @@ function createGrantCode(clientId, userId) {
     userId: userId
   });
 }
+
 function createAuthToken(clientId, userId = null) {
+  return models.AuthToken.create({
+    token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
+    scope: ["*"],
+    explicit: false,
+    clientId: clientId,
+    userId: userId
+  });
+}
+
+function createRefreshToken(clientId, userId) {
   return models.AuthToken.create({
     token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
     scope: ["*"],
@@ -74,5 +85,6 @@ module.exports = {
   findAuthToken,
   findOrCreateAuthToken,
   deleteAuthToken,
-  findAuthTokensByClientId
+  findAuthTokensByClientId,
+  createRefreshToken
 };

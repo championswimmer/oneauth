@@ -5,14 +5,6 @@
 <form class="form-group" method="post" action="/api/address/{{address.id}}">
     <input type="hidden" name="returnTo" id="redirect-input">
     <p>Edit Details for {{address.id}}</p>
-    <div class="form-group">
-        <label>Label</label>
-        <input class="form-control" type="text" autocomplete='given-name' placeholder="Label" name="label" value="{{address.label}}">
-    </div>
-    <div class="form-group">
-        <label>First Name</label>
-        <input class="form-control" type="text" autocomplete='given-name' placeholder="First Name" name="first_name" value="{{address.first_name}}">
-    </div>
             <div class="attributes">
                 <div class="row justify-content-between">
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
@@ -84,7 +76,7 @@
 
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
                         <div class="label-input col-md-4 col-sm-3">Label</div>
-                        <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Label" name="label" required />
+                        <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Label" name="label"  value="{{address.label}}" required />
                     </div>
                 </div>
 

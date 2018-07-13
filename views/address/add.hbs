@@ -1,34 +1,101 @@
-
 {{!< centercolumn}}
+<div class="col-md-8 o-add-address">
+  <div class="card">
+    <div class="heading-u-red">Add Address</div>
 
+      <form action="/api/address" method="POST">
+        <input type="hidden" name="returnTo" id="redirect-input" />
 
-<form class="form-group" method="post" action="/api/address">
-    <input type="hidden" name="returnTo" id="redirect-input">
-    <input class="form-control" type="text" placeholder="Label" name="label" required><br>
-    <input class="form-control" type="text" placeholder="First Name" name="first_name" required><br>
-    <input class="form-control" type="text" placeholder="Last Name" name="last_name" required><br>
-    <input class="form-control" type="text" pattern="[0-9]{10}" maxlength="10" placeholder="Mobile Number" name="number" required><br>
-    <input class="form-control" type="email" placeholder="E-mail" name="email" required><br>
-    <input class="form-control" type="text" placeholder="Street Address" name="street_address" required><br>
-    <input class="form-control" type="text" placeholder="Landmark" name="landmark" required><br>
-    <input class="form-control" type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" placeholder="Pin Code" required><br>
-    <input class="form-control" type="text" placeholder="City" name="city" required><br>
-    <label>State:</label>
-    <select name="stateId" class="m-2a form-control" required>
-        {{#each states}}
-            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
-        {{/each}}
-    </select>
-    <label>Country:</label>
-    <select name="countryId" class="m-2a form-control" required>
-        {{#each countries}}
-            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
-        {{/each}}
-    </select>
-    <div class="row mt-5p">
-        <input class="btn btn-warning mx-auto" value="Add Address" type="submit">
+        <div class="attributes">
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">First Name</div>
+              <input class="input-text col-md-8 col-sm-8"  type="text" placeholder="First Name" name="first_name" required />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Last Name</div>
+              <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Last Name" name="last_name" required />
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Mobile No.</div>
+              <input class="input-text col-md-8 col-sm-8" type="text" pattern="[0-9]{10}" maxlength="10" placeholder="Mobile Number" name="number" required />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Email</div>
+              <input class="input-text col-md-8 col-sm-8" type="email" placeholder="E-mail" name="email" required />
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Address Line</div>
+              <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Street Address" name="street_address" required />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Landmark</div>
+              <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Landmark" name="landmark" required />
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Pincode</div>
+              <input class="input-text col-md-8 col-sm-8" type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" placeholder="Pin Code" required />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">City</div>
+              <input class="input-text col-md-8 col-sm-8" type="text" placeholder="City" name="city" required />
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">State</div>
+
+              <select name="stateId" required class="dropdown-ul input-text col-md-8 col-sm-8">
+                {{#each states}}
+                  <option class="dropdown-li" value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Country</div>
+              <select name="countryId" required class="dropdown-ul input-text col-md-8 col-sm-8">
+                {{#each countries}}
+                    <option class="dropdown-li" value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Label</div>
+              <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Label" name="label" required />
+            </div>
+          </div>
+
+          <div class="row justify-content-end button-row">
+            <div class="grey reset-button">
+              <button type="reset">RESET</button>
+            </div>
+
+            <div class="button-solid">
+              <button type="submit">SAVE CHANGES</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-</form>
+  </div>
+
+
 <script>
     $(function(){
         let params = (new URL(document.location)).searchParams;

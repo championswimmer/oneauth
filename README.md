@@ -7,6 +7,11 @@
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=championswimmer&url=https://github.com/coding-blocks/oneauth&title=oneauth&language=&tags=github&category=software)
 
+## Design and Styles
+
+**IMPORTANT NOTE** The css is picked from [motley](https://github.com/coding-blocks/motley)
+If there are any UI changes to be made, please make on motley.
+
 ## Installation
 
 ### Step 1 : Database Setup
@@ -21,6 +26,8 @@ Simple clone and  -
 
 ```
 npm install
+git submodule init
+git submodule update
 npm run start:dev
 ```
 

@@ -1,32 +1,50 @@
 {{!< centercolumn}}
 
-{{#each clients as |client|}}
-
-    <div class="row p-2">
-        <div class="col p-2">
-            <div class="row h1 m-2">{{client.name}}</div>
-            <div class="row">
-                <div class="col align-self-center align-items-center">
-                    <a href="/clients/{{client.id}}"><div class="btn btn-sm btn-info">Details</div></a>
-                    <a href="/clients/{{client.id}}/edit"><div class="btn btn-sm btn-info">Edit</div></a>
-                </div>
+<div class="col-md-8 o-client-page">
+    <div class="card">
+        <div class="flex-row justify-content-between">
+            <div class="heading-u-red">My Clients</div>
+            <div class="button-solid">
+                <a class="white" href="/clients/add">
+                    <button>+ Add New Client</button>
+                </a>
             </div>
         </div>
-
-    </div>
-
-{{else}}
-
-    <div class="row p-2">
-        <div class="col p-2 text-center">
-            <h3 class="thin-font">
-                You have registered no clients yet
-            </h3>
-            <a href="/clients/add">
-            <h4> Add one now</h4>
-            </a>
+        <div class="attributes">
+            <div class="row justify-content-between">
+                {{#each clients as |client|}}
+                    <div class="border-card">
+                        <div class="client-row heading">{{client.name}}</div>
+                        <div class="client-row">
+                            <span>Client Id:</span>
+                            <span class="grey">{{client.id}}</span>
+                        </div>
+                        <div class="client-row">
+                            <span>Domain:</span>
+                            <span class="grey">{{client.domain}}</span>
+                        </div>
+                        <div class="client-row">
+                            <span>Callback URL:</span>
+                            <span class="grey">{{client.callbackURL}}</span>
+                        </div>
+                        <div class="client-row">
+                            <span>Client Secret:</span>
+                            <span class="grey">{{client.secret}}</span>
+                        </div>
+                        <div class="row justify-content-end button-row">
+                            <div class="button-dashed">
+                                <a class="red" href="/clients/{{client.id}}/edit">
+                                    <button>Edit Client</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="border-card">
+                        <div class="client-row heading">You have registered no clients yet</div>
+                    </div>
+                {{/each}}
+            </div>
         </div>
     </div>
-
-
-{{/each}}
+</div>

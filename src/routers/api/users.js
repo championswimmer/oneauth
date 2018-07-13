@@ -7,7 +7,7 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
-
+const Raven = require('raven')
 
 router.get('/me',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
@@ -185,14 +185,11 @@ router.get('/:id/address',
             where: {'$demographic.userId$': req.params.id},
             include: includes
         }).then(function (addresses) {
-            if (!addresses || addresses.length === 0) {
-                throw new Error("User has no addresses")
-            }
             return res.json(addresses)
         }).catch(function (err) {
             Raven.captureException(err)
             req.flash('error', 'Something went wrong trying to query address database')
-            return res.status(501).json({error: err.message})
+            return res.status(500).json({error: err.message})
         })
     }
 )

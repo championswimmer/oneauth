@@ -1,79 +1,124 @@
 {{!< centercolumn}}
 
-<h2 class="text-center thin-font">
-    My Profile &nbsp;&nbsp;
-    <a href="/users/{{user.id}}/edit"><i class="fa fa-edit"></i></a>
-</h2>
+<div class="col-md-8 o-profile">
+    <div class="card">
+        <div class="details">
+            <div class="flex-row justify-content-between">
+                {{#if user.firstname}}
+                    <div class="heading-u-red">{{user.firstname}}'s Profile</div>
+                {{else}}
+                    <div class="heading-u-red">User Profile</div>
+                {{/if}}
+                
+                <div class="button-solid">
+                    <a class="white" href="/users/{{user.id}}/edit">
+                        <button>EDIT PROFILE</button>
+                    </a>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center profile-row">
+                <div class="round-img">
+                    {{#if user.photo}}
+                        <img class="round-img user-pic" src="{{user.photo}}">
+                    {{else}}
+                        <img class="round-img user-pic" src="img/user.svg">
+                    {{/if}}
+                </div>
+            </div>
 
-<table class="table table-bordered">
-    <tr id="profile-row-photo">
-        <td colspan="2" class="text-center">
-            <img class="img-thumbnail" src="{{user.photo}}">
-        </td>
-    </tr>
-    <tr id="profile-row-id">
-        <td class="font-weight-bold"> User ID </td>
-        <td> {{user.id}} </td>
-    </tr>
-    <tr id="profile-row-username">
-        <td class="font-weight-bold"> Username </td>
-        <td> {{user.username}} </td>
-    </tr>
-    <tr id="profile-row-firstname">
-        <td class="font-weight-bold"> Firstname </td>
-        <td> {{user.firstname}} </td>
-    </tr>
-    <tr id="profile-row-lastname">
-        <td class="font-weight-bold"> Lastname </td>
-        <td> {{user.lastname}} </td>
-    </tr>
-    <tr id="profile-row-email">
-        <td class="font-weight-bold"> Email </td>
-        <td> <a href="mailto:{{user.email}}">{{user.email}}</a> </td>
-    </tr>
-    <tr id="profile-row-role">
-        <td class="font-weight-bold"> Role@CB </td>
-        <td> {{user.role}} </td>
-    </tr>
-    {{#if user.userfacebook}}
-    <tr id="profile-row-fb">
-        <td class="font-weight-bold"> Facebook </td>
-        <td> Connected to
-            <a target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
-            {{user.firstname}} {{user.lastname}}
-            </a>
-        </td>
-    </tr>
-    {{/if}}
-    {{#if user.usertwitter}}
-        <tr id="profile-row-twitter">
-            <td class="font-weight-bold"> Twitter </td>
-            <td> Connected to
-                <a target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
-                {{user.usertwitter.username}}
-                </a>
-            </td>
-        </tr>
-    {{/if}}
-    {{#if user.usergithub}}
-        <tr id="profile-row-github">
-            <td class="font-weight-bold"> Github </td>
-            <td> Connected to
-                <a target="_blank" href="http://github.com/{{user.usergithub.username}}">
-                    {{user.usergithub.username}}
-                </a>
-            </td>
-        </tr>
-    {{/if}}
-    {{#if user.usergoogle}}
-        <tr id="profile-row-google">
-            <td class="font-weight-bold"> Google </td>
-            <td> Connected to
-                <a target="_blank" href="http://google.com/{{user.usergoogle.username}}">
-                    {{user.usergoogle.username}}
-                </a>
-            </td>
-        </tr>
-    {{/if}}
+            <div class="attributes">
+                <div id="profile-row-id" class="flex-row">
+                    <div>UserID</div>
+                    <div>
+                        <span class="faded">{{user.id}}</span>
+                    </div>
+                </div>
 
-</table>
+                <div id="profile-row-id" class="flex-row">
+                    <div>Usernname</div>
+                    <div>
+                        <span class="faded">{{user.username}}</span>
+                    </div>
+                </div>
+
+                <div id="profile-row-id" class="flex-row">
+                    <div>Firstname</div>
+                    <div>
+                        <span class="faded">{{user.firstname}}</span>
+                    </div>
+                </div>
+
+                <div id="profile-row-id" class="flex-row">
+                    <div>Lastname</div>
+                    <div>
+                        <span class="faded">{{user.lastname}}</span>
+                    </div>
+                </div>
+
+                <div id="profile-row-id" class="flex-row">
+                    <div>Email ID</div>
+                    <div>
+                        <a href="mailto:{{user.email}}"><span class="faded">{{user.email}}</span></a>
+                    </div>
+                </div>
+
+                <div id="profile-row-id" class="flex-row">
+                    <div>Role@CB</div>
+                    <div>
+                        <span class="faded">{{user.role}}</span>
+                    </div>
+                </div>
+
+                {{#if user.userfacebook}}
+                    <div id="profile-row-fb" class="flex-row">
+                        <div>Facebook Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
+                                    {{user.firstname}} {{user.lastname}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if user.usergoogle}}
+                    <div id="profile-row-google" class="flex-row">
+                        <div>Google Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="http://google.com/{{user.usergoogle.id}}">
+                                    {{user.usergoogle.username}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if user.usertwitter}}
+                    <div id="profile-row-twitter" class="flex-row">
+                        <div>Twitter Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
+                                    {{user.usertwitter.username}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if user.usergithub}}    
+                    <div id="profile-row-github" class="flex-row">
+                        <div>Github Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="http://github.com/{{user.usergithub.username}}">
+                                    {{user.usergithub.username}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+

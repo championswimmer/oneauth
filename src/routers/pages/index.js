@@ -16,6 +16,9 @@ router.use(function (req, res, next) {
     res.locals.loggedIn = !!req.user
     res.locals.userRole = req.user && req.user.role
     res.locals.userId = req.user && req.user.id
+    res.locals.userName= req.user && req.user.firstname
+    res.locals.userPhoto= req.user && req.user.photo
+    res.locals.currentUrl= req.url.split("/")[1];
     next()
 })
 

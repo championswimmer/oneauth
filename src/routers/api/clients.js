@@ -39,7 +39,7 @@ router.post('/add', function (req, res) {
         callbackURL: clientCallbacks,
         userId: req.user.id
     }).then(function (client) {
-        res.redirect('/clients/' + client.id)
+        res.redirect('/clients');
     }).catch(err => console.log(err))
 })
 
@@ -72,7 +72,7 @@ router.post('/edit/:id', cel.ensureLoggedIn('/login'),
         }, {
             where: {id: clientId}
         }).then(function (client) {
-            res.redirect('/clients/' + clientId)
+            res.redirect('/clients');
         }).catch(function (error) {
             console.error(error)
         })

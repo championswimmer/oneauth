@@ -142,7 +142,13 @@ router.post('/me/edit',
             if (req.body.collegeId) {
                 demographic.collegeId = +req.body.collegeId
             }
-            await models.Demographic.upsert({userId:demographic.userId,collegeId:demographic.collegeId,branchId:demographic.branchId})
+
+            let userDemographic = await models.Demographic.findOne({
+                where:{
+                    userId:demographic.userId
+                }
+            })
+            await models.Demographic.upsert({id:userDemographic.id,collegeId:demographic.collegeId,branchId:demographic.branchId})
 
             if (req.body.password) {
                 const passHash = await passutils.pass2hash(req.body.password)

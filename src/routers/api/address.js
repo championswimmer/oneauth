@@ -7,7 +7,7 @@ const urlutils = require('../../utils/urlutils')
 const {hasNull} = require('../../utils/nullCheck')
 
 router.post('/', cel.ensureLoggedIn('/login'), function (req, res) {
-    if (hasNull(req.body, ['label', 'first_name', 'last_name', 'number', 'email', 'pincode', 'street_address', 'landmark', 'city', 'stateId', 'countryId'])) {
+    if (hasNull(req.body, ['first_name', 'last_name', 'number', 'email', 'pincode', 'street_address', 'landmark', 'city', 'stateId', 'countryId'])) {
         res.send(400)
     } else {
         if (req.query) {
@@ -17,7 +17,7 @@ router.post('/', cel.ensureLoggedIn('/login'), function (req, res) {
             where: {userId: req.user.id},
             include: [models.Address]
         }).then(([demographics, created]) => models.Address.create({
-            label: req.body.label,
+            label: req.body.label || null,
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             mobile_number: req.body.number,
@@ -29,6 +29,7 @@ router.post('/', cel.ensureLoggedIn('/login'), function (req, res) {
             stateId: req.body.stateId,
             countryId: req.body.countryId,
             demographicId: demographics.id,
+            whatsapp_number: req.body.whatsapp_number || null,
             // if no addresses, then first one added is primary
             primary: !demographics.get().addresses
         }))
@@ -48,7 +49,7 @@ router.post('/', cel.ensureLoggedIn('/login'), function (req, res) {
 })
 
 router.post('/:id', cel.ensureLoggedIn('/login'), async function (req, res) {
-    if (hasNull(req.body, ['label', 'first_name', 'last_name', 'number', 'email', 'pincode', 'street_address', 'landmark', 'city', 'stateId', 'countryId'])) {
+    if (hasNull(req.body, ['first_name', 'last_name', 'number', 'email', 'pincode', 'street_address', 'landmark', 'city', 'stateId', 'countryId'])) {
         return res.send(400)
     }
     let addrId = parseInt(req.params.id)
@@ -68,7 +69,7 @@ router.post('/:id', cel.ensureLoggedIn('/login'), async function (req, res) {
             }
 
             await models.Address.update({
-                    label: req.body.label,
+                    label: req.body.label || null,
                     first_name: req.body.first_name,
                     last_name: req.body.last_name,
                     mobile_number: req.body.number,
@@ -79,6 +80,7 @@ router.post('/:id', cel.ensureLoggedIn('/login'), async function (req, res) {
                     city: req.body.city,
                     stateId: req.body.stateId,
                     countryId: req.body.countryId,
+                    whatsapp_number: req.body.whatsapp_number || null,
                     primary: req.body.primary === 'on'
                 },
                 { where: {id: addrId} }

@@ -16,9 +16,11 @@ const {
 } = require('../../controllers/user');
 const { findAllClientsByUserId } = require('../../controllers/clients');
 const {
-    findAllBranches, 
-    findAllColleges
-} = require('../../controllers/demographics');
+  findAllBranches,
+  findAllColleges,
+  findDemographic,
+  upsertDemographic
+} = require("../../controllers/demographics");
 
 router.get('/me',
     cel.ensureLoggedIn('/login'),
@@ -145,12 +147,9 @@ router.post('/me/edit',
                 demographic.collegeId = +req.body.collegeId
             }
 
-            let userDemographic = await models.Demographic.findOne({
-                where:{
-                    userId:demographic.userId
-                }
-            })
-            await models.Demographic.upsert({id:userDemographic.id,collegeId:demographic.collegeId,branchId:demographic.branchId})
+            let userDemographic = await findDemographic(demographic.userId)
+
+            await upsertDemographic(userDemographic.id,demographic.collegeId,demographic.branchId)
 
             if (req.body.password) {
                 const passHash = await passutils.pass2hash(req.body.password)

@@ -2,9 +2,9 @@ const generator = require("../utils/generator");
 const urlutils = require("../utils/urlutils");
 const { Client } = require("../db/models").models;
 
-function findClientById(clientId) {
+function findClientById(id) {
   return Client.findOne({
-    where: { id: clientId }
+    where: { id }
   });
 }
 
@@ -57,7 +57,7 @@ function findAllClients() {
 
 function findAllClientsByUserId(userId) {
   return Client.findAll({
-    where: { userId: userId }
+    where: { userId }
   });
 }
 

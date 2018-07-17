@@ -1,8 +1,8 @@
 const { User } = require("../db/models").models;
 
-function findUserById(userid, includes) {
+function findUserById(id, includes) {
   return User.findOne({
-    where: { id: userid },
+    where: { id },
     include: includes
   });
 }

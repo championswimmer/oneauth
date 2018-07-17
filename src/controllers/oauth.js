@@ -5,8 +5,8 @@ const models = require("../db/models").models,
 function createGrantCode(clientId, userId) {
   return models.GrantCode.create({
     code: generator.genNcharAlphaNum(config.GRANT_TOKEN_SIZE),
-    clientId: clientId,
-    userId: userId
+    clientId,
+    userId
   });
 }
 
@@ -15,8 +15,8 @@ function createAuthToken(clientId, userId = null) {
     token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
     scope: ["*"],
     explicit: false,
-    clientId: clientId,
-    userId: userId
+    clientId,
+    userId
   });
 }
 
@@ -25,14 +25,14 @@ function createRefreshToken(clientId, userId) {
     token: generator.genNcharAlphaNum(config.AUTH_TOKEN_SIZE),
     scope: ["*"],
     explicit: false,
-    clientId: clientId,
-    userId: userId
+    clientId,
+    userId
   });
 }
 
 function findGrantCode(code) {
   return models.GrantCode.findOne({
-    where: { code: code },
+    where: { code },
     include: [models.Client]
   });
 }
@@ -57,15 +57,15 @@ function findOrCreateAuthToken(grantCode) {
 function findAuthToken(clientId, userId) {
   return models.AuthToken.findOne({
     where: {
-      clientId: clientId,
-      userId: userId
+      clientId,
+      userId
     }
   });
 }
 
-function findAuthTokensByClientId(clientId) {
+function findAuthTokensByUserId(userId) {
   return models.AuthToken.findAll({
-    where: { userId: clientId },
+    where: { userId },
     include: [models.Client]
   });
 }
@@ -85,6 +85,6 @@ module.exports = {
   findAuthToken,
   findOrCreateAuthToken,
   deleteAuthToken,
-  findAuthTokensByClientId,
+  findAuthTokensByUserId,
   createRefreshToken
 };

@@ -61,6 +61,10 @@ function findAllColleges() {
   return models.College.findAll({});
 }
 
+function upsertDemographic(id, collegeId, branchId) {
+  return models.Demographic.upsert({ id, collegeId, branchId });
+}
+
 module.exports = {
   findOrCreateDemographic,
   updateAddressbyDemoId,
@@ -72,5 +76,6 @@ module.exports = {
   findAllStates,
   findAllCountries,
   findAllBranches,
-  findAllColleges
+  findAllColleges,
+  upsertDemographic
 };

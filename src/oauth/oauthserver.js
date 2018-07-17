@@ -80,7 +80,7 @@ server.exchange(oauth.exchange.code(
                 return done(null,false) // Wrong redirect URI
             }
             const authToken = await findOrCreateAuthToken(grantCode )
-            grantCode.destroy()
+            await grantCode.destroy()
             return done(null, authToken.token);
         } catch (error) {
             return done(error)

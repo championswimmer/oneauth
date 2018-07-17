@@ -5,7 +5,7 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 
 const { 
-    findAuthTokensByClientId,
+    findAuthTokensByUserId,
     findAuthToken 
 } = require('../../controllers/oauth');
 
@@ -13,7 +13,7 @@ router.get('/',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try{
-            const apps = await findAuthTokensByClientId(req.user.id);
+            const apps = await findAuthTokensByUserId(req.user.id);
             return res.render('apps/all', {apps: apps})
         } catch(error){
             res.send("No clients registered")

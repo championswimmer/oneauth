@@ -79,8 +79,8 @@ server.exchange(oauth.exchange.code(
             if (!callbackMatch) {
                 return done(null,false) // Wrong redirect URI
             }
-            const authToken = await findOrCreateAuthToken(grantCode )
-            await grantCode.destroy()
+            const authToken = await findOrCreateAuthToken(grantCode)
+            grantCode.destroy()
             return done(null, authToken.token);
         } catch (error) {
             return done(error)
@@ -118,7 +118,6 @@ const authorizationMiddleware = [
             } else {
                 return done(null, true)
             }
-            return done(null, authToken);
         } catch (error) {
             return done(error);
         }

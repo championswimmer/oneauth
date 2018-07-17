@@ -16,10 +16,10 @@ const {
 } = require('../../controllers/user');
 const { findAllClientsByUserId } = require('../../controllers/clients');
 const {
-  findAllBranches,
-  findAllColleges,
-  findDemographic,
-  upsertDemographic
+    findAllBranches,
+    findAllColleges,
+    findDemographic,
+    upsertDemographic
 } = require("../../controllers/demographics");
 
 router.get('/me',

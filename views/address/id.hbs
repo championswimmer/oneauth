@@ -1,62 +1,93 @@
-{{!< centercolumn}}
-<div class="h3 thin-font text-center">Address Details</div>
-<div class="row">
-    <div class="col-4 offset-4">
-        <a class="col-12 btn btn-sm btn-info" href="/address/{{address.id}}/edit">
-            <i class="fa fa-edit"></i> Edit
-        </a>
+<!-- {{!< centercolumn}} -->
+<div class="col-md-8 o-add-address">
+  <div class="card">
+    <div class="heading-u-red">Address Details for {{address.label}}</div>
+
+        <div class="attributes">
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">First Name</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.first_name}}" disabled />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Last Name</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.last_name}}" disabled />
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Mobile No.</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.mobile_number}}" disabled />
+            </div>
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Whatsapp Number</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.whatsapp_number}}" disabled />
+            </div>
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Email</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.email}}" disabled />
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Street Address</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.street_address}}" disabled />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Landmark</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.landmark}}" disabled />
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Pincode</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.pincode}}" disabled />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">City</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.city}}" disabled />
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">State</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.state.name}}" disabled />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Country</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.country.name}}" disabled />
+            </div>
+
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+              <div class="label-input col-md-4 col-sm-3">Label</div>
+              <input class="input-text col-md-8 col-sm-8" value="{{address.label}}" disabled />
+            </div>
+          </div>
+
+          <div class="row justify-content-end button-row">
+            <div class="reset-button">
+              <a class="grey" href="/address/">
+                <button>BACK</button>
+              </a>
+            </div>
+
+            <div class="button-solid">
+              <a style="color:#fff;" href="/address/{{address.id}}/edit">
+                <button>EDIT ADDRESS</button>
+              </a>
+            </div>
+          </div>
+
+        </div>
     </div>
 </div>
-<table class="table table-striped m-2">
-    <tbody>
-    <tr>
-        <th scope="row">Label</th>
-        <td> {{address.label}}</td>
-    </tr>
-    <tr>
-        <th scope="row">First Name</th>
-        <td> {{address.first_name}}</td>
-    </tr>
-    <tr>
-        <th>Last Name</th>
-        <td> {{address.last_name}}</td>
-    </tr>
-    <tr>
-        <th>Mobile Number</th>
-        <td> {{address.mobile_number}}</td>
-    </tr>
-    <tr>
-        <th>E-mail</th>
-        <td> {{address.email}}</td>
-    </tr>
-    <tr>
-        <th>Pincode</th>
-        <td> {{address.pincode}}</td>
-    </tr>
-    <tr>
-        <th>Street Address</th>
-        <td> {{address.street_address}}</td>
-    </tr>
-    <tr>
-        <th>Landmark</th>
-        <td> {{address.landmark}}</td>
-    </tr>
-    <tr>
-        <th>City</th>
-        <td> {{address.city}}</td>
-    </tr>
-    <tr>
-        <th>State</th>
-        <td> {{address.state.name}}</td>
-    </tr>
-    <tr>
-        <th> Country</th>
-        <td> {{address.country.name}}</td>
-    </tr>
-    <tr>
-        <th> Primary Address</th>
-        <td>{{#if address.primary}}Yes{{else}}No{{/if}}</td>
-    </tr>
-    </tbody>
 
-</table>
+

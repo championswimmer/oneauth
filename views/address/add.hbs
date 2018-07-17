@@ -7,7 +7,12 @@
         <input type="hidden" name="returnTo" id="redirect-input" />
 
         <div class="attributes">
+            <div class="row no-gutters align-items-center justify-content-between detail-row">
+                <div class="label-input col-md-4 col-sm-3">Label</div>
+                <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Home, Office etc" name="label" />
+            </div>
           <div class="row justify-content-between">
+
             <div class="row no-gutters align-items-center justify-content-between detail-row">
               <div class="label-input col-md-4 col-sm-3">First Name</div>
               <input class="input-text col-md-8 col-sm-8"  type="text" placeholder="First Name" name="first_name" required />
@@ -74,11 +79,15 @@
                 {{/each}}
               </select>
             </div>
+              <div class="row no-gutters align-items-center justify-content-between detail-row">
+                      <div class="label-input col-md-4 col-sm-3">Whatsapp No.</div>
+                      <input class="input-text col-md-8 col-sm-8"  type="text" placeholder="Whatsapp Number" name="whatsapp_number" />
+                      <label><input type="checkbox" class="input-checkbox" id="cb-whatsapp-toggle" >Same as Mobile No.</label>
+              </div>
+              <div class="row no-gutters align-items-center detail-row">
 
-            <div class="row no-gutters align-items-center justify-content-between detail-row">
-              <div class="label-input col-md-4 col-sm-3">Label</div>
-              <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Label" name="label" required />
-            </div>
+              </div>
+           </div>
           </div>
 
           <div class="row justify-content-end button-row">
@@ -90,6 +99,7 @@
               <button type="submit">SAVE CHANGES</button>
             </div>
           </div>
+
         </div>
       </form>
     </div>
@@ -101,5 +111,23 @@
         let params = (new URL(document.location)).searchParams;
         let url = params.get('returnTo')
         $('#redirect-input').val(url)
+
+        let mobile_number = $("input[name=number]");
+        let whatsapp_number = $('input[name=whatsapp_number]');
+        let whatsapp_toggle = $('#cb-whatsapp-toggle')
+
+        whatsapp_toggle.change(function() {
+            if($(this).is(':checked')) {
+                whatsapp_number.val(mobile_number.val());
+                $(whatsapp_number).prop('disabled', true);
+            } else {
+                $('input[name=whatsapp_number]').val('');
+                $(whatsapp_number).prop('disabled', false);
+            }
+        });
+
+        $('form').submit(function () {
+            $(whatsapp_number).prop('disabled', false);
+        })
     })
 </script>

@@ -20,7 +20,11 @@
               <div class="address-row heading red">{{address.label}}</div>
               <div class="address-row heading">
                 {{address.first_name}} {{address.last_name}} {{address.email}} | {{address.mobile_number}}
+                  {{#if address.whatsapp_number}}
+                          | {{address.whatsapp_number}}
+                  {{/if}}
               </div>
+
               <div class="address-row grey">
                 {{address.street_address}} Near {{address.landmark}}, {{address.city}}<br> {{address.state.name}}: {{address.pincode}}
                   <br>{{address.country.name}}

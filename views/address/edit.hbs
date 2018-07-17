@@ -5,6 +5,10 @@
 <form class="form-group" method="post" action="/api/address/{{address.id}}">
     <input type="hidden" name="returnTo" id="redirect-input">
             <div class="attributes">
+                <div class="row no-gutters align-items-center justify-content-between detail-row">
+                    <div class="label-input col-md-4 col-sm-3">Label</div>
+                    <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Label" name="label"  value="{{address.label}}" />
+                </div>
                 <div class="row justify-content-between">
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
                         <div class="label-input col-md-4 col-sm-3">First Name</div>
@@ -72,10 +76,10 @@
                             {{/each}}
                         </select>
                     </div>
-
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
-                        <div class="label-input col-md-4 col-sm-3">Label</div>
-                        <input class="input-text col-md-8 col-sm-8" type="text" placeholder="Label" name="label"  value="{{address.label}}" required />
+                        <div class="label-input col-md-4 col-sm-3">Whatsapp No.</div>
+                        <label></label><input class="input-text col-md-8 col-sm-8" type="text" pattern="[0-9]{10}" maxlength="10" placeholder="Whatsapp Number" name="whatsapp_number" value="{{address.whatsapp_number}}" />
+                        <label><input type="checkbox" class="input-checkbox" id="cb-whatsapp-toggle" >Same as Mobile No.</label>
                     </div>
                 </div>
 
@@ -95,5 +99,27 @@
         let params = (new URL(document.location)).searchParams;
         let url = params.get('returnTo')
         $('#redirect-input').val(url)
+
+        let mobile_number = $('input[name=number]');
+        let whatsapp_number = $('input[name=whatsapp_number]');
+        let whatsapp_toggle = $('#cb-whatsapp-toggle')
+
+        if (mobile_number.val() === whatsapp_number.val()) {
+          whatsapp_toggle.prop('checked', true);
+        }
+
+        whatsapp_toggle.change(function() {
+            if($(this).is(':checked')) {
+                whatsapp_number.val(mobile_number.val());
+                $(whatsapp_number).prop('disabled', true);
+            } else {
+                $('input[name=whatsapp_number]').val('');
+                $(whatsapp_number).prop('disabled', false);
+            }
+        });
+
+        $('.form-group').submit(function () {
+            $(whatsapp_number).prop('disabled', false);
+        })
     })
 </script>

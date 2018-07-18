@@ -17,25 +17,27 @@
         <div class="row justify-content-between">
           {{#each addresses as |address index|}}
             <div class="border-card">
-              <div class="address-row heading red">{{address.label}}</div>
-              <div class="address-row heading">
-                {{address.first_name}} {{address.last_name}} {{address.email}} | {{address.mobile_number}}
-                  {{#if address.whatsapp_number}}
-                          | {{address.whatsapp_number}}
-                  {{/if}}
-              </div>
-
-              <div class="address-row grey">
-                {{address.street_address}} Near {{address.landmark}}, {{address.city}}<br> {{address.state.name}}: {{address.pincode}}
-                  <br>{{address.country.name}}
-              </div>
-              <div class="row justify-content-end button-row">
-                <div class="button-dashed">
-                  <a class="red" href="/address/{{address.id}}/edit">
-                    <button>Edit Address</button>
-                  </a>  
+              <a href="/address/{{address.id}}">
+                <div class="address-row heading red">{{address.label}}</div>
+                  <div class="address-row heading">
+                      {{address.first_name}} {{address.last_name}} {{address.email}} | {{address.mobile_number}}
+                      {{#if address.whatsapp_number}}
+                        | {{address.whatsapp_number}}
+                      {{/if}}
                 </div>
-              </div>
+
+                <div class="address-row grey">
+                  {{address.street_address}} Near {{address.landmark}}, {{address.city}}<br> {{address.state.name}}: {{address.pincode}}
+                    <br>{{address.country.name}}
+                </div>
+                <div class="row justify-content-end button-row">
+                  <div class="button-dashed">
+                    <a class="red" href="/address/{{address.id}}/edit">
+                      <button>Edit Address</button>
+                    </a>  
+                  </div>
+                </div>
+              </a>
             </div>
           {{/each}}
         </div>

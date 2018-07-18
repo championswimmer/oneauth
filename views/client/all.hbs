@@ -14,7 +14,11 @@
             <div class="row justify-content-between">
                 {{#each clients as |client|}}
                     <div class="border-card">
-                        <div class="client-row heading">{{client.name}}</div>
+                        <div class="client-row heading">
+                            <a href="/clients/{{client.id}}">
+                                {{client.name}}
+                            </a>
+                        </div>
                         <div class="client-row">
                             <span>Client Id:</span>
                             <span class="grey">{{client.id}}</span>

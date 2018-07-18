@@ -79,7 +79,7 @@ server.exchange(oauth.exchange.code(
             if (!callbackMatch) {
                 return done(null,false) // Wrong redirect URI
             }
-            const authToken = await findOrCreateAuthToken(grantCode)
+            const [authToken, created] = await findOrCreateAuthToken(grantCode)
             grantCode.destroy()
             return done(null, authToken.token);
         } catch (error) {

@@ -27,7 +27,7 @@
                     </div>
                   {{/each}}
                 </div>
-                
+
                 <div class="row justify-content-between">
                   {{#each client.callbackURL as |callback|}}
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
@@ -54,13 +54,13 @@
                 <br>
                 <div class="row justify-content-end button-row">
                   <div class="reset-button mr-5">
-                    <a class="grey" href="/clients/">
+                    <a class="grey" href="/users/me/clients/">
                       <button>BACK </button>
                     </a>
                   </div>
 
                   <div class="button-solid">
-                    <a class="white" href="/api/clients/edit/{{client.id}}">
+                    <a class="white" href="/clients/{{client.id}}/edit/">
                       <button>EDIT CLIENT</button>
                     </a>
                   </div>

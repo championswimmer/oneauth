@@ -39,7 +39,7 @@ router.post('/add', function (req, res) {
         callbackURL: clientCallbacks,
         userId: req.user.id
     }).then(function (client) {
-        res.redirect('/clients');
+        res.redirect('/users/me/clients');
     }).catch(err => console.log(err))
 })
 

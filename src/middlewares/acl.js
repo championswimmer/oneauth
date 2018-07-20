@@ -2,7 +2,7 @@ function ensureAdmin(req, res, next) {
      if ((req.user.role === 'admin')) {
          next()
      } else {
-         res.render('error')  //403 error, Unauthorized user
+         res.status(403).render('error')  //403 error, Unauthorized user
      }
 }
 

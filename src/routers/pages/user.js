@@ -10,13 +10,23 @@ const models = require('../../db/models').models
 const acl = require('../../middlewares/acl')
 const multer = require('../../utils/multer')
 
+const { 
+    findUserById,
+    updateUser
+} = require('../../controllers/user');
+const { findAllClientsByUserId } = require('../../controllers/clients');
+const {
+    findAllBranches,
+    findAllColleges,
+    findDemographic,
+    upsertDemographic
+} = require("../../controllers/demographics");
+
 router.get('/me',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-
-        models.User.findOne({
-            where: {id: req.user.id},
-            include: [
+    async function (req, res, next) {
+        try {
+            const user = await findUserById(req.user.id,[
                 models.UserGithub,
                 models.UserGoogle,
                 models.UserFacebook,
@@ -30,25 +40,22 @@ router.get('/me',
                         models.Company,
                     ]
                 }
-            ]
-        }).then(function (user) {
+            ]);
             if (!user) {
                 res.redirect('/login')
             }
             return res.render('user/me', {user: user})
-        }).catch(function (err) {
+        } catch (error) {
             throw err
-        })
-
+        }
     })
 
 router.get('/me/edit',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        Promise.all([
-            models.User.findOne({
-                where: {id: req.user.id},
-                include: [
+    async function (req, res, next) {
+        try {
+            const [user, colleges, branches] = await Promise.all([
+                findUserById(req.user.id,[
                     {
                         model: models.Demographic,
                         include: [
@@ -57,18 +64,18 @@ router.get('/me/edit',
                             models.Company,
                         ]
                     }
-                ]
-            }),
-            models.College.findAll({}),
-            models.Branch.findAll({})
-        ]).then(function ([user, colleges, branches]) {
+                ]),
+                findAllColleges(),
+                findAllBranches() 
+            ])
             if (!user) {
                 res.redirect('/login')
             }
             return res.render('user/me/edit', {user, colleges, branches})
-        }).catch(function (err) {
-            throw err
-        })
+        } catch (error) {
+            Raven.captureException(error)
+            res.send("Error Fetching College and Branches Data.")
+        }
 
     }
 )
@@ -107,10 +114,7 @@ router.post('/me/edit',
         }
 
         try {
-            const user = await models.User.findOne({
-                where: {id: req.user.id},
-                include: [models.Demographic]
-            })
+            const user = await findUserById(req.user.id,[models.Demographic])
             const demographic = user.demographic || {};
             
             user.firstname = req.body.firstname
@@ -143,12 +147,9 @@ router.post('/me/edit',
                 demographic.collegeId = +req.body.collegeId
             }
 
-            let userDemographic = await models.Demographic.findOne({
-                where:{
-                    userId:demographic.userId
-                }
-            })
-            await models.Demographic.upsert({id:userDemographic.id,collegeId:demographic.collegeId,branchId:demographic.branchId})
+            let userDemographic = await findDemographic(demographic.userId)
+
+            await upsertDemographic(userDemographic.id,demographic.collegeId,demographic.branchId)
 
             if (req.body.password) {
                 const passHash = await passutils.pass2hash(req.body.password)
@@ -170,78 +171,68 @@ router.post('/me/edit',
 router.get('/:id',
     cel.ensureLoggedIn('/login'),
     acl.ensureRole('admin'),
-    function (req, res, next) {
-
-        models.User.findOne({
-            where: {id: req.params.id},
-            include: [
+    async function (req, res, next) {
+        try {
+            const user = await findUserById(req.params.id,[
                 models.UserGithub,
                 models.UserGoogle,
                 models.UserFacebook,
                 models.UserLms,
                 models.UserTwitter
-            ]
-        }).then(function (user) {
+            ]) 
             if (!user) {
                 return res.status(404).send({error: "Not found"})
             }
             return res.render('user/id', {user: user})
-        }).catch(function (err) {
-            throw err
-        })
+        } catch (error) {
+            throw erorr
+        }
     }
 )
 
 router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     acl.ensureRole('admin'),
-    function (req, res, next) {
-
-        models.User.findOne({
-            where: {id: req.params.id},
-        }).then(function (user) {
+    async function (req, res, next) {
+        try {
+            const user = await findUserById(req.params.id) 
             if (!user) {
                 return res.status(404).send({error: "Not found"})
             }
             return res.render('user/id/edit', {user: user})
-        }).catch(function (err) {
-            throw err
-        })
+        } catch (error) {
+            throw erorr
+        }
     }
 )
 
 router.post('/:id/edit',
     cel.ensureLoggedIn('/login'),
     acl.ensureRole('admin'),
-    function (req, res, next) {
-
-        models.User.update({
+    async function (req, res, next) {
+        try {
+            const user = await updateUser(req.params.id,{
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 email: req.body.email,
                 role: req.body.role !== 'unchanged' ? req.body.role : undefined
-            },
-            {
-                where: {id: req.params.id},
-                returning: true
-            }).then(function (result) {
-            return res.redirect('../' + req.params.id)
-        }).catch(function (err) {
-            throw err
-        })
+            }) 
+            return res.redirect('../' + req.params.id);
+        } catch (error) {
+            throw erorr
+        }
     }
 )
 
 router.get('/me/clients',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Client.findAll({
-            where: {userId: req.user.id}
-        }).then(function (clients) {
+    async function (req, res, next) {
+        try {
+            const clients = await findAllClientsByUserId(req.user.id);
             return res.render('client/all', {clients: clients})
-        }).catch(function (err) {
+        } catch (error) {
             res.send("No clients registered")
-        })
+        }
     }
 )
 

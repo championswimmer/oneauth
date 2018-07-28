@@ -46,12 +46,16 @@
                         </div>
                     </div>
                 {{/unless}}
-                <div id="profile-row-lastname" class="flex-row">
-                    <div>Contact Number</div>
-                    <div>
-                        <span class="faded">{{user.mobile_number}}</span>
-                    </div>
-                </div>
+
+                {{#if user.mobile_number}}
+                  <div id="profile-row-lastname" class="flex-row">
+                      <div>Contact Number</div>
+                      <div>
+                          <span class="faded">{{user.mobile_number}}</span>
+                      </div>
+                  </div>
+                {{/if}}  
+
                 <div id="profile-row-email" class="flex-row">
                     <div>Verified Email</div>
                     <div>

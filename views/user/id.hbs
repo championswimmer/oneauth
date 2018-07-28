@@ -9,7 +9,7 @@
                 {{else}}
                     <div class="heading-u-red">User Profile</div>
                 {{/if}}
-                
+
                 <div class="button-solid">
                     <a class="white" href="/users/{{user.id}}/edit">
                         <button>EDIT PROFILE</button>
@@ -63,6 +63,13 @@
                 </div>
 
                 <div id="profile-row-id" class="flex-row">
+                    <div>Contact Number</div>
+                    <div>
+                        <span class="faded">{{user.mobile_number}}</span>
+                    </div>
+                </div>
+
+                <div id="profile-row-id" class="flex-row">
                     <div>Role@CB</div>
                     <div>
                         <span class="faded">{{user.role}}</span>
@@ -105,7 +112,7 @@
                         </div>
                     </div>
                 {{/if}}
-                {{#if user.usergithub}}    
+                {{#if user.usergithub}}
                     <div id="profile-row-github" class="flex-row">
                         <div>Github Connected</div>
                         <div>
@@ -121,4 +128,3 @@
         </div>
     </div>
 </div>
-

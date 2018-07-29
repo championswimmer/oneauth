@@ -2,6 +2,13 @@
 
 ## 1.0.0
 
+### 0.5.0
+
+  - show all clients to admins
+  - show connected apps to the user
+  - convert promises in strategies to async-await
+  - make users paranoid (not what you're thinking)
+
 #### 0.4.8
 
   - Add college and branch details
@@ -9,6 +16,7 @@
 #### 0.4.7
 
   - Add address to users
+
 #### 0.4.2
 
   - Make username field non-null
@@ -18,7 +26,7 @@
   - [hotfix] clear cookies so older logins get cleared
   - some fixed to make it deploy on heroku properly
 
-#### 0.4.0
+### 0.4
 
   - create heroku-deployable setup for staging
   - improve user profile ui

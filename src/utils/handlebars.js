@@ -14,3 +14,15 @@ hbs.registerHelper('formatDate', function (date) {
     let dateString = dateObject.getDate() + "/" + dateObject.getMonth() + "/" + dateObject.getFullYear()
     return dateString
 })
+
+hbs.registerHelper('for', function(from, to, incr, block) {
+  var accum = '';
+  for(var i = from; i <= to; i += incr)
+    accum += block.fn(i);
+  return accum;
+});
+
+hbs.registerHelper('ifCond', function (...args) {
+    const options = args.pop()
+    return args.some(x => !x) ? options.fn(this): options.inverse(this);
+});

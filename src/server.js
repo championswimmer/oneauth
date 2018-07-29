@@ -16,6 +16,7 @@ const express = require('express')
 
 const config = require('../config')
     , secrets = config.SECRETS
+    , {sessionStore, saveIp} = require('./middlewares/sessionstore')
     , loginrouter = require('./routers/login')
     , connectrouter = require('./routers/connect')
     , disconnectrouter = require('./routers/disconnect')
@@ -32,6 +33,8 @@ const config = require('../config')
 
 const app = express()
 
+app.set('trust proxy', 'loopback, linklocal, uniquelocal')
+
 // ============== START DATADOG
 app.use(expresstracer)
 // ================= END DATADOG
@@ -45,7 +48,13 @@ const redirectToHome = function (req, res, next) {
 
 }
 const setuserContext = function (req, res, next) {
+    if (req.authInfo) {
+        if (req.authInfo.clientOnly) {
+            return next()
+        }
+    }
     if (req.user) {
+        if (req.authInfo)
         Raven.setContext({
             user: {
                 username: req.user.dataValues.username,
@@ -72,17 +81,21 @@ app.set("view engine", "hbs")
 
 app.use(expressLogger)
 app.use(express.static(path.join(__dirname, '../public_static')))
+app.use(express.static(path.join(__dirname, '../submodules/motley/examples/public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
+    store: sessionStore,
     secret: secrets.EXPRESS_SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     name: 'oneauth',
     cookie: {
-        domain: config.COOKIE_DOMAIN
+        domain: config.COOKIE_DOMAIN,
+        maxAge: 86400000
     }
 }))
+app.use(saveIp)
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
@@ -100,6 +113,7 @@ app.use('/api', apirouter)
 app.use('/oauth', oauthrouter)
 app.use('/status', statusrouter)
 app.use('/', pagerouter)
+app.get('*', (req, res) => res.render('404')); 
 
 app.use(Raven.errorHandler())
 

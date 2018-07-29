@@ -1,4 +1,4 @@
-{{!< main}}
+{{!< centercolumn}}
 
 <div class="container p-4 mt-4">
     <div class="h3 thin-font text-center">Client Details</div>
@@ -33,6 +33,11 @@
                     <td>{{callback}}</td>
                 </tr>
             {{/each}}
+            
+            <tr>
+                <th>Default URL</th>
+                <td>{{client.defaultURL}}</td>
+            </tr>
 
             <tr>
                 <th> Trusted Client</th>

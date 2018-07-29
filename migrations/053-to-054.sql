@@ -1,0 +1,1 @@
+ALTER TABLE "sessions" ALTER COLUMN "ipAddr" TYPE VARCHAR(39);

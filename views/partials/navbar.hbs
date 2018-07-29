@@ -1,0 +1,118 @@
+<nav class="main-nav">
+    <span class="hamburger-parent">
+      <i class="hamburger fas fa-bars"></i>
+    </span>
+    <span class="logo-parent">
+             <a class="logo-link" href="/">
+                <img src="/img/account-logo.png" alt="online-logo" class="nav-logo pointer">
+            </a>
+        </span>
+    {{#if loggedIn}}
+        <div class="round-img">
+            {{#if userPhoto}}
+                <img src="{{userPhoto}}" alt="profile-pic">
+            {{else}}
+                <img src="img/user.svg" alt="profile-pic">
+            {{/if}}
+        </div>
+
+        <div class="card">
+            <div class="top-offset"></div>
+            <div class="nav-info">
+                <div class="flex-row justify-content-end">
+                    <a href="/users/me"><span class="pointer {{#ifeq  val=currentUrl expected="users"}}red{{/ifeq}}">MY PROFILE</span></a>
+                </div>
+                <div class="separator"></div>
+
+                <div class="flex-row justify-content-end">
+                    <a href="/address"><span class="pointer {{#ifeq  val=currentUrl expected="address"}}red{{/ifeq}}">MY ADDRESSES</span></a>
+                </div>
+                <div class="separator"></div>
+
+                <div class="flex-row justify-content-end">
+                    <a href="/apps"><span class="pointer {{#ifeq  val=currentUrl expected="apps"}}red{{/ifeq}}">MY APPS</span></a>
+                </div>
+                <div class="separator"></div>
+
+                <div class="flex-row justify-content-end">
+                    <a href="/users/me/clients"><span class="pointer {{#ifeq  val=currentUrl expected="clients"}}red{{/ifeq}}">MY CLIENTS</span></a>
+                </div>
+                <div class="separator"></div>
+
+                <div class="flex-row justify-content-end faded">
+                    <a href="/logout"><span class="pointer">LOGOUT</span></a>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <a href="https://codingblocks.com/classroom-courses">
+                <li class="nav-items pointer">
+                    CLASSROOM COURSES
+                </li>
+            </a>
+
+            <a href="https://online.codingblocks.com/">
+                <li class="nav-items pointer">
+                    ONLINE COURSES
+                </li>
+            </a>
+
+            <a href="https://hack.codingblocks.com/">
+                <li class="nav-items pointer">
+                    HACKER BLOCKS
+                </li>
+            </a>
+        </ul>
+    {{/if}}
+</nav>
+
+<div class="sidebar sidebar-none">
+    <i class="close fas fa-times fa-200px"></i>
+    <div class="upper-half">
+        <div class="round-img">
+            {{#if userPhoto}}
+                <img src="{{userPhoto}}" alt="profile-pic">
+            {{else}}
+                <img src="img/user.svg" alt="profile-pic">
+            {{/if}}
+        </div>
+        {{#if user}}
+            <p>
+                Hi, {{userName}}
+            </p>
+            <a href="/logout">
+                <div class="button-solid">
+                    <button>Logout</button>
+                </div>
+            </a>
+        {{else}}
+            <p>
+                Hi, Guest
+            </p>
+        {{/if}}
+
+
+    </div>
+
+    <div class="lower-half">
+        <a href="https://codingblocks.com/classroom-courses">
+            <div class="para">
+                CLASSROOM COURSES
+            </div>
+        </a>
+
+        <a href="https://online.codingblocks.com/">
+            <div class="para">
+                ONLINE COURSES
+            </div>
+        </a>
+
+        <a href="https://hack.codingblocks.com/">
+            <div class="para">
+                HACKER BLOCKS
+            </div>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="o-changedp">
+    <div class="modal fade o-modal" id="change-dp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="row justify-content-between no-gutters">
+                    <div class="heading">
+                        Change Profile Image
+                    </div>
+                    <span class="pointer" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times"></i></span>
+
+                </div>
+
+                <p class="red">Choose from existing avatars</p>
+
+                <div class="row no-gutters">
+                    {{#for 1 36 1}}
+                        <div class="col-2 images">
+                            <img class="avatar" src="https://minio.cb.lk/img/avatar-{{this}}.svg">
+                        </div>
+                    {{/for}}
+
+                </div>
+
+                <p>OR</p>
+
+                <p class="red">Upload Image from your computer</p>
+
+                <input type="file" id="userpic" accept="image/jpeg, image/png" name="userpic">
+                <input id="avatar-selector" type="hidden" name="avatarselect" value="">
+
+                <div class="footer row justify-content-end no-gutters">
+                    <div class="button">
+                        <button id="btn-clear" type="button">RESET</button>
+                    </div>
+
+                    <div class="button-solid">
+                        <button type="button" data-dismiss="modal" data-target="#change-dp">SAVE CHANGES</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

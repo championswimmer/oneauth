@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/**/workspace.xml
 .idea/**/tasks.xml
+.idea/codeStyles
 .idea/dictionaries
 .idea/**/dataSources/
 .idea/**/dataSources.ids
@@ -51,3 +52,5 @@ secrets.json
 
 # New Relic
 newrelic_agent.log
+.DS_Store
+public_static/css/motley.css

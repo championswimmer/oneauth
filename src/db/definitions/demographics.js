@@ -2,10 +2,11 @@ const Sequelize = require('sequelize')
 
 module.exports = {
     address: {
-        label: {type: Sequelize.DataTypes.STRING, allowNull: false},
+        label: {type: Sequelize.DataTypes.STRING, allowNull: true},
         first_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
         last_name: {type: Sequelize.DataTypes.STRING, allowNull: false},
         mobile_number: {type: Sequelize.DataTypes.STRING, allowNull: false, validate: {len: [10, 10]}},
+        whatsapp_number: {type: Sequelize.DataTypes.STRING, allowNull: true, validate: {len: [10, 10]}},
         email: {type: Sequelize.DataTypes.STRING, allowNull: false},
         pincode: {type: Sequelize.DataTypes.INTEGER, allowNull: false},
         street_address: {type: Sequelize.DataTypes.STRING, allowNull: false},

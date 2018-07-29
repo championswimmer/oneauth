@@ -113,6 +113,7 @@ app.use('/api', apirouter)
 app.use('/oauth', oauthrouter)
 app.use('/status', statusrouter)
 app.use('/', pagerouter)
+app.get('*', (req, res) => res.render('404')); 
 
 app.use(Raven.errorHandler())
 

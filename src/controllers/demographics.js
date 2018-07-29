@@ -58,7 +58,11 @@ function findAllBranches() {
   return models.Branch.findAll({});
 }
 function findAllColleges() {
-  return models.College.findAll({});
+  return models.College.findAll({
+      order:[
+          ['name','ASC']
+      ]
+  });
 }
 
 function upsertDemographic(id, collegeId, branchId) {

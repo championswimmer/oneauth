@@ -35,6 +35,9 @@ router.get('/me',
                         case 'lms':
                             includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]}})
                             break
+                        case 'demographic':
+                            includes.push({ model: models.Demographic, include: [models.College] })
+                            break
                     }
                 }
             }

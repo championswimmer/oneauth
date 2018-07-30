@@ -1,1 +1,1 @@
-ALTER TABLE users ADD COLUMN "mobile_number" VARCHAR(255) NOT NULL;
+ALTER TABLE users ADD COLUMN "mobile_number" VARCHAR(255);

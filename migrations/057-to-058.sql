@@ -1,1 +1,1 @@
-ALTER TABLE users ADD COLUMN "gender" VARCHAR(50);
+ALTER TABLE users ADD COLUMN "gender" VARCHAR(12);

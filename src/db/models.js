@@ -32,7 +32,7 @@ const User = db.define('user', {
     username: {type: Sequelize.DataTypes.STRING, unique: true, allowNull: false},
     firstname: Sequelize.DataTypes.STRING,
     lastname: Sequelize.DataTypes.STRING,
-    gender: {type:Sequelize.DataTypes.STRING,defaultValue:'Don\'t want to disclose'},
+    gender: {type:Sequelize.DataTypes.ENUM('MALE','FEMALE','UNDISCLOSED')},
     photo: Sequelize.DataTypes.STRING,
     email: Sequelize.DataTypes.STRING,
     role: {type: Sequelize.DataTypes.ENUM('admin', 'employee', 'intern'), allowNull: true},

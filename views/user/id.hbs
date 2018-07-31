@@ -9,14 +9,7 @@
                 {{else}}
                     <div class="heading-u-red">User Profile</div>
                 {{/if}}
-                
-                <div class="button-solid">
-                    <a class="white" href="/users/{{user.id}}/edit">
-                        <button>EDIT PROFILE</button>
-                    </a>
-                </div>
-            </div>
-            <div class="row justify-content-center align-items-center profile-row">
+
                 <div class="round-img">
                     {{#if user.photo}}
                         <img class="round-img user-pic" src="{{user.photo}}">
@@ -105,7 +98,7 @@
                         </div>
                     </div>
                 {{/if}}
-                {{#if user.usergithub}}    
+                {{#if user.usergithub}}
                     <div id="profile-row-github" class="flex-row">
                         <div>Github Connected</div>
                         <div>
@@ -121,4 +114,3 @@
         </div>
     </div>
 </div>
-

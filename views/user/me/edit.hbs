@@ -4,22 +4,23 @@
             <div class="heading-u-red">Edit Profile</div>
 
             <form id="edit-form" enctype="multipart/form-data" method="POST">
-                {{#unless user.email}}
+                {{#if user.email}} 
+                    {{#unless user.mobile_number}}
+                        <div class="alert alert-danger" role="alert">
+                            Please enter your mobile number to continue.
+                        </div>
+                    {{/unless}} 
+                {{else}} 
                     {{#if user.mobile_number}}
                         <div class="alert alert-danger" role="alert">
-                            Please enter your email address to continue. 
+                            Please enter your email address to continue.
                         </div>
                     {{else}}
                         <div class="alert alert-danger" role="alert">
-                            Please enter your email address and mobile number to continue. 
+                            Please enter your email address and mobile number to continue.
                         </div>
                     {{/if}}
-                {{/unless}}
-                {{#unless user.mobile_number}}
-                    <div class="alert alert-danger" role="alert">
-                        Please enter your mobile number to continue. 
-                    </div>
-                {{/unless}}
+                {{/if}}
                 {{>modal_profile_pic}}
                 <div class="row justify-content-between align-items-center profile-row">
                     <div class="round-img">

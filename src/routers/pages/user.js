@@ -113,6 +113,11 @@ router.post('/me/edit',
             return res.redirect('/')
         }
 
+        if(req.body.mobile_number.trim() === ''){
+            req.flash('error', 'Contact number cannot be empty')
+            return res.redirect('/me/edit')
+        }
+
         try {
             const user = await findUserById(req.user.id,[models.Demographic])
             const demographic = user.demographic || {};

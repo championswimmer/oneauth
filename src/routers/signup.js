@@ -47,7 +47,7 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
                             firstname: req.body.firstname,
                             lastname: req.body.lastname,
                             email: req.body.email,
-                            mobile_number: +req.body.mobile_number,
+                            mobile_number: req.body.mobile_number,
                             demographic: {
                                 branchId: req.body.branchId,
                                 collegeId: req.body.collegeId,

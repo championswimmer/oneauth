@@ -1,49 +1,70 @@
 {{!< centercolumn}}
+<div class="col-md-8 o-client-add">
+    <div class="card">
+        <div class="heading-u-red">Details for {{client.name}}</div>
+            <div class="attributes d-flex flex-column">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Client Name</div>
+                        <input type="text" class="input-text col-8" value="{{client.name}}" disabled/>
+                    </div>
+                <div class="row justify-content-between">
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Client ID</div>
+                        <input type="text" class="input-text col-8" value="{{client.id}}" disabled/>
+                    </div>
 
-<div class="container p-4 mt-4">
-    <div class="h3 thin-font text-center">Client Details</div>
-    <div class="col-md-12 col-lg-10 offset-lg-1">
-        <a href="/clients/{{client.id}}/edit">
-            <div class="btn btn-sm btn-info">Edit</div>
-        </a>
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Client Secret</div>
+                        <input type="text" class="input-text col-8" value="{{client.secret}}" disabled/>
+                    </div>
+                </div>
 
-        <table class="table table-bordered table-responsive">
-            <tr>
-                <th> Client Name</th>
-                <td> {{client.name}}</td>
-            </tr>
-            <tr>
-                <th> Client Id</th>
-                <td> {{client.id}}</td>
-            </tr>
-            <tr>
-                <th> Client Secret</th>
-                <td> {{client.secret}}</td>
-            </tr>
+                <div class="row justify-content-between">
+                  {{#each client.domain as |domain|}}
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">Domain</div>
+                        <input type="text" class="input-text col-8" value="{{domain}}" disabled/>
+                    </div>
+                  {{/each}}
+                </div>
 
-            {{#each client.domain as |domain|}}
-                <tr>
-                    <th>Domain</th>
-                    <td>{{domain}}</td>
-                </tr>
-            {{/each}}
-            {{#each client.callbackURL as |callback|}}
-                <tr>
-                    <th>Callback URL</th>
-                    <td>{{callback}}</td>
-                </tr>
-            {{/each}}
-            
-            <tr>
-                <th>Default URL</th>
-                <td>{{client.defaultURL}}</td>
-            </tr>
+                <div class="row justify-content-between">
+                  {{#each client.callbackURL as |callback|}}
+                    <div class="row no-gutters align-items-center justify-content-between detail-row">
+                        <div class="label-input col-md-4 col-sm-3">CallBack Url</div>
+                        <input type="text" class="input-text col-8" value="{{callback}}" disabled/>
+                    </div>
+                  {{/each}}
+                </div>
 
-            <tr>
-                <th> Trusted Client</th>
-                <td> {{client.trusted}}</td>
-            </tr>
+                <div class="row justify-content-between">
+                  <div class="row no-gutters align-items-center justify-content-between detail-row">
+                      <div class="label-input col-md-4 col-sm-3">Default Url</div>
+                      <input type="text" class="input-text col-8" value="{{client.defaultURL}}" disabled/>
+                  </div>
 
-        </table>
-    </div>
+                  {{#ifeq val=userRole expected="admin"}}
+                      <div class="row no-gutters align-items-center justify-content-between detail-row">
+                          <div class="label-input col-md-4 col-sm-3">Trusted Client</div>
+                          <input type="checkbox" class="input-checkbox col-7" {{#if client.trusted}} checked {{/if}} disabled/>
+                      </div>
+                  {{/ifeq}}
+                </div>
+
+                <br>
+                <div class="row justify-content-end button-row">
+                  <div class="reset-button mr-5">
+                    <a class="grey" href="/users/me/clients/">
+                      <button>BACK </button>
+                    </a>
+                  </div>
+
+                  <div class="button-solid">
+                    <a class="white" href="/clients/{{client.id}}/edit/">
+                      <button>EDIT CLIENT</button>
+                    </a>
+                  </div>
+              </div>
+          </div>
+      </div>
 </div>

@@ -24,6 +24,10 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
         req.flash('error', 'Email cannot be empty')
         return res.redirect('/signup')
     }
+    if (req.body.mobile_number.trim() === '') {
+        req.flash('error', 'Contact number cannot be empty')
+        return res.redirect('/signup')
+    }
     if ((req.body.password.trim() === '') || req.body.password.length < 5) {
         req.flash('error', 'Password too weak. Use 5 characters at least.')
         return res.redirect('/signup')
@@ -43,6 +47,7 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
                             firstname: req.body.firstname,
                             lastname: req.body.lastname,
                             email: req.body.email,
+                            mobile_number: +req.body.mobile_number,
                             demographic: {
                                 branchId: req.body.branchId,
                                 collegeId: req.body.collegeId,

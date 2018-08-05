@@ -55,6 +55,15 @@
                     </div>
                 </div>
 
+                {{#if user.mobile_number}}
+                  <div id="profile-row-id" class="flex-row">
+                      <div>Contact Number</div>
+                      <div>
+                          <span class="faded">{{user.mobile_number}}</span>
+                      </div>
+                  </div>
+                {{/if}}  
+
                 <div id="profile-row-id" class="flex-row">
                     <div>Role@CB</div>
                     <div>

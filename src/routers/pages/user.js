@@ -115,7 +115,7 @@ router.post('/me/edit',
 
         if(req.body.mobile_number.trim() === ''){
             req.flash('error', 'Contact number cannot be empty')
-            return res.redirect('users/me/edit')
+            return res.redirect('/users/me/edit')
         }
 
         try {

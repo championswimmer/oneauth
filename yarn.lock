@@ -1805,6 +1805,13 @@ passport-http@^0.3.0:
   dependencies:
     passport-strategy "1.x.x"
 
+passport-linkedin-oauth2@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/passport-linkedin-oauth2/-/passport-linkedin-oauth2-1.5.0.tgz#06640b36a6f68299fedb8a6a3acfef4dd04d23b9"
+  dependencies:
+    passport-oauth2 "1.x.x"
+    underscore "^1.7.0"
+
 passport-local@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/passport-local/-/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"

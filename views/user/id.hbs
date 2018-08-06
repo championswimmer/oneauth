@@ -69,7 +69,7 @@
                           <span class="faded">{{user.mobile_number}}</span>
                       </div>
                   </div>
-                {{/if}}  
+                {{/if}}
 
                 <div id="profile-row-id" class="flex-row">
                     <div>Role@CB</div>
@@ -121,6 +121,18 @@
                             <span class="grey">
                                 <a class="grey" target="_blank" href="http://github.com/{{user.usergithub.username}}">
                                     {{user.usergithub.username}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if user.userlinkedin}}
+                    <div id="profile-row-github" class="flex-row">
+                        <div>Linkedin Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="{{user.userlinkedin.profile}}">
+                                    {{user.userlinkedin.username}}
                                 </a>
                             </span>
                         </div>

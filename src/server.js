@@ -103,6 +103,13 @@ app.use(setuserContext)
 app.use(redirectToHome)
 app.use(expressGa('UA-83327907-7'))
 app.use(datadogRouter)
+app.use((req, res, next) => {
+    if (req.path == "/users/me/edit") return next();
+    if (req.user && (!req.user.email || !req.user.mobile_number)) {
+        return res.redirect("/users/me/edit");
+    }
+    return next();
+}); 
 app.use('/login', loginrouter)
 app.use('/connect', connectrouter)
 app.use('/disconnect', disconnectrouter)

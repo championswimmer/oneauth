@@ -4,10 +4,13 @@ const models = require('../../db/models').models
 function DisconnectLinkedin(req, res) {
 
      let existingUser = req.user
+
      if (!existingUser) {
+         req.flash('error','Account doesn\'t exist.')
          res.redirect('/')
      }
-    else {
+
+     else {
 
         models.UserLinkedin.destroy({
             where: {userId: req.user.id}

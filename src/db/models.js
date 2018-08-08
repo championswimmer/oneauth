@@ -32,6 +32,7 @@ const User = db.define('user', {
     username: {type: Sequelize.DataTypes.STRING, unique: true, allowNull: false},
     firstname: Sequelize.DataTypes.STRING,
     lastname: Sequelize.DataTypes.STRING,
+    gender: {type:Sequelize.DataTypes.ENUM('MALE','FEMALE','UNDISCLOSED'),default:'UNDISCLOSED'},
     photo: Sequelize.DataTypes.STRING,
     email: Sequelize.DataTypes.STRING,
     mobile_number: {type: Sequelize.DataTypes.STRING, validate: {len: [10, 10]}},

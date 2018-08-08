@@ -125,8 +125,10 @@ router.post('/me/edit',
 
             user.firstname = req.body.firstname
             user.lastname = req.body.lastname
+            if(req.body.gender){
+                user.gender = req.body.gender
+            }
             user.mobile_number = req.body.mobile_number
-
             if (!user.verifiedemail && req.body.email !== user.email) {
                 user.email = req.body.email
             }
@@ -222,6 +224,7 @@ router.post('/:id/edit',
             const user = await updateUser(req.params.id,{
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
+                gender:req.body.gender,
                 email: req.body.email,
                 mobile_number: req.body.mobile_number,
                 role: req.body.role !== 'unchanged' ? req.body.role : undefined

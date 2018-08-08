@@ -9,7 +9,7 @@ const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
 
 const Raven = require('raven');
-const { findUserById } = require('../../controllers/user');
+const { findUserById , findUserForTrustedClient} = require('../../controllers/user');
 const { deleteAuthToken } = require('../../controllers/oauth');
 const  { findAllAddresses } = require('../../controllers/demographics');
 

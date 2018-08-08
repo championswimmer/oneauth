@@ -79,6 +79,7 @@ app.engine('hbs', exphbs.express4({
 }))
 app.set('views', path.join(__dirname, '../views'))
 app.set("view engine", "hbs")
+app.set('view cache', true)
 
 app.use(expressLogger)
 app.use(express.static(path.join(__dirname, '../public_static')))

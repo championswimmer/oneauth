@@ -10,13 +10,6 @@
                     <div class="heading-u-red">User Profile</div>
                 {{/if}}
 
-                <div class="button-solid">
-                    <a class="white" href="/users/{{user.id}}/edit">
-                        <button>EDIT PROFILE</button>
-                    </a>
-                </div>
-            </div>
-            <div class="row justify-content-center align-items-center profile-row">
                 <div class="round-img">
                     {{#if user.photo}}
                         <img class="round-img user-pic" src="{{user.photo}}">
@@ -52,6 +45,13 @@
                     <div>Lastname</div>
                     <div>
                         <span class="faded">{{user.lastname}}</span>
+                    </div>
+                </div>
+
+                <div id="profile-row-id" class="flex-row">
+                    <div>Gender</div>
+                    <div>
+                        <span class="faded">{{user.gender}}</span>
                     </div>
                 </div>
 

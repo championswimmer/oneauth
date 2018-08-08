@@ -17,6 +17,7 @@ const express = require('express')
 const config = require('../config')
     , secrets = config.SECRETS
     , {sessionStore, saveIp} = require('./middlewares/sessionstore')
+    , {redirectToEditProfile} = require('./middlewares/profilevalidation')
     , loginrouter = require('./routers/login')
     , connectrouter = require('./routers/connect')
     , disconnectrouter = require('./routers/disconnect')
@@ -103,13 +104,7 @@ app.use(setuserContext)
 app.use(redirectToHome)
 app.use(expressGa('UA-83327907-7'))
 app.use(datadogRouter)
-app.use((req, res, next) => {
-    if (req.path == "/users/me/edit") return next();
-    if (req.user && (!req.user.email || !req.user.mobile_number)) {
-        return res.redirect("/users/me/edit");
-    }
-    return next();
-}); 
+app.use(redirectToEditProfile); 
 app.use('/login', loginrouter)
 app.use('/connect', connectrouter)
 app.use('/disconnect', disconnectrouter)

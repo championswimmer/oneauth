@@ -156,7 +156,7 @@ router.post('/me/edit',
                 demographic.collegeId = +req.body.collegeId
             }
 
-            let userDemographic = await findDemographic(demographic.userId)
+            let userDemographic = await findDemographic(req.user.id)
 
             await upsertDemographic(userDemographic.id,demographic.collegeId,demographic.branchId)
 

@@ -32,6 +32,7 @@ router.get('/me',
                 models.UserFacebook,
                 models.UserLms,
                 models.UserTwitter,
+                models.UserLinkedin,
                 {
                     model: models.Demographic,
                     include: [

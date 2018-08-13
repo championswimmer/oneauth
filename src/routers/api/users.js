@@ -36,6 +36,9 @@ router.get('/me',
                         case 'google':
                             includes.push({model: models.UserGoogle, attributes: {exclude: ["token","tokenSecret"]}})
                             break
+                        case 'linkedin':
+                            includes.push({model: models.UserLinkedin, attributes: {exclude: ["token","tokenSecret"]}})
+                            break
                         case 'lms':
                             includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]}})
                             break
@@ -82,6 +85,9 @@ router.get('/me/address',
                             break
                         case 'google':
                             includes.push({model: models.UserGoogle, attributes: {exclude: ["token","tokenSecret"]}})
+                            break
+                        case 'linkedin':
+                            includes.push({model: models.UserLinkedin, attributes: {exclude: ["token","tokenSecret"]}})
                             break
                         case 'lms':
                             includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]}})

@@ -19,6 +19,7 @@ passport.use(UserStrategies.fbStrategy)
 passport.use(UserStrategies.twitterStrategy)
 passport.use(UserStrategies.githubStrategy)
 passport.use(UserStrategies.googleStrategy)
+passport.use(UserStrategies.linkedinStrategy)
 passport.use(UserStrategies.lmsStrategy)
 
 passport.use(ClientStrategies.basicStrategy)
@@ -69,4 +70,3 @@ passport.deserializeUser(async (idHash, cb) => {
 passport.transformAuthInfo((info, done) => done(null, info))
 
 module.exports = passport
-

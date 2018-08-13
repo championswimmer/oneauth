@@ -60,7 +60,7 @@
                           <span class="faded">{{user.mobile_number}}</span>
                       </div>
                   </div>
-                {{/if}}  
+                {{/if}}
 
                 <div id="profile-row-email" class="flex-row">
                     <div>Verified Email</div>
@@ -154,7 +154,22 @@
                         </div>
                     </div>
                 {{/if}}
-                {{#ifCond user.userfacebook user.usergithub user.usergoogle user.usertwitter}}
+                {{#if user.userlinkedin}}
+                    <div id="profile-row-linkedin" class="flex-row">
+                        <div>Linkedin Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="{{user.userlinkedin.profile}}">
+                                    {{user.userlinkedin.username}}
+                                </a>
+                                <a class="grey" href="/disconnect/linkedin" title="Disconnect Linkedin">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#ifCond user.userfacebook user.usergithub user.usergoogle user.usertwitter user.userlinkedin}}
                     <div class="flex-row">
                         You may also connect to:
                     </div>
@@ -199,6 +214,16 @@
                                     <i class="fab fa-github fa-2x"></i>
                                 </button>
                                 <div class="link-text">GITHUB</div>
+                            </a>
+                        </div>
+                    {{/unless}}
+                    {{#unless user.userlinkedin}}
+                        <div class="auth-link">
+                            <a href="/connect/linkedin">
+                                <button class="button-circle linkedin">
+                                    <i class="fab fa-linkedin fa-2x"></i>
+                                </button>
+                                <div class="link-text">LINKEDIN</div>
                             </a>
                         </div>
                     {{/unless}}

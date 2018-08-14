@@ -10,6 +10,7 @@ router.use('/', require('./local'))
 router.use('/facebook', require('./facebook'))
 router.use('/twitter', require('./twitter'))
 router.use('/google', require('./google'))
+router.use('/linkedin',require('./linkedin'))
 router.use('/github', require('./github'))
 
 module.exports = router

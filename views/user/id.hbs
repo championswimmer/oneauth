@@ -9,14 +9,7 @@
                 {{else}}
                     <div class="heading-u-red">User Profile</div>
                 {{/if}}
-                
-                <div class="button-solid">
-                    <a class="white" href="/users/{{user.id}}/edit">
-                        <button>EDIT PROFILE</button>
-                    </a>
-                </div>
-            </div>
-            <div class="row justify-content-center align-items-center profile-row">
+
                 <div class="round-img">
                     {{#if user.photo}}
                         <img class="round-img user-pic" src="{{user.photo}}">
@@ -56,11 +49,27 @@
                 </div>
 
                 <div id="profile-row-id" class="flex-row">
+                    <div>Gender</div>
+                    <div>
+                        <span class="faded">{{user.gender}}</span>
+                    </div>
+                </div>
+
+                <div id="profile-row-id" class="flex-row">
                     <div>Email ID</div>
                     <div>
                         <a href="mailto:{{user.email}}"><span class="faded">{{user.email}}</span></a>
                     </div>
                 </div>
+
+                {{#if user.mobile_number}}
+                  <div id="profile-row-id" class="flex-row">
+                      <div>Contact Number</div>
+                      <div>
+                          <span class="faded">{{user.mobile_number}}</span>
+                      </div>
+                  </div>
+                {{/if}}
 
                 <div id="profile-row-id" class="flex-row">
                     <div>Role@CB</div>
@@ -105,7 +114,7 @@
                         </div>
                     </div>
                 {{/if}}
-                {{#if user.usergithub}}    
+                {{#if user.usergithub}}
                     <div id="profile-row-github" class="flex-row">
                         <div>Github Connected</div>
                         <div>
@@ -117,8 +126,19 @@
                         </div>
                     </div>
                 {{/if}}
+                {{#if user.userlinkedin}}
+                    <div id="profile-row-github" class="flex-row">
+                        <div>Linkedin Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="{{user.userlinkedin.profile}}">
+                                    {{user.userlinkedin.username}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
             </div>
         </div>
     </div>
 </div>
-

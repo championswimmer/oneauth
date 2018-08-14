@@ -36,6 +36,12 @@
                         <span class="faded">{{user.lastname}}</span>
                     </div>
                 </div>
+                <div id="profile-row-gender" class="flex-row">
+                    <div>Gender</div>
+                    <div>
+                        <span class="faded">{{user.gender}}</span>
+                    </div>
+                </div>
                 {{#unless user.verifiedemail}}
                     <div id="profile-row-email" class="flex-row">
                         <div>Email Address</div>
@@ -46,6 +52,16 @@
                         </div>
                     </div>
                 {{/unless}}
+
+                {{#if user.mobile_number}}
+                  <div id="profile-row-lastname" class="flex-row">
+                      <div>Contact Number</div>
+                      <div>
+                          <span class="faded">{{user.mobile_number}}</span>
+                      </div>
+                  </div>
+                {{/if}}
+
                 <div id="profile-row-email" class="flex-row">
                     <div>Verified Email</div>
                     <div>
@@ -83,7 +99,7 @@
                         <div>Facebook Connected</div>
                         <div>
                             <span class="grey">
-                                <a class="grey" target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
+                                <a class="red" target="_blank" href="http://facebook.com/{{user.userfacebook.id}}">
                                     {{user.firstname}} {{user.lastname}}
                                 </a>
                                 <a class="grey" href="/disconnect/facebook" title="Disconnect Facebook">
@@ -98,7 +114,7 @@
                         <div>Google Connected</div>
                         <div>
                             <span class="grey">
-                                <a class="grey" target="_blank" href="http://google.com/{{user.usergoogle.id}}">
+                                <a class="red" target="_blank" href="http://google.com/{{user.usergoogle.id}}">
                                     {{user.usergoogle.username}}
                                 </a>
                                 <a class="grey" href="/disconnect/google" title="Disconnect Google">
@@ -113,7 +129,7 @@
                         <div>Twitter Connected</div>
                         <div>
                             <span class="grey">
-                                <a class="grey" target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
+                                <a class="red" target="_blank" href="http://twitter.com/{{user.usertwitter.username}}">
                                     {{user.usertwitter.username}}
                                 </a>
                                 <a class="grey" href="/disconnect/twitter" title="Disconnect Twitter">
@@ -123,12 +139,12 @@
                         </div>
                     </div>
                 {{/if}}
-                {{#if user.usergithub}}    
+                {{#if user.usergithub}}
                     <div id="profile-row-github" class="flex-row">
                         <div>Github Connected</div>
                         <div>
                             <span class="grey">
-                                <a class="grey" target="_blank" href="http://github.com/{{user.usergithub.username}}">
+                                <a class="red" target="_blank" href="http://github.com/{{user.usergithub.username}}">
                                     {{user.usergithub.username}}
                                 </a>
                                 <a class="grey" href="/disconnect/github" title="Disconnect Github">
@@ -138,7 +154,22 @@
                         </div>
                     </div>
                 {{/if}}
-                {{#ifCond user.userfacebook user.usergithub user.usergoogle user.usertwitter}}   
+                {{#if user.userlinkedin}}
+                    <div id="profile-row-linkedin" class="flex-row">
+                        <div>Linkedin Connected</div>
+                        <div>
+                            <span class="grey">
+                                <a class="grey" target="_blank" href="{{user.userlinkedin.profile}}">
+                                    {{user.userlinkedin.username}}
+                                </a>
+                                <a class="grey" href="/disconnect/linkedin" title="Disconnect Linkedin">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#ifCond user.userfacebook user.usergithub user.usergoogle user.usertwitter user.userlinkedin}}
                     <div class="flex-row">
                         You may also connect to:
                     </div>
@@ -183,6 +214,16 @@
                                     <i class="fab fa-github fa-2x"></i>
                                 </button>
                                 <div class="link-text">GITHUB</div>
+                            </a>
+                        </div>
+                    {{/unless}}
+                    {{#unless user.userlinkedin}}
+                        <div class="auth-link">
+                            <a href="/connect/linkedin">
+                                <button class="button-circle linkedin">
+                                    <i class="fab fa-linkedin fa-2x"></i>
+                                </button>
+                                <div class="link-text">LINKEDIN</div>
                             </a>
                         </div>
                     {{/unless}}

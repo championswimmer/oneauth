@@ -20,8 +20,16 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
         req.flash('error', 'Firstname and/or Lastname cannot be empty')
         return res.redirect('/signup')
     }
+    if ((req.body.gender.trim() === '')) {
+        req.flash('error', 'Gender cannot be empty')
+        return res.redirect('/signup')
+    }
     if (req.body.email.trim() === '') {
         req.flash('error', 'Email cannot be empty')
+        return res.redirect('/signup')
+    }
+    if (req.body.mobile_number.trim() === '') {
+        req.flash('error', 'Contact number cannot be empty')
         return res.redirect('/signup')
     }
     if ((req.body.password.trim() === '') || req.body.password.length < 5) {
@@ -42,7 +50,9 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
                             username: req.body.username,
                             firstname: req.body.firstname,
                             lastname: req.body.lastname,
+                            gender:req.body.gender,
                             email: req.body.email,
+                            mobile_number: req.body.mobile_number,
                             demographic: {
                                 branchId: req.body.branchId,
                                 collegeId: req.body.collegeId,

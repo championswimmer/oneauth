@@ -4,17 +4,18 @@
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const acl = require('../../middlewares/acl')
+const { 
+    findClientById, 
+    findAllClients
+} =require('../../controllers/clients');
 
-const models = require('../../db/models').models
-
-
-router.get('/',acl.ensureAdmin,function (req,res,next) {
-    models.Client.findAll({})
-        .then(function (clients) {
-            return res.render('client/all',{clients:clients})
-        }).catch(function(err){
-            res.send("No clients Registered")
-    })
+router.get('/',acl.ensureAdmin, async function (req,res,next) {
+    try {
+        const clients = await findAllClients();
+        return res.render('client/all',{clients:clients})
+    } catch (error) {
+        res.send("No clients Registered")
+    }
 })
 
 router.get('/add',
@@ -26,29 +27,30 @@ router.get('/add',
 
 router.get('/:id',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Client.findOne({
-            where: {id: req.params.id}
-        }).then(function (client) {
+    async function (req, res, next) {
+        try {
+            const client = await findClientById(req.params.id)  
             if (!client) {
                 return res.send("Invalid Client Id")
             }
             if (client.userId != req.user.id) {
                 return res.send("Unauthorized user")
             }
-
             return res.render('client/id', {client: client})
-        })
+        } catch (error) {
+            Raven.captureException(error)
+            req.flash('error', 'Error Getting Client')
+            res.status(500).json({error: error})
+        }
     }
 )
 
 
 router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
-    function (req, res, next) {
-        models.Client.findOne({
-            where: {id: req.params.id}
-        }).then(function (client) {
+    async function (req, res, next) {
+        try {
+            const client = await findClientById(req.params.id)    
             if (!client) {
                 return res.send("Invalid Client Id")
             }
@@ -58,9 +60,12 @@ router.get('/:id/edit',
             client.clientDomains = client.domain.join(";")
             client.clientCallbacks = client.callbackURL.join(";")
             client.clientdefaultURL = client.defaultURL;
-
             return res.render('client/edit', {client: client})
-        })
+        } catch (error) {
+            Raven.captureException(error)
+            req.flash('error', 'Error Editing Client')
+            res.status(500).json({error: error})
+        }
     }
 )
 

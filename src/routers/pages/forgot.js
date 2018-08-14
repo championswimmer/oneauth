@@ -1,4 +1,3 @@
-const cel = require('connect-ensure-login')
 const models = require('../../db/models').models
 const makeGaEvent = require('../../utils/ga').makeGaEvent
 const mail = require('../../utils/email')
@@ -18,11 +17,11 @@ router.use((req, res, next) => {
     }
 })
 
-router.get('/username', (req, res, next) => {
+router.get('/username', (req, res) => {
     res.render('forgot/username/index', {title: "Resetusername | OneAuth"})
 })
 
-router.get('/username/inter', (req, res, next) => {
+router.get('/username/inter', (req, res) => {
     res.render('forgot/username/inter', {title: "Resetusername | OneAuth"})
 })
 
@@ -56,11 +55,11 @@ router.post('/username', makeGaEvent('submit', 'form', 'forgot.username'), funct
     })
 })
 
-router.get('/password', (req, res, next) => {
+router.get('/password', (req, res) => {
     res.render('forgot/password/index', {title: "Resetpassword | OneAuth"})
 })
 
-router.get('/password/inter', (req, res, next) => {
+router.get('/password/inter', (req, res) => {
     res.render('forgot/password/inter', {title: "Resetinter | OneAuth"})
 })
 
@@ -166,7 +165,7 @@ router.post('/password/new', makeGaEvent('submit', 'form', 'forgot.password.new'
 
             }
           )
-          .then((userlocal) => {
+          .then(() => {
 
             return models.Resetpassword.update({
                 deletedAt: moment().format()

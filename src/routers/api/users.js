@@ -7,12 +7,16 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
-const Raven = require('raven')
+
+const Raven = require('raven');
+const { findUserById , findUserForTrustedClient} = require('../../controllers/user');
+const { deleteAuthToken } = require('../../controllers/oauth');
+const  { findAllAddresses } = require('../../controllers/demographics');
 
 router.get('/me',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
     passport.authenticate(['bearer', 'session']),
-    function (req, res) {
+    async function (req, res) {
 
         if (req.user && !req.authInfo.clientOnly && req.user.id) {
             let includes = []
@@ -32,36 +36,36 @@ router.get('/me',
                         case 'google':
                             includes.push({model: models.UserGoogle, attributes: {exclude: ["token","tokenSecret"]}})
                             break
+                        case 'linkedin':
+                            includes.push({model: models.UserLinkedin, attributes: {exclude: ["token","tokenSecret"]}})
+                            break
                         case 'lms':
                             includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]}})
+                            break
+                        case 'demographic':
+                            includes.push({ model: models.Demographic, include: [models.College] })
                             break
                     }
                 }
             }
-
-
-            models.User.findOne({
-                where: {id: req.user.id},
-                include: includes
-            }).then(function (user) {
+            try {
+                const user = await findUserById(req.user.id,includes);
                 if (!user) {
                     throw new Error("User not found")
                 }
                 res.send(user)
-            }).catch(function (err) {
+            } catch (error) {
                 res.send('Unknown user or unauthorized request')
-            })
-
+            }
         } else {
             return res.status(403).json({error: 'Unauthorized'})
         }
-
     })
 
 router.get('/me/address',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
     passport.authenticate(['bearer', 'session']),
-    function (req, res) {
+    async function (req, res) {
         if (req.user && req.user.id) {
             let includes = [{model: models.Demographic,
             include: [models.Address]
@@ -82,50 +86,43 @@ router.get('/me/address',
                         case 'google':
                             includes.push({model: models.UserGoogle, attributes: {exclude: ["token","tokenSecret"]}})
                             break
+                        case 'linkedin':
+                            includes.push({model: models.UserLinkedin, attributes: {exclude: ["token","tokenSecret"]}})
+                            break
                         case 'lms':
                             includes.push({ model: models.UserLms, attributes: {exclude: ["accessToken"]}})
                             break
                     }
                 }
             }
-
-
-            models.User.findOne({
-                where: {id: req.user.id},
-                include: includes
-            }).then(function (user) {
-                console.log(user)
+            try {
+                const user = await findUserById(req.user.id,includes);
                 if (!user) {
                     throw new Error("User not found")
                 }
                 res.send(user)
-            }).catch(function (err) {
+            } catch (error) {
                 res.send('Unknown user or unauthorized request')
-            })
-
+            }
         } else {
             return res.sendStatus(403)
         }
-
     })
-
 
 router.get('/me/logout',
     passport.authenticate('bearer', {session: false}),
-    function (req, res) {
+    async function (req, res) {
         if (req.user && req.user.id) {
-            models.AuthToken.destroy({
-                where: {
-                    token: req.header('Authorization').split(' ')[1]
-                }
-            }).then(function () {
+            let token = req.header('Authorization').split(' ')[1];
+            try {
+                const del = await deleteAuthToken(token)
                 res.status(202).send({
                     'user_id': req.user.id,
-                    'logout': 'success'
+                    'logout': "success"
                 })
-            }).catch(function (err) {
-                res.status(501).send(err)
-            })
+            } catch (error) {
+                res.status(501).send(error)
+            }
         } else {
             res.status(403).send("Unauthorized")
         }
@@ -134,7 +131,7 @@ router.get('/me/logout',
 
 router.get('/:id',
     passport.authenticate('bearer', {session: false}),
-    function (req, res) {
+    async function (req, res) {
         // Send the user his own object if the token is user scoped
         if (req.user && !req.authInfo.clientOnly && req.user.id) {
             if (req.params.id == req.user.id) {
@@ -142,25 +139,21 @@ router.get('/:id',
             }
         }
         let trustedClient = req.client && req.client.trusted
-        models.User.findOne({
-            // Public API should expose only id, username and photo URL of users
-            // But for trusted clients we will pull down our pants
-            attributes: trustedClient ? undefined: ['id', 'username', 'photo'],
-            where: {id: req.params.id}
-        }).then(function (user) {
+        try {
+            const user = await findUserForTrustedClient(trustedClient, req.params.id);
             if (!user) {
                 throw new Error("User not found")
             }
             res.send(user)
-        }).catch(function (err) {
+        } catch (error) {
             res.send('Unknown user or unauthorized request')
-        })
+        }
     }
 )
 router.get('/:id/address',
     // Only for server-to-server calls, no session auth
     passport.authenticate('bearer', {session: false}),
-    function (req, res) {
+    async function (req, res) {
         let includes = [{model: models.Demographic,
             include: [{model: models.Address, include:[models.State, models.Country]}]
         }]
@@ -180,17 +173,14 @@ router.get('/:id/address',
                 return res.status(403).json({error: 'Unauthorized'})
             }
         }
-
-        models.Address.findAll({
-            where: {'$demographic.userId$': req.params.id},
-            include: includes
-        }).then(function (addresses) {
+        try {
+            const addresses = await findAllAddresses(req.params.id, includes)
             return res.json(addresses)
-        }).catch(function (err) {
-            Raven.captureException(err)
+        } catch (error) {
+            Raven.captureException(error)
             req.flash('error', 'Something went wrong trying to query address database')
-            return res.status(500).json({error: err.message})
-        })
+            return res.status(500).json({error: error.message})
+        }
     }
 )
 

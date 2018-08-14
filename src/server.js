@@ -17,6 +17,7 @@ const express = require('express')
 const config = require('../config')
     , secrets = config.SECRETS
     , {sessionStore, saveIp} = require('./middlewares/sessionstore')
+    , {redirectToEditProfile} = require('./middlewares/profilevalidation')
     , loginrouter = require('./routers/login')
     , connectrouter = require('./routers/connect')
     , disconnectrouter = require('./routers/disconnect')
@@ -78,6 +79,7 @@ app.engine('hbs', exphbs.express4({
 }))
 app.set('views', path.join(__dirname, '../views'))
 app.set("view engine", "hbs")
+app.set('view cache', true)
 
 app.use(expressLogger)
 app.use(express.static(path.join(__dirname, '../public_static')))
@@ -103,6 +105,7 @@ app.use(setuserContext)
 app.use(redirectToHome)
 app.use(expressGa('UA-83327907-7'))
 app.use(datadogRouter)
+app.use(redirectToEditProfile); 
 app.use('/login', loginrouter)
 app.use('/connect', connectrouter)
 app.use('/disconnect', disconnectrouter)
@@ -113,6 +116,7 @@ app.use('/api', apirouter)
 app.use('/oauth', oauthrouter)
 app.use('/status', statusrouter)
 app.use('/', pagerouter)
+app.get('*', (req, res) => res.render('404')); 
 
 app.use(Raven.errorHandler())
 

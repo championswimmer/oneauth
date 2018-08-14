@@ -9,9 +9,36 @@ const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
 
 const Raven = require('raven');
-const { findUserById , findUserForTrustedClient} = require('../../controllers/user');
+const { findUserById , findUserForTrustedClient, findAllUsersWithFilter} = require('../../controllers/user');
 const { deleteAuthToken } = require('../../controllers/oauth');
 const  { findAllAddresses } = require('../../controllers/demographics');
+
+router.get('/',
+  passport.authenticate('bearer', {session: false}),
+  async function (req, res) {
+    // Send the user his own object if the token is user scoped
+    if (req.user && !req.authInfo.clientOnly && req.user.id) {
+      if (req.params.id == req.user.id) {
+        return res.send(req.user)
+      }
+    }
+
+    let trustedClient = req.client && req.client.trusted
+    try {
+      let users = await findAllUsersWithFilter(trustedClient, req.query);
+      if (!users) {
+        throw new Error("User not found")
+      }
+      if (!Array.isArray(users)) {
+        users = [users]
+      }
+      res.send(users)
+    } catch (error) {
+      res.send('Unknown user or unauthorized request')
+    }
+  }
+)
+
 
 router.get('/me',
     // Frontend clients can use this API via session (using the '.codingblocks.com' cookie)
@@ -183,5 +210,8 @@ router.get('/:id/address',
         }
     }
 )
+
+
+
 
 module.exports = router

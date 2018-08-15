@@ -47,7 +47,7 @@ router.get('/me',
             }
             return res.render('user/me', {user: user})
         } catch (error) {
-            throw err
+            throw error
         }
     })
 

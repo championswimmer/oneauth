@@ -37,15 +37,18 @@ function updateClient(options, clientId) {
   options.clientCallbacks.forEach(function(url, i, arr) {
     arr[i] = urlutils.prefixHttp(url);
   });
-  return Client.update(
-    {
+
+  let update = {
       name: options.clientName,
       domain: options.clientDomains,
       defaultURL: options.defaultURL,
       callbackURL: options.clientCallbacks,
       trusted: options.trustedClient
-    },
-    {
+    }
+  if (options.webhookURL) {
+    update.webhookURL = options.webhookURL
+  }
+  return Client.update( update, {
       where: { id: clientId }
     }
   );

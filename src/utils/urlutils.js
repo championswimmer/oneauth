@@ -8,5 +8,10 @@ module.exports = {
             url = "http://" + url
         }
         return url
+    },
+
+    isURL: function (url) {
+        const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+        return regex.test(url) ? true : false
     }
 }

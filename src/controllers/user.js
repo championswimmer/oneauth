@@ -76,6 +76,7 @@ function generateFilter(filterArgs) {
     }
   }
   return whereObj
+
 }
 
 module.exports = {

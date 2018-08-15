@@ -1,0 +1,1 @@
+ALTER TABLE public.userlinkedins ADD COLUMN email VARCHAR(255);

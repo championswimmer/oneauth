@@ -1,0 +1,64 @@
+version: 2
+machine:
+jobs:
+  
+  # BUILD JOB NEEDS DEBUGGING, TEST JOB RUNNING PERFECTLY
+  
+  # build:
+  #   docker:
+  #     - image: circleci/node:8.9
+  #     - image: circleci/postgres:9.6.2-alpine
+  #       environment:
+  #         POSTGRES_USER: oneauth
+  #         POSTGRES_DB: oneauth
+  #   steps:
+  #     - checkout
+  #     - run: sudo apt install -y postgresql || true
+  #     - run:
+  #         command: |
+  #           sudo -u postgres createuser POSTGRES_USER
+  #           sudo -u postgres createdb POSTGRES_DB
+  #     - run: 
+  #         name: pre install
+  #         command: |
+  #           curl -o- -L https://yarnpkg.com/install.sh | bash
+  #           export PATH=$HOME/.yarn/bin:$PATH
+  #           sudo npm install -g node-gyp
+  #     - checkout      
+  #     - run:
+  #         name: install 
+  #         command: |
+  #           yarn install
+  #     - checkout      
+  #     - run:
+  #         name: build 
+  #         command: |
+  #           yarn start:dev
+  test:
+    docker:
+      - image: circleci/node:8.9
+    steps:
+      - checkout
+      - run: 
+          name: pre install
+          command: |
+            curl -o- -L https://yarnpkg.com/install.sh | bash
+            export PATH=$HOME/.yarn/bin:$PATH
+            sudo npm install -g node-gyp
+      - checkout      
+      - run:
+          name: install 
+          command: |
+            yarn install
+      - checkout      
+      - run:
+          name: test 
+          command: |
+            yarn test
+            
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      # - build
+      - test

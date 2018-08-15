@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --timeout 10000 -- tests/**/*.js",
+    "report": "nyc yarn test",
     "start": "node src/server.js",
     "start:dev": "cross-env ONEAUTH_DEV=localhost npm start"
   },
@@ -75,6 +76,20 @@
     "yarn": "1"
   },
   "devDependencies": {
-    "cross-env": "^5.1.5"
+    "chai": "^4.1.2",
+    "cross-env": "^5.1.5",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2"
+  },
+  "nyc": {
+    "extensions": [
+      ".js",
+      ".hbs"
+    ],
+    "reporter": [
+      "text",
+      "lcovonly"
+    ],
+    "sourceMap": true
   }
 }

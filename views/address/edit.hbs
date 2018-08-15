@@ -61,7 +61,7 @@
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
                         <div class="label-input col-md-4 col-sm-3">State</div>
 
-                        <select name="stateId" value="{{address.stateId}}" required class="dropdown-ul input-text col-md-8 col-sm-8">
+                        <select name="stateId" value="{{address.stateId}}" required class="input-text col-md-8 col-sm-8">
                             {{#each states}}
                                 <option class="dropdown-li" value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
                             {{/each}}
@@ -70,7 +70,7 @@
 
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
                         <div class="label-input col-md-4 col-sm-3">Country</div>
-                        <select name="countryId" value="{{address.countryId}}" required class="dropdown-ul input-text col-md-8 col-sm-8">
+                        <select name="countryId" value="{{address.countryId}}" required class="input-text col-md-8 col-sm-8">
                             {{#each countries}}
                                 <option class="dropdown-li" value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
                             {{/each}}

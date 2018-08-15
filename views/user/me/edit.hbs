@@ -98,7 +98,7 @@
 
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
                         <div class="label-input col-2">College</div>
-                        <select name="collegeId" class="dropdown-ul input-text col-9">
+                        <select name="collegeId" class="input-text col-9">
                             {{#each colleges}}
                                 {{#ifeq expected=id val=../user.demographic.collegeId}}
                                     <option class="dropdown-li" value="{{id}}" selected>{{name}}</option>
@@ -112,7 +112,7 @@
 
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
                         <div class="label-input col-2">Branch</div>
-                        <select name="branchId" class="dropdown-ul input-text col-9">
+                        <select name="branchId" class="input-text col-9">
                             {{#each branches}}
                                 {{#ifeq expected=id val=../user.demographic.branchId}}
                                     <option class="dropdown-li" value="{{id}}" selected>{{name}}</option>

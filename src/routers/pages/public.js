@@ -3,6 +3,7 @@
  *
  * This route contains pages that are visible to public (without logging in)
  */
+const Raven = require('raven') 
 const cel = require('connect-ensure-login')
 const router = require('express').Router()
 const verifyemail = require('../../routers/verifyemail')
@@ -21,9 +22,10 @@ router.get('/signup', cel.ensureNotLoggedIn('/'), async function (req, res, next
             findAllBranches()
         ])
         res.render('signup', {title: "Signup | OneAuth", colleges:colleges, branches:branches})
-    } catch (error) {
-        Raven.captureException(error)
-        res.send("Error Fetching College and Branches Data.")
+    } catch (err) {
+        Raven.captureException(err)
+        res.flash('error','Error Fetching College and Branches Data.')
+        res.redirect('/')
     }
 })
 

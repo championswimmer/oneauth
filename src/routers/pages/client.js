@@ -1,11 +1,12 @@
 /**
  * Created by championswimmer on 13/03/17.
  */
+const Raven = require('raven') 
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const acl = require('../../middlewares/acl')
-const { 
-    findClientById, 
+const {
+    findClientById,
     findAllClients
 } =require('../../controllers/clients');
 
@@ -14,7 +15,9 @@ router.get('/',acl.ensureAdmin, async function (req,res,next) {
         const clients = await findAllClients();
         return res.render('client/all',{clients:clients})
     } catch (error) {
-        res.send("No clients Registered")
+        Raven.captureException(err)
+        req.flash('error','No cLients registered')
+        res.redirect('user/me')
     }
 })
 
@@ -29,7 +32,7 @@ router.get('/:id',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const client = await findClientById(req.params.id)  
+            const client = await findClientById(req.params.id)
             if (!client) {
                 return res.send("Invalid Client Id")
             }
@@ -40,7 +43,7 @@ router.get('/:id',
         } catch (error) {
             Raven.captureException(error)
             req.flash('error', 'Error Getting Client')
-            res.status(500).json({error: error})
+            res.redirect('users/me/clients')
         }
     }
 )
@@ -50,7 +53,7 @@ router.get('/:id/edit',
     cel.ensureLoggedIn('/login'),
     async function (req, res, next) {
         try {
-            const client = await findClientById(req.params.id)    
+            const client = await findClientById(req.params.id)
             if (!client) {
                 return res.send("Invalid Client Id")
             }
@@ -64,7 +67,7 @@ router.get('/:id/edit',
         } catch (error) {
             Raven.captureException(error)
             req.flash('error', 'Error Editing Client')
-            res.status(500).json({error: error})
+            res.redirect('users/me/clients')
         }
     }
 )

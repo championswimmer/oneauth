@@ -47,7 +47,8 @@ router.get('/me',
             }
             return res.render('user/me', {user: user})
         } catch (error) {
-            throw err
+            Raven.captureException(error)
+            res.status(500).json({error: error})
         }
     })
 
@@ -75,7 +76,8 @@ router.get('/me/edit',
             return res.render('user/me/edit', {user, colleges, branches})
         } catch (error) {
             Raven.captureException(error)
-            res.send("Error Fetching College and Branches Data.")
+            res.flash('error','Error Fetching College and Branches Data.')
+            res.redirect('users/me')
         }
 
     }
@@ -194,8 +196,10 @@ router.get('/:id',
                 return res.status(404).send({error: "Not found"})
             }
             return res.render('user/id', {user: user})
-        } catch (error) {
-            throw erorr
+        } catch (err) {
+            Raven.captureException(err)
+            req.flash('error','Could not fetch user')
+            res.redirect('user/me')
         }
     }
 )
@@ -210,8 +214,10 @@ router.get('/:id/edit',
                 return res.status(404).send({error: "Not found"})
             }
             return res.render('user/id/edit', {user: user})
-        } catch (error) {
-            throw erorr
+        } catch (err) {
+            Raven.captureException(err)
+            req.flash('error', 'Error in Server')
+            res.redirect('user/id')
         }
     }
 )
@@ -231,7 +237,9 @@ router.post('/:id/edit',
             })
             return res.redirect('../' + req.params.id);
         } catch (error) {
-            throw erorr
+            Raven.captureException(err)
+            req.flash('error','Could not update User')
+            res.redirect('user/id')
         }
     }
 )
@@ -243,7 +251,9 @@ router.get('/me/clients',
             const clients = await findAllClientsByUserId(req.user.id);
             return res.render('client/all', {clients: clients})
         } catch (error) {
-            res.send("No clients registered")
+            Raven.captureException(err)
+            req.flash('error','Could not find any clients')
+            res.redirect('user/me')
         }
     }
 )

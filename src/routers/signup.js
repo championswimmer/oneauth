@@ -3,14 +3,15 @@
  *
  * This is the /signup path
  */
+const Raven = require('raven')
 const router = require('express').Router()
 const models = require('../db/models').models
 const passutils = require('../utils/password')
 const makeGaEvent = require('../utils/ga').makeGaEvent
 const mail = require('../utils/email')
+const { findUserByParams, createUserLocal } = require('../controllers/user')
 
-
-router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
+router.post('/', makeGaEvent('submit', 'form', 'signup'), async (req, res) => {
 
     if (req.body.username.trim() === '') {
         req.flash('error', 'Username cannot be empty')
@@ -37,45 +38,36 @@ router.post('/', makeGaEvent('submit', 'form', 'signup'), function (req, res) {
         return res.redirect('/signup')
     }
 
-    models.User.findOne({where: {username: req.body.username}})
-        .then((user) => {
-            if (user) {
-                req.flash('error', 'Username already exist\'s. Please try again.')
-                return res.redirect('/signup')
-            }
-            passutils.pass2hash(req.body.password)
-                .then(function (passhash) {
-                    models.UserLocal.create({
-                        user: {
-                            username: req.body.username,
-                            firstname: req.body.firstname,
-                            lastname: req.body.lastname,
-                            gender:req.body.gender,
-                            email: req.body.email,
-                            mobile_number: req.body.mobile_number,
-                            demographic: {
-                                branchId: req.body.branchId,
-                                collegeId: req.body.collegeId,
-                            }
-                        },
-                        password: passhash
-                    }, {
-                        include: [
-                            {model: models.User, include: [models.Demographic]}
-                        ]
-                    }).then(function (user) {
+    try {
 
-                        mail.welcomeEmail(user.user.dataValues)
-
-                        res.redirect('/login')
-                    })
-                })
-        })
-        .catch(function (err) {
-            // Could not register user
-            req.flash('error', 'Unsuccessful registration. Please try again.')
+        const User = await findUserByParams({username: req.body.username})
+        if (User) {
+            req.flash('error', 'Username already exists. Please try again.')
             return res.redirect('/signup')
-        })
+        }
+
+        const passhash = await passutils.pass2hash(req.body.password)
+        const query = {
+            username: req.body.username,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            demographic: {
+                branchId: req.body.branchId,
+                collegeId: req.body.collegeId,
+            }
+
+          let includes = [{model: models.User, include: [models.Demographic]}]
+          const user = await createUserLocal(query, passhash, includes)
+
+          mail.welcomeEmail(user.user.dataValues)
+          res.redirect('/login')
+
+     } catch(err) {
+        Raven.captureException(err)
+        req.flash('error', 'Unsuccessful registration. Please try again.')
+        return res.redirect('/signup')
+    }
 })
 
 module.exports = router

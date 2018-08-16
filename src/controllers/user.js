@@ -8,6 +8,14 @@ function findUserById(id, includes) {
   });
 }
 
+function findUserByParams(params) {
+  return models.User.findOne({where: params})
+}
+
+function createUserLocal(params, pass, includes) {
+  return models.UserLocal.create({user: params, password: pass}, {include: includes})
+}
+
 function updateUser(userid, newValues) {
   return User.update(newValues, {
     where: { id: userid },
@@ -81,6 +89,8 @@ function generateFilter(filterArgs) {
 
 module.exports = {
   findUserById,
+  findUserByParams,
+  createUserLocal,
   updateUser,
   findUserForTrustedClient,
   findAllUsersWithFilter

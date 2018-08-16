@@ -36,6 +36,7 @@ module.exports = {
     linkedin:{
         id: {type: Sequelize.DataTypes.STRING, primaryKey: true},
         username: Sequelize.DataTypes.STRING,
+        email: Sequelize.DataTypes.STRING,
         profile: Sequelize.DataTypes.STRING,
         token: Sequelize.DataTypes.TEXT,
         tokenSecret: {type: Sequelize.DataTypes.TEXT, allowNull: true}

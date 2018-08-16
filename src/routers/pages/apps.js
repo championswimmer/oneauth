@@ -3,10 +3,11 @@
  */
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
+const Raven = require('raven')
 
-const { 
+const {
     findAuthTokensByUserId,
-    findAuthToken 
+    findAuthToken
 } = require('../../controllers/oauth');
 
 router.get('/',
@@ -16,7 +17,9 @@ router.get('/',
             const apps = await findAuthTokensByUserId(req.user.id);
             return res.render('apps/all', {apps: apps})
         } catch(error){
-            res.send("No clients registered")
+            Raven.captureException(err)
+            req.flash('error','No Clients registered')
+            res.redirect('user/me')
         }
     }
 )
@@ -33,8 +36,10 @@ router.get('/:clientId/delete',cel.ensureLoggedIn('/login'),
             }
             token.destroy();
             return res.redirect('/apps/')
-        } catch (error) {
-            return res.send("Invalid App")
+        } catch (err) {
+            Raven.captureException(err)
+            req.flash('error', 'Something went wrong, could not delete app')
+            res.redirect('/apps/')
         }
     }
 )

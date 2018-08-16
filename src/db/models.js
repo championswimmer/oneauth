@@ -173,8 +173,8 @@ Branch.hasMany(Demographic)
 
 const EventSubscription = db.define('event_subscription', {
   id: {type: Sequelize.DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
-  clientId: {type: Sequelize.DataTypes.BIGINT, references: 'clients'},
-  model: {type: Sequelize.DataTypes.ENUM(User, Client, Address, Demographic)},
+  clientId: {type: Sequelize.DataTypes.BIGINT, references: {model: 'clients', key: 'id'}},
+  model: {type: Sequelize.DataTypes.ENUM('user', 'client', 'address', 'demographic')},
   type: {type: Sequelize.DataTypes.ENUM('create', 'update', 'delete')}
 })
 

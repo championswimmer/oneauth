@@ -1,7 +1,7 @@
 # oneauth
 [![Build Status](https://travis-ci.org/coding-blocks/oneauth.svg)](https://travis-ci.org/coding-blocks/oneauth)
 [![CircleCI](https://circleci.com/gh/coding-blocks/oneauth.svg?style=svg)](https://circleci.com/gh/coding-blocks/oneauth)
-[![Coverage Status](https://codecov.io/github/coding-blocks/oneauth/badge.svg)](https://coveralls.io/github/coding-blocks/oneauth)
+[![Coverage Status](https://codecov.io/github/coding-blocks/oneauth/badge.svg)](https://codecov.io/gh/coding-blocks/oneauth)
 [![Code Climate](https://lima.codeclimate.com/github/coding-blocks/oneauth/badges/gpa.svg)](https://lima.codeclimate.com/github/coding-blocks/oneauth)
 [![bitHound Code](https://www.bithound.io/github/coding-blocks/oneauth/badges/code.svg)](https://www.bithound.io/github/coding-blocks/oneauth)
 [![bitHound Dependencies](https://www.bithound.io/github/coding-blocks/oneauth/badges/dependencies.svg)](https://www.bithound.io/github/coding-blocks/oneauth/master/dependencies/npm)

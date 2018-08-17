@@ -18,7 +18,9 @@ before_install:
 
 install:
   - yarn install --non-interactive
+  - yarn global add codecov
 
 script:
   - yarn test
   - yarn report
+  - bash <(curl -s https://codecov.io/bash)

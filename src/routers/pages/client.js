@@ -10,6 +10,10 @@ const {
     findAllClients
 } =require('../../controllers/clients');
 
+const { 
+    findAllEventSubscription
+} =require('../../controllers/event_subscriptions');
+
 router.get('/',acl.ensureAdmin, async function (req,res,next) {
     try {
         const clients = await findAllClients();
@@ -54,6 +58,7 @@ router.get('/:id/edit',
     async function (req, res, next) {
         try {
             const client = await findClientById(req.params.id)
+            let eventSubscription = []  
             if (!client) {
                 return res.send("Invalid Client Id")
             }
@@ -63,7 +68,48 @@ router.get('/:id/edit',
             client.clientDomains = client.domain.join(";")
             client.clientCallbacks = client.callbackURL.join(";")
             client.clientdefaultURL = client.defaultURL;
-            return res.render('client/edit', {client: client})
+            if (client.dataValues.webhookURL) {
+                eventSubscription = await findAllEventSubscription (req.params.id)
+            }
+            let event_subscription = {
+                cUser: '',
+                uUser: '',
+                dUser: '',
+                cDemographic: '',
+                uDemographic: '',
+                dDemographic: '',
+                cAddress: '',
+                uAddress: '',
+                dAddress: '',
+                cClient: '',
+                uClient: '',
+                dClient: ''
+            }
+
+            eventSubscription.forEach (event => {
+                if (event.model === 'user') {
+                    if (event.type === 'create') event_subscription.cUser = '1'
+                    else if (event.type === 'update') event_subscription.uUser = '1'
+                    else if (event.type === 'delete') event_subscription.dUser = '1'
+                }
+                else if (event.model === 'demographic') {
+                    if (event.type === 'create') event_subscription.cDemographic = '1'
+                    if (event.type === 'update') event_subscription.uDemographic = '1'
+                    if (event.type === 'delete') event_subscription.dDemographic = '1'
+                }
+                else if (event.model === 'address') {
+                    if (event.type === 'create') event_subscription.cAddress = '1'
+                    if (event.type === 'update') event_subscription.uAddress = '1'
+                    if (event.type === 'delete') event_subscription.dAddress = '1'
+                }
+                else if (event.model === 'client') {
+                    if (event.type === 'create') event_subscription.cClient = '1'
+                    if (event.type === 'update') event_subscription.uClient = '1'
+                    if (event.type === 'delete') event_subscription.dClient = '1'
+                }
+            })
+
+            return res.render('client/edit', {client: client, event_subscription: event_subscription})
         } catch (error) {
             Raven.captureException(error)
             req.flash('error', 'Error Editing Client')

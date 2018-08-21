@@ -123,6 +123,7 @@ router.post('/me/edit',
 
         try {
             const user = await findUserById(req.user.id,[models.Demographic])
+            // user might have demographic, if not make empty
             const demographic = user.demographic || {};
 
             user.firstname = req.body.firstname
@@ -151,7 +152,11 @@ router.post('/me/edit',
                 multer.deleteMinio(prevPhoto)
             }
 
-            demographic.userId = demographic.userId || req.user.id;
+            // If am empty demographic, then insert userid
+            if (!demographic.userId) {
+                demographic.userId = req.user.id
+            }
+
             if (req.body.branchId) {
                 demographic.branchId = +req.body.branchId
             }
@@ -159,9 +164,12 @@ router.post('/me/edit',
                 demographic.collegeId = +req.body.collegeId
             }
 
-            let userDemographic = await findDemographic(req.user.id)
-
-            await upsertDemographic(userDemographic.id,demographic.collegeId,demographic.branchId)
+            await upsertDemographic (
+                demographic.id,
+                demographic.userId,
+                demographic.collegeId,
+                demographic.branchId
+            )
 
             if (req.body.password) {
                 const passHash = await passutils.pass2hash(req.body.password)

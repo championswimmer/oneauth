@@ -65,8 +65,11 @@ function findAllColleges() {
   });
 }
 
-function upsertDemographic(id, collegeId, branchId) {
-  return models.Demographic.upsert({ id, collegeId, branchId });
+function upsertDemographic(id, userId, collegeId, branchId) {
+  if ((!id) && (!userId)) {
+    throw new Error("To upsert demographic either id or userid needed")
+  }
+  return models.Demographic.upsert({ id, userId, collegeId, branchId });
 }
 
 module.exports = {

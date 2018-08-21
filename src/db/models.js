@@ -127,8 +127,8 @@ Client.hasMany(AuthToken)
 
 const Demographic = db.define('demographic', {})
 
-Demographic.belongsTo(User)
-User.hasOne(Demographic)
+Demographic.belongsTo(User)     // Demographic has userId
+User.hasOne(Demographic)        // One user has only one demographic, so userId is UNIQUE
 
 const Address = db.define('address', definitions.demographics.address, {
     indexes: [

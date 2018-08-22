@@ -15,14 +15,15 @@ SELECT
         count("email") AS "count", 
         count("verifiedemail") as "Verified", 
         max("createdAt") as "Last Attempt", 
-        min("createdAt") as "First Attempt", 
-        "public"."users"."email" AS "email"
-FROM "public"."users"
-GROUP BY "public"."users"."email"
+        min("createdAt") as "First Attempt",
+        "users"."email" AS "email"
+FROM "users"
+WHERE "deletedAt" is NULL
+GROUP BY "users"."email"
 HAVING 
         count("email") > 1 AND 
         count("verifiedemail") = 1
-ORDER BY "count" DESC, "public"."users"."email" ASC
+ORDER BY "count" DESC, "users"."email" ASC
         `)
         console.log("Going to delete " + users.length + " users")
         for (user of users) {
@@ -31,7 +32,8 @@ ORDER BY "count" DESC, "public"."users"."email" ASC
                 where: {
                     email: user.email,
                     verifiedemail: { $eq: null}
-                }
+                },
+                // force: true
             })
         }
 
@@ -47,5 +49,7 @@ ORDER BY "count" DESC, "public"."users"."email" ASC
 runPrune()
 
 /*
-NOTES: This deleted (paranoid) 817 users on 2018-06-08
+NOTES:
+    - This deleted (paranoid) 817 users on 2018-06-08
+    - The deleted (force) 841 users on 2018-08-23
  */

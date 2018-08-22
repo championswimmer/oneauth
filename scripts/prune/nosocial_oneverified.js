@@ -20,6 +20,7 @@ from "users"
     left outer join "userfacebooks" on "userfacebooks"."userId" = "users"."id"
     left outer join "usergithubs" on "usergithubs"."userId" = "users"."id"
     left outer join "usertwitters" on "usertwitters"."userId" = "users"."id"
+where "users"."deletedAt" is null   
 group by "email"
 having 
     count("email") > 1 and

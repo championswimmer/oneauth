@@ -12,13 +12,11 @@ engines:
     enabled: true
 ratings:
   paths:
-    - "db/**/*"
-    - "oauth/**/*"
-    - "routers/**/*"
-    - "utils/**/*"
+    - "src/**/*"
     - "scripts/**/*"
     - "views/**/*"
 exclude_paths:
  - "docs/**/*"
  - "**/jquery*"
  - "**/bootstrap*"
+ - "public_static/**/*"

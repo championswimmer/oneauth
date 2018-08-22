@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --timeout 10000 -- tests/**/*.js",
-    "report": "nyc yarn test",
-    "report-coverage": "cd tests/ && nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "test:clean": "rimraf .nyc_output coverage",
+    "test:report": "nyc npm test",
+    "precodecov": "npm run test:report",
+    "codecov": "codecov",
     "start": "node src/server.js",
     "start:dev": "cross-env ONEAUTH_DEV=localhost npm start"
   },
@@ -80,7 +82,8 @@
     "chai": "^4.1.2",
     "cross-env": "^5.1.5",
     "mocha": "^5.2.0",
-    "nyc": "^12.0.2"
+    "nyc": "^12.0.2",
+    "rimraf": "^2.6.2"
   },
   "nyc": {
     "extensions": [
@@ -88,8 +91,9 @@
       ".hbs"
     ],
     "reporter": [
-      "text",
-      "lcovonly"
+      "html",
+      "text-lcov",
+      "text"
     ],
     "sourceMap": true
   }

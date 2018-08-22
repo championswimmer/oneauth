@@ -40,25 +40,21 @@ jobs:
       - image: circleci/node:8.9
     steps:
       - checkout
-      - run: 
-          name: pre install
-          command: |
-            curl -o- -L https://yarnpkg.com/install.sh | bash
-            export PATH=$HOME/.yarn/bin:$PATH
-            sudo npm install -g node-gyp
-      - checkout      
       - run:
           name: install 
           command: |
-            yarn install
+            npm install -D;
+            npm install -g codecov
       - checkout      
       - run:
-          name: test and code coverage 
+          name: test
           command: |
-            yarn test
-            yarn report
-            bash <(curl -s https://codecov.io/bash)
-            
+            npm run test
+      - run:
+          name: coverage
+          command: |
+            npm run codecov
+
 workflows:
   version: 2
   build_and_test:

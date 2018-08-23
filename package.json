@@ -93,7 +93,8 @@
     "reporter": [
       "html",
       "text-lcov",
-      "text"
+      "text",
+      "lcovonly"
     ],
     "sourceMap": true
   }

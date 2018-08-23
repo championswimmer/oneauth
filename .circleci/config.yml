@@ -44,7 +44,7 @@ jobs:
           name: install 
           command: |
             npm install -D;
-            npm install -g codecov
+            npm install -D codecov;
       - checkout      
       - run:
           name: test

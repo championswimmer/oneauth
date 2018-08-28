@@ -103,7 +103,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(setuserContext)
 app.use(redirectToHome)
-app.use(expressGa('UA-83327907-7'))
+app.use(expressGa('UA-83327907-12'))
 app.use(datadogRouter)
 app.use(redirectToEditProfile); 
 app.use('/login', loginrouter)

@@ -28,7 +28,7 @@ module.exports = new LmsStrategy({
                 course_identifier: profileJson.course_identifier,
                 courses: profileJson.courses,
                 user: {
-                    username: profileJson.roll_number,
+                    username: profileJson.roll_number || profileJson.email,
                     firstname: profileJson.name.split(' ')[0],
                     lastname: profileJson.name.split(' ').pop(),
                     email: profileJson.email,

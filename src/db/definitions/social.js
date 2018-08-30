@@ -1,9 +1,7 @@
 const Sequelize = require('sequelize')
-const userIdColumnDef = {type: Sequelize.DataTypes.INTEGER, unique: true}
 module.exports = {
     local: {
         password: Sequelize.DataTypes.STRING,
-        userId: userIdColumnDef,
     },
 
     facebook: {
@@ -11,7 +9,6 @@ module.exports = {
         accessToken: Sequelize.DataTypes.STRING,
         refreshToken: {type: Sequelize.DataTypes.STRING, allowNull: true},
         photo: {type: Sequelize.DataTypes.STRING, allowNull: true},
-        userId: userIdColumnDef,
     },
 
     twitter: {
@@ -19,7 +16,6 @@ module.exports = {
         token: Sequelize.DataTypes.STRING,
         tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
         username: {type: Sequelize.DataTypes.STRING, allowNull: true},
-        userId: userIdColumnDef,
     },
 
     github: {
@@ -27,7 +23,6 @@ module.exports = {
         token: Sequelize.DataTypes.STRING,
         tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
         username: {type: Sequelize.DataTypes.STRING, allowNull: true},
-        userId: userIdColumnDef,
     },
 
     google:{
@@ -35,7 +30,6 @@ module.exports = {
         token: Sequelize.DataTypes.STRING,
         tokenSecret: {type: Sequelize.DataTypes.STRING, allowNull: true},
         username: {type: Sequelize.DataTypes.STRING, allowNull: true},
-        userId: userIdColumnDef,
     },
 
     linkedin:{
@@ -45,7 +39,6 @@ module.exports = {
         profile: Sequelize.DataTypes.STRING,
         token: Sequelize.DataTypes.TEXT,
         tokenSecret: {type: Sequelize.DataTypes.TEXT, allowNull: true},
-        userId: userIdColumnDef,
     },
 
     lms: {
@@ -54,7 +47,6 @@ module.exports = {
         accessToken: Sequelize.DataTypes.STRING,
         course_identifier: Sequelize.DataTypes.STRING,
         courses: Sequelize.DataTypes.JSONB,
-        userId: userIdColumnDef,
     }
 
 }

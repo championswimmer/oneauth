@@ -170,10 +170,15 @@ router.post('/edit',
 
       if (req.body.password) {
         const passHash = await passutils.pass2hash(req.body.password)
-        await models.UserLocal.update({
+        /*
+         * We are upserting because there are two cases -
+         *  a. userlocal with this userId exists,
+         *     if he created account with email + password
+         *  b. user created account via oauth2 means, so it doesn't exist
+         */
+        await models.UserLocal.upsert({
+          userId: req.user.id,
           password: passHash
-        }, {
-          where: {userId: req.user.id}
         })
       }
       res.redirect('/users/me')

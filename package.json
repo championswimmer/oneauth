@@ -62,7 +62,7 @@
     "passport-oauth2-client-password": "^0.1.2",
     "passport-strategy": "^1.0.0",
     "passport-twitter-email": "^1.0.3",
-    "pg": "6",
+    "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "proxy-addr": "^2.0.3",
     "raven": "^2.3.0",

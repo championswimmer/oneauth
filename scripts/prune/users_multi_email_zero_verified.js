@@ -9,7 +9,7 @@ const {db, models: {
  */
 async function runPrune() {
     try {
-
+        // Only deleting older than 01 May 2018
         const [users, result] = await db.query(`
 SELECT  
         count("email") AS "count", 
@@ -18,11 +18,14 @@ SELECT
         min("createdAt") as "First Attempt",
         "users"."email" AS "email"
 FROM "users"
-WHERE "deletedAt" is NULL
+WHERE 
+    "deletedAt" is NULL
+    AND
+    "updatedAt" < date('2018-05-01')
 GROUP BY "users"."email"
 HAVING 
         count("email") > 1 AND 
-        count("verifiedemail") = 1
+        count("verifiedemail") = 0
 ORDER BY "count" DESC, "users"."email" ASC
         `)
         console.log("Going to delete " + users.length + " users")
@@ -33,7 +36,7 @@ ORDER BY "count" DESC, "users"."email" ASC
                     email: user.email,
                     verifiedemail: { $eq: null}
                 },
-                // force: true
+                // force: true // this *REALLY* deletes, not just deletedAt
             })
         }
 

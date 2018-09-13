@@ -118,6 +118,11 @@ router.post('/edit',
       return res.redirect('/users/me/edit')
     }
 
+    if(Number.isNaN(+(req.body.mobile_number)) || (req.body.mobile_number.length !== 10)){
+        req.flash('error', 'Contact number is not a valid number')
+        return res.redirect('/users/me/edit')
+    }
+
     try {
       const user = await findUserById(req.user.id,[models.Demographic])
       // user might have demographic, if not make empty

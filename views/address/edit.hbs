@@ -1,5 +1,5 @@
 {{!< centercolumn}}
-<div class="col-md-8 c-add-address">
+<div class="offset-md-4 col-md-8 c-add-address">
     <div class="card">
         <div class="heading-u-red">Edit Details for {{address.id}}</div>
 <form class="form-group" method="post" action="/api/address/{{address.id}}">
@@ -79,6 +79,8 @@
                     <div class="row no-gutters align-items-center justify-content-between detail-row">
                         <div class="label-input col-md-4 col-sm-3">Whatsapp No.</div>
                         <label></label><input class="input-text col-md-8 col-sm-8" type="text" pattern="[0-9]{10}" maxlength="10" placeholder="Whatsapp Number" name="whatsapp_number" value="{{address.whatsapp_number}}" />
+                    </div>
+                    <div class="row no-gutters align-items-center detail-row">
                         <label><input type="checkbox" class="input-checkbox" id="cb-whatsapp-toggle" >Same as Mobile No.</label>
                     </div>
                 </div>

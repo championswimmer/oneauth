@@ -241,14 +241,14 @@
 
             {{#unless user.verifiedemail}}
                 <div class="row mt-4">
-                    <form method="post" action="/verifyemail">
+                    <form method="post" action="/verifyemail" class="w-100">
                     {{#if user.email}}
                         <div>This is your registered email please verify.</div>
                         <div class="row mt-3 align-items-center">
-                            <div class="col-7">
+                            <div class="col-8">
                                 <input class="input-text inputvalidation" name="email" placeholder="&#xf0e0; Email" value="{{user.email}}" type="email" readonly required/>
                             </div>
-                            <div class="col-5">
+                            <div class="col-3">
                                 <div class="button-solid">
                                     <button type="submit">Verify</button>
                                 </div>
@@ -257,10 +257,10 @@
                     {{else}}
                         <div>Please enter your registered email id which you have used to buy courses.</div>
                         <div class="row mt-3 align-items-center">
-                            <div class="col-7">
+                            <div class="col-8">
                                 <input class="input-text" name="email" placeholder="&#xf0e0; Email" type="email" required/>
                             </div>
-                            <div class="col-5">
+                            <div class="col-3">
                                 <div class="button-solid">
                                     <button type="submit">Verify</button>
                                 </div>

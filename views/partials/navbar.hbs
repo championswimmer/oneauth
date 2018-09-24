@@ -9,81 +9,80 @@
             </a>
         </span>
     </div>
-    
-    
+
+
     <div class="nav-right">
-        <ul class="nav-list">
-
-        <a href="https://codingblocks.com/classroom-courses">
-            <li class="nav-items pointer">
-                CLASSROOM COURSES
-            </li>
-        </a>
-
-        <a href="https://online.codingblocks.com/">
-            <li class="nav-items pointer">
-                ONLINE COURSES
-            </li>
-        </a>
-
-        <a href="https://hack.codingblocks.com/">
-            <li class="nav-items pointer">
-                HACKER BLOCKS
-            </li>
-        </a>
-         {{#if loggedIn}}
-        <div class="round-img">
-            {{#if userPhoto}}
-            <img src="{{userPhoto}}" alt="profile-pic"> 
-            {{else}}
-            <img src="/img/user.svg" alt="profile-pic"> 
-            {{/if}}
+        <div class="dsp-none-sm">
+            <ul class="nav-list">
+                <a href="https://codingblocks.com/classroom-courses">
+                    <li class="nav-items pointer">
+                        CLASSROOM COURSES
+                    </li>
+                </a>
+        
+                <a href="https://online.codingblocks.com/">
+                    <li class="nav-items pointer">
+                        ONLINE COURSES
+                    </li>
+                </a>
+        
+                <a href="https://hack.codingblocks.com/">
+                    <li class="nav-items pointer">
+                        HACKER BLOCKS
+                    </li>
+                </a>
+            </ul>
         </div>
-        
-        <div class="card">
-            <div class="top-offset"></div>
-            <div class="nav-info">
-                <div class="flex-row justify-content-end">
-                    <a href="/users/me">
-                        <span class="pointer {{#ifeq  val=currentUrl expected=" users "}}red{{/ifeq}}">MY PROFILE</span>
-                    </a>
-                </div>
-                <div class="separator"></div>
-        
-                <div class="flex-row justify-content-end">
-                    <a href="/address">
-                        <span class="pointer {{#ifeq  val=currentUrl expected=" address "}}red{{/ifeq}}">MY ADDRESSES</span>
-                    </a>
-                </div>
-                <div class="separator"></div>
-        
-                <div class="flex-row justify-content-end">
-                    <a href="/apps">
-                        <span class="pointer {{#ifeq  val=currentUrl expected=" apps "}}red{{/ifeq}}">MY APPS</span>
-                    </a>
-                </div>
-                <div class="separator"></div>
-        
-                <div class="flex-row justify-content-end">
-                    <a href="/users/me/clients">
-                        <span class="pointer {{#ifeq  val=currentUrl expected=" clients "}}red{{/ifeq}}">MY CLIENTS</span>
-                    </a>
-                </div>
-                <div class="separator"></div>
-        
-                <div class="flex-row justify-content-end faded">
-                    <a href="/logout">
-                        <span class="pointer">LOGOUT</span>
-                    </a>
+
+        {{#if loggedIn}}
+            <div class="round-img">
+                {{#if userPhoto}}
+                <img src="{{userPhoto}}" alt="profile-pic"> {{else}}
+                <img src="/img/user.svg" alt="profile-pic"> {{/if}}
+            </div>
+
+            <div class="card">
+                <div class="top-offset"></div>
+                <div class="nav-info">
+                    <div class="flex-row justify-content-end">
+                        <a href="/users/me">
+                            <span class="pointer {{#ifeq  val=currentUrl expected=" users "}}red{{/ifeq}}">MY PROFILE</span>
+                        </a>
+                    </div>
+                    <div class="separator"></div>
+
+                    <div class="flex-row justify-content-end">
+                        <a href="/address">
+                            <span class="pointer {{#ifeq  val=currentUrl expected=" address "}}red{{/ifeq}}">MY ADDRESSES</span>
+                        </a>
+                    </div>
+                    <div class="separator"></div>
+
+                    <div class="flex-row justify-content-end">
+                        <a href="/apps">
+                            <span class="pointer {{#ifeq  val=currentUrl expected=" apps "}}red{{/ifeq}}">MY APPS</span>
+                        </a>
+                    </div>
+                    <div class="separator"></div>
+
+                    <div class="flex-row justify-content-end">
+                        <a href="/users/me/clients">
+                            <span class="pointer {{#ifeq  val=currentUrl expected=" clients "}}red{{/ifeq}}">MY CLIENTS</span>
+                        </a>
+                    </div>
+                    <div class="separator"></div>
+
+                    <div class="flex-row justify-content-end faded">
+                        <a href="/logout">
+                            <span class="pointer">LOGOUT</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
         {{/if}}
-
-    </ul>
     </div>
-    
-    
+
+
 </nav>
 
 <div class="sidebar sidebar-none">

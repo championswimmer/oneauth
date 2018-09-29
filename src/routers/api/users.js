@@ -7,14 +7,12 @@ const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const passport = require('../../passport/passporthandler')
 const models = require('../../db/models').models
-const { apiLimiter } = require('../../middlewares/ratelimit')
 
 const Raven = require('raven');
 const { findUserById , findUserForTrustedClient, findAllUsersWithFilter} = require('../../controllers/user');
 const { deleteAuthToken } = require('../../controllers/oauth');
 const  { findAllAddresses } = require('../../controllers/demographics');
 
-router.use(apiLimiter)
 router.get('/',
   passport.authenticate('bearer', {session: false}),
   async function (req, res) {

@@ -4,14 +4,11 @@
 const router = require('express').Router()
 const cel = require('connect-ensure-login')
 const Raven = require('raven')
-const { pageLimiter } = require('../../middlewares/ratelimit')
 
 const {
     findAuthTokensByUserId,
     findAuthToken
 } = require('../../controllers/oauth');
-
-router.use(pageLimiter)
 
 router.get('/',
     cel.ensureLoggedIn('/login'),

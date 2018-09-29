@@ -9,8 +9,9 @@ const publicroute = require('./public')
     , forgotroute = require('./forgot')
     , approute = require('./apps')
 const makeGaEvent = require('../../utils/ga').makeGaEvent
+const { pageLimiter } = require('../../middlewares/ratelimit')
 
-
+router.use(pageLimiter)
 router.use(function (req, res, next) {
     // One '!' doesn't cancel the other'!'. This is not wrong code. Learn JS
     res.locals.loggedIn = !!req.user

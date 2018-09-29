@@ -41,6 +41,7 @@
     "express-flash": "^0.0.2",
     "express-ga-middleware": "^0.1.6",
     "express-hbs": "^1.0.4",
+    "express-rate-limit": "^3.2.0",
     "express-session": "^1.15.4",
     "express-winston": "^2.4.0",
     "hbs": "^4.0.1",
